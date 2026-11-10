@@ -68,21 +68,62 @@ function hideMenuScreens() {
 }
 
 function syncMenuLabels() {
-  const best = bestWave > 0 ? `PERSONAL BEST · WAVE ${bestWave}` : 'NO RUNS YET';
-  $('#hubBest').textContent = best;
-  $('#hubMapLabel').textContent = `${selectedMap.planet} · ${selectedMap.site}`;
+  const bestText = bestWave > 0 ? `WAVE ${bestWave}` : 'NO RUNS YET';
+  const bestValue = bestWave > 0 ? String(bestWave) : '0';
+  if ($('#hubBest')) $('#hubBest').textContent = bestValue;
+  if ($('#hubMapLabel')) $('#hubMapLabel').textContent = `${selectedMap.planet} · ${selectedMap.site}`;
+  document.querySelectorAll('.best-wave').forEach((el) => { el.textContent = bestValue; });
+  const rank = Math.max(1, Math.min(12, 1 + Math.floor(bestWave / 3)));
+  document.querySelectorAll('.rank-label').forEach((el) => { el.textContent = `LV ${rank} FIELD COMMANDER`; });
+  document.querySelectorAll('.rank-fill').forEach((el) => { el.style.width = `${Math.min(100, 10 + bestWave * 3.4)}%`; });
+  document.querySelectorAll('.best-run').forEach((el) => { el.textContent = bestText; });
 }
 
 function renderMenuRoster() {
   const preview = TOWER_ORDER.map(type => `<span class="hub-mini-icon">${TOWERS[type].icon}</span>`).join('');
-  $('#hubTowerPreview').innerHTML = preview;
-  $('#hangarRoster').innerHTML = TOWER_ORDER.map(type => {
+  if ($('#hubTowerPreview')) $('#hubTowerPreview').innerHTML = preview;
+
+  const stats = TOWER_ORDER.map((type) => {
     const def = TOWERS[type];
-    return `<div class="hangar-card">
-      <span class="hangar-card-icon">${def.icon}</span>
-      <div><b>${def.short}</b><span>${def.role}</span></div>
-      <em>FIELD UPGRADES</em>
-    </div>`;
+    return {
+      type, def,
+      power: def.damage[3],
+      range: def.range[3],
+      rate: 1 / def.cooldown[3],
+    };
+  });
+  const max = {
+    power: Math.max(...stats.map(s => s.power)),
+    range: Math.max(...stats.map(s => s.range)),
+    rate: Math.max(...stats.map(s => s.rate)),
+  };
+  const pct = (v, m) => Math.round(18 + (v / m) * 82);
+
+  $('#hangarRoster').innerHTML = stats.map(({ def, power, range, rate }) => {
+    const bar = (label, v, m) => `<span><em>${label}</em><i><b style="width:${pct(v, m)}%"></b></i></span>`;
+    return `<article class="hangar-card" style="--accent:${def.color}">
+      <span class="hangar-card-glow" aria-hidden="true"></span>
+      <span class="hangar-watermark" aria-hidden="true">${def.icon}</span>
+      <div class="hangar-card-top">
+        <span class="hangar-card-icon">${def.icon}</span>
+        <div class="hangar-card-id">
+          <span class="hangar-role">${def.role}</span>
+          <b>${def.name}</b>
+          <small>${def.cost} CR TO DEPLOY · KEY ${def.hotkey}</small>
+        </div>
+        <span class="hangar-tier">TIER 1–4</span>
+      </div>
+      <p>${def.desc}</p>
+      <div class="hangar-meters">
+        ${bar('DMG', power, max.power)}
+        ${bar('RNG', range, max.range)}
+        ${bar('RATE', rate, max.rate)}
+      </div>
+      <div class="hangar-pips">
+        <i class="on"></i><i></i><i></i><i></i>
+        <span>FIELD UPGRADES</span>
+      </div>
+    </article>`;
   }).join('');
 }
 
@@ -569,8 +610,11 @@ function syncUI(force = false) {
   $('#btnSpeed').classList.toggle('on', game.speed > 1);
   $('#btnPause').classList.toggle('paused', game.paused);
   document.body.classList.toggle('muted', audio.muted);
-  $('#startSoundBtn').textContent = `SOUND: ${audio.muted ? 'OFF' : 'ON'}`;
-  $('#homeSoundBtn').textContent = `SOUND: ${audio.muted ? 'OFF' : 'ON'}`;
+  document.querySelectorAll('.sound-toggle').forEach((el) => {
+    const label = el.querySelector('.sound-state');
+    if (label) label.textContent = audio.muted ? 'OFF' : 'ON';
+    else el.textContent = `SOUND: ${audio.muted ? 'OFF' : 'ON'}`;
+  });
   $('#btnMute').setAttribute('aria-label', audio.muted ? 'Unmute sound' : 'Mute sound');
 
   placeHint.classList.toggle('hidden', !game.pendingType || game.paused || !game.started);
@@ -608,8 +652,7 @@ function toggleSound() {
   if (!audio.muted) audio.ui();
   syncUI(true);
 }
-$('#startSoundBtn').addEventListener('click', toggleSound);
-$('#homeSoundBtn').addEventListener('click', toggleSound);
+document.querySelectorAll('.sound-toggle').forEach((btn) => btn.addEventListener('click', toggleSound));
 
 $('#btnPause').addEventListener('click', () => setPaused(!game.paused));
 $('#resumeBtn').addEventListener('click', () => setPaused(false));
@@ -728,6 +771,17 @@ $('#mapBackBtn').addEventListener('click', () => { audio.ui(); showMenuScreen('h
 $('#upgradesBtn').addEventListener('click', () => { audio.ui(); showMenuScreen('hangar'); });
 $('#hangarBackBtn').addEventListener('click', () => { audio.ui(); showMenuScreen('home'); });
 $('#hangarMapBtn').addEventListener('click', () => { audio.ui(); showMenuScreen('map'); });
+
+/* extra command-deck navigation */
+$('#startMapBtn')?.addEventListener('click', () => { audio.ensure(); audio.ui(); showMenuScreen('map'); });
+$('#startHangarBtn')?.addEventListener('click', () => { audio.ensure(); audio.ui(); showMenuScreen('hangar'); });
+$('#dockMapBtn')?.addEventListener('click', () => { audio.ui(); showMenuScreen('map'); });
+$('#dockHangarBtn')?.addEventListener('click', () => { audio.ui(); showMenuScreen('hangar'); });
+$('#mapDockPlayBtn')?.addEventListener('click', () => { audio.ensure(); audio.ui(); launchSelectedMap(selectedMap); });
+$('#mapDockHomeBtn')?.addEventListener('click', () => { audio.ui(); showMenuScreen('home'); });
+$('#mapDockHangarBtn')?.addEventListener('click', () => { audio.ui(); showMenuScreen('hangar'); });
+$('#hangarDockMapBtn')?.addEventListener('click', () => { audio.ui(); showMenuScreen('map'); });
+$('#hangarDockHomeBtn')?.addEventListener('click', () => { audio.ui(); showMenuScreen('home'); });
 
 for (const tile of document.querySelectorAll('.map-tile-available[data-map]')) {
   tile.addEventListener('click', () => {

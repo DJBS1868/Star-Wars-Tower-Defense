@@ -10,6 +10,138 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317130e'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23f4c14d' stroke-width='3'/%3E%3Cpath d='M32 14l4.8 12.7L50 32l-13.2 5.3L32 50l-4.8-12.7L14 32l13.2-5.3z' fill='%23f4c14d'/%3E%3C/svg%3E" />
 </head>
 <body>
+  <svg class="icon-defs" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sd-hull" x1="0" y1="0" x2=".9" y2="1">
+        <stop offset="0" stop-color="#e1eaf1"/>
+        <stop offset=".32" stop-color="#9fb0be"/>
+        <stop offset=".68" stop-color="#637789"/>
+        <stop offset="1" stop-color="#344757"/>
+      </linearGradient>
+      <linearGradient id="sd-deck" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#7f92a2"/>
+        <stop offset=".55" stop-color="#b9c9d5"/>
+        <stop offset="1" stop-color="#e7f0f6"/>
+      </linearGradient>
+      <radialGradient id="sd-glow">
+        <stop offset="0" stop-color="#effdff" stop-opacity=".95"/>
+        <stop offset=".38" stop-color="#6cdcff" stop-opacity=".7"/>
+        <stop offset="1" stop-color="#2b8cff" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="xw-wing" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#e0ebf2"/>
+        <stop offset=".5" stop-color="#a7b8c5"/>
+        <stop offset="1" stop-color="#6d8293"/>
+      </linearGradient>
+      <radialGradient id="xw-engine">
+        <stop offset="0" stop-color="#fff2c4" stop-opacity=".95"/>
+        <stop offset=".45" stop-color="#ff9c47" stop-opacity=".7"/>
+        <stop offset="1" stop-color="#ff6a2a" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="mc-hull" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#c2dbe6"/>
+        <stop offset=".4" stop-color="#7c9baa"/>
+        <stop offset="1" stop-color="#3b5869"/>
+      </linearGradient>
+      <radialGradient id="mc-glow">
+        <stop offset="0" stop-color="#c9f4ff" stop-opacity=".9"/>
+        <stop offset=".5" stop-color="#63c9f2" stop-opacity=".5"/>
+        <stop offset="1" stop-color="#2b8cff" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="tie-panel" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#657c8e"/>
+        <stop offset=".45" stop-color="#324658"/>
+        <stop offset="1" stop-color="#152432"/>
+      </linearGradient>
+    </defs>
+
+    <symbol id="ship-sd" viewBox="0 0 520 260">
+      <ellipse cx="58" cy="130" rx="82" ry="58" fill="url(#sd-glow)" opacity=".32"/>
+      <path d="M52 40 L505 129 L52 220 L92 130 Z" fill="url(#sd-hull)" stroke="#d6e4ef" stroke-opacity=".5" stroke-width="1.2"/>
+      <path d="M52 40 L505 129 L290 129 Z" fill="#edf5fa" opacity=".24"/>
+      <path d="M52 220 L505 129 L290 129 Z" fill="#081725" opacity=".4"/>
+      <path d="M92 130 L505 129" stroke="#d8e6ef" stroke-width="1.3" opacity=".36"/>
+      <path d="M120 91 L420 125 M120 169 L420 135" stroke="#1b2d3e" stroke-width="1.5" opacity=".34"/>
+      <path d="M170 63 L380 123 M170 197 L380 137" stroke="#0a1725" stroke-width="1" opacity=".23"/>
+      <g stroke="#263b4d" stroke-width="1" opacity=".5">
+        <path d="M230 80 L320 115 M230 180 L320 145"/>
+        <path d="M285 100 L390 125 M285 160 L390 135"/>
+      </g>
+      <path d="M150 112 L250 101 L318 114 L318 146 L250 159 L150 148 Z" fill="url(#sd-deck)" stroke="#3c5163" stroke-width="1"/>
+      <path d="M170 120 L250 111 L296 120 L296 140 L250 149 L170 140 Z" fill="#5d7284" opacity=".72"/>
+      <path d="M214 111 L226 84 L272 84 L286 111 L276 151 L224 151 Z" fill="#9cafbd" stroke="#3a5061" stroke-width="1"/>
+      <path d="M234 90 L266 90 L272 108 L228 108 Z" fill="#2d4457"/>
+      <rect x="239" y="93" width="22" height="4" fill="#9ff0ff" opacity=".7"/>
+      <circle cx="222" cy="82" r="9" fill="#c9d9e4" stroke="#52687a"/>
+      <circle cx="278" cy="82" r="9" fill="#c9d9e4" stroke="#52687a"/>
+      <circle cx="219" cy="79" r="3" fill="#fff" opacity=".68"/>
+      <circle cx="275" cy="79" r="3" fill="#fff" opacity=".68"/>
+      <g fill="#c3d2dd" stroke="#31485b" stroke-width=".6">
+        <circle cx="340" cy="122" r="2.4"/><circle cx="360" cy="126" r="2.4"/>
+        <circle cx="380" cy="130" r="2.2"/><circle cx="330" cy="136" r="2.2"/>
+        <circle cx="410" cy="128" r="1.8"/><circle cx="300" cy="118" r="2"/>
+        <circle cx="300" cy="142" r="2"/>
+      </g>
+      <g>
+        <ellipse cx="55" cy="80" rx="19" ry="10" fill="#8feaff" opacity=".7"/>
+        <ellipse cx="55" cy="130" rx="23" ry="11" fill="#c4f8ff" opacity=".85"/>
+        <ellipse cx="55" cy="180" rx="19" ry="10" fill="#8feaff" opacity=".7"/>
+        <circle cx="52" cy="80" r="5" fill="#e8ffff"/><circle cx="52" cy="130" r="6" fill="#e8ffff"/><circle cx="52" cy="180" r="5" fill="#e8ffff"/>
+      </g>
+    </symbol>
+
+    <symbol id="ship-xw" viewBox="0 0 220 180">
+      <g transform="rotate(-6 110 90)">
+        <ellipse cx="34" cy="90" rx="20" ry="9" fill="url(#xw-engine)" opacity=".8"/>
+        <path d="M64 82 L96 74 L42 22 L24 30 Z" fill="url(#xw-wing)" stroke="#d8e4ed" stroke-opacity=".32"/>
+        <path d="M64 98 L96 106 L42 158 L24 150 Z" fill="#6b7f90" stroke="#d8e4ed" stroke-opacity=".25"/>
+        <path d="M112 80 L140 74 L188 34 L172 22 Z" fill="#a9bac7" stroke="#e0ebf2" stroke-opacity=".28"/>
+        <path d="M112 100 L140 106 L188 146 L172 158 Z" fill="#5c7183" stroke="#d8e4ed" stroke-opacity=".22"/>
+        <path d="M82 78 L108 72" stroke="#e24c42" stroke-width="5"/>
+        <path d="M82 102 L108 108" stroke="#e24c42" stroke-width="5"/>
+        <path d="M152 62 L170 48" stroke="#e24c42" stroke-width="4"/>
+        <path d="M152 118 L170 132" stroke="#e24c42" stroke-width="4"/>
+        <g stroke="#c9d7e2" stroke-width="2.4" stroke-linecap="round">
+          <path d="M40 26 L18 10"/><path d="M40 154 L18 170"/>
+          <path d="M184 28 L204 14"/><path d="M184 152 L204 166"/>
+        </g>
+        <path d="M28 84 L130 78 L200 88 L200 92 L130 102 L28 96 Z" fill="#b9c8d3" stroke="#4f6374" stroke-width="1"/>
+        <path d="M148 78 L200 89 L200 92 L148 102 Z" fill="#e2ebf1"/>
+        <path d="M52 80 L142 76" stroke="#e2ebf1" stroke-width="1.2" opacity=".7"/>
+        <ellipse cx="116" cy="90" rx="16" ry="7" fill="#274a5c" stroke="#8bd7ef" stroke-width="1"/>
+        <ellipse cx="116" cy="88" rx="10" ry="3.4" fill="#8fe5ff" opacity=".5"/>
+        <circle cx="88" cy="90" r="4.4" fill="#dfeaf0" stroke="#657b8b"/>
+        <circle cx="88" cy="90" r="1.6" fill="#5ad4f7"/>
+        <circle cx="42" cy="86" r="4.2" fill="#ffb35c"/><circle cx="42" cy="96" r="4.2" fill="#ffb35c"/>
+      </g>
+    </symbol>
+
+    <symbol id="ship-tie" viewBox="0 0 160 160">
+      <path d="M18 22 L48 36 L48 124 L18 138 L6 80 Z" fill="url(#tie-panel)" stroke="#b4c8d5" stroke-opacity=".75" stroke-width="1.6"/>
+      <path d="M142 22 L112 36 L112 124 L142 138 L154 80 Z" fill="url(#tie-panel)" stroke="#b4c8d5" stroke-opacity=".75" stroke-width="1.6"/>
+      <path d="M18 22 L48 36 L31 80 Z" fill="#8da4b4" opacity=".45"/>
+      <path d="M142 22 L112 36 L129 80 Z" fill="#8da4b4" opacity=".45"/>
+      <path d="M18 138 L48 124 L31 80 Z" fill="#0b1823" opacity=".5"/>
+      <path d="M142 138 L112 124 L129 80 Z" fill="#0b1823" opacity=".5"/>
+      <path d="M48 80 L64 80 M112 80 L96 80" stroke="#8399a9" stroke-width="6"/>
+      <circle cx="80" cy="80" r="21" fill="#6f8494" stroke="#c9d8e2" stroke-width="2"/>
+      <circle cx="80" cy="80" r="14" fill="#172a38" stroke="#8fa4b3" stroke-width="1.5"/>
+      <path d="M72 72 L88 72 L92 80 L88 88 L72 88 L68 80 Z" fill="#8edcff" opacity=".5"/>
+      <circle cx="80" cy="80" r="19" fill="none" stroke="#dbe8ef" stroke-width="1" opacity=".45"/>
+      <circle cx="80" cy="80" r="3" fill="#9ff0ff"/>
+    </symbol>
+
+    <symbol id="ship-mc80" viewBox="0 0 460 180">
+      <ellipse cx="48" cy="90" rx="54" ry="25" fill="url(#mc-glow)" opacity=".36"/>
+      <path d="M38 90 C78 40 250 26 420 60 C448 67 454 86 446 98 C426 114 258 150 88 128 C56 124 42 108 38 90 Z" fill="url(#mc-hull)" stroke="#c3e0ed" stroke-opacity=".36" stroke-width="1.2"/>
+      <path d="M120 72 C210 54 330 50 424 66" stroke="#325d72" stroke-width="1.4" opacity=".5"/>
+      <path d="M120 108 C220 130 330 132 432 102" stroke="#102a39" stroke-width="1.4" opacity=".55"/>
+      <path d="M150 90 C240 72 340 70 420 84" stroke="#d7edf5" stroke-width="1" opacity=".28"/>
+      <g fill="#b9edff"><circle cx="56" cy="72" r="5"/><circle cx="56" cy="90" r="6"/><circle cx="56" cy="108" r="5"/></g>
+      <g fill="#d6e8f0" opacity=".65"><circle cx="210" cy="78" r="2"/><circle cx="270" cy="73" r="2"/><circle cx="330" cy="76" r="2"/><circle cx="388" cy="82" r="1.7"/></g>
+    </symbol>
+  </svg>
+
   <div id="app" class="app" aria-hidden="false">
     <main id="stage" class="stage" aria-label="Battle map">
       <canvas id="game" aria-label="Tower defense battlefield"></canvas>
@@ -137,192 +269,419 @@
   <div id="dragGhost" class="drag-ghost hidden" aria-hidden="true"></div>
 
   <div id="startScreen" class="screen start-screen">
-    <div class="space-bg">
-      <div class="planet-main" aria-hidden="true"></div>
-      <div class="moon-mini" aria-hidden="true"></div>
-      <svg class="ship destroyer" viewBox="0 0 260 120" aria-hidden="true">
-        <path d="M8 94 190 12l50 26-132 66z" fill="#0a121e" stroke="#7d9db8" stroke-opacity=".25" stroke-width="1.2"/>
-        <path d="M186 16l14 16 26 8-18 7 10 8-22 1z" fill="#111f2f" opacity=".9"/>
-        <path d="M54 78 178 28" stroke="#6e93b1" stroke-opacity=".16" stroke-width="2"/>
-        <g fill="#b7e2ee" opacity=".65"><circle cx="88" cy="66" r="1.1"/><circle cx="124" cy="51" r=".9"/><circle cx="154" cy="38" r=".8"/></g>
-      </svg>
-      <svg class="ship fighter fighter-a" viewBox="0 0 140 68" aria-hidden="true">
-        <path d="M8 38 52 29 74 9l13 18 45 6-36 8-12 18-22-17z" fill="#0b1420" stroke="#83a7c0" stroke-opacity=".28" stroke-width="1"/>
-        <path d="M74 18v28" stroke="#7b9db8" stroke-opacity=".3" stroke-width="1.2"/>
-        <circle cx="62" cy="34" r="2.6" fill="#ffd37e" opacity=".85"/>
-        <path d="M10 38H2" stroke="#ffb45e" stroke-opacity=".5" stroke-width="2"/>
-      </svg>
-      <svg class="ship fighter fighter-b" viewBox="0 0 140 68" aria-hidden="true">
-        <path d="M8 38 52 29 74 9l13 18 45 6-36 8-12 18-22-17z" fill="#0b1420" stroke="#83a7c0" stroke-opacity=".28" stroke-width="1"/>
-        <path d="M74 18v28" stroke="#7b9db8" stroke-opacity=".3" stroke-width="1.2"/>
-        <circle cx="62" cy="34" r="2.6" fill="#ffd37e" opacity=".85"/>
-        <path d="M10 38H2" stroke="#ffb45e" stroke-opacity=".5" stroke-width="2"/>
-      </svg>
+    <div class="space-bg" aria-hidden="true">
+      <div class="nebula nebula-a"></div>
+      <div class="nebula nebula-b"></div>
+      <div class="planet-main"></div>
+      <div class="moon-mini"></div>
+      <div class="ship-layer">
+        <svg class="ship cruiser" viewBox="0 0 460 180"><use href="#ship-mc80"/></svg>
+        <svg class="ship destroyer" viewBox="0 0 520 260"><use href="#ship-sd"/></svg>
+        <svg class="ship tie tie-a" viewBox="0 0 160 160"><use href="#ship-tie"/></svg>
+        <svg class="ship tie tie-b" viewBox="0 0 160 160"><use href="#ship-tie"/></svg>
+        <svg class="ship fighter fighter-a" viewBox="0 0 220 180"><use href="#ship-xw"/></svg>
+        <svg class="ship fighter fighter-b" viewBox="0 0 220 180"><use href="#ship-xw"/></svg>
+        <span class="laser-bolt laser-a"></span>
+        <span class="laser-bolt laser-b"></span>
+      </div>
     </div>
     <div class="stars stars-a"></div>
     <div class="stars stars-b"></div>
-    <div class="start-wrap">
-      <div class="start-eyebrow"><span></span>STAR WARS · TOWER DEFENSE<span></span></div>
-      <h1>REBEL<br /><em>OUTPOST</em></h1>
-      <p class="start-tag">The Empire is closing in. Pick a world, build your defenses,<br />and keep the Rebel signal alive.</p>
-      <button id="playBtn" class="deploy-btn">
-        <span>PLAY</span>
-        <small>CHOOSE YOUR BATTLEFIELD</small>
-      </button>
-      <div class="how-row">
-        <div class="how-item"><b>01</b><span>Choose a planet from the star map</span></div>
-        <div class="how-item"><b>02</b><span>Drag towers onto the battlefield</span></div>
-        <div class="how-item"><b>03</b><span>Upgrade, adapt, and hold the relay</span></div>
-      </div>
-      <div class="start-foot">
+    <div class="screen-vignette"></div>
+
+    <div class="menu-shell start-shell">
+      <header class="menu-topbar">
+        <div class="menu-brand">
+          <span class="brand-emblem" aria-hidden="true">
+            <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".65"/><path d="M16 4.5l2.9 8.6L27.5 16l-8.6 2.9L16 27.5l-2.9-8.6L4.5 16l8.6-2.9z" fill="currentColor"/></svg>
+          </span>
+          <div class="menu-brand-copy"><b>REBEL COMMAND</b><span>SECTOR 77 · OUTER RIM</span></div>
+        </div>
+        <div class="menu-topright">
+          <div class="commander-chip">
+            <span class="commander-avatar" aria-hidden="true">
+              <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".65"/><path d="M16 5l2.7 8.3L27 16l-8.3 2.7L16 27l-2.7-8.3L5 16l8.3-2.7z" fill="currentColor"/></svg>
+            </span>
+            <span class="commander-meta"><b class="rank-label">LV 1 FIELD COMMANDER</b><span class="rank-bar"><i class="rank-fill"></i></span></span>
+          </div>
+          <div class="resource-row">
+            <span class="resource-chip" title="Personal best wave"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9m5 11V4m5 16v-7m5 7V7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><b class="best-wave">—</b><small>BEST</small></span>
+            <span class="resource-chip" title="Available units"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8.5 5v10L12 22l-8.5-5V7z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v10M9 9h6M9 15h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><b>6</b><small>UNITS</small></span>
+          </div>
+          <button id="startSoundBtn" class="sound-toggle topbar-sound" aria-label="Toggle sound"><span class="sound-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5c1.2 1 1.8 2.2 1.8 3.5s-.6 2.5-1.8 3.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span><span class="sound-state">ON</span></button>
+        </div>
+      </header>
+
+      <main class="start-main">
+        <section class="start-hero">
+          <div class="start-eyebrow"><span></span>STAR WARS · TOWER DEFENSE<span></span></div>
+          <h1 class="game-logo"><span>REBEL</span><em>OUTPOST</em></h1>
+          <p class="start-tag">The Empire is closing in. Pick a world, build your defenses, and keep the Rebel signal alive.</p>
+          <div class="start-cta-row">
+            <button id="playBtn" class="deploy-btn big-deploy">
+              <span>PLAY</span>
+              <small>ENTER COMMAND CENTER</small>
+            </button>
+            <button id="startMapBtn" class="btn-metal">
+              <span class="btn-metal-icon" aria-hidden="true">
+                <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="15" fill="none" stroke="currentColor" stroke-width="1.5"/><ellipse cx="32" cy="32" rx="27" ry="10" fill="none" stroke="currentColor" stroke-width="1" transform="rotate(-18 32 32)"/><circle cx="43" cy="22" r="2.2" fill="currentColor"/></svg>
+              </span>
+              <span class="btn-metal-copy"><b>STAR MAP</b><small>25-WAVE CAMPAIGN</small></span>
+            </button>
+          </div>
+          <div class="how-row">
+            <div class="how-item"><b>01</b><span>Pick a planet</span></div>
+            <div class="how-item"><b>02</b><span>Deploy units</span></div>
+            <div class="how-item"><b>03</b><span>Hold the relay</span></div>
+          </div>
+        </section>
+
+        <aside class="start-ops" aria-label="Active deployment">
+          <div class="ops-head"><span>ACTIVE DEPLOYMENT</span><span class="ops-live"><i></i>LIVE</span></div>
+          <div class="ops-art">
+            <span class="ops-grid"></span>
+            <span class="ops-planet"></span>
+            <span class="ops-ring"></span>
+            <svg class="ops-ship" viewBox="0 0 220 180" aria-hidden="true"><use href="#ship-xw"/></svg>
+          </div>
+          <div class="ops-body">
+            <span class="ops-kicker">REBEL ALLIANCE · DEEP SPACE</span>
+            <b class="ops-title">OUTPOST RELAY</b>
+            <p>Hold the signal station against 25 waves of Separatist droids.</p>
+            <div class="ops-stats">
+              <div><b>25</b><span>WAVES</span></div>
+              <div><b>6</b><span>UNITS</span></div>
+              <div><b class="best-wave">—</b><span>BEST</span></div>
+            </div>
+            <button id="startHangarBtn" class="ops-link">REVIEW HANGAR <i>→</i></button>
+          </div>
+        </aside>
+      </main>
+
+      <footer class="menu-footer">
         <span id="bestRun">NO RUNS YET</span>
-        <button id="startSoundBtn" class="sound-toggle" aria-label="Toggle sound">SOUND: ON</button>
-      </div>
+        <span class="footer-note">REBEL ALLIANCE · SECTOR COMMAND · v1.0</span>
+      </footer>
     </div>
   </div>
 
   <div id="homeScreen" class="screen menu-screen hub-screen hidden">
-    <div class="space-bg space-bg-dim">
-      <div class="planet-main" aria-hidden="true"></div>
-      <div class="moon-mini" aria-hidden="true"></div>
-      <svg class="ship destroyer" viewBox="0 0 260 120" aria-hidden="true">
-        <path d="M8 94 190 12l50 26-132 66z" fill="#0a121e" stroke="#7d9db8" stroke-opacity=".25" stroke-width="1.2"/>
-        <path d="M186 16l14 16 26 8-18 7 10 8-22 1z" fill="#111f2f" opacity=".9"/>
-        <g fill="#b7e2ee" opacity=".5"><circle cx="88" cy="66" r="1.1"/><circle cx="124" cy="51" r=".9"/></g>
-      </svg>
+    <div class="space-bg space-bg-dim" aria-hidden="true">
+      <div class="nebula nebula-a"></div>
+      <div class="nebula nebula-b"></div>
+      <div class="planet-main"></div>
+      <div class="moon-mini"></div>
+      <div class="ship-layer">
+        <svg class="ship cruiser" viewBox="0 0 460 180"><use href="#ship-mc80"/></svg>
+        <svg class="ship destroyer" viewBox="0 0 520 260"><use href="#ship-sd"/></svg>
+        <svg class="ship tie tie-a" viewBox="0 0 160 160"><use href="#ship-tie"/></svg>
+        <svg class="ship fighter fighter-a" viewBox="0 0 220 180"><use href="#ship-xw"/></svg>
+      </div>
     </div>
     <div class="stars stars-a"></div>
     <div class="stars stars-b"></div>
-    <div class="menu-veil"></div>
-    <div class="hub-wrap">
-      <header class="hub-head">
-        <div class="hub-profile">
-          <span class="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".65"/><path d="M16 5l2.7 8.3L27 16l-8.3 2.7L16 27l-2.7-8.3L5 16l8.3-2.7z" fill="currentColor"/></svg>
+    <div class="screen-vignette"></div>
+
+    <div class="menu-shell hub-shell">
+      <header class="menu-topbar">
+        <div class="menu-brand">
+          <span class="brand-emblem" aria-hidden="true">
+            <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".65"/><path d="M16 4.5l2.9 8.6L27.5 16l-8.6 2.9L16 27.5l-2.9-8.6L4.5 16l8.6-2.9z" fill="currentColor"/></svg>
           </span>
-          <div><span class="hub-kicker">REBEL COMMAND</span><b>COMMANDER</b></div>
+          <div class="menu-brand-copy"><b>REBEL COMMAND</b><span>HOME BASE · SECTOR 77</span></div>
         </div>
-        <div class="hub-head-right">
-          <span id="hubBest">NO RUNS YET</span>
-          <button id="homeSoundBtn" class="sound-toggle" aria-label="Toggle sound">SOUND: ON</button>
+        <div class="menu-topright">
+          <div class="commander-chip">
+            <span class="commander-avatar" aria-hidden="true">
+              <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".65"/><path d="M16 5l2.7 8.3L27 16l-8.3 2.7L16 27l-2.7-8.3L5 16l8.3-2.7z" fill="currentColor"/></svg>
+            </span>
+            <span class="commander-meta"><b class="rank-label">LV 1 FIELD COMMANDER</b><span class="rank-bar"><i class="rank-fill"></i></span></span>
+          </div>
+          <div class="resource-row">
+            <span class="resource-chip" title="Personal best wave"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9m5 11V4m5 16v-7m5 7V7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><b class="best-wave">—</b><small>BEST</small></span>
+            <span class="resource-chip" title="Available units"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8.5 5v10L12 22l-8.5-5V7z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v10M9 9h6M9 15h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><b>6</b><small>UNITS</small></span>
+          </div>
+          <button id="homeSoundBtn" class="sound-toggle topbar-sound" aria-label="Toggle sound"><span class="sound-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5c1.2 1 1.8 2.2 1.8 3.5s-.6 2.5-1.8 3.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span><span class="sound-state">ON</span></button>
         </div>
       </header>
 
-      <div class="hub-intro">
-        <div class="start-eyebrow"><span></span>HOME BASE<span></span></div>
-        <h2>HOME BASE</h2>
-        <p>Choose your next battlefield or prepare your forces in the hangar.</p>
-      </div>
-
-      <div class="hub-grid">
-        <button id="chooseMapBtn" class="hub-card hub-card-map" aria-label="Choose a map">
-          <span class="hub-card-tag">CAMPAIGN</span>
-          <span class="hub-card-title">CHOOSE MAP</span>
-          <span class="hub-card-desc">Pick a planet and deploy your defenses.</span>
-          <span id="hubMapLabel" class="hub-card-telemetry">REBEL · OUTPOST RELAY</span>
-          <span class="hub-card-cta">OPEN STAR MAP <i>→</i></span>
-          <svg class="hub-card-icon" viewBox="0 0 64 64" aria-hidden="true">
-            <circle cx="32" cy="32" r="15" fill="none" stroke="currentColor" stroke-width="1.4"/>
-            <ellipse cx="32" cy="32" rx="28" ry="10" fill="none" stroke="currentColor" stroke-width="1.1" transform="rotate(-18 32 32)"/>
-            <circle cx="44" cy="22" r="2.2" fill="currentColor"/>
-          </svg>
+      <main class="home-main">
+        <button id="chooseMapBtn" class="home-feature" aria-label="Open the star map and choose a battlefield">
+          <span class="feature-art art-rebel" aria-hidden="true">
+            <i class="feature-stars"></i>
+            <i class="feature-planet"></i>
+            <i class="feature-horizon"></i>
+            <svg class="feature-ship" viewBox="0 0 520 260"><use href="#ship-sd"/></svg>
+          </span>
+          <span class="feature-copy">
+            <span class="section-tag">CAMPAIGN</span>
+            <span class="feature-title">COMMAND<br />CENTER</span>
+            <span class="feature-desc">Pick a planet, drop your defenses, and hold the line against the droid army.</span>
+            <span class="feature-map" id="hubMapLabel">REBEL · OUTPOST RELAY</span>
+            <span class="feature-cta">DEPLOY TO STAR MAP <i>→</i></span>
+          </span>
         </button>
-        <button id="upgradesBtn" class="hub-card hub-card-hangar" aria-label="Open upgrades">
-          <span class="hub-card-tag">HANGAR</span>
-          <span class="hub-card-title">UNIT UPGRADES</span>
-          <span class="hub-card-desc">Prepare your Rebel units and learn how to upgrade them in battle.</span>
-          <span id="hubTowerPreview" class="hub-tower-preview" aria-hidden="true"></span>
-          <span class="hub-card-cta">VIEW HANGAR <i>→</i></span>
-          <svg class="hub-card-icon" viewBox="0 0 64 64" aria-hidden="true">
-            <path d="M32 8 48 18v20L32 56 16 38V18z" fill="none" stroke="currentColor" stroke-width="1.4"/>
-            <path d="M32 20v18M25 31l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
 
-      <div class="hub-foot">
-        <button id="hubBackBtn" class="menu-back">← MAIN MENU</button>
-        <span class="hub-foot-note">REBEL ALLIANCE · SECTOR COMMAND</span>
-      </div>
+        <div class="home-side">
+          <button id="upgradesBtn" class="side-card side-hangar" aria-label="Open the hangar">
+            <span class="side-card-glow" aria-hidden="true"></span>
+            <svg class="side-hangar-art" viewBox="0 0 220 180" aria-hidden="true"><use href="#ship-xw"/></svg>
+            <span class="side-head"><span class="section-tag">HANGAR</span><span class="side-arrow">→</span></span>
+            <span class="side-title">UNIT UPGRADES</span>
+            <span class="side-desc">Six Rebel classes, four upgrade tiers each. Review field roles before deployment.</span>
+            <span id="hubTowerPreview" class="hub-tower-preview" aria-hidden="true"></span>
+          </button>
+
+          <section class="side-card side-record">
+            <span class="side-head"><span class="section-tag alt">SERVICE RECORD</span></span>
+            <span class="side-title">FIELD LOG</span>
+            <div class="record-stats">
+              <div><b id="hubBest">—</b><span>BEST WAVE</span></div>
+              <div><b>25</b><span>MISSION CAP</span></div>
+              <div><b>6</b><span>UNIT TYPES</span></div>
+            </div>
+            <span class="record-note">Clearing a wave pays a credit bonus. Upgrades persist for the rest of the run.</span>
+          </section>
+        </div>
+      </main>
+
+      <nav class="menu-dock" aria-label="Command navigation">
+        <button id="dockMapBtn" class="dock-btn dock-primary">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="15" fill="none" stroke="currentColor" stroke-width="2"/><ellipse cx="32" cy="32" rx="28" ry="10" fill="none" stroke="currentColor" stroke-width="1.4" transform="rotate(-18 32 32)"/><circle cx="44" cy="22" r="2.6" fill="currentColor"/></svg>
+          <b>CAMPAIGN</b><small>PLAY</small>
+        </button>
+        <button id="dockHangarBtn" class="dock-btn">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 8 48 18v20L32 56 16 38V18z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M32 20v18M25 31l7 7 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <b>HANGAR</b><small>UNITS</small>
+        </button>
+        <button id="hubBackBtn" class="dock-btn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5l-7 7 7 7M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <b>MAIN MENU</b><small>BACK</small>
+        </button>
+        <button id="dockSoundBtn" class="dock-btn sound-toggle" aria-label="Toggle sound">
+          <svg class="ico-sound" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5c1.2 1 1.8 2.2 1.8 3.5s-.6 2.5-1.8 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <b>SOUND</b><small><span class="sound-state">ON</span></small>
+        </button>
+      </nav>
     </div>
   </div>
 
   <div id="mapScreen" class="screen menu-screen map-screen hidden">
-    <div class="space-bg space-bg-dim">
-      <div class="planet-main" aria-hidden="true"></div>
-      <div class="moon-mini" aria-hidden="true"></div>
+    <div class="space-bg space-bg-dim" aria-hidden="true">
+      <div class="nebula nebula-a"></div>
+      <div class="nebula nebula-b"></div>
+      <div class="planet-main"></div>
+      <div class="moon-mini"></div>
+      <div class="ship-layer">
+        <svg class="ship cruiser" viewBox="0 0 460 180"><use href="#ship-mc80"/></svg>
+        <svg class="ship destroyer" viewBox="0 0 520 260"><use href="#ship-sd"/></svg>
+        <svg class="ship tie tie-a" viewBox="0 0 160 160"><use href="#ship-tie"/></svg>
+        <svg class="ship fighter fighter-b" viewBox="0 0 220 180"><use href="#ship-xw"/></svg>
+      </div>
     </div>
     <div class="stars stars-a"></div>
     <div class="stars stars-b"></div>
-    <div class="menu-veil"></div>
-    <div class="map-wrap">
-      <header class="menu-head">
-        <button id="mapBackBtn" class="menu-back">← HOME</button>
-        <div class="menu-heading">
-          <span class="start-eyebrow"><span></span>STAR MAP<span></span></span>
-          <h1>SELECT A PLANET</h1>
+    <div class="screen-vignette"></div>
+
+    <div class="menu-shell map-shell">
+      <header class="menu-topbar">
+        <div class="menu-brand">
+          <span class="brand-emblem" aria-hidden="true">
+            <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".65"/><path d="M16 4.5l2.9 8.6L27.5 16l-8.6 2.9L16 27.5l-2.9-8.6L4.5 16l8.6-2.9z" fill="currentColor"/></svg>
+          </span>
+          <div class="menu-brand-copy"><b>STAR MAP</b><span>SECTOR 77 · CAMPAIGN ROUTE</span></div>
         </div>
-        <span class="menu-side-note"><b>1</b> BATTLEFIELD AVAILABLE</span>
+        <div class="menu-topright">
+          <div class="commander-chip">
+            <span class="commander-avatar" aria-hidden="true">
+              <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".65"/><path d="M16 5l2.7 8.3L27 16l-8.3 2.7L16 27l-2.7-8.3L5 16l8.3-2.7z" fill="currentColor"/></svg>
+            </span>
+            <span class="commander-meta"><b class="rank-label">LV 1 FIELD COMMANDER</b><span class="rank-bar"><i class="rank-fill"></i></span></span>
+          </div>
+          <div class="resource-row">
+            <span class="resource-chip" title="Personal best wave"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9m5 11V4m5 16v-7m5 7V7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><b class="best-wave">—</b><small>BEST</small></span>
+          </div>
+          <button id="mapSoundBtn" class="sound-toggle topbar-sound" aria-label="Toggle sound"><span class="sound-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5c1.2 1 1.8 2.2 1.8 3.5s-.6 2.5-1.8 3.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span><span class="sound-state">ON</span></button>
+        </div>
       </header>
 
-      <div class="map-grid">
-        <button class="map-tile map-tile-available" data-map="rebel" data-planet="REBEL" data-site="OUTPOST RELAY" aria-label="Deploy to Rebel Outpost Relay">
-          <span class="map-art art-rebel" aria-hidden="true">
-            <i class="rebel-planet"></i><b class="rebel-ship"></b><i class="rebel-star rebel-star-a"></i><i class="rebel-star rebel-star-b"></i><i class="rebel-star rebel-star-c"></i>
-          </span>
-          <span class="map-info">
-            <span class="map-kicker">REBEL ALLIANCE · DEEP SPACE</span>
-            <span class="map-title">OUTPOST RELAY</span>
-            <span class="map-desc">A remote Rebel signal station under attack. Hold the line and keep the transmission alive.</span>
-            <span class="map-status"><b>DEPLOY</b><em>25 WAVES</em></span>
-          </span>
-          <span class="map-ready">READY</span>
-        </button>
-      </div>
+      <main class="map-main">
+        <div class="page-head">
+          <button id="mapBackBtn" class="menu-back">← HOME BASE</button>
+          <div class="page-title">
+            <span class="start-eyebrow"><span></span>STAR MAP<span></span></span>
+            <h1>SELECT A BATTLEFIELD</h1>
+            <p>Choose a world. Every battlefield changes the route, the pressure, and your defense.</p>
+          </div>
+          <span class="menu-side-note"><b>1</b> / 3 BATTLEFIELDS<br />SECTOR 77</span>
+        </div>
 
-      <div class="map-foot">
-        <span>More battlefields can be added to the star map later.</span>
-        <span class="map-foot-badge">1 BATTLEFIELD</span>
-      </div>
+        <div class="map-grid">
+          <button class="map-tile map-tile-available" data-map="rebel" data-planet="REBEL" data-site="OUTPOST RELAY" aria-label="Deploy to Rebel Outpost Relay">
+            <span class="map-art art-rebel" aria-hidden="true">
+              <i class="rebel-planet"></i><b class="rebel-ship"></b><i class="rebel-star rebel-star-a"></i><i class="rebel-star rebel-star-b"></i><i class="rebel-star rebel-star-c"></i>
+              <span class="map-art-tag">DEEP SPACE</span>
+            </span>
+            <span class="map-info">
+              <span class="map-kicker">REBEL ALLIANCE · OUTER RIM</span>
+              <span class="map-title">OUTPOST RELAY</span>
+              <span class="map-desc">A remote Rebel signal station under attack. Hold the line and keep the transmission alive.</span>
+              <span class="map-chip-row"><span>25 WAVES</span><span>TATOOINE</span><span>STANDARD</span></span>
+              <span class="map-status"><b>DEPLOY</b><em>25 WAVES</em></span>
+            </span>
+            <span class="map-ready">READY</span>
+          </button>
+
+          <div class="map-tile map-tile-locked" aria-label="Hoth, locked">
+            <span class="map-art art-hoth" aria-hidden="true">
+              <i class="m-sun m-sun-a"></i>
+              <span class="m-ridge m-ridge-back"></span>
+              <span class="m-ridge"></span>
+              <span class="map-art-tag">ICE WORLD</span>
+            </span>
+            <span class="map-info">
+              <span class="map-kicker">REBEL ALLIANCE · HOTH SYSTEM</span>
+              <span class="map-title">ECHO BASE</span>
+              <span class="map-desc">Frozen trenches and a shield generator. Complete the Outpost Relay campaign to unlock.</span>
+              <span class="map-chip-row"><span>30 WAVES</span><span>HOTH</span><span>VETERAN</span></span>
+              <span class="map-status"><b>LOCKED</b><em>CAMPAIGN</em></span>
+            </span>
+            <span class="map-lock">LOCKED</span>
+          </div>
+
+          <div class="map-tile map-tile-locked" aria-label="Endor, locked">
+            <span class="map-art art-endor" aria-hidden="true">
+              <span class="m-ridge m-ridge-back"></span>
+              <span class="m-ridge"></span>
+              <span class="map-art-tag">FOREST MOON</span>
+            </span>
+            <span class="map-info">
+              <span class="map-kicker">REBEL ALLIANCE · ENDOR</span>
+              <span class="map-title">SHIELD BUNKER</span>
+              <span class="map-desc">Dense forest, narrow sightlines, and an Imperial shield bunker. Unlocks later.</span>
+              <span class="map-chip-row"><span>35 WAVES</span><span>ENDOR</span><span>ELITE</span></span>
+              <span class="map-status"><b>LOCKED</b><em>CAMPAIGN</em></span>
+            </span>
+            <span class="map-lock">LOCKED</span>
+          </div>
+        </div>
+      </main>
+
+      <nav class="menu-dock" aria-label="Star map navigation">
+        <button id="mapDockPlayBtn" class="dock-btn dock-primary">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg>
+          <b>DEPLOY</b><small>OUTPOST RELAY</small>
+        </button>
+        <button id="mapDockHangarBtn" class="dock-btn">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 8 48 18v20L32 56 16 38V18z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M32 20v18M25 31l7 7 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <b>HANGAR</b><small>UNITS</small>
+        </button>
+        <button id="mapDockHomeBtn" class="dock-btn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5l-7 7 7 7M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <b>HOME</b><small>BACK</small>
+        </button>
+        <button id="mapDockSoundBtn" class="dock-btn sound-toggle" aria-label="Toggle sound">
+          <svg class="ico-sound" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5c1.2 1 1.8 2.2 1.8 3.5s-.6 2.5-1.8 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <b>SOUND</b><small><span class="sound-state">ON</span></small>
+        </button>
+      </nav>
     </div>
   </div>
 
   <div id="hangarScreen" class="screen menu-screen hangar-screen hidden">
-    <div class="space-bg space-bg-dim">
-      <div class="planet-main" aria-hidden="true"></div>
-      <div class="moon-mini" aria-hidden="true"></div>
+    <div class="space-bg space-bg-dim" aria-hidden="true">
+      <div class="nebula nebula-a"></div>
+      <div class="nebula nebula-b"></div>
+      <div class="planet-main"></div>
+      <div class="moon-mini"></div>
+      <div class="ship-layer">
+        <svg class="ship cruiser" viewBox="0 0 460 180"><use href="#ship-mc80"/></svg>
+        <svg class="ship destroyer" viewBox="0 0 520 260"><use href="#ship-sd"/></svg>
+        <svg class="ship tie tie-b" viewBox="0 0 160 160"><use href="#ship-tie"/></svg>
+        <svg class="ship fighter fighter-a" viewBox="0 0 220 180"><use href="#ship-xw"/></svg>
+      </div>
     </div>
     <div class="stars stars-a"></div>
     <div class="stars stars-b"></div>
-    <div class="menu-veil"></div>
-    <div class="hangar-wrap">
-      <header class="menu-head">
-        <button id="hangarBackBtn" class="menu-back">← HOME</button>
-        <div class="menu-heading">
-          <span class="start-eyebrow"><span></span>REBEL HANGAR<span></span></span>
-          <h1>UNIT UPGRADES</h1>
+    <div class="screen-vignette"></div>
+
+    <div class="menu-shell hangar-shell">
+      <header class="menu-topbar">
+        <div class="menu-brand">
+          <span class="brand-emblem" aria-hidden="true">
+            <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".65"/><path d="M16 4.5l2.9 8.6L27.5 16l-8.6 2.9L16 27.5l-2.9-8.6L4.5 16l8.6-2.9z" fill="currentColor"/></svg>
+          </span>
+          <div class="menu-brand-copy"><b>REBEL HANGAR</b><span>SECTOR 77 · FIELD ROSTER</span></div>
         </div>
-        <span class="menu-side-note">FIELD UNIT UPGRADES · LEVELS 1–4</span>
+        <div class="menu-topright">
+          <div class="commander-chip">
+            <span class="commander-avatar" aria-hidden="true">
+              <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".65"/><path d="M16 5l2.7 8.3L27 16l-8.3 2.7L16 27l-2.7-8.3L5 16l8.3-2.7z" fill="currentColor"/></svg>
+            </span>
+            <span class="commander-meta"><b class="rank-label">LV 1 FIELD COMMANDER</b><span class="rank-bar"><i class="rank-fill"></i></span></span>
+          </div>
+          <div class="resource-row">
+            <span class="resource-chip" title="Personal best wave"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9m5 11V4m5 16v-7m5 7V7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><b class="best-wave">—</b><small>BEST</small></span>
+            <span class="resource-chip" title="Available units"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8.5 5v10L12 22l-8.5-5V7z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v10M9 9h6M9 15h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><b>6</b><small>UNITS</small></span>
+          </div>
+          <button id="hangarSoundBtn" class="sound-toggle topbar-sound" aria-label="Toggle sound"><span class="sound-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5c1.2 1 1.8 2.2 1.8 3.5s-.6 2.5-1.8 3.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span><span class="sound-state">ON</span></button>
+        </div>
       </header>
 
-      <div class="hangar-lead">
-        <div>
-          <b>FIELD UPGRADES AVAILABLE</b>
-          <p>Choose a unit below to review its battlefield role. During a mission, select any deployed unit and spend credits to upgrade it up to level 4.</p>
+      <main class="hangar-main">
+        <div class="page-head">
+          <button id="hangarBackBtn" class="menu-back">← HOME BASE</button>
+          <div class="page-title">
+            <span class="start-eyebrow"><span></span>REBEL HANGAR<span></span></span>
+            <h1>THE HANGAR</h1>
+            <p>Six field classes. Four upgrade tiers. Review the roster before you deploy.</p>
+          </div>
+          <span class="menu-side-note"><b>6</b> UNITS ONLINE<br />LEVELS 1–4</span>
         </div>
-        <span class="hangar-stamp">LEVEL 1–4</span>
-      </div>
 
-      <div id="hangarRoster" class="hangar-roster"></div>
+        <div class="hangar-lead">
+          <div>
+            <b>FIELD UPGRADES AVAILABLE</b>
+            <p>During a mission, select any deployed unit and spend credits to upgrade it up to level 4. Higher tiers add damage, range, and special effects.</p>
+          </div>
+          <span class="hangar-stamp">LEVEL 1–4</span>
+        </div>
 
-      <div class="hangar-foot">
-        <span>ALL SIX TOWER CLASSES AVAILABLE IN BATTLE</span>
-        <button id="hangarMapBtn" class="deploy-btn"><span>CHOOSE MAP</span><small>DEPLOY YOUR DEFENSES</small></button>
-      </div>
+        <div id="hangarRoster" class="hangar-roster"></div>
+
+        <div class="hangar-foot">
+          <span>ALL SIX UNIT CLASSES ARE AVAILABLE IN EVERY MISSION</span>
+          <button id="hangarMapBtn" class="deploy-btn"><span>CHOOSE MAP</span><small>DEPLOY YOUR DEFENSES</small></button>
+        </div>
+      </main>
+
+      <nav class="menu-dock" aria-label="Hangar navigation">
+        <button id="hangarDockMapBtn" class="dock-btn dock-primary">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg>
+          <b>DEPLOY</b><small>STAR MAP</small>
+        </button>
+        <button id="hangarDockHomeBtn" class="dock-btn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5l-7 7 7 7M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <b>HOME</b><small>BACK</small>
+        </button>
+        <button id="hangarDockSoundBtn" class="dock-btn sound-toggle" aria-label="Toggle sound">
+          <svg class="ico-sound" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5c1.2 1 1.8 2.2 1.8 3.5s-.6 2.5-1.8 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <b>SOUND</b><small><span class="sound-state">ON</span></small>
+        </button>
+      </nav>
     </div>
   </div>
 
   <div id="endScreen" class="screen end-screen hidden">
+    <div class="space-bg end-space" aria-hidden="true">
+      <div class="nebula nebula-a"></div>
+      <div class="nebula nebula-b"></div>
+      <div class="planet-main"></div>
+      <div class="ship-layer">
+        <svg class="ship destroyer" viewBox="0 0 520 260"><use href="#ship-sd"/></svg>
+        <svg class="ship fighter fighter-a" viewBox="0 0 220 180"><use href="#ship-xw"/></svg>
+      </div>
+    </div>
     <div class="stars stars-a"></div>
     <div class="screen-shade"></div>
     <div class="end-wrap">
