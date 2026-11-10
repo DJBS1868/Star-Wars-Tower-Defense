@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-  <meta name="theme-color" content="#12100d" />
-  <meta name="description" content="Tatooine Outpost — a landscape tower defense game. Drag towers, stop the droid waves, and hold the last Rebel relay." />
-  <title>Tatooine Outpost — Star Wars Tower Defense</title>
+  <meta name="theme-color" content="#070b14" />
+  <meta name="description" content="Rebel Outpost — a landscape Star Wars tower defense game. Choose a planet, build your defenses, and hold the Rebel relay." />
+  <title>Rebel Outpost — Star Wars Tower Defense</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317130e'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23f4c14d' stroke-width='3'/%3E%3Cpath d='M32 14l4.8 12.7L50 32l-13.2 5.3L32 50l-4.8-12.7L14 32l13.2-5.3z' fill='%23f4c14d'/%3E%3C/svg%3E" />
 </head>
@@ -50,6 +50,7 @@
           <div class="modal-actions">
             <button id="resumeBtn" class="btn-primary">Resume</button>
             <button id="restartBtn" class="btn-ghost">Restart</button>
+            <button id="quitMapBtn" class="btn-ghost">Map Select</button>
           </div>
         </div>
       </div>
@@ -136,89 +137,226 @@
   <div id="dragGhost" class="drag-ghost hidden" aria-hidden="true"></div>
 
   <div id="startScreen" class="screen start-screen">
+    <div class="space-bg">
+      <div class="planet-main" aria-hidden="true"></div>
+      <div class="moon-mini" aria-hidden="true"></div>
+      <svg class="ship destroyer" viewBox="0 0 260 120" aria-hidden="true">
+        <path d="M8 94 190 12l50 26-132 66z" fill="#0a121e" stroke="#7d9db8" stroke-opacity=".25" stroke-width="1.2"/>
+        <path d="M186 16l14 16 26 8-18 7 10 8-22 1z" fill="#111f2f" opacity=".9"/>
+        <path d="M54 78 178 28" stroke="#6e93b1" stroke-opacity=".16" stroke-width="2"/>
+        <g fill="#b7e2ee" opacity=".65"><circle cx="88" cy="66" r="1.1"/><circle cx="124" cy="51" r=".9"/><circle cx="154" cy="38" r=".8"/></g>
+      </svg>
+      <svg class="ship fighter fighter-a" viewBox="0 0 140 68" aria-hidden="true">
+        <path d="M8 38 52 29 74 9l13 18 45 6-36 8-12 18-22-17z" fill="#0b1420" stroke="#83a7c0" stroke-opacity=".28" stroke-width="1"/>
+        <path d="M74 18v28" stroke="#7b9db8" stroke-opacity=".3" stroke-width="1.2"/>
+        <circle cx="62" cy="34" r="2.6" fill="#ffd37e" opacity=".85"/>
+        <path d="M10 38H2" stroke="#ffb45e" stroke-opacity=".5" stroke-width="2"/>
+      </svg>
+      <svg class="ship fighter fighter-b" viewBox="0 0 140 68" aria-hidden="true">
+        <path d="M8 38 52 29 74 9l13 18 45 6-36 8-12 18-22-17z" fill="#0b1420" stroke="#83a7c0" stroke-opacity=".28" stroke-width="1"/>
+        <path d="M74 18v28" stroke="#7b9db8" stroke-opacity=".3" stroke-width="1.2"/>
+        <circle cx="62" cy="34" r="2.6" fill="#ffd37e" opacity=".85"/>
+        <path d="M10 38H2" stroke="#ffb45e" stroke-opacity=".5" stroke-width="2"/>
+      </svg>
+    </div>
     <div class="stars stars-a"></div>
     <div class="stars stars-b"></div>
-    <svg class="start-scene" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <defs>
-        <radialGradient id="sun-a" cx="50%" cy="48%" r="50%">
-          <stop offset="0" stop-color="#fff8dd" />
-          <stop offset="0.38" stop-color="#ffe0a0" />
-          <stop offset="0.72" stop-color="#f2ad53" />
-          <stop offset="1" stop-color="#e08d35" stop-opacity="0" />
-        </radialGradient>
-        <radialGradient id="sun-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0" stop-color="#ffc768" stop-opacity="0.42" />
-          <stop offset="0.55" stop-color="#e08a35" stop-opacity="0.12" />
-          <stop offset="1" stop-color="#e08a35" stop-opacity="0" />
-        </radialGradient>
-        <radialGradient id="sun-b" cx="50%" cy="45%" r="50%">
-          <stop offset="0" stop-color="#fff0c0" />
-          <stop offset="0.65" stop-color="#ffc267" />
-          <stop offset="1" stop-color="#f0a040" stop-opacity="0" />
-        </radialGradient>
-        <linearGradient id="dune-far" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#3a2717" />
-          <stop offset="1" stop-color="#1d130c" />
-        </linearGradient>
-        <linearGradient id="dune-mid" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#26190f" />
-          <stop offset="1" stop-color="#100b07" />
-        </linearGradient>
-        <linearGradient id="haze" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#f3b65f" stop-opacity="0" />
-          <stop offset="1" stop-color="#e59b45" stop-opacity="0.14" />
-        </linearGradient>
-      </defs>
-
-      <circle cx="942" cy="304" r="260" fill="url(#sun-glow)" />
-      <circle cx="942" cy="304" r="98" fill="url(#sun-a)" />
-      <circle cx="1092" cy="228" r="73" fill="url(#sun-glow)" />
-      <circle cx="1092" cy="228" r="45" fill="url(#sun-b)" />
-
-      <rect x="0" y="390" width="1280" height="160" fill="url(#haze)" />
-
-      <path d="M0 512 C 150 474 270 500 410 530 S 700 575 850 548 S 1130 480 1280 508 L1280 720 L0 720 Z" fill="url(#dune-far)" />
-      <path d="M0 512 C 150 474 270 500 410 530 S 700 575 850 548 S 1130 480 1280 508" fill="none" stroke="#d7a15a" stroke-opacity="0.22" stroke-width="2" />
-      <path d="M0 620 C 210 562 400 632 610 646 S 970 600 1280 592 L1280 720 L0 720 Z" fill="url(#dune-mid)" />
-      <path d="M0 620 C 210 562 400 632 610 646 S 970 600 1280 592" fill="none" stroke="#c99451" stroke-opacity="0.14" stroke-width="2" />
-      <path d="M0 694 C 260 646 520 706 760 692 S 1090 658 1280 684 L1280 720 L0 720 Z" fill="#080604" />
-
-      <g transform="translate(1026 570)" fill="#0b0805">
-        <ellipse cx="0" cy="34" rx="88" ry="12" opacity="0.55" />
-        <path d="M-62 26 Q-62 -30 0 -34 Q62 -30 62 26 Z" />
-        <path d="M-62 26 Q-62 -30 0 -34 Q62 -30 62 26" fill="none" stroke="#d3a55f" stroke-opacity="0.32" stroke-width="1.6" />
-        <rect x="-17" y="0" width="34" height="26" rx="9" fill="#080604" />
-        <rect x="-11" y="5" width="22" height="10" rx="2" fill="#4bb3c4" opacity="0.55" />
-        <path d="M39 26 L39 -54" stroke="#0b0805" stroke-width="5" />
-        <path d="M39 -54 l15 9 -15 9" fill="none" stroke="#0b0805" stroke-width="3" />
-        <circle cx="39" cy="-56" r="3.4" fill="#ffc568" opacity="0.9" />
-        <path d="M-66 26 L66 26" stroke="#0b0805" stroke-width="7" stroke-linecap="round" />
-        <path d="M-51 27 c-3 8 -9 14 -14 17 M-27 29 c-1 9 -4 15 -8 20" stroke="#0b0805" stroke-width="2.5" fill="none" />
-        <ellipse cx="0" cy="30" rx="92" ry="15" fill="#0b0805" opacity="0.7" />
-      </g>
-
-      <g opacity="0.7" fill="#0b0805">
-        <path d="M142 618 l12 -16 8 16 z" />
-        <path d="M788 640 l9 -13 7 13 z" />
-        <path d="M1186 610 l7 -10 6 10 z" />
-      </g>
-    </svg>
     <div class="start-wrap">
       <div class="start-eyebrow"><span></span>STAR WARS · TOWER DEFENSE<span></span></div>
-      <h1>TATOOINE<br /><em>OUTPOST</em></h1>
-      <p class="start-tag">The last Rebel relay is online. Separatist droids are coming out of the dunes.<br />Build your defense. Hold the line.</p>
-      <button id="deployBtn" class="deploy-btn">
-        <span>DEPLOY OUTPOST</span>
-        <small>25 waves · landscape mode</small>
+      <h1>REBEL<br /><em>OUTPOST</em></h1>
+      <p class="start-tag">The Empire is closing in. Pick a world, build your defenses,<br />and keep the Rebel signal alive.</p>
+      <button id="playBtn" class="deploy-btn">
+        <span>PLAY</span>
+        <small>CHOOSE YOUR BATTLEFIELD</small>
       </button>
       <div class="how-row">
-        <div class="how-item"><b>01</b><span>Drag towers from the hangar onto the sand</span></div>
-        <div class="how-item"><b>02</b><span>Tap any tower to upgrade or sell it</span></div>
-        <div class="how-item"><b>03</b><span>Send waves and keep the relay alive</span></div>
+        <div class="how-item"><b>01</b><span>Choose a planet from the star map</span></div>
+        <div class="how-item"><b>02</b><span>Drag towers onto the battlefield</span></div>
+        <div class="how-item"><b>03</b><span>Upgrade, adapt, and hold the relay</span></div>
       </div>
       <div class="start-foot">
         <span id="bestRun">NO RUNS YET</span>
         <button id="startSoundBtn" class="sound-toggle" aria-label="Toggle sound">SOUND: ON</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="homeScreen" class="screen menu-screen hub-screen hidden">
+    <div class="space-bg space-bg-dim">
+      <div class="planet-main" aria-hidden="true"></div>
+      <div class="moon-mini" aria-hidden="true"></div>
+      <svg class="ship destroyer" viewBox="0 0 260 120" aria-hidden="true">
+        <path d="M8 94 190 12l50 26-132 66z" fill="#0a121e" stroke="#7d9db8" stroke-opacity=".25" stroke-width="1.2"/>
+        <path d="M186 16l14 16 26 8-18 7 10 8-22 1z" fill="#111f2f" opacity=".9"/>
+        <g fill="#b7e2ee" opacity=".5"><circle cx="88" cy="66" r="1.1"/><circle cx="124" cy="51" r=".9"/></g>
+      </svg>
+    </div>
+    <div class="stars stars-a"></div>
+    <div class="stars stars-b"></div>
+    <div class="menu-veil"></div>
+    <div class="hub-wrap">
+      <header class="hub-head">
+        <div class="hub-profile">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".65"/><path d="M16 5l2.7 8.3L27 16l-8.3 2.7L16 27l-2.7-8.3L5 16l8.3-2.7z" fill="currentColor"/></svg>
+          </span>
+          <div><span class="hub-kicker">REBEL COMMAND</span><b>COMMANDER</b></div>
+        </div>
+        <div class="hub-head-right">
+          <span id="hubBest">NO RUNS YET</span>
+          <button id="homeSoundBtn" class="sound-toggle" aria-label="Toggle sound">SOUND: ON</button>
+        </div>
+      </header>
+
+      <div class="hub-intro">
+        <div class="start-eyebrow"><span></span>HOME BASE<span></span></div>
+        <h2>HOME BASE</h2>
+        <p>Choose your next battlefield or prepare your forces in the hangar.</p>
+      </div>
+
+      <div class="hub-grid">
+        <button id="chooseMapBtn" class="hub-card hub-card-map" aria-label="Choose a map">
+          <span class="hub-card-tag">CAMPAIGN</span>
+          <span class="hub-card-title">CHOOSE MAP</span>
+          <span class="hub-card-desc">Pick a planet and deploy your defenses.</span>
+          <span id="hubMapLabel" class="hub-card-telemetry">TATOOINE · DUNE SEA RELAY</span>
+          <span class="hub-card-cta">OPEN STAR MAP <i>→</i></span>
+          <svg class="hub-card-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="32" cy="32" r="15" fill="none" stroke="currentColor" stroke-width="1.4"/>
+            <ellipse cx="32" cy="32" rx="28" ry="10" fill="none" stroke="currentColor" stroke-width="1.1" transform="rotate(-18 32 32)"/>
+            <circle cx="44" cy="22" r="2.2" fill="currentColor"/>
+          </svg>
+        </button>
+        <button id="upgradesBtn" class="hub-card hub-card-hangar" aria-label="Open upgrades">
+          <span class="hub-card-tag">HANGAR</span>
+          <span class="hub-card-title">UPGRADES</span>
+          <span class="hub-card-desc">Permanent tower upgrades are on the way.</span>
+          <span id="hubTowerPreview" class="hub-tower-preview" aria-hidden="true"></span>
+          <span class="hub-card-cta">VIEW HANGAR <i>→</i></span>
+          <svg class="hub-card-icon" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M32 8 48 18v20L32 56 16 38V18z" fill="none" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M32 20v18M25 31l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="hub-foot">
+        <button id="hubBackBtn" class="menu-back">← MAIN MENU</button>
+        <span class="hub-foot-note">REBEL ALLIANCE · SECTOR COMMAND</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="mapScreen" class="screen menu-screen map-screen hidden">
+    <div class="space-bg space-bg-dim">
+      <div class="planet-main" aria-hidden="true"></div>
+      <div class="moon-mini" aria-hidden="true"></div>
+    </div>
+    <div class="stars stars-a"></div>
+    <div class="stars stars-b"></div>
+    <div class="menu-veil"></div>
+    <div class="map-wrap">
+      <header class="menu-head">
+        <button id="mapBackBtn" class="menu-back">← HOME</button>
+        <div class="menu-heading">
+          <span class="start-eyebrow"><span></span>STAR MAP<span></span></span>
+          <h1>SELECT A PLANET</h1>
+        </div>
+        <span class="menu-side-note"><b>1</b> / 4 SECTORS ONLINE</span>
+      </header>
+
+      <div class="map-grid">
+        <button class="map-tile map-tile-available" data-map="tatooine" data-planet="TATOOINE" data-site="DUNE SEA RELAY" aria-label="Deploy to Tatooine, Dune Sea Relay">
+          <span class="map-art art-tatooine" aria-hidden="true">
+            <i class="m-sun m-sun-a"></i><i class="m-sun m-sun-b"></i><b class="m-ridge"></b>
+          </span>
+          <span class="map-info">
+            <span class="map-kicker">TATOOINE · OUTER RIM</span>
+            <span class="map-title">DUNE SEA RELAY</span>
+            <span class="map-desc">Twin suns, open sand, and a droid column on the horizon.</span>
+            <span class="map-status"><b>DEPLOY</b><em>25 WAVES</em></span>
+          </span>
+          <span class="map-ready">READY</span>
+        </button>
+
+        <button class="map-tile map-tile-locked" disabled>
+          <span class="map-art art-hoth" aria-hidden="true">
+            <i class="m-sun m-sun-a"></i><b class="m-ridge m-ridge-back"></b><b class="m-ridge"></b>
+          </span>
+          <span class="map-info">
+            <span class="map-kicker">HOTH · OUTER RIM</span>
+            <span class="map-title">ECHO BASE</span>
+            <span class="map-desc">Frozen trenches and whiteout assaults.</span>
+            <span class="map-status"><b>LOCKED</b><em>COMING SOON</em></span>
+          </span>
+          <span class="map-lock">LOCKED</span>
+        </button>
+
+        <button class="map-tile map-tile-locked" disabled>
+          <span class="map-art art-coruscant" aria-hidden="true">
+            <i class="m-moon"></i><b class="m-city"></b>
+          </span>
+          <span class="map-info">
+            <span class="map-kicker">CORUSCANT · CORE WORLDS</span>
+            <span class="map-title">IMPERIAL PLAZA</span>
+            <span class="map-desc">Urban crossfire in the galactic capital.</span>
+            <span class="map-status"><b>LOCKED</b><em>COMING SOON</em></span>
+          </span>
+          <span class="map-lock">LOCKED</span>
+        </button>
+
+        <button class="map-tile map-tile-locked" disabled>
+          <span class="map-art art-endor" aria-hidden="true">
+            <i class="m-moon"></i><b class="m-ridge m-ridge-back"></b><b class="m-ridge"></b>
+          </span>
+          <span class="map-info">
+            <span class="map-kicker">ENDOR · OUTER RIM</span>
+            <span class="map-title">SHIELD BUNKER</span>
+            <span class="map-desc">Forest cover and a hidden shield array.</span>
+            <span class="map-status"><b>LOCKED</b><em>COMING SOON</em></span>
+          </span>
+          <span class="map-lock">LOCKED</span>
+        </button>
+      </div>
+
+      <div class="map-foot">
+        <span>New planets are being scouted. More battlefields arrive soon.</span>
+        <span class="map-foot-badge">MORE MAPS SOON</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="hangarScreen" class="screen menu-screen hangar-screen hidden">
+    <div class="space-bg space-bg-dim">
+      <div class="planet-main" aria-hidden="true"></div>
+      <div class="moon-mini" aria-hidden="true"></div>
+    </div>
+    <div class="stars stars-a"></div>
+    <div class="stars stars-b"></div>
+    <div class="menu-veil"></div>
+    <div class="hangar-wrap">
+      <header class="menu-head">
+        <button id="hangarBackBtn" class="menu-back">← HOME</button>
+        <div class="menu-heading">
+          <span class="start-eyebrow"><span></span>HANGAR BAY<span></span></span>
+          <h1>UPGRADES</h1>
+        </div>
+        <span class="menu-side-note">PERMANENT BOOSTS · IN DEVELOPMENT</span>
+      </header>
+
+      <div class="hangar-lead">
+        <div>
+          <b>UPGRADE BAY OFFLINE</b>
+          <p>Permanent tower upgrades are being installed in a future transmission. For now, tap any deployed tower in battle to upgrade it up to level 4.</p>
+        </div>
+        <span class="hangar-stamp">COMING SOON</span>
+      </div>
+
+      <div id="hangarRoster" class="hangar-roster"></div>
+
+      <div class="hangar-foot">
+        <span>ALL SIX TOWER CLASSES AVAILABLE IN BATTLE</span>
+        <button id="hangarMapBtn" class="deploy-btn"><span>CHOOSE MAP</span><small>DEPLOY YOUR DEFENSES</small></button>
       </div>
     </div>
   </div>
@@ -238,6 +376,7 @@
       <div class="modal-actions">
         <button id="againBtn" class="deploy-btn"><span>REDEPLOY</span><small>Try a new defense</small></button>
         <button id="endlessBtn" class="btn-ghost hidden">CONTINUE · ENDLESS</button>
+        <button id="endMapBtn" class="btn-ghost">MAP SELECT</button>
       </div>
       <div id="endBest" class="start-foot"></div>
     </div>

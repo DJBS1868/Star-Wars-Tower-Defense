@@ -16,8 +16,16 @@ const inspectPanel = $('#inspectPanel');
 const placeHint = $('#placeHint');
 const dragGhost = $('#dragGhost');
 const startScreen = $('#startScreen');
+const homeScreen = $('#homeScreen');
+const mapScreen = $('#mapScreen');
+const hangarScreen = $('#hangarScreen');
 const endScreen = $('#endScreen');
 const pauseModal = $('#pauseModal');
+
+const MAPS = {
+  tatooine: { id: 'tatooine', planet: 'TATOOINE', site: 'DUNE SEA RELAY' },
+};
+const menuScreens = { start: startScreen, home: homeScreen, map: mapScreen, hangar: hangarScreen };
 
 const audio = new AudioEngine();
 let game;
@@ -25,6 +33,7 @@ let selectedType = null;
 let ghostVisible = false;
 let activeCard = null;
 let bestWave = Number(localStorage.getItem('to-best') || 0);
+let selectedMap = MAPS.tatooine;
 
 const callbacks = {
   toast: (message, type) => toast(message, type),
@@ -43,6 +52,44 @@ const COIN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8.5 5v1
 
 function fmt(n) {
   return Math.round(n).toLocaleString('en-US');
+}
+
+function showMenuScreen(name) {
+  for (const [key, screen] of Object.entries(menuScreens)) {
+    screen.classList.toggle('hidden', key !== name);
+  }
+  endScreen.classList.add('hidden');
+  pauseModal.classList.add('hidden');
+  if (name === 'home') syncMenuLabels();
+}
+
+function hideMenuScreens() {
+  for (const screen of Object.values(menuScreens)) screen.classList.add('hidden');
+}
+
+function syncMenuLabels() {
+  const best = bestWave > 0 ? `PERSONAL BEST · WAVE ${bestWave}` : 'NO RUNS YET';
+  $('#hubBest').textContent = best;
+  $('#hubMapLabel').textContent = `${selectedMap.planet} · ${selectedMap.site}`;
+}
+
+function renderMenuRoster() {
+  const preview = TOWER_ORDER.map(type => `<span class="hub-mini-icon">${TOWERS[type].icon}</span>`).join('');
+  $('#hubTowerPreview').innerHTML = preview;
+  $('#hangarRoster').innerHTML = TOWER_ORDER.map(type => {
+    const def = TOWERS[type];
+    return `<div class="hangar-card">
+      <span class="hangar-card-icon">${def.icon}</span>
+      <div><b>${def.short}</b><span>${def.role}</span></div>
+      <em>FIELD UPGRADES</em>
+    </div>`;
+  }).join('');
+}
+
+function setSelectedMap(map) {
+  selectedMap = map || MAPS.tatooine;
+  $('.map-name').innerHTML = `<span class="dot"></span>${selectedMap.site}`;
+  syncMenuLabels();
 }
 
 function pointToMap(clientX, clientY) {
@@ -523,6 +570,7 @@ function syncUI(force = false) {
   $('#btnPause').classList.toggle('paused', game.paused);
   document.body.classList.toggle('muted', audio.muted);
   $('#startSoundBtn').textContent = `SOUND: ${audio.muted ? 'OFF' : 'ON'}`;
+  $('#homeSoundBtn').textContent = `SOUND: ${audio.muted ? 'OFF' : 'ON'}`;
   $('#btnMute').setAttribute('aria-label', audio.muted ? 'Unmute sound' : 'Mute sound');
 
   placeHint.classList.toggle('hidden', !game.pendingType || game.paused || !game.started);
@@ -554,12 +602,14 @@ $('#btnMute').addEventListener('click', () => {
   syncUI(true);
 });
 
-$('#startSoundBtn').addEventListener('click', () => {
+function toggleSound() {
   audio.ensure();
   audio.setMuted(!audio.muted);
   if (!audio.muted) audio.ui();
   syncUI(true);
-});
+}
+$('#startSoundBtn').addEventListener('click', toggleSound);
+$('#homeSoundBtn').addEventListener('click', toggleSound);
 
 $('#btnPause').addEventListener('click', () => setPaused(!game.paused));
 $('#resumeBtn').addEventListener('click', () => setPaused(false));
@@ -583,7 +633,7 @@ function restartRun() {
   runFinished = false;
   pauseModal.classList.add('hidden');
   endScreen.classList.add('hidden');
-  startScreen.classList.add('hidden');
+  hideMenuScreens();
   game.reset();
   game.started = true;
   game.paused = false;
@@ -597,6 +647,24 @@ function restartRun() {
   syncUI(true);
   audio.ensure();
   toast('Wave 1 ready — drag a tower from the hangar', 'good');
+}
+
+function quitToMap() {
+  runFinished = false;
+  pauseModal.classList.add('hidden');
+  endScreen.classList.add('hidden');
+  cancelPlacement(true);
+  closeInspector(true);
+  game.reset();
+  game.started = false;
+  game.paused = false;
+  selectedType = null;
+  drag = null;
+  setArmed(null);
+  dragGhost.classList.add('hidden');
+  placeHint.classList.add('hidden');
+  showMenuScreen('map');
+  syncUI(true);
 }
 
 $('#nextWaveBtn').addEventListener('click', () => {
@@ -619,19 +687,66 @@ let runFinished = false;
 
 function startGame(auto = false) {
   audio.ensure();
-  startScreen.classList.add('hidden');
+  hideMenuScreens();
+  endScreen.classList.add('hidden');
+  pauseModal.classList.add('hidden');
+  runFinished = false;
+  lastIntelKey = '';
+  game.reset();
+  game.started = false;
   game.begin();
+  game.paused = false;
+  selectedType = null;
+  drag = null;
   closeInspector(true);
+  setArmed(null);
+  dragGhost.classList.add('hidden');
+  placeHint.classList.add('hidden');
+  setSelectedMap(selectedMap);
   syncUI(true);
   if (!auto) {
     audio.ui();
-    toast('Wave 1 ready — drag a tower from the hangar', 'good');
+    toast(`Wave 1 ready — defend ${selectedMap.site.toLowerCase().replace(/\b\w/g, c => c.toUpperCase())}`, 'good');
   }
   towerList.classList.add('intro-pulse');
   setTimeout(() => towerList.classList.remove('intro-pulse'), 2400);
 }
 
-$('#deployBtn').addEventListener('click', () => startGame(false));
+function launchSelectedMap(map) {
+  if (map) setSelectedMap(map);
+  startGame(false);
+}
+
+$('#playBtn').addEventListener('click', () => {
+  audio.ensure();
+  audio.ui();
+  showMenuScreen('home');
+});
+$('#hubBackBtn').addEventListener('click', () => { audio.ui(); showMenuScreen('start'); });
+$('#chooseMapBtn').addEventListener('click', () => { audio.ui(); showMenuScreen('map'); });
+$('#mapBackBtn').addEventListener('click', () => { audio.ui(); showMenuScreen('home'); });
+$('#upgradesBtn').addEventListener('click', () => { audio.ui(); showMenuScreen('hangar'); });
+$('#hangarBackBtn').addEventListener('click', () => { audio.ui(); showMenuScreen('home'); });
+$('#hangarMapBtn').addEventListener('click', () => { audio.ui(); showMenuScreen('map'); });
+
+for (const tile of document.querySelectorAll('.map-tile-available[data-map]')) {
+  tile.addEventListener('click', () => {
+    const map = MAPS[tile.dataset.map];
+    if (!map) return;
+    audio.ensure();
+    audio.ui();
+    launchSelectedMap(map);
+  });
+}
+
+$('#quitMapBtn').addEventListener('click', () => {
+  audio.ui();
+  quitToMap();
+});
+$('#endMapBtn').addEventListener('click', () => {
+  audio.ui();
+  quitToMap();
+});
 
 function updateBest(held) {
   if (held > bestWave) {
@@ -641,6 +756,7 @@ function updateBest(held) {
   const label = bestWave > 0 ? `BEST RUN · WAVE ${bestWave}` : 'NO RUNS YET';
   $('#bestRun').textContent = label;
   $('#endBest').textContent = bestWave > 0 ? `PERSONAL BEST · WAVE ${bestWave}` : '';
+  syncMenuLabels();
 }
 
 function finishRun(win) {
@@ -690,6 +806,11 @@ $('#endlessBtn').addEventListener('click', () => {
 
 window.addEventListener('keydown', (e) => {
   if (e.repeat) return;
+  if (!game.started && e.key === 'Escape') {
+    if (!mapScreen.classList.contains('hidden') || !hangarScreen.classList.contains('hidden')) { showMenuScreen('home'); return; }
+    if (!homeScreen.classList.contains('hidden')) { showMenuScreen('start'); return; }
+    return;
+  }
   if (e.key === 'Escape') {
     if (game.paused) { setPaused(false); return; }
     if (game.pendingType) { cancelPlacement(); return; }
@@ -697,7 +818,18 @@ window.addEventListener('keydown', (e) => {
     return;
   }
   if (!game.started) {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); startGame(false); }
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      if (!startScreen.classList.contains('hidden')) {
+        audio.ensure(); audio.ui(); showMenuScreen('home');
+      } else if (!homeScreen.classList.contains('hidden')) {
+        audio.ui(); showMenuScreen('map');
+      } else if (!mapScreen.classList.contains('hidden')) {
+        audio.ensure(); audio.ui(); launchSelectedMap(selectedMap);
+      } else if (!hangarScreen.classList.contains('hidden')) {
+        audio.ui(); showMenuScreen('home');
+      }
+    }
     return;
   }
   if (e.key === 'p' || e.key === 'P') { setPaused(!game.paused); return; }
@@ -763,6 +895,7 @@ function loop(now) {
 }
 
 buildCards();
+renderMenuRoster();
 updateBest(0);
 applyMuteClass();
 syncUI(true);
