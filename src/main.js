@@ -23,7 +23,7 @@ const endScreen = $('#endScreen');
 const pauseModal = $('#pauseModal');
 
 const MAPS = {
-  tatooine: { id: 'tatooine', planet: 'TATOOINE', site: 'DUNE SEA RELAY' },
+  rebel: { id: 'rebel', planet: 'REBEL', site: 'OUTPOST RELAY' },
 };
 const menuScreens = { start: startScreen, home: homeScreen, map: mapScreen, hangar: hangarScreen };
 
@@ -33,7 +33,7 @@ let selectedType = null;
 let ghostVisible = false;
 let activeCard = null;
 let bestWave = Number(localStorage.getItem('to-best') || 0);
-let selectedMap = MAPS.tatooine;
+let selectedMap = MAPS.rebel;
 
 const callbacks = {
   toast: (message, type) => toast(message, type),
@@ -87,8 +87,8 @@ function renderMenuRoster() {
 }
 
 function setSelectedMap(map) {
-  selectedMap = map || MAPS.tatooine;
-  $('.map-name').innerHTML = `<span class="dot"></span>${selectedMap.site}`;
+  selectedMap = map || MAPS.rebel;
+  $('.map-name').innerHTML = `<span class="dot"></span>${selectedMap.planet} · ${selectedMap.site}`;
   syncMenuLabels();
 }
 

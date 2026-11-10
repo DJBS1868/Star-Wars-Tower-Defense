@@ -16,7 +16,7 @@
 
       <div class="hud">
         <div class="hud-left">
-          <div class="map-name"><span class="dot"></span>DUNE SEA RELAY</div>
+          <div class="map-name"><span class="dot"></span>REBEL · OUTPOST RELAY</div>
           <div class="wave-line">
             <span id="waveTag">WAVE 1 <i>/ 25</i></span>
             <span id="waveSub" class="wave-sub">Build phase</span>
@@ -219,7 +219,7 @@
           <span class="hub-card-tag">CAMPAIGN</span>
           <span class="hub-card-title">CHOOSE MAP</span>
           <span class="hub-card-desc">Pick a planet and deploy your defenses.</span>
-          <span id="hubMapLabel" class="hub-card-telemetry">TATOOINE · DUNE SEA RELAY</span>
+          <span id="hubMapLabel" class="hub-card-telemetry">REBEL · OUTPOST RELAY</span>
           <span class="hub-card-cta">OPEN STAR MAP <i>→</i></span>
           <svg class="hub-card-icon" viewBox="0 0 64 64" aria-hidden="true">
             <circle cx="32" cy="32" r="15" fill="none" stroke="currentColor" stroke-width="1.4"/>
@@ -229,8 +229,8 @@
         </button>
         <button id="upgradesBtn" class="hub-card hub-card-hangar" aria-label="Open upgrades">
           <span class="hub-card-tag">HANGAR</span>
-          <span class="hub-card-title">UPGRADES</span>
-          <span class="hub-card-desc">Permanent tower upgrades are on the way.</span>
+          <span class="hub-card-title">UNIT UPGRADES</span>
+          <span class="hub-card-desc">Prepare your Rebel units and learn how to upgrade them in battle.</span>
           <span id="hubTowerPreview" class="hub-tower-preview" aria-hidden="true"></span>
           <span class="hub-card-cta">VIEW HANGAR <i>→</i></span>
           <svg class="hub-card-icon" viewBox="0 0 64 64" aria-hidden="true">
@@ -262,66 +262,27 @@
           <span class="start-eyebrow"><span></span>STAR MAP<span></span></span>
           <h1>SELECT A PLANET</h1>
         </div>
-        <span class="menu-side-note"><b>1</b> / 4 SECTORS ONLINE</span>
+        <span class="menu-side-note"><b>1</b> BATTLEFIELD AVAILABLE</span>
       </header>
 
       <div class="map-grid">
-        <button class="map-tile map-tile-available" data-map="tatooine" data-planet="TATOOINE" data-site="DUNE SEA RELAY" aria-label="Deploy to Tatooine, Dune Sea Relay">
-          <span class="map-art art-tatooine" aria-hidden="true">
-            <i class="m-sun m-sun-a"></i><i class="m-sun m-sun-b"></i><b class="m-ridge"></b>
+        <button class="map-tile map-tile-available" data-map="rebel" data-planet="REBEL" data-site="OUTPOST RELAY" aria-label="Deploy to Rebel Outpost Relay">
+          <span class="map-art art-rebel" aria-hidden="true">
+            <i class="rebel-planet"></i><b class="rebel-ship"></b><i class="rebel-star rebel-star-a"></i><i class="rebel-star rebel-star-b"></i><i class="rebel-star rebel-star-c"></i>
           </span>
           <span class="map-info">
-            <span class="map-kicker">TATOOINE · OUTER RIM</span>
-            <span class="map-title">DUNE SEA RELAY</span>
-            <span class="map-desc">Twin suns, open sand, and a droid column on the horizon.</span>
+            <span class="map-kicker">REBEL ALLIANCE · DEEP SPACE</span>
+            <span class="map-title">OUTPOST RELAY</span>
+            <span class="map-desc">A remote Rebel signal station under attack. Hold the line and keep the transmission alive.</span>
             <span class="map-status"><b>DEPLOY</b><em>25 WAVES</em></span>
           </span>
           <span class="map-ready">READY</span>
         </button>
-
-        <button class="map-tile map-tile-locked" disabled>
-          <span class="map-art art-hoth" aria-hidden="true">
-            <i class="m-sun m-sun-a"></i><b class="m-ridge m-ridge-back"></b><b class="m-ridge"></b>
-          </span>
-          <span class="map-info">
-            <span class="map-kicker">HOTH · OUTER RIM</span>
-            <span class="map-title">ECHO BASE</span>
-            <span class="map-desc">Frozen trenches and whiteout assaults.</span>
-            <span class="map-status"><b>LOCKED</b><em>COMING SOON</em></span>
-          </span>
-          <span class="map-lock">LOCKED</span>
-        </button>
-
-        <button class="map-tile map-tile-locked" disabled>
-          <span class="map-art art-coruscant" aria-hidden="true">
-            <i class="m-moon"></i><b class="m-city"></b>
-          </span>
-          <span class="map-info">
-            <span class="map-kicker">CORUSCANT · CORE WORLDS</span>
-            <span class="map-title">IMPERIAL PLAZA</span>
-            <span class="map-desc">Urban crossfire in the galactic capital.</span>
-            <span class="map-status"><b>LOCKED</b><em>COMING SOON</em></span>
-          </span>
-          <span class="map-lock">LOCKED</span>
-        </button>
-
-        <button class="map-tile map-tile-locked" disabled>
-          <span class="map-art art-endor" aria-hidden="true">
-            <i class="m-moon"></i><b class="m-ridge m-ridge-back"></b><b class="m-ridge"></b>
-          </span>
-          <span class="map-info">
-            <span class="map-kicker">ENDOR · OUTER RIM</span>
-            <span class="map-title">SHIELD BUNKER</span>
-            <span class="map-desc">Forest cover and a hidden shield array.</span>
-            <span class="map-status"><b>LOCKED</b><em>COMING SOON</em></span>
-          </span>
-          <span class="map-lock">LOCKED</span>
-        </button>
       </div>
 
       <div class="map-foot">
-        <span>New planets are being scouted. More battlefields arrive soon.</span>
-        <span class="map-foot-badge">MORE MAPS SOON</span>
+        <span>More battlefields can be added to the star map later.</span>
+        <span class="map-foot-badge">1 BATTLEFIELD</span>
       </div>
     </div>
   </div>
@@ -338,18 +299,18 @@
       <header class="menu-head">
         <button id="hangarBackBtn" class="menu-back">← HOME</button>
         <div class="menu-heading">
-          <span class="start-eyebrow"><span></span>HANGAR BAY<span></span></span>
-          <h1>UPGRADES</h1>
+          <span class="start-eyebrow"><span></span>REBEL HANGAR<span></span></span>
+          <h1>UNIT UPGRADES</h1>
         </div>
-        <span class="menu-side-note">PERMANENT BOOSTS · IN DEVELOPMENT</span>
+        <span class="menu-side-note">FIELD UNIT UPGRADES · LEVELS 1–4</span>
       </header>
 
       <div class="hangar-lead">
         <div>
-          <b>UPGRADE BAY OFFLINE</b>
-          <p>Permanent tower upgrades are being installed in a future transmission. For now, tap any deployed tower in battle to upgrade it up to level 4.</p>
+          <b>FIELD UPGRADES AVAILABLE</b>
+          <p>Choose a unit below to review its battlefield role. During a mission, select any deployed unit and spend credits to upgrade it up to level 4.</p>
         </div>
-        <span class="hangar-stamp">COMING SOON</span>
+        <span class="hangar-stamp">LEVEL 1–4</span>
       </div>
 
       <div id="hangarRoster" class="hangar-roster"></div>

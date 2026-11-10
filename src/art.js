@@ -1,5 +1,5 @@
 /* ============================================================
-   Canvas art — procedural Tatooine outpost
+   Canvas art — procedural Rebel outpost battlefield
    All game visuals are drawn with the 2D canvas (no assets).
    ============================================================ */
 

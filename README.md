@@ -4,13 +4,13 @@ Create something awesome. Open the project, try it, and make it your own.
 
 ## Play
 
-Rebel Outpost is a landscape Star Wars tower-defense game built with plain HTML, CSS, and JavaScript. No build step or external assets are required. Pick a planet from the star map and hold the last Rebel relay.
+Rebel Outpost is a landscape Star Wars tower-defense game built with plain HTML, CSS, and JavaScript. No build step or external assets are required. Head to the Rebel homepage, select the Outpost Relay battlefield, and hold the relay; more battlefields can be added later.
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Then open <http://localhost:8000/>, tap **Play**, and choose a planet from the star map.
+Then open <http://localhost:8000/>, tap **Play**, choose **Battlefields**, and deploy to **Rebel · Outpost Relay**.
 
 - **Drag** a tower card from the hangar onto the battlefield, or **tap** a card and then tap the map.
 - Tap a placed tower to upgrade it, change its priority, or sell it.
