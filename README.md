@@ -2,6 +2,22 @@
 
 Create something awesome. Open the project, try it, and make it your own.
 
+## Play
+
+Tatooine Outpost is a landscape tower-defense game built with plain HTML, CSS, and JavaScript. No build step or external assets are required.
+
+```bash
+python3 -m http.server 8000
+```
+
+Then open <http://localhost:8000/> and tap **Deploy Outpost**.
+
+- **Drag** a tower card from the hangar onto the sand, or **tap** a card and then tap the map.
+- Tap a placed tower to upgrade it, change its priority, or sell it.
+- Send waves when you are ready; clearing one pays a credit bonus.
+- Press **P** to pause, **Space** to send the next wave, and **1–6** to arm a tower.
+- Rotate a phone to landscape to play.
+
 <!-- omgithub:readme:start -->
 ## 🚀 Build, play, and remix with OMGithub
 
