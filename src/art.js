@@ -4801,6 +4801,12 @@ function drawScrabblerBody(ctx, e, time) {
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
 
+  // low body shadow keeps the small silhouette readable on bright snow
+  ctx.fillStyle = 'rgba(34, 70, 88, 0.2)';
+  ctx.beginPath();
+  ctx.ellipse(-2.5, 2.0, 18.0, 8.6, 0, 0, TAU);
+  ctx.fill();
+
   /* --- flattened paddle tail -------------------------------------- */
   const N = 14;
   const upper = [];
@@ -4864,7 +4870,7 @@ function drawScrabblerBody(ctx, e, time) {
     const swing = leg.s * 1.35;
     // upper limb
     ctx.strokeStyle = '#c5e5f2';
-    ctx.lineWidth = 2.5;
+    ctx.lineWidth = 3.2;
     ctx.beginPath();
     ctx.moveTo(leg.hx, leg.hy);
     ctx.lineTo(leg.kx + swing * 0.22, leg.ky);
@@ -4872,11 +4878,11 @@ function drawScrabblerBody(ctx, e, time) {
     // knee
     ctx.fillStyle = '#dff3fb';
     ctx.beginPath();
-    ctx.ellipse(leg.kx + swing * 0.22, leg.ky, 1.35, 1.15, 0, 0, TAU);
+    ctx.ellipse(leg.kx + swing * 0.22, leg.ky, 1.55, 1.3, 0, 0, TAU);
     ctx.fill();
     // lower limb
     ctx.strokeStyle = '#b6dbea';
-    ctx.lineWidth = 1.8;
+    ctx.lineWidth = 2.3;
     ctx.beginPath();
     ctx.moveTo(leg.kx + swing * 0.22, leg.ky);
     ctx.lineTo(leg.fx + swing * 0.6, leg.fy);
@@ -4888,14 +4894,14 @@ function drawScrabblerBody(ctx, e, time) {
     for (let toe = -1; toe <= 1; toe++) {
       const a = toeAng + toe * 0.34;
       ctx.strokeStyle = toe === 0 ? '#eaf9ff' : '#cfeaf6';
-      ctx.lineWidth = 0.85;
+      ctx.lineWidth = 1.0;
       ctx.beginPath();
       ctx.moveTo(baseX, baseY);
-      ctx.lineTo(baseX + Math.cos(a) * 2.7, baseY + Math.sin(a) * 2.7);
+      ctx.lineTo(baseX + Math.cos(a) * 2.9, baseY + Math.sin(a) * 2.9);
       ctx.stroke();
       ctx.fillStyle = '#7fb5cb';
       ctx.beginPath();
-      ctx.arc(baseX + Math.cos(a) * 2.9, baseY + Math.sin(a) * 2.9, 0.34, 0, TAU);
+      ctx.arc(baseX + Math.cos(a) * 3.1, baseY + Math.sin(a) * 3.1, 0.38, 0, TAU);
       ctx.fill();
     }
     // little shoulder scale
@@ -4942,33 +4948,31 @@ function drawScrabblerBody(ctx, e, time) {
     }
   }
 
-  // pale dorsal ridge plates (flat scutes, not a shell)
-  for (let i = 0; i < 6; i++) {
-    const sx = -7.0 + i * 2.55;
-    const size = 1.45 - i * 0.1;
-    ctx.fillStyle = i % 2 ? 'rgba(255, 255, 255, 0.9)' : 'rgba(210, 239, 249, 0.9)';
+  // soft spinal scutes: rounded, low and sparse so the back reads as a
+  // lizard's hide rather than a segmented carapace
+  for (let i = 0; i < 4; i++) {
+    const sx = -6.4 + i * 3.4;
+    const size = 1.15 - i * 0.08;
+    ctx.fillStyle = i % 2 ? 'rgba(255, 255, 255, 0.7)' : 'rgba(211, 239, 249, 0.72)';
     ctx.beginPath();
-    ctx.moveTo(sx - size, 0);
-    ctx.lineTo(sx, -size * 0.72);
-    ctx.lineTo(sx + size, 0);
-    ctx.lineTo(sx, size * 0.72);
-    ctx.closePath();
+    ctx.ellipse(sx, 0, size, size * 0.52, 0, 0, TAU);
     ctx.fill();
-    ctx.strokeStyle = 'rgba(115, 169, 188, 0.4)';
-    ctx.lineWidth = 0.3;
+    ctx.strokeStyle = 'rgba(115, 169, 188, 0.28)';
+    ctx.lineWidth = 0.28;
     ctx.stroke();
   }
 
-  // frosty side fringe
-  for (let i = 0; i < 12; i++) {
-    const a = 0.65 + (i / 11) * (TAU - 1.3);
-    const bx = Math.cos(a) * 8.7;
-    const by = Math.sin(a) * 4.5;
-    ctx.strokeStyle = i % 3 === 0 ? 'rgba(255, 255, 255, 0.85)' : 'rgba(157, 205, 222, 0.6)';
-    ctx.lineWidth = 0.55;
+  // soft frost tufts along the flanks, not a spiny insect fringe
+  for (let i = 0; i < 6; i++) {
+    const t = i / 5;
+    const side = i % 2 ? 1 : -1;
+    const bx = -7.8 + t * 13.0;
+    const by = side * (4.15 - t * 0.55);
+    ctx.strokeStyle = i % 3 === 0 ? 'rgba(255, 255, 255, 0.8)' : 'rgba(157, 205, 222, 0.55)';
+    ctx.lineWidth = 0.6;
     ctx.beginPath();
-    ctx.moveTo(bx * 0.95, by * 0.95);
-    ctx.lineTo(bx + Math.cos(a) * 1.1, by + Math.sin(a) * 0.85);
+    ctx.moveTo(bx, by);
+    ctx.quadraticCurveTo(bx - 0.5, by + side * 0.85, bx - 1.4, by + side * 1.15);
     ctx.stroke();
   }
 
