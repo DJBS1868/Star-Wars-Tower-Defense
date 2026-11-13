@@ -9,7 +9,7 @@ Rebel Outpost is a landscape Star Wars tower-defense game built with plain HTML,
 Four worlds are available, each with its own route, terrain, weather, and enemy army:
 
 - **Tatooine · Outpost Relay** — womp rat packs, bantha stampedes, and a final krayt dragon.
-- **Hoth · Echo Base** — Snowtroopers, probe droids, AT-STs, and a massive AT-AT.
+- **Hoth · Echo Base** — Ice Scrabbler packs, charging Tauntauns, and a wave-25 Wampa.
 - **Mustafar · Lava Refinery** — Magma troopers, lava skitters, mining droids, and a Sith enforcer.
 - **Endor · Shield Bunker** — Stormtroopers, scout troopers, storm commandos, and an AT-ST commander.
 

@@ -499,10 +499,29 @@ function drawTerrainDetail(ctx, w, h, S, rng, pathPts, theme) {
       }
     }
   } else if (theme.extra === 'ice') {
+    // Broad glacial flow bands sweep across the field under everything.
+    ctx.save();
+    for (let i = 0; i < 5; i++) {
+      const y0 = (0.10 + i * 0.20) * h;
+      const x0 = -0.08 * w + rng() * 0.2 * w;
+      const len = (0.75 + rng() * 0.45) * w;
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.quadraticCurveTo(x0 + len * 0.45, y0 - (14 + rng() * 26) * S, x0 + len, y0 + (rng() - 0.5) * 30 * S);
+      ctx.strokeStyle = `rgba(255, 255, 255, ${0.10 + rng() * 0.10})`;
+      ctx.lineWidth = (16 + rng() * 22) * S;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+      ctx.strokeStyle = `rgba(91, 142, 164, ${0.05 + rng() * 0.06})`;
+      ctx.lineWidth = (3 + rng() * 3) * S;
+      ctx.stroke();
+    }
+    ctx.restore();
+
     // wind-carved sastrugi
     ctx.save();
     ctx.lineCap = 'round';
-    for (let i = 0; i < 26; i++) {
+    for (let i = 0; i < 34; i++) {
       const x = rng() * w;
       const y = rng() * h;
       if (distanceToPath(x, y, pathPts) < 52 * S) continue;
@@ -521,20 +540,64 @@ function drawTerrainDetail(ctx, w, h, S, rng, pathPts, theme) {
       ctx.stroke();
     }
     ctx.restore();
-    // frozen melt pools
-    for (let i = 0; i < 9; i++) {
+
+    // long pressure ridges with a sunlit lip and a blue lee shadow
+    for (let i = 0; i < 7; i++) {
+      const x = rng() * w;
+      const y = rng() * h;
+      if (distanceToPath(x, y, pathPts) < 88 * S) continue;
+      const len = (70 + rng() * 150) * S;
+      const rot = -0.22 + (rng() - 0.5) * 0.28;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(rot);
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(-len / 2, 5 * S);
+      ctx.quadraticCurveTo(0, -7 * S, len / 2, 3 * S);
+      ctx.strokeStyle = 'rgba(58, 105, 128, 0.16)';
+      ctx.lineWidth = 7 * S;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(-len / 2, 0);
+      ctx.quadraticCurveTo(0, -9 * S, len / 2, -2 * S);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.34)';
+      ctx.lineWidth = 2.4 * S;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(-len / 2, -2 * S);
+      ctx.quadraticCurveTo(0, -11 * S, len / 2, -4 * S);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+      ctx.lineWidth = 1.1 * S;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // frozen melt pools with pale ice centres
+    for (let i = 0; i < 11; i++) {
       const x = rng() * w;
       const y = rng() * h;
       if (distanceToPath(x, y, pathPts) < 70 * S) continue;
       const rx = (18 + rng() * 46) * S;
       const g = ctx.createRadialGradient(x, y, 0, x, y, rx);
-      g.addColorStop(0, 'rgba(132, 188, 208, 0.32)');
+      g.addColorStop(0, 'rgba(196, 233, 245, 0.5)');
+      g.addColorStop(0.45, 'rgba(132, 188, 208, 0.3)');
       g.addColorStop(0.7, 'rgba(174, 214, 228, 0.16)');
       g.addColorStop(1, 'rgba(174, 214, 228, 0)');
       ctx.fillStyle = g;
       ctx.beginPath();
       ctx.ellipse(x, y, rx, rx * 0.55, rng() * TAU, 0, TAU);
       ctx.fill();
+      // a couple of hairline cracks
+      ctx.strokeStyle = 'rgba(86, 140, 162, 0.22)';
+      ctx.lineWidth = 0.5 * S;
+      for (let c = 0; c < 3; c++) {
+        const a = rng() * TAU;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + Math.cos(a) * rx * 0.62, y + Math.sin(a) * rx * 0.3);
+        ctx.stroke();
+      }
     }
   } else if (theme.extra === 'lava') {
     // glowing fissures that never cross the route
@@ -770,6 +833,19 @@ function drawForeground(ctx, w, h, S, rng, theme, pathPts) {
       g.addColorStop(1, 'rgba(255, 255, 255, 0)');
       ctx.fillStyle = g;
       ctx.fillRect(x - 160 * S, y - 160 * S, 320 * S, 320 * S);
+    }
+    // static wind streaks give the whiteout a sense of direction
+    ctx.lineCap = 'round';
+    for (let i = 0; i < 22; i++) {
+      const x = rng() * w;
+      const y = rng() * h;
+      const len = (30 + rng() * 90) * S;
+      ctx.strokeStyle = `rgba(255, 255, 255, ${0.05 + rng() * 0.08})`;
+      ctx.lineWidth = (0.8 + rng() * 1.8) * S;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.quadraticCurveTo(x + len * 0.5, y - (2 + rng() * 6) * S, x + len, y + (rng() - 0.5) * 5 * S);
+      ctx.stroke();
     }
     ctx.restore();
   } else if (theme.extra === 'lava') {
@@ -1363,6 +1439,365 @@ function drawAntenna(ctx, x, y, r, S) {
   ctx.beginPath();
   ctx.arc(-r * 0.25, -r * 2.2, Math.max(1.2 * S, r * 0.14), 0, TAU);
   ctx.fill();
+  ctx.restore();
+}
+
+/* —— Hoth landmarks —— */
+function drawHothCliff(ctx, x, y, r, S, rng) {
+  ctx.save();
+  ctx.translate(x, y);
+  // long blue shadow cast by the prevailing wind
+  ctx.fillStyle = 'rgba(35, 72, 92, 0.24)';
+  ctx.beginPath();
+  ctx.ellipse(r * 0.65, r * 0.55, r * 1.9, r * 0.66, 0.12, 0, TAU);
+  ctx.fill();
+
+  // layered ice wall
+  const wall = ctx.createLinearGradient(0, -r * 0.4, 0, r * 0.95);
+  wall.addColorStop(0, '#d9edf5');
+  wall.addColorStop(0.38, '#9dc2d2');
+  wall.addColorStop(0.72, '#6f98ab');
+  wall.addColorStop(1, '#4d7488');
+  ctx.fillStyle = wall;
+  ctx.beginPath();
+  ctx.moveTo(-r * 1.55, -r * 0.12);
+  ctx.lineTo(-r * 1.1, -r * 0.58);
+  ctx.lineTo(-r * 0.15, -r * 0.78);
+  ctx.lineTo(r * 0.92, -r * 0.54);
+  ctx.lineTo(r * 1.5, -r * 0.02);
+  ctx.lineTo(r * 1.15, r * 0.82);
+  ctx.lineTo(r * 0.1, r * 0.98);
+  ctx.lineTo(-r * 0.9, r * 0.78);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(55, 91, 108, 0.65)';
+  ctx.lineWidth = Math.max(0.7 * S, r * 0.035);
+  ctx.stroke();
+
+  // snow-capped top shelf
+  const top = ctx.createLinearGradient(0, -r * 0.8, 0, r * 0.28);
+  top.addColorStop(0, 'rgba(255, 255, 255, 0.98)');
+  top.addColorStop(0.55, '#e9f7fc');
+  top.addColorStop(1, '#c3e0eb');
+  ctx.fillStyle = top;
+  ctx.beginPath();
+  ctx.moveTo(-r * 1.48, -r * 0.16);
+  ctx.lineTo(-r * 1.02, -r * 0.52);
+  ctx.lineTo(-r * 0.12, -r * 0.7);
+  ctx.lineTo(r * 0.86, -r * 0.5);
+  ctx.lineTo(r * 1.38, -r * 0.06);
+  ctx.lineTo(r * 0.98, r * 0.34);
+  ctx.lineTo(-r * 0.04, r * 0.5);
+  ctx.lineTo(-r * 0.95, r * 0.3);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+  ctx.lineWidth = Math.max(0.5 * S, r * 0.025);
+  ctx.stroke();
+
+  // wind-scoured grooves and fracture lines
+  ctx.save();
+  ctx.lineCap = 'round';
+  for (let i = 0; i < 5; i++) {
+    const yy = -r * 0.35 + i * r * 0.16;
+    ctx.strokeStyle = `rgba(107, 153, 173, ${0.18 + rng() * 0.2})`;
+    ctx.lineWidth = (0.5 + rng() * 0.6) * S;
+    ctx.beginPath();
+    ctx.moveTo(-r * (0.85 + rng() * 0.4), yy);
+    ctx.quadraticCurveTo(0, yy - r * 0.12, r * (0.8 + rng() * 0.4), yy + r * 0.04);
+    ctx.stroke();
+  }
+  // blue ice strata on the exposed face
+  for (let i = 0; i < 3; i++) {
+    ctx.strokeStyle = `rgba(76, 134, 160, ${0.22 + rng() * 0.16})`;
+    ctx.lineWidth = (0.7 + rng() * 0.7) * S;
+    ctx.beginPath();
+    ctx.moveTo(-r * 1.2 + i * r * 0.18, r * 0.1 + i * r * 0.18);
+    ctx.quadraticCurveTo(0, r * 0.35 + i * r * 0.12, r * 1.1, r * 0.08 + i * r * 0.17);
+    ctx.stroke();
+  }
+  ctx.restore();
+  ctx.restore();
+}
+
+function drawShieldGen(ctx, x, y, r, S, rng) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = 'rgba(28, 58, 76, 0.28)';
+  ctx.beginPath();
+  ctx.ellipse(r * 0.3, r * 0.7, r * 1.65, r * 0.52, -0.08, 0, TAU);
+  ctx.fill();
+
+  // armoured base ring
+  const base = ctx.createLinearGradient(0, -r * 0.35, 0, r * 0.6);
+  base.addColorStop(0, '#c2d5dd');
+  base.addColorStop(0.5, '#7f98a5');
+  base.addColorStop(1, '#445d6b');
+  ctx.fillStyle = base;
+  ctx.beginPath();
+  ctx.ellipse(0, r * 0.2, r * 1.15, r * 0.55, 0, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = '#314954';
+  ctx.lineWidth = Math.max(0.7 * S, r * 0.04);
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(190, 224, 237, 0.55)';
+  ctx.beginPath();
+  ctx.ellipse(0, r * 0.08, r * 0.88, r * 0.34, 0, 0, TAU);
+  ctx.fill();
+
+  // support struts
+  ctx.strokeStyle = '#607b89';
+  ctx.lineWidth = Math.max(1.0 * S, r * 0.075);
+  for (const side of [-1, 0, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(side * r * 0.78, r * 0.18);
+    ctx.lineTo(side * r * 0.42, -r * 0.56);
+    ctx.stroke();
+  }
+
+  // tilted parabolic dish
+  ctx.save();
+  ctx.translate(0, -r * 0.72);
+  ctx.rotate(-0.18);
+  const dish = ctx.createLinearGradient(-r * 1.25, -r * 0.7, r * 1.1, r * 0.7);
+  dish.addColorStop(0, '#f8fdff');
+  dish.addColorStop(0.42, '#d7e9f0');
+  dish.addColorStop(0.78, '#9dbac7');
+  dish.addColorStop(1, '#6f8f9e');
+  ctx.fillStyle = dish;
+  ctx.beginPath();
+  ctx.ellipse(0, 0, r * 1.3, r * 0.72, 0, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = '#526f7d';
+  ctx.lineWidth = Math.max(0.8 * S, r * 0.045);
+  ctx.stroke();
+  // concentric dish panels
+  ctx.strokeStyle = 'rgba(88, 120, 134, 0.55)';
+  ctx.lineWidth = 0.55 * S;
+  for (const k of [0.3, 0.58, 0.82]) {
+    ctx.beginPath();
+    ctx.ellipse(0, 0, r * 1.3 * k, r * 0.72 * k, 0, 0, TAU);
+    ctx.stroke();
+  }
+  ctx.beginPath();
+  ctx.moveTo(-r * 1.25, 0);
+  ctx.lineTo(r * 1.25, 0);
+  ctx.stroke();
+  // receiver hub
+  ctx.fillStyle = '#3c515b';
+  ctx.beginPath();
+  ctx.arc(0, 0, r * 0.2, 0, TAU);
+  ctx.fill();
+  ctx.fillStyle = '#d9f4ff';
+  ctx.beginPath();
+  ctx.arc(0, 0, r * 0.1, 0, TAU);
+  ctx.fill();
+  // dish edge lights
+  for (let i = 0; i < 5; i++) {
+    const a = i * 1.26 + 0.35;
+    ctx.fillStyle = i % 2 ? 'rgba(255, 118, 88, 0.95)' : 'rgba(138, 232, 255, 0.95)';
+    ctx.beginPath();
+    ctx.arc(Math.cos(a) * r * 1.18, Math.sin(a) * r * 0.64, r * 0.055, 0, TAU);
+    ctx.fill();
+  }
+  ctx.restore();
+
+  // shield projector glow
+  const glow = ctx.createRadialGradient(0, -r * 0.75, 0, 0, -r * 0.75, r * 1.8);
+  glow.addColorStop(0, 'rgba(134, 232, 255, 0.26)');
+  glow.addColorStop(0.55, 'rgba(134, 232, 255, 0.08)');
+  glow.addColorStop(1, 'rgba(134, 232, 255, 0)');
+  ctx.fillStyle = glow;
+  ctx.beginPath();
+  ctx.arc(0, -r * 0.75, r * 1.8, 0, TAU);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawSnowSpeeder(ctx, x, y, r, S, rng) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(-0.34 + rng() * 0.22);
+  ctx.fillStyle = 'rgba(31, 58, 74, 0.28)';
+  ctx.beginPath();
+  ctx.ellipse(r * 0.18, r * 0.42, r * 1.7, r * 0.45, 0.06, 0, TAU);
+  ctx.fill();
+
+  // bent starboard wing and ski
+  ctx.fillStyle = '#8fa6b1';
+  ctx.beginPath();
+  ctx.moveTo(-r * 0.3, r * 0.15);
+  ctx.lineTo(r * 1.45, r * 1.02);
+  ctx.lineTo(r * 1.22, r * 1.28);
+  ctx.lineTo(-r * 0.55, r * 0.42);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#4a616e';
+  ctx.lineWidth = 0.6 * S;
+  ctx.stroke();
+
+  // port wing
+  ctx.fillStyle = '#b6c8d0';
+  ctx.beginPath();
+  ctx.moveTo(-r * 0.35, -r * 0.12);
+  ctx.lineTo(-r * 1.15, -r * 0.82);
+  ctx.lineTo(-r * 0.92, -r * 1.0);
+  ctx.lineTo(-r * 0.08, -r * 0.34);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#556c79';
+  ctx.lineWidth = 0.6 * S;
+  ctx.stroke();
+
+  // fuselage
+  const hull = ctx.createLinearGradient(0, -r * 0.5, 0, r * 0.5);
+  hull.addColorStop(0, '#f1f7f9');
+  hull.addColorStop(0.45, '#c4d4da');
+  hull.addColorStop(1, '#8097a2');
+  ctx.fillStyle = hull;
+  ctx.beginPath();
+  ctx.moveTo(-r * 0.85, -r * 0.24);
+  ctx.quadraticCurveTo(-r * 0.2, -r * 0.52, r * 0.78, -r * 0.34);
+  ctx.quadraticCurveTo(r * 1.24, -r * 0.18, r * 1.36, 0);
+  ctx.quadraticCurveTo(r * 1.24, r * 0.18, r * 0.78, r * 0.34);
+  ctx.quadraticCurveTo(-r * 0.2, r * 0.52, -r * 0.85, r * 0.24);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#4f6672';
+  ctx.lineWidth = 0.7 * S;
+  ctx.stroke();
+
+  // orange Rebel stripes and cockpit
+  ctx.fillStyle = 'rgba(234, 112, 48, 0.85)';
+  ctx.fillRect(-r * 0.62, -r * 0.32, r * 0.28, r * 0.64);
+  ctx.fillRect(-r * 0.12, -r * 0.38, r * 0.2, r * 0.76);
+  ctx.fillStyle = '#263c47';
+  ctx.beginPath();
+  ctx.ellipse(r * 0.28, 0, r * 0.33, r * 0.26, 0, 0, TAU);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(144, 222, 244, 0.85)';
+  ctx.beginPath();
+  ctx.ellipse(r * 0.32, 0, r * 0.16, r * 0.12, 0, 0, TAU);
+  ctx.fill();
+
+  // snow piled over the wreck
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.82)';
+  ctx.beginPath();
+  ctx.ellipse(-r * 0.35, r * 0.34, r * 0.9, r * 0.24, 0.12, 0, TAU);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(r * 0.98, r * 0.46, r * 0.48, r * 0.16, -0.3, 0, TAU);
+  ctx.fill();
+  // scorched patch
+  ctx.fillStyle = 'rgba(52, 49, 42, 0.35)';
+  ctx.beginPath();
+  ctx.ellipse(-r * 0.55, -r * 0.12, r * 0.35, r * 0.22, 0.3, 0, TAU);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawFrozenLake(ctx, x, y, r, S, rng) {
+  ctx.save();
+  ctx.translate(x, y);
+  // snow bank rim
+  ctx.fillStyle = 'rgba(44, 82, 101, 0.18)';
+  ctx.beginPath();
+  ctx.ellipse(r * 0.12, r * 0.22, r * 1.65, r * 0.95, -0.1, 0, TAU);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+  ctx.beginPath();
+  ctx.ellipse(0, 0, r * 1.52, r * 0.84, -0.1, 0, TAU);
+  ctx.fill();
+
+  // pale blue ice
+  const ice = ctx.createRadialGradient(-r * 0.2, -r * 0.1, r * 0.1, 0, 0, r * 1.25);
+  ice.addColorStop(0, 'rgba(203, 238, 249, 0.95)');
+  ice.addColorStop(0.52, 'rgba(143, 198, 220, 0.9)');
+  ice.addColorStop(1, 'rgba(92, 151, 178, 0.9)');
+  ctx.fillStyle = ice;
+  ctx.beginPath();
+  ctx.ellipse(0, 0, r * 1.32, r * 0.7, -0.1, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+  ctx.lineWidth = 0.8 * S;
+  ctx.stroke();
+
+  // pressure cracks radiating from the centre
+  ctx.save();
+  ctx.lineCap = 'round';
+  for (let i = 0; i < 6; i++) {
+    const a = rng() * TAU;
+    const len = r * (0.35 + rng() * 0.6);
+    ctx.strokeStyle = `rgba(59, 114, 140, ${0.22 + rng() * 0.22})`;
+    ctx.lineWidth = (0.4 + rng() * 0.55) * S;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(Math.cos(a) * len * 0.45, Math.sin(a) * len * 0.28);
+    ctx.lineTo(Math.cos(a + 0.14) * len, Math.sin(a + 0.14) * len * 0.62);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // wind-burnished highlight and a dusting of snow
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+  ctx.lineWidth = 1.0 * S;
+  ctx.beginPath();
+  ctx.ellipse(-r * 0.18, -r * 0.08, r * 0.92, r * 0.42, -0.16, Math.PI * 0.92, Math.PI * 1.9);
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+  ctx.beginPath();
+  ctx.ellipse(r * 0.55, -r * 0.22, r * 0.42, r * 0.13, -0.22, 0, TAU);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawCrevasse(ctx, x, y, r, S, rng) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(-0.28 + rng() * 0.5);
+  // bright snow lip
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.72)';
+  ctx.beginPath();
+  ctx.ellipse(0, 0, r * 1.75, r * 0.52, 0, 0, TAU);
+  ctx.fill();
+
+  // jagged fracture
+  const pts = [];
+  const n = 9;
+  for (let i = 0; i < n; i++) {
+    const t = i / (n - 1);
+    pts.push([(t - 0.5) * r * 3.1, (rng() - 0.5) * r * 0.48]);
+  }
+  ctx.fillStyle = 'rgba(20, 56, 76, 0.9)';
+  ctx.beginPath();
+  ctx.moveTo(pts[0][0], pts[0][1] - r * 0.2);
+  for (let i = 1; i < n; i++) ctx.lineTo(pts[i][0], pts[i][1] - r * 0.2);
+  for (let i = n - 1; i >= 0; i--) ctx.lineTo(pts[i][0], pts[i][1] + r * 0.2);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(119, 187, 213, 0.85)';
+  ctx.lineWidth = 0.8 * S;
+  ctx.stroke();
+
+  // deep blue inner glow
+  ctx.strokeStyle = 'rgba(68, 144, 177, 0.7)';
+  ctx.lineWidth = 1.2 * S;
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    if (i === 0) ctx.moveTo(pts[i][0], pts[i][1]);
+    else ctx.lineTo(pts[i][0], pts[i][1]);
+  }
+  ctx.stroke();
+
+  // snow bridges
+  for (let i = 1; i < n - 1; i += 3) {
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+    ctx.lineWidth = 1.1 * S;
+    ctx.beginPath();
+    ctx.moveTo(pts[i][0] - r * 0.12, pts[i][1] - r * 0.22);
+    ctx.lineTo(pts[i][0] + r * 0.1, pts[i][1] + r * 0.2);
+    ctx.stroke();
+  }
   ctx.restore();
 }
 
@@ -2013,6 +2448,11 @@ function drawDecor(ctx, d, x, y, r, S, rng, theme = THEMES.desert) {
     case 'ice': drawIceCrystal(ctx, x, y, r, S, rng); break;
     case 'snowdrift': drawSnowdrift(ctx, x, y, r, S); break;
     case 'antenna': drawAntenna(ctx, x, y, r, S); break;
+    case 'hothcliff': drawHothCliff(ctx, x, y, r, S, rng); break;
+    case 'shieldgen': drawShieldGen(ctx, x, y, r, S, rng); break;
+    case 'snowspeeder': drawSnowSpeeder(ctx, x, y, r, S, rng); break;
+    case 'frozenlake': drawFrozenLake(ctx, x, y, r, S, rng); break;
+    case 'crevasse': drawCrevasse(ctx, x, y, r, S, rng); break;
     case 'lavapool': drawLavaPool(ctx, x, y, r, S, rng); break;
     case 'pipe': drawPipe(ctx, x, y, r, S); break;
     case 'tree': drawTree(ctx, x, y, r, S, rng, theme); break;
@@ -2686,6 +3126,9 @@ export function drawEnemy(ctx, e, time, S) {
   else if (body === 'stap') drawStapBody(ctx, e, time);
   else if (body === 'b2') drawB2Body(ctx, e, time);
   else if (body === 'droidboss') drawDroidGunshipBody(ctx, e, time);
+  else if (body === 'scrabbler') drawScrabblerBody(ctx, e, time);
+  else if (body === 'tauntaun') drawTauntaunBody(ctx, e, time);
+  else if (body === 'wampa') drawWampaBody(ctx, e, time);
   else if (body === 'snowtrooper') drawSnowtrooperBody(ctx, e, time);
   else if (body === 'probe') drawProbeBody(ctx, e, time);
   else if (body === 'atst') drawAtstBody(ctx, e, time);
@@ -4342,6 +4785,945 @@ function drawDroidGunshipBody(ctx, e, time) {
   ctx.arc(-11, -24, 1.6, 0, TAU);
   ctx.fill();
   ctx.shadowBlur = 0;
+}
+
+/* —— Hoth · ice scrabbler ————————————————————————————————
+   A palm-sized snow lizard seen from above. Four splayed legs, a
+   wedge-shaped head and a broad flattened tail make the silhouette
+   read as a reptile at a glance — never an insect. */
+function drawScrabblerBody(ctx, e, time) {
+  const p = e.phase || 0;
+  const stride = Math.sin(time * 18 + p);
+  const strideB = Math.sin(time * 18 + p + Math.PI);
+  const tailWave = Math.sin(time * 10.5 + p);
+  const tailWaveB = Math.sin(time * 10.5 + p - 1.1);
+
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  /* --- flattened paddle tail -------------------------------------- */
+  const N = 14;
+  const upper = [];
+  const lower = [];
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    const x = -8.2 - 19.6 * t;
+    const cy = tailWaveB * 3.0 * t * t + tailWave * 0.9 * t;
+    const w = 3.5 * Math.pow(1 - t, 0.72) + 0.7;
+    upper.push([x, cy - w]);
+    lower.push([x, cy + w]);
+  }
+  const tailGrad = ctx.createLinearGradient(-8, 0, -28, 0);
+  tailGrad.addColorStop(0, '#eaf8ff');
+  tailGrad.addColorStop(0.55, '#c9e8f5');
+  tailGrad.addColorStop(1, '#94c6dc');
+  ctx.fillStyle = tailGrad;
+  ctx.beginPath();
+  ctx.moveTo(upper[0][0], upper[0][1]);
+  for (let i = 1; i <= N; i++) ctx.lineTo(upper[i][0], upper[i][1]);
+  for (let i = N; i >= 0; i--) ctx.lineTo(lower[i][0], lower[i][1]);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(86, 139, 162, 0.7)';
+  ctx.lineWidth = 0.65;
+  ctx.stroke();
+
+  // pale centre ridge and flat scale bands
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+  ctx.lineWidth = 0.55;
+  ctx.beginPath();
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    const x = -8.2 - 19.6 * t;
+    const cy = tailWaveB * 3.0 * t * t + tailWave * 0.9 * t;
+    if (i === 0) ctx.moveTo(x, cy);
+    else ctx.lineTo(x, cy);
+  }
+  ctx.stroke();
+  for (let i = 2; i < N; i += 2) {
+    const t = i / N;
+    const x = -8.2 - 19.6 * t;
+    const cy = tailWaveB * 3.0 * t * t + tailWave * 0.9 * t;
+    const w = (3.5 * Math.pow(1 - t, 0.72) + 0.7) * 0.86;
+    ctx.strokeStyle = `rgba(96, 150, 174, ${0.26 + t * 0.2})`;
+    ctx.lineWidth = 0.45;
+    ctx.beginPath();
+    ctx.moveTo(x + 0.8, cy - w);
+    ctx.quadraticCurveTo(x - 0.7, cy, x + 0.8, cy + w);
+    ctx.stroke();
+  }
+
+  /* --- four splayed lizard legs ----------------------------------- */
+  const legs = [
+    { hx: 4.4, hy: -3.6, kx: 7.0, ky: -7.2, fx: 9.2, fy: -10.5, s: stride, side: -1, front: true },
+    { hx: 4.4, hy: 3.6, kx: 7.0, ky: 7.2, fx: 9.2, fy: 10.5, s: -stride, side: 1, front: true },
+    { hx: -5.0, hy: -3.5, kx: -7.6, ky: -7.4, fx: -10.4, fy: -10.8, s: -strideB, side: -1, front: false },
+    { hx: -5.0, hy: 3.5, kx: -7.6, ky: 7.4, fx: -10.4, fy: 10.8, s: strideB, side: 1, front: false },
+  ];
+  for (const leg of legs) {
+    const swing = leg.s * 1.35;
+    // upper limb
+    ctx.strokeStyle = '#c5e5f2';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(leg.hx, leg.hy);
+    ctx.lineTo(leg.kx + swing * 0.22, leg.ky);
+    ctx.stroke();
+    // knee
+    ctx.fillStyle = '#dff3fb';
+    ctx.beginPath();
+    ctx.ellipse(leg.kx + swing * 0.22, leg.ky, 1.35, 1.15, 0, 0, TAU);
+    ctx.fill();
+    // lower limb
+    ctx.strokeStyle = '#b6dbea';
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.moveTo(leg.kx + swing * 0.22, leg.ky);
+    ctx.lineTo(leg.fx + swing * 0.6, leg.fy);
+    ctx.stroke();
+    // splayed toes with tiny claws
+    const baseX = leg.fx + swing * 0.6;
+    const baseY = leg.fy;
+    const toeAng = Math.atan2(baseY - leg.ky, baseX - leg.kx);
+    for (let toe = -1; toe <= 1; toe++) {
+      const a = toeAng + toe * 0.34;
+      ctx.strokeStyle = toe === 0 ? '#eaf9ff' : '#cfeaf6';
+      ctx.lineWidth = 0.85;
+      ctx.beginPath();
+      ctx.moveTo(baseX, baseY);
+      ctx.lineTo(baseX + Math.cos(a) * 2.7, baseY + Math.sin(a) * 2.7);
+      ctx.stroke();
+      ctx.fillStyle = '#7fb5cb';
+      ctx.beginPath();
+      ctx.arc(baseX + Math.cos(a) * 2.9, baseY + Math.sin(a) * 2.9, 0.34, 0, TAU);
+      ctx.fill();
+    }
+    // little shoulder scale
+    ctx.fillStyle = 'rgba(154, 204, 222, 0.65)';
+    ctx.beginPath();
+    ctx.ellipse(leg.hx + 0.4, leg.hy, 1.45, 1.05, leg.side * 0.4, 0, TAU);
+    ctx.fill();
+  }
+
+  /* --- scaled torso ------------------------------------------------ */
+  const bodyGrad = ctx.createLinearGradient(-10, -5, 10, 5);
+  bodyGrad.addColorStop(0, '#ffffff');
+  bodyGrad.addColorStop(0.42, '#e6f6fd');
+  bodyGrad.addColorStop(0.78, '#c4e3f0');
+  bodyGrad.addColorStop(1, '#a4cedf');
+  ctx.fillStyle = bodyGrad;
+  ctx.beginPath();
+  ctx.moveTo(-10.6, 0);
+  ctx.bezierCurveTo(-10.4, -3.2, -7.2, -5.1, -1.4, -5.2);
+  ctx.bezierCurveTo(3.8, -5.3, 7.3, -4.4, 8.8, -2.2);
+  ctx.lineTo(8.8, 2.2);
+  ctx.bezierCurveTo(7.3, 4.4, 3.8, 5.3, -1.4, 5.2);
+  ctx.bezierCurveTo(-7.2, 5.1, -10.4, 3.2, -10.6, 0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(91, 145, 166, 0.72)';
+  ctx.lineWidth = 0.75;
+  ctx.stroke();
+
+  // overlapping scale rows, deliberately rounded and organic
+  for (const side of [-1, 1]) {
+    for (let r = 0; r < 2; r++) {
+      for (let i = 0; i < 5; i++) {
+        const sx = -7.2 + i * 3.35 + r * 1.0;
+        const sy = side * (4.25 - r * 1.25);
+        ctx.fillStyle = r === 0 ? 'rgba(255, 255, 255, 0.72)' : 'rgba(185, 224, 238, 0.6)';
+        ctx.beginPath();
+        ctx.ellipse(sx, sy, 1.55, 1.02, side * 0.28, 0, TAU);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(112, 166, 185, 0.32)';
+        ctx.lineWidth = 0.35;
+        ctx.stroke();
+      }
+    }
+  }
+
+  // pale dorsal ridge plates (flat scutes, not a shell)
+  for (let i = 0; i < 6; i++) {
+    const sx = -7.0 + i * 2.55;
+    const size = 1.45 - i * 0.1;
+    ctx.fillStyle = i % 2 ? 'rgba(255, 255, 255, 0.9)' : 'rgba(210, 239, 249, 0.9)';
+    ctx.beginPath();
+    ctx.moveTo(sx - size, 0);
+    ctx.lineTo(sx, -size * 0.72);
+    ctx.lineTo(sx + size, 0);
+    ctx.lineTo(sx, size * 0.72);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(115, 169, 188, 0.4)';
+    ctx.lineWidth = 0.3;
+    ctx.stroke();
+  }
+
+  // frosty side fringe
+  for (let i = 0; i < 12; i++) {
+    const a = 0.65 + (i / 11) * (TAU - 1.3);
+    const bx = Math.cos(a) * 8.7;
+    const by = Math.sin(a) * 4.5;
+    ctx.strokeStyle = i % 3 === 0 ? 'rgba(255, 255, 255, 0.85)' : 'rgba(157, 205, 222, 0.6)';
+    ctx.lineWidth = 0.55;
+    ctx.beginPath();
+    ctx.moveTo(bx * 0.95, by * 0.95);
+    ctx.lineTo(bx + Math.cos(a) * 1.1, by + Math.sin(a) * 0.85);
+    ctx.stroke();
+  }
+
+  /* --- wedge head with brow crests -------------------------------- */
+  const headGrad = ctx.createLinearGradient(8, -5, 18, 5);
+  headGrad.addColorStop(0, '#f7fdff');
+  headGrad.addColorStop(0.55, '#dcf1f9');
+  headGrad.addColorStop(1, '#b6dbe9');
+  ctx.fillStyle = headGrad;
+  ctx.beginPath();
+  ctx.moveTo(7.8, -3.7);
+  ctx.quadraticCurveTo(11.6, -5.0, 14.6, -3.4);
+  ctx.quadraticCurveTo(17.8, -2.0, 18.2, 0);
+  ctx.quadraticCurveTo(17.8, 2.0, 14.6, 3.4);
+  ctx.quadraticCurveTo(11.6, 5.0, 7.8, 3.7);
+  ctx.quadraticCurveTo(7.1, 0, 7.8, -3.7);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(84, 137, 158, 0.8)';
+  ctx.lineWidth = 0.7;
+  ctx.stroke();
+
+  // swept-back ice crests
+  for (const side of [-1, 1]) {
+    ctx.fillStyle = '#e8f8ff';
+    ctx.beginPath();
+    ctx.moveTo(10.3, side * 2.9);
+    ctx.quadraticCurveTo(9.2, side * 5.1, 6.8, side * 5.5);
+    ctx.quadraticCurveTo(8.2, side * 3.8, 8.8, side * 2.4);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(111, 167, 187, 0.5)';
+    ctx.lineWidth = 0.35;
+    ctx.stroke();
+  }
+
+  // eyes, nostrils and jaw line
+  for (const side of [-1, 1]) {
+    ctx.fillStyle = '#16323f';
+    ctx.beginPath();
+    ctx.ellipse(13.2, side * 2.1, 1.05, 0.86, side * 0.28, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(151, 235, 255, 0.95)';
+    ctx.beginPath();
+    ctx.arc(13.45, side * 2.06, 0.38, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(80, 129, 146, 0.75)';
+    ctx.beginPath();
+    ctx.ellipse(17.0, side * 0.62, 0.32, 0.22, 0, 0, TAU);
+    ctx.fill();
+  }
+  ctx.strokeStyle = 'rgba(91, 143, 160, 0.8)';
+  ctx.lineWidth = 0.45;
+  ctx.beginPath();
+  ctx.moveTo(14.4, 0);
+  ctx.quadraticCurveTo(16.2, 0.5, 17.5, 0);
+  ctx.stroke();
+  // tiny frost fangs
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(15.2, side * 0.48);
+    ctx.lineTo(16.1, side * 0.18);
+    ctx.lineTo(15.2, side * 0.02);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // breath frost catches the light when the lizard sprints
+  const puff = 0.16 + (Math.sin(time * 9 + p) * 0.5 + 0.5) * 0.16;
+  ctx.fillStyle = `rgba(238, 253, 255, ${puff})`;
+  ctx.beginPath();
+  ctx.ellipse(19.6, 0.4, 2.1, 1.0, 0, 0, TAU);
+  ctx.fill();
+}
+
+/* —— Hoth · tauntaun ————————————————————————————————————
+   A big bipedal snow lizard: barrel chest, long furry tail, small
+   forearms, and a pair of thick ram horns curling around the skull. */
+function drawTauntaunBody(ctx, e, time) {
+  const p = e.phase || 0;
+  const gait = Math.sin(time * 5.2 + p);
+  const gaitB = Math.sin(time * 5.2 + p + Math.PI);
+  const sway = Math.sin(time * 2.9 + p);
+  const tailSway = Math.sin(time * 2.4 + p + 0.6);
+
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  /* --- long shaggy tail ------------------------------------------- */
+  const N = 16;
+  const upper = [];
+  const lower = [];
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    const x = -14.5 - 31 * t;
+    const cy = tailSway * 7.8 * t * t + sway * 0.8 * t;
+    const w = 5.2 * Math.pow(1 - t, 0.78) + 0.25;
+    upper.push([x, cy - w]);
+    lower.push([x, cy + w]);
+  }
+  const tailGrad = ctx.createLinearGradient(-14, -4, -46, 5);
+  tailGrad.addColorStop(0, '#f8fdff');
+  tailGrad.addColorStop(0.5, '#dcebf2');
+  tailGrad.addColorStop(1, '#b4ceda');
+  ctx.fillStyle = tailGrad;
+  ctx.beginPath();
+  ctx.moveTo(upper[0][0], upper[0][1]);
+  for (let i = 1; i <= N; i++) ctx.lineTo(upper[i][0], upper[i][1]);
+  for (let i = N; i >= 0; i--) ctx.lineTo(lower[i][0], lower[i][1]);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(120, 154, 168, 0.72)';
+  ctx.lineWidth = 0.8;
+  ctx.stroke();
+
+  // fur tufts along the tail and a warm under-shadow
+  for (let i = 1; i < N; i += 2) {
+    const t = i / N;
+    const x = -14.5 - 31 * t;
+    const cy = tailSway * 7.8 * t * t + sway * 0.8 * t;
+    const w = 5.2 * Math.pow(1 - t, 0.78) + 0.25;
+    for (const side of [-1, 1]) {
+      ctx.strokeStyle = i % 4 === 1 ? 'rgba(255, 255, 255, 0.85)' : 'rgba(150, 183, 196, 0.62)';
+      ctx.lineWidth = 0.55;
+      ctx.beginPath();
+      ctx.moveTo(x, cy + side * w * 0.82);
+      ctx.lineTo(x - 2.0 * (1 - t * 0.5), cy + side * (w + 1.35 * (1 - t * 0.5)));
+      ctx.stroke();
+    }
+  }
+  ctx.strokeStyle = 'rgba(137, 171, 185, 0.35)';
+  ctx.lineWidth = 1.1;
+  ctx.beginPath();
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    const x = -14.5 - 31 * t;
+    const cy = tailSway * 7.8 * t * t + sway * 0.8 * t + 1.1 * (1 - t);
+    if (i === 0) ctx.moveTo(x, cy);
+    else ctx.lineTo(x, cy);
+  }
+  ctx.stroke();
+
+  /* --- two powerful hind legs ------------------------------------- */
+  const legs = [
+    { hx: -6.8, hy: -6.2, kx: -9.4, ky: -14.0, fx: -3.0, fy: -21.0, s: gait, side: -1 },
+    { hx: -6.8, hy: 6.2, kx: -9.4, ky: 14.0, fx: -3.0, fy: 21.0, s: gaitB, side: 1 },
+  ];
+  for (const leg of legs) {
+    const swing = leg.s * 1.5;
+    // thigh
+    ctx.strokeStyle = '#c6dde8';
+    ctx.lineWidth = 8.2;
+    ctx.beginPath();
+    ctx.moveTo(leg.hx, leg.hy);
+    ctx.lineTo(leg.kx + swing * 0.2, leg.ky);
+    ctx.stroke();
+    // shin
+    ctx.strokeStyle = '#e5f2f8';
+    ctx.lineWidth = 5.2;
+    ctx.beginPath();
+    ctx.moveTo(leg.kx + swing * 0.2, leg.ky);
+    ctx.lineTo(leg.fx + swing * 0.55, leg.fy);
+    ctx.stroke();
+    // broad three-toed foot
+    const baseX = leg.fx + swing * 0.55;
+    const baseY = leg.fy;
+    const toeAng = Math.atan2(baseY - leg.ky, baseX - leg.kx);
+    ctx.fillStyle = '#f7fdff';
+    ctx.beginPath();
+    ctx.ellipse(baseX, baseY, 4.3, 3.0, toeAng, 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(130, 167, 182, 0.7)';
+    ctx.lineWidth = 0.6;
+    ctx.stroke();
+    for (let toe = -1; toe <= 1; toe++) {
+      const a = toeAng + toe * 0.38;
+      ctx.strokeStyle = toe === 0 ? '#d9edf5' : '#c4dfe9';
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.moveTo(baseX, baseY);
+      ctx.lineTo(baseX + Math.cos(a) * 5.5, baseY + Math.sin(a) * 5.5);
+      ctx.stroke();
+      ctx.fillStyle = '#7f9eac';
+      ctx.beginPath();
+      ctx.arc(baseX + Math.cos(a) * 5.9, baseY + Math.sin(a) * 5.9, 0.52, 0, TAU);
+      ctx.fill();
+    }
+    // shaggy thigh fringe
+    for (let i = 0; i < 5; i++) {
+      const t = 0.2 + i * 0.15;
+      const x = leg.hx + (leg.kx - leg.hx) * t;
+      const y = leg.hy + (leg.ky - leg.hy) * t;
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+      ctx.lineWidth = 0.65;
+      ctx.beginPath();
+      ctx.moveTo(x, y + leg.side * 3.2);
+      ctx.lineTo(x - 1.6, y + leg.side * 5.4);
+      ctx.stroke();
+    }
+  }
+
+  /* --- small tucked forearms -------------------------------------- */
+  for (const side of [-1, 1]) {
+    const swing = side === -1 ? -gait : gait;
+    const hx = 7.2;
+    const hy = side * 6.6;
+    const ex = 12.0 + swing * 0.5;
+    const ey = side * 10.4;
+    const fx = 15.2 + swing * 0.9;
+    const fy = side * 11.6;
+    ctx.strokeStyle = '#d8eaf2';
+    ctx.lineWidth = 3.4;
+    ctx.beginPath();
+    ctx.moveTo(hx, hy);
+    ctx.lineTo(ex, ey);
+    ctx.lineTo(fx, fy);
+    ctx.stroke();
+    for (let claw = -1; claw <= 1; claw++) {
+      ctx.strokeStyle = '#a9c9d8';
+      ctx.lineWidth = 0.85;
+      ctx.beginPath();
+      ctx.moveTo(fx, fy);
+      ctx.lineTo(fx + 2.4, fy + claw * 1.1);
+      ctx.stroke();
+    }
+  }
+
+  /* --- barrel body with shaggy coat ------------------------------- */
+  const bodyGrad = ctx.createLinearGradient(-16, -12, 17, 12);
+  bodyGrad.addColorStop(0, '#d6e8f1');
+  bodyGrad.addColorStop(0.28, '#f8fdff');
+  bodyGrad.addColorStop(0.64, '#e6f3f8');
+  bodyGrad.addColorStop(1, '#b9d3df');
+  ctx.fillStyle = bodyGrad;
+  ctx.beginPath();
+  ctx.moveTo(-16.5, 0);
+  ctx.bezierCurveTo(-16.5, -7.0, -11.0, -11.0, -2.0, -11.6);
+  ctx.bezierCurveTo(6.0, -12.2, 13.0, -10.2, 16.0, -6.4);
+  ctx.bezierCurveTo(18.0, -3.8, 18.0, 3.8, 16.0, 6.4);
+  ctx.bezierCurveTo(13.0, 10.2, 6.0, 12.2, -2.0, 11.6);
+  ctx.bezierCurveTo(-11.0, 11.0, -16.5, 7.0, -16.5, 0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(119, 153, 168, 0.75)';
+  ctx.lineWidth = 1.0;
+  ctx.stroke();
+
+  // shaggy coat fringe around the flanks and rump
+  for (let i = 0; i < 26; i++) {
+    const a = 0.42 + (i / 25) * (TAU - 0.84);
+    const bx = Math.cos(a) * 14.7;
+    const by = Math.sin(a) * 9.8;
+    const len = 1.2 + ((i * 7) % 5) * 0.32;
+    ctx.strokeStyle = i % 4 === 0 ? 'rgba(255, 255, 255, 0.9)' : i % 3 === 0 ? 'rgba(188, 216, 228, 0.75)' : 'rgba(147, 179, 194, 0.62)';
+    ctx.lineWidth = 0.7;
+    ctx.beginPath();
+    ctx.moveTo(bx * 0.94, by * 0.94);
+    ctx.lineTo(bx + Math.cos(a) * len, by + Math.sin(a) * len);
+    ctx.stroke();
+  }
+
+  // broad shoulder hump and spine shading
+  const hump = ctx.createRadialGradient(5.6, 0, 0.8, 5.6, 0, 9.6);
+  hump.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+  hump.addColorStop(0.6, 'rgba(231, 244, 250, 0.4)');
+  hump.addColorStop(1, 'rgba(183, 211, 224, 0)');
+  ctx.fillStyle = hump;
+  ctx.beginPath();
+  ctx.ellipse(5.6, 0, 9.6, 8.0, 0, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(143, 177, 192, 0.38)';
+  ctx.lineWidth = 0.8;
+  ctx.beginPath();
+  ctx.moveTo(-13.5, 0.6);
+  ctx.quadraticCurveTo(-1.0, -1.8, 13.8, 0.2);
+  ctx.stroke();
+
+  /* --- Rebel saddle and field pack -------------------------------- */
+  const saddle = ctx.createLinearGradient(-6, -8, 6, 8);
+  saddle.addColorStop(0, '#7f6b52');
+  saddle.addColorStop(0.55, '#5c4a37');
+  saddle.addColorStop(1, '#3d3126');
+  ctx.fillStyle = saddle;
+  roundRect(ctx, -5.2, -7.4, 11.0, 14.8, 2.8);
+  ctx.fill();
+  ctx.strokeStyle = '#2c241b';
+  ctx.lineWidth = 0.7;
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(220, 187, 126, 0.45)';
+  roundRect(ctx, -3.7, -6.1, 2.0, 12.2, 0.9);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(43, 34, 25, 0.8)';
+  ctx.lineWidth = 1.3;
+  ctx.beginPath();
+  ctx.moveTo(-6.2, -8.2);
+  ctx.quadraticCurveTo(-1.0, -11.0, 6.2, -8.2);
+  ctx.moveTo(-6.2, 8.2);
+  ctx.quadraticCurveTo(-1.0, 11.0, 6.2, 8.2);
+  ctx.stroke();
+  // bedroll behind the saddle
+  ctx.fillStyle = '#8e7a5c';
+  roundRect(ctx, -9.6, -4.6, 4.2, 9.2, 1.9);
+  ctx.fill();
+  ctx.strokeStyle = '#4a3c2b';
+  ctx.lineWidth = 0.55;
+  ctx.stroke();
+
+  /* --- neck and ram-horned head ----------------------------------- */
+  ctx.fillStyle = '#e7f4f9';
+  ctx.beginPath();
+  ctx.moveTo(11.0, -7.6);
+  ctx.quadraticCurveTo(17.0, -7.8, 19.8, -4.2);
+  ctx.lineTo(19.8, 4.2);
+  ctx.quadraticCurveTo(17.0, 7.8, 11.0, 7.6);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(130, 164, 179, 0.65)';
+  ctx.lineWidth = 0.7;
+  ctx.stroke();
+  // mane
+  for (let i = 0; i < 12; i++) {
+    const side = i % 2 ? 1 : -1;
+    const t = Math.floor(i / 2) / 5;
+    const x = 10.5 + t * 8.2;
+    const y = side * (7.0 + t * 0.6);
+    ctx.strokeStyle = i % 3 === 0 ? 'rgba(255, 255, 255, 0.9)' : 'rgba(180, 209, 222, 0.75)';
+    ctx.lineWidth = 0.7;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - 2.0, y + side * 2.2);
+    ctx.stroke();
+  }
+
+  const headGrad = ctx.createLinearGradient(17, -6, 29, 6);
+  headGrad.addColorStop(0, '#fbfeff');
+  headGrad.addColorStop(0.52, '#e9f5fa');
+  headGrad.addColorStop(1, '#c3dde8');
+  ctx.fillStyle = headGrad;
+  ctx.beginPath();
+  ctx.moveTo(18.0, -5.4);
+  ctx.quadraticCurveTo(23.0, -6.8, 26.5, -4.0);
+  ctx.quadraticCurveTo(29.4, -1.8, 29.8, 0);
+  ctx.quadraticCurveTo(29.4, 1.8, 26.5, 4.0);
+  ctx.quadraticCurveTo(23.0, 6.8, 18.0, 5.4);
+  ctx.quadraticCurveTo(17.0, 0, 18.0, -5.4);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(116, 151, 166, 0.8)';
+  ctx.lineWidth = 0.75;
+  ctx.stroke();
+
+  // thick curved ram horns, built from a dark outline plus bone core
+  for (const side of [-1, 1]) {
+    const hornPts = [
+      [19.2, side * 4.2],
+      [23.2, side * 8.2],
+      [25.0, side * 13.0],
+      [22.2, side * 16.2],
+      [17.0, side * 15.0],
+      [14.6, side * 11.4],
+    ];
+    const strokeHorn = (width, color) => {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.beginPath();
+      ctx.moveTo(hornPts[0][0], hornPts[0][1]);
+      ctx.bezierCurveTo(hornPts[1][0], hornPts[1][1], hornPts[2][0], hornPts[2][1], hornPts[3][0], hornPts[3][1]);
+      ctx.bezierCurveTo(hornPts[4][0], hornPts[4][1], hornPts[5][0], hornPts[5][1], hornPts[5][0] - 0.8, hornPts[5][1] - side * 1.4);
+      ctx.stroke();
+    };
+    strokeHorn(5.4, '#7e715f');
+    strokeHorn(4.2, '#cdbd9f');
+    strokeHorn(2.1, '#eadfc7');
+    // horn growth rings
+    for (let i = 1; i <= 4; i++) {
+      const t = i / 5.2;
+      const hx = 19.2 + 6.4 * t;
+      const hy = side * (4.2 + 10.6 * t);
+      ctx.strokeStyle = 'rgba(104, 90, 70, 0.55)';
+      ctx.lineWidth = 0.55;
+      ctx.beginPath();
+      ctx.moveTo(hx - 1.0, hy - side * 1.8);
+      ctx.lineTo(hx + 1.0, hy + side * 1.8);
+      ctx.stroke();
+    }
+  }
+
+  // ears, eyes, muzzle
+  for (const side of [-1, 1]) {
+    ctx.fillStyle = '#d3e6ee';
+    ctx.beginPath();
+    ctx.ellipse(19.2, side * 5.5, 2.0, 1.25, side * 0.5, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = '#35525f';
+    ctx.beginPath();
+    ctx.ellipse(23.2, side * 3.0, 1.35, 1.05, side * 0.2, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(255, 216, 154, 0.95)';
+    ctx.beginPath();
+    ctx.arc(23.45, side * 2.98, 0.48, 0, TAU);
+    ctx.fill();
+  }
+  ctx.fillStyle = '#6f7f83';
+  ctx.beginPath();
+  ctx.ellipse(29.4, 0, 1.25, 0.9, 0, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(83, 118, 130, 0.8)';
+  ctx.lineWidth = 0.5;
+  ctx.beginPath();
+  ctx.moveTo(25.8, 0);
+  ctx.quadraticCurveTo(27.6, 0.6, 29.1, 0);
+  ctx.stroke();
+  // cheek fur tufts
+  for (const side of [-1, 1]) {
+    for (let i = 0; i < 4; i++) {
+      ctx.strokeStyle = i % 2 ? 'rgba(255, 255, 255, 0.85)' : 'rgba(176, 207, 220, 0.75)';
+      ctx.lineWidth = 0.6;
+      ctx.beginPath();
+      ctx.moveTo(21.0 + i * 1.5, side * 5.2);
+      ctx.lineTo(20.0 + i * 1.5, side * 7.0);
+      ctx.stroke();
+    }
+  }
+}
+
+/* —— Hoth · wampa ————————————————————————————————————————
+   The wave-25 horror: a broad-shouldered yeti with a shaggy white
+   pelt, huge clawed hands, and thick horns sweeping from its skull. */
+function drawWampaBody(ctx, e, time) {
+  const p = e.phase || 0;
+  const breathe = Math.sin(time * 1.9 + p);
+  const stride = Math.sin(time * 3.2 + p);
+  const strideB = Math.sin(time * 3.2 + p + Math.PI);
+  const armSway = Math.sin(time * 2.2 + p + 0.7);
+
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  /* --- two heavy feet behind the body ----------------------------- */
+  const legs = [
+    { hx: -15.0, hy: -8.6, kx: -21.0, ky: -15.0, fx: -18.0, fy: -23.0, s: stride, side: -1 },
+    { hx: -15.0, hy: 8.6, kx: -21.0, ky: 15.0, fx: -18.0, fy: 23.0, s: strideB, side: 1 },
+  ];
+  for (const leg of legs) {
+    const swing = leg.s * 1.8;
+    ctx.strokeStyle = '#b6ccd8';
+    ctx.lineWidth = 13.5;
+    ctx.beginPath();
+    ctx.moveTo(leg.hx, leg.hy);
+    ctx.lineTo(leg.kx + swing * 0.2, leg.ky);
+    ctx.stroke();
+    ctx.strokeStyle = '#e4f1f7';
+    ctx.lineWidth = 9.0;
+    ctx.beginPath();
+    ctx.moveTo(leg.kx + swing * 0.2, leg.ky);
+    ctx.lineTo(leg.fx + swing * 0.55, leg.fy);
+    ctx.stroke();
+    // broad splayed foot
+    const baseX = leg.fx + swing * 0.55;
+    const baseY = leg.fy;
+    ctx.fillStyle = '#eff9fd';
+    ctx.beginPath();
+    ctx.ellipse(baseX, baseY, 7.8, 5.6, Math.atan2(baseY - leg.ky, baseX - leg.kx), 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(117, 151, 166, 0.65)';
+    ctx.lineWidth = 0.8;
+    ctx.stroke();
+    // four long black claws
+    const toeAng = Math.atan2(baseY - leg.ky, baseX - leg.kx);
+    for (let claw = -1.5; claw <= 1.5; claw++) {
+      const a = toeAng + claw * 0.28;
+      const tx = baseX + Math.cos(a) * 9.6;
+      const ty = baseY + Math.sin(a) * 9.6;
+      ctx.fillStyle = '#26343c';
+      ctx.beginPath();
+      ctx.moveTo(baseX + Math.cos(a - 0.14) * 4.0, baseY + Math.sin(a - 0.14) * 4.0);
+      ctx.quadraticCurveTo(baseX + Math.cos(a) * 7.6, baseY + Math.sin(a) * 7.6 - 1.0, tx, ty);
+      ctx.quadraticCurveTo(baseX + Math.cos(a + 0.1) * 6.2, baseY + Math.sin(a + 0.1) * 6.2, baseX + Math.cos(a + 0.16) * 4.0, baseY + Math.sin(a + 0.16) * 4.0);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(191, 224, 237, 0.45)';
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    }
+    // shaggy ankle cuff
+    for (let i = 0; i < 6; i++) {
+      const t = 0.45 + i * 0.08;
+      const x = leg.hx + (leg.fx - leg.hx) * t;
+      const y = leg.hy + (leg.fy - leg.hy) * t;
+      ctx.strokeStyle = i % 2 ? 'rgba(255, 255, 255, 0.85)' : 'rgba(177, 207, 221, 0.7)';
+      ctx.lineWidth = 0.9;
+      ctx.beginPath();
+      ctx.moveTo(x, y + leg.side * 4.0);
+      ctx.lineTo(x - 2.2, y + leg.side * 7.2);
+      ctx.stroke();
+    }
+  }
+
+  /* --- massive arms with hooked claws ----------------------------- */
+  for (const side of [-1, 1]) {
+    const lift = side === -1 ? armSway : -armSway;
+    const shoulderX = 2.0;
+    const shoulderY = side * 18.0;
+    const elbowX = 13.5 + lift * 0.8;
+    const elbowY = side * 29.0;
+    const wristX = 22.0 + lift * 1.2;
+    const wristY = side * 35.0;
+    // upper arm
+    ctx.strokeStyle = '#c0d5e0';
+    ctx.lineWidth = 15.0;
+    ctx.beginPath();
+    ctx.moveTo(shoulderX, shoulderY);
+    ctx.lineTo(elbowX, elbowY);
+    ctx.stroke();
+    // forearm
+    ctx.strokeStyle = '#eaf6fb';
+    ctx.lineWidth = 11.0;
+    ctx.beginPath();
+    ctx.moveTo(elbowX, elbowY);
+    ctx.lineTo(wristX, wristY);
+    ctx.stroke();
+    // shaggy arm fringe
+    for (let i = 0; i < 7; i++) {
+      const t = 0.12 + i * 0.12;
+      const x = shoulderX + (wristX - shoulderX) * t;
+      const y = shoulderY + (wristY - shoulderY) * t;
+      ctx.strokeStyle = i % 3 === 0 ? 'rgba(255, 255, 255, 0.9)' : 'rgba(157, 190, 205, 0.7)';
+      ctx.lineWidth = 0.9;
+      ctx.beginPath();
+      ctx.moveTo(x, y + side * 5.5);
+      ctx.lineTo(x - 2.5, y + side * 9.0);
+      ctx.stroke();
+    }
+    // palm
+    ctx.fillStyle = '#f4fbfe';
+    ctx.beginPath();
+    ctx.ellipse(wristX, wristY, 6.4, 4.8, side * 0.55, 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(112, 148, 164, 0.6)';
+    ctx.lineWidth = 0.7;
+    ctx.stroke();
+    // four sharp curved claws
+    const handAng = side * 0.55;
+    for (let claw = -1.5; claw <= 1.5; claw++) {
+      const a = handAng + claw * 0.25;
+      const bx = wristX + Math.cos(a) * 4.2;
+      const by = wristY + Math.sin(a) * 4.2;
+      const tx = wristX + Math.cos(a) * 13.6;
+      const ty = wristY + Math.sin(a) * 13.6;
+      ctx.fillStyle = '#222f37';
+      ctx.beginPath();
+      ctx.moveTo(bx + Math.cos(a - 0.16) * 1.5, by + Math.sin(a - 0.16) * 1.5);
+      ctx.quadraticCurveTo(wristX + Math.cos(a) * 9.8, wristY + Math.sin(a) * 9.8 - 1.4, tx, ty);
+      ctx.quadraticCurveTo(wristX + Math.cos(a + 0.16) * 8.0, wristY + Math.sin(a + 0.16) * 8.0, bx + Math.cos(a + 0.16) * 1.5, by + Math.sin(a + 0.16) * 1.5);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(210, 237, 248, 0.55)';
+      ctx.lineWidth = 0.55;
+      ctx.stroke();
+    }
+  }
+
+  /* --- giant shaggy torso ----------------------------------------- */
+  const bodyGrad = ctx.createLinearGradient(-26, -20, 24, 20);
+  bodyGrad.addColorStop(0, '#c2d8e3');
+  bodyGrad.addColorStop(0.28, '#f4fbfe');
+  bodyGrad.addColorStop(0.62, '#e1f0f7');
+  bodyGrad.addColorStop(1, '#adc7d4');
+  ctx.fillStyle = bodyGrad;
+  ctx.beginPath();
+  ctx.moveTo(-25.0, 0);
+  ctx.bezierCurveTo(-26.0, -10.0, -22.0, -20.0, -8.0, -23.0);
+  ctx.bezierCurveTo(8.0, -26.0, 22.0, -22.0, 26.0, -13.0);
+  ctx.bezierCurveTo(28.0, -7.0, 28.0, 7.0, 26.0, 13.0);
+  ctx.bezierCurveTo(22.0, 22.0, 8.0, 26.0, -8.0, 23.0);
+  ctx.bezierCurveTo(-22.0, 20.0, -26.0, 10.0, -25.0, 0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(104, 139, 155, 0.75)';
+  ctx.lineWidth = 1.2;
+  ctx.stroke();
+
+  // shaggy pelt fringe, long around the shoulders and hips
+  for (let i = 0; i < 42; i++) {
+    const a = 0.24 + (i / 41) * (TAU - 0.48);
+    const bx = Math.cos(a) * 23.8;
+    const by = Math.sin(a) * 20.4;
+    const len = 1.4 + ((i * 11) % 7) * 0.4;
+    ctx.strokeStyle = i % 5 === 0 ? 'rgba(255, 255, 255, 0.95)' : i % 3 === 0 ? 'rgba(199, 224, 235, 0.85)' : 'rgba(143, 176, 192, 0.7)';
+    ctx.lineWidth = 0.85;
+    ctx.beginPath();
+    ctx.moveTo(bx * 0.95, by * 0.95);
+    ctx.lineTo(bx + Math.cos(a) * len, by + Math.sin(a) * len);
+    ctx.stroke();
+  }
+
+  // broad shoulder mass and frosty spine
+  const shoulder = ctx.createRadialGradient(6.0, -2.0, 1.0, 6.0, 0, 18.0);
+  shoulder.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+  shoulder.addColorStop(0.55, 'rgba(231, 244, 250, 0.48)');
+  shoulder.addColorStop(1, 'rgba(181, 211, 225, 0)');
+  ctx.fillStyle = shoulder;
+  ctx.beginPath();
+  ctx.ellipse(6.0, 0, 18.0, 15.0, 0, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(135, 169, 184, 0.45)';
+  ctx.lineWidth = 1.0;
+  ctx.beginPath();
+  ctx.moveTo(-21.0, breathe * 0.6);
+  ctx.quadraticCurveTo(-2.0, -2.4 + breathe * 0.4, 23.0, 0.2);
+  ctx.stroke();
+  // dark chest shadow beneath the mane
+  const chest = ctx.createRadialGradient(16.0, 0, 1.0, 16.0, 0, 13.0);
+  chest.addColorStop(0, 'rgba(123, 158, 175, 0.32)');
+  chest.addColorStop(1, 'rgba(123, 158, 175, 0)');
+  ctx.fillStyle = chest;
+  ctx.beginPath();
+  ctx.ellipse(16.0, 0, 13.0, 11.0, 0, 0, TAU);
+  ctx.fill();
+
+  /* --- skull, face and huge curved horns -------------------------- */
+  // thick neck ruff
+  for (let i = 0; i < 16; i++) {
+    const side = i % 2 ? 1 : -1;
+    const t = Math.floor(i / 2) / 7;
+    const x = 18.0 + t * 7.0;
+    const y = side * (13.0 + t * 1.0);
+    ctx.strokeStyle = i % 3 === 0 ? 'rgba(255, 255, 255, 0.95)' : 'rgba(183, 213, 226, 0.8)';
+    ctx.lineWidth = 1.0;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - 3.0, y + side * 3.2);
+    ctx.stroke();
+  }
+
+  const headGrad = ctx.createLinearGradient(20, -12, 39, 12);
+  headGrad.addColorStop(0, '#fdfeff');
+  headGrad.addColorStop(0.5, '#edf7fb');
+  headGrad.addColorStop(1, '#bfd8e4');
+  ctx.fillStyle = headGrad;
+  ctx.beginPath();
+  ctx.moveTo(20.0, -11.0);
+  ctx.quadraticCurveTo(28.0, -13.0, 34.0, -8.5);
+  ctx.quadraticCurveTo(39.0, -4.5, 39.6, 0);
+  ctx.quadraticCurveTo(39.0, 4.5, 34.0, 8.5);
+  ctx.quadraticCurveTo(28.0, 13.0, 20.0, 11.0);
+  ctx.quadraticCurveTo(18.0, 0, 20.0, -11.0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(105, 141, 157, 0.8)';
+  ctx.lineWidth = 0.95;
+  ctx.stroke();
+
+  // thick horns on the sides of the skull
+  for (const side of [-1, 1]) {
+    const hornPath = (w, col) => {
+      ctx.strokeStyle = col;
+      ctx.lineWidth = w;
+      ctx.beginPath();
+      ctx.moveTo(24.0, side * 8.2);
+      ctx.bezierCurveTo(33.0, side * 10.5, 40.0, side * 16.0, 39.0, side * 24.0);
+      ctx.bezierCurveTo(38.0, side * 30.0, 31.0, side * 31.0, 27.0, side * 27.0);
+      ctx.stroke();
+    };
+    hornPath(8.2, '#6f6557');
+    hornPath(6.6, '#b8a98e');
+    hornPath(3.4, '#e9ddc5');
+    // horn ridges
+    for (let i = 0; i < 6; i++) {
+      const t = i / 6;
+      const hx = 24.0 + 15.0 * t;
+      const hy = side * (8.2 + 18.0 * t);
+      ctx.strokeStyle = 'rgba(93, 81, 64, 0.5)';
+      ctx.lineWidth = 0.65;
+      ctx.beginPath();
+      ctx.moveTo(hx - 1.2, hy - side * 2.2);
+      ctx.lineTo(hx + 1.4, hy + side * 2.2);
+      ctx.stroke();
+    }
+    // warm inner-ear / horn root
+    ctx.fillStyle = 'rgba(168, 144, 112, 0.55)';
+    ctx.beginPath();
+    ctx.ellipse(24.6, side * 8.6, 2.2, 1.6, side * 0.4, 0, TAU);
+    ctx.fill();
+  }
+
+  // brow ridges, eyes and snarling muzzle
+  for (const side of [-1, 1]) {
+    ctx.fillStyle = 'rgba(176, 205, 218, 0.85)';
+    ctx.beginPath();
+    ctx.ellipse(29.0, side * 6.0, 3.6, 1.9, side * 0.25, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = '#16232b';
+    ctx.beginPath();
+    ctx.ellipse(31.6, side * 4.7, 1.7, 1.3, side * 0.2, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(255, 184, 92, 0.95)';
+    ctx.beginPath();
+    ctx.arc(31.9, side * 4.7, 0.58, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+    ctx.beginPath();
+    ctx.arc(32.1, side * 4.55, 0.2, 0, TAU);
+    ctx.fill();
+  }
+  // muzzle
+  ctx.fillStyle = '#d7e9f1';
+  ctx.beginPath();
+  ctx.ellipse(37.0, 0, 5.6, 4.4, 0, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(103, 137, 152, 0.75)';
+  ctx.lineWidth = 0.7;
+  ctx.stroke();
+  ctx.fillStyle = '#3f5058';
+  ctx.beginPath();
+  ctx.ellipse(39.2, 0, 1.7, 1.25, 0, 0, TAU);
+  ctx.fill();
+  // snarl and fangs
+  ctx.strokeStyle = 'rgba(76, 105, 118, 0.9)';
+  ctx.lineWidth = 0.8;
+  ctx.beginPath();
+  ctx.moveTo(33.8, 0);
+  ctx.quadraticCurveTo(36.6, 1.4, 39.0, 0.2);
+  ctx.stroke();
+  ctx.fillStyle = '#f8f4e9';
+  for (const side of [-1, 1]) {
+    for (let i = 0; i < 3; i++) {
+      const fx = 34.4 + i * 1.35;
+      const fy = side * (1.0 + i * 0.18);
+      ctx.beginPath();
+      ctx.moveTo(fx, fy);
+      ctx.lineTo(fx + 0.85, fy + side * 1.35);
+      ctx.lineTo(fx + 1.45, fy);
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+  // frost breath
+  const breath = 0.14 + (Math.sin(time * 2.6 + p) * 0.5 + 0.5) * 0.12;
+  ctx.fillStyle = `rgba(231, 250, 255, ${breath})`;
+  ctx.beginPath();
+  ctx.ellipse(43.0, -1.4, 4.2, 2.1, -0.2, 0, TAU);
+  ctx.ellipse(47.0, -3.0, 3.0, 1.6, -0.3, 0, TAU);
+  ctx.fill();
+
+  // snow crusted into the shoulder fur
+  for (let i = 0; i < 12; i++) {
+    const a = i * 1.9;
+    const d = 9 + (i % 5) * 3.2;
+    ctx.fillStyle = `rgba(255, 255, 255, ${0.45 + (i % 3) * 0.15})`;
+    ctx.beginPath();
+    ctx.arc(Math.cos(a) * d + 4, Math.sin(a) * d * 0.75, 0.55 + (i % 3) * 0.25, 0, TAU);
+    ctx.fill();
+  }
 }
 
 /* —— Hoth · snowtrooper —— */

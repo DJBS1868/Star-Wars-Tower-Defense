@@ -116,22 +116,42 @@ export const DECOR = [
 ];
 
 const HOTH_DECOR = [
-  { type: 'rock', x: 0.055, y: 0.135, r: 0.032, seed: 11 },
-  { type: 'ice', x: 0.145, y: 0.105, r: 0.030, seed: 23 },
-  { type: 'snowdrift', x: 0.295, y: 0.115, r: 0.040, seed: 31 },
-  { type: 'ice', x: 0.475, y: 0.115, r: 0.026, seed: 41 },
-  { type: 'rock', x: 0.735, y: 0.095, r: 0.024, seed: 53 },
-  { type: 'antenna', x: 0.935, y: 0.145, r: 0.030, seed: 61 },
-  { type: 'crate', x: 0.875, y: 0.245, r: 0.014, seed: 67 },
-  { type: 'snowdrift', x: 0.955, y: 0.895, r: 0.044, seed: 71 },
-  { type: 'ice', x: 0.855, y: 0.955, r: 0.028, seed: 79 },
-  { type: 'rock', x: 0.105, y: 0.925, r: 0.030, seed: 83 },
-  { type: 'snowdrift', x: 0.305, y: 0.945, r: 0.036, seed: 89 },
-  { type: 'crate', x: 0.655, y: 0.115, r: 0.015, seed: 97 },
-  { type: 'ice', x: 0.635, y: 0.955, r: 0.024, seed: 101 },
-  { type: 'antenna', x: 0.045, y: 0.545, r: 0.026, seed: 103 },
-  { type: 'snowdrift', x: 0.495, y: 0.495, r: 0.024, seed: 107 },
-  { type: 'ice', x: 0.245, y: 0.465, r: 0.018, seed: 109 },
+  /* Northern ridge and the Echo Base shield array. */
+  { type: 'hothcliff', x: 0.205, y: 0.055, r: 0.064, seed: 11 },
+  { type: 'rock', x: 0.052, y: 0.118, r: 0.029, seed: 17 },
+  { type: 'ice', x: 0.125, y: 0.128, r: 0.026, seed: 23 },
+  { type: 'snowdrift', x: 0.315, y: 0.095, r: 0.038, seed: 31 },
+  { type: 'snowspeeder', x: 0.405, y: 0.150, r: 0.035, seed: 37 },
+  { type: 'ice', x: 0.505, y: 0.092, r: 0.022, seed: 41 },
+  { type: 'hothcliff', x: 0.608, y: 0.050, r: 0.052, seed: 43 },
+  { type: 'crate', x: 0.655, y: 0.115, r: 0.015, seed: 47 },
+  { type: 'crate', x: 0.690, y: 0.137, r: 0.012, seed: 49 },
+  { type: 'rock', x: 0.735, y: 0.078, r: 0.022, seed: 53 },
+  { type: 'shieldgen', x: 0.822, y: 0.142, r: 0.052, seed: 59 },
+  { type: 'antenna', x: 0.936, y: 0.148, r: 0.030, seed: 61 },
+  { type: 'crate', x: 0.888, y: 0.246, r: 0.014, seed: 67 },
+  { type: 'crate', x: 0.850, y: 0.268, r: 0.011, seed: 69 },
+  { type: 'frozenlake', x: 0.338, y: 0.215, r: 0.058, seed: 71 },
+  { type: 'crevasse', x: 0.485, y: 0.205, r: 0.042, seed: 73 },
+
+  /* The open middle of the trench field. */
+  { type: 'snowdrift', x: 0.058, y: 0.665, r: 0.030, seed: 79 },
+  { type: 'antenna', x: 0.045, y: 0.548, r: 0.026, seed: 83 },
+  { type: 'ice', x: 0.245, y: 0.468, r: 0.018, seed: 89 },
+  { type: 'snowdrift', x: 0.495, y: 0.498, r: 0.024, seed: 97 },
+  { type: 'ice', x: 0.728, y: 0.452, r: 0.016, seed: 101 },
+  { type: 'ice', x: 0.952, y: 0.708, r: 0.019, seed: 103 },
+
+  /* Southern drifts, wrecks and the frozen melt lake. */
+  { type: 'hothcliff', x: 0.072, y: 0.775, r: 0.055, seed: 107 },
+  { type: 'crevasse', x: 0.185, y: 0.890, r: 0.046, seed: 109 },
+  { type: 'rock', x: 0.105, y: 0.942, r: 0.030, seed: 113 },
+  { type: 'snowspeeder', x: 0.372, y: 0.930, r: 0.031, seed: 127 },
+  { type: 'snowdrift', x: 0.305, y: 0.952, r: 0.036, seed: 131 },
+  { type: 'ice', x: 0.638, y: 0.955, r: 0.024, seed: 137 },
+  { type: 'rock', x: 0.758, y: 0.935, r: 0.020, seed: 139 },
+  { type: 'frozenlake', x: 0.868, y: 0.918, r: 0.064, seed: 149 },
+  { type: 'snowdrift', x: 0.955, y: 0.895, r: 0.044, seed: 151 },
 ];
 
 const MUSTAFAR_DECOR = [
@@ -346,26 +366,21 @@ export const ENEMY_TYPES = {
     color: '#c7a06a',
   },
 
-  /* —— Hoth: Imperial cold-weather assault —— */
-  snowtrooper: {
-    name: 'Snowtrooper', short: 'SNOW', body: 'snowtrooper',
-    hp: 1.15, speed: 62, radius: 11, reward: 1.1, leak: 1, armor: 0, gap: 0.68,
-    color: '#dce8ee',
+  /* —— Hoth: native ice fauna driven from the deep drifts —— */
+  scrabbler: {
+    name: 'Ice Scrabbler', short: 'SCRAB', body: 'scrabbler',
+    hp: 0.62, speed: 112, radius: 8.5, reward: 0.9, leak: 1, armor: 0, gap: 0.4,
+    color: '#bfeeff', fx: '#cdefff',
   },
-  probe: {
-    name: 'Probe Droid', short: 'PROBE', body: 'probe', palette: 'probe',
-    hp: 0.55, speed: 138, radius: 8.5, reward: 1.1, leak: 1, armor: 0, gap: 0.42,
-    color: '#93b6c2',
+  tauntaun: {
+    name: 'Tauntaun', short: 'TAUN', body: 'tauntaun',
+    hp: 5.6, speed: 40, radius: 17, reward: 2.9, leak: 2, armor: 3, gap: 1.28,
+    heavy: true, color: '#e2d6b8', fx: '#eaf6ff',
   },
-  atst: {
-    name: 'AT-ST Walker', short: 'AT-ST', body: 'atst',
-    hp: 5.2, speed: 40, radius: 16, reward: 2.8, leak: 2, armor: 3, gap: 1.2,
-    heavy: true, color: '#9aa9ad',
-  },
-  atat: {
-    name: 'AT-AT Walker', short: 'AT-AT', body: 'atat', boss: true,
-    hp: 20, speed: 30, radius: 28, reward: 26, leak: 9, armor: 5, gap: 1.6,
-    color: '#aebcc0',
+  wampa: {
+    name: 'Wampa', short: 'WAMPA', body: 'wampa', boss: true,
+    hp: 24, speed: 29, radius: 31, reward: 32, leak: 11, armor: 5, gap: 1.8,
+    color: '#d9ecff', fx: '#bfe9ff',
   },
 
   /* —— Mustafar: Black Sun mining force —— */
@@ -452,7 +467,7 @@ export const MAPS = {
     site: 'ECHO BASE',
     region: 'HOTH',
     kicker: 'REBEL ALLIANCE · HOTH SYSTEM',
-    desc: 'Frozen trenches, howling wind, and Imperial walkers. Hold the ice until the transports are away.',
+    desc: 'A whiteout over the frozen trench line. Ice Scrabbler packs swarm the drifts, Tauntaun bulls charge the relay, and something huge is moving beneath the glacier.',
     tag: 'HOTH',
     difficulty: 'VETERAN',
     theme: 'ice',
@@ -464,11 +479,14 @@ export const MAPS = {
     base: { x: 0.952, y: 0.60 },
     path: HOTH_PATH,
     decor: HOTH_DECOR,
-    roster: { line: 'snowtrooper', fast: 'probe', heavy: 'atst', boss: 'atat' },
-    mix: { lineRate: 0.8, fastRate: 0.7, heavyStart: 5, heavyRate: 0.5, fastStart: 2 },
-    flavor: { boss: 'AT-AT walker inbound — focus fire!', final: 'Final wave — the walkers are coming!' },
-    endWin: 'The last walker is down in the snow. Echo Base holds, and the transports are clear.',
-    endLose: 'The shield generator is gone. Imperial walkers overrun the frozen trenches.',
+    roster: { line: 'scrabbler', fast: 'scrabbler', heavy: 'tauntaun', boss: 'wampa' },
+    mix: { lineRate: 1.0, fastRate: 0.38, heavyStart: 7, heavyRate: 0.6, fastStart: 3 },
+    bossEvery: 0,
+    finalBossCount: 1,
+    finalBossMul: 1.7,
+    flavor: { boss: 'Something enormous is moving under the ice', final: 'Final wave — the Wampa has broken through the glacier!' },
+    endWin: 'The Wampa is down and the ice is still. Echo Base holds, and the last transport clears the ridge.',
+    endLose: 'The relay is buried in snow. The creatures of Hoth own the frozen trench line.',
     chips: ['25 WAVES', 'HOTH', 'VETERAN'],
     accent: '#9bd8ec',
   },
