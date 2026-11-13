@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-label="Illustrated desert outpost beneath twin suns">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#182638"/><stop offset=".58" stop-color="#c56d46"/><stop offset="1" stop-color="#f3bb70"/></linearGradient>
+    <linearGradient id="dune" x2="0" y2="1"><stop stop-color="#e9b46b"/><stop offset="1" stop-color="#8d4b37"/></linearGradient>
+    <radialGradient id="sun"><stop stop-color="#fff5c8"/><stop offset=".7" stop-color="#ffcd72"/><stop offset="1" stop-color="#ff9a58" stop-opacity=".2"/></radialGradient>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h960v420H0z"/>
+  <circle cx="690" cy="112" r="58" fill="url(#sun)"/><circle cx="779" cy="137" r="25" fill="#ffdca0" opacity=".8"/>
+  <path fill="#65434a" opacity=".6" d="M0 220 70 180l58 22 67-55 56 34 71-60 61 46 73-25 60 49 75-38 62 45 82-33 74 55 65-19 46 31v100H0z"/>
+  <path fill="#b76a4a" d="M0 272q130-50 262-4t260 0q122-37 224 3t214-6v155H0z"/>
+  <path fill="url(#dune)" d="M0 325q130-67 270-17t242 2q140-58 253-4t195-10v124H0z"/>
+  <path fill="#f2c27a" opacity=".7" d="M0 362q155-36 288-3t248-1q167-44 256-4t168-5v71H0z"/>
+  <g fill="#493a37" stroke="#d78a56" stroke-width="4">
+    <path d="M365 273h108v70H365zM386 242h52v31h-52zM451 253h38v20h-38z"/>
+    <path d="M353 267h12v76h-12zM474 263h11v80h-11z"/>
+    <path d="M402 287h22v18h-22z" fill="#f8c768" stroke="none"/>
+    <path d="M518 296v-67h30v67m-38 0h47v12h-47zM532 220h4v-18h4v18"/>
+  </g>
+  <path fill="none" stroke="#ffd48a" stroke-opacity=".45" stroke-width="3" d="M0 388q150-26 285 2t270-4q175-34 405 1"/>
+</svg>

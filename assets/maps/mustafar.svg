@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-label="Illustrated volcanic refinery above glowing lava rivers">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#180f1c"/><stop offset=".58" stop-color="#532331"/><stop offset="1" stop-color="#bd4930"/></linearGradient>
+    <linearGradient id="lava" x2="0" y2="1"><stop stop-color="#ffbd43"/><stop offset=".42" stop-color="#f45424"/><stop offset="1" stop-color="#812332"/></linearGradient>
+    <linearGradient id="rock" x2="0" y2="1"><stop stop-color="#4a3035"/><stop offset="1" stop-color="#1a1721"/></linearGradient>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h960v420H0z"/>
+  <circle cx="741" cy="108" r="74" fill="#ff6939" opacity=".34"/>
+  <path fill="#241923" d="m0 238 72-44 61 30 88-127 69 102 83-70 74 76 101-141 78 114 66-54 76 59 65-40 67 50v227H0z"/>
+  <path fill="#a43d30" opacity=".55" d="m221 97 38 62 54 46-65-17-47 20 37-54-40-18zm330-33 42 75 67 39-76-11-40 20 28-49-43-28z"/>
+  <path fill="url(#lava)" d="M0 305q123-58 252-7t245-5q116-50 226 3t237-8v132H0z"/>
+  <path fill="#221b24" d="M0 279h90l32 53-47 88H0zm854-15h106v156H839l-38-71z"/>
+  <path fill="none" stroke="#ffd45c" stroke-width="9" stroke-linecap="round" d="M122 361q92-36 174 0t165 2q105-36 203-1t195-5"/>
+  <g fill="#25232a" stroke="#f18449" stroke-width="4">
+    <path d="M365 248h181v63H365zM394 211h83v37h-83zM486 225h74v23h-74z"/>
+    <path d="M380 270h14v78h-14zm140-10h13v88h-13zM410 238v-38h12v38m31 0v-48h12v48"/>
+    <path d="M427 265h28v21h-28z" fill="#ff9e38" stroke="none"/>
+  </g>
+  <path fill="none" stroke="#ffb347" stroke-opacity=".5" stroke-width="3" d="M0 394q154-31 284 2t252-4q187-37 424 1"/>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-label="Illustrated moon forest with towering trees and a shield bunker">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#142831"/><stop offset=".6" stop-color="#55754e"/><stop offset="1" stop-color="#b5a56a"/></linearGradient>
+    <linearGradient id="ground" x2="0" y2="1"><stop stop-color="#665d39"/><stop offset="1" stop-color="#222a22"/></linearGradient>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h960v420H0z"/>
+  <circle cx="696" cy="83" r="39" fill="#e0dfba" opacity=".82"/>
+  <path fill="#243b32" d="M57 0h39v274H57zm136 0h32v300h-32zm574 0h43v279h-43zm123 0h33v306h-33z"/>
+  <g fill="#355642">
+    <path d="M10 150 102 14l92 136H10zm83 34 97-158 97 158H93zm526-23 112-174 112 174H619zm135 28L850 18l111 171H754z"/>
+    <path d="M-25 240 75 93l106 147H-25zm683-8 119-174 121 174H658z" fill="#496b48"/>
+  </g>
+  <path fill="#9caa68" opacity=".23" d="M274 90h5v235h-5zm291-57h4v275h-4zM481 113h3v209h-3z"/>
+  <path fill="url(#ground)" d="M0 299q117-42 246 0t232-2q127-42 241 2t241-5v126H0z"/>
+  <path fill="#71804e" d="M0 344q120-40 248 2t234-4q140-43 240 1t238-9v86H0z"/>
+  <g fill="#282f2a" stroke="#a8a06a" stroke-width="3">
+    <path d="M407 265h149v62H407zM430 226h94v39h-94zM452 203h51v23h-51z"/>
+    <path d="M392 277h17v65h-17zm162 0h17v65h-17z"/>
+    <path d="M449 284h28v22h-28z" fill="#f2bd61"/>
+  </g>
+  <path fill="none" stroke="#b6c778" stroke-opacity=".7" stroke-width="4" d="M0 377q143-27 279 1t252-3q176-30 429 4"/>
+</svg>

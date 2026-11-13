@@ -3170,3 +3170,53 @@ body.muted .sound-ico { color: #7a8b98; }
   .hangar-foot > span { display: none; }
 }
 
+
+/* ---------- original illustrated battlefield previews ---------- */
+.map-art-illustration {
+  isolation: isolate;
+  background: #0a1017;
+}
+.map-art-illustration::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(4, 9, 15, 0.05) 0%, rgba(4, 9, 15, 0.12) 46%, rgba(4, 9, 15, 0.82) 100%),
+    linear-gradient(90deg, rgba(4, 9, 15, 0.28), transparent 42%);
+}
+.map-art-illustration .map-illustration {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.04) contrast(1.04) brightness(0.92);
+  transform: scale(1.02);
+  transition: transform 0.5s ease, filter 0.35s ease;
+}
+.map-tile-available:hover .map-art-illustration .map-illustration,
+.map-tile-available:focus-visible .map-art-illustration .map-illustration {
+  transform: scale(1.075);
+  filter: saturate(1.14) contrast(1.06) brightness(1);
+}
+.map-art-illustration .map-art-tag {
+  z-index: 2;
+  border-color: rgba(255, 224, 168, 0.45);
+  background: rgba(5, 10, 15, 0.7);
+  color: #ffe6ae;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+.art-rebel.map-art-illustration {
+  box-shadow: inset 0 0 42px rgba(244, 193, 77, 0.08);
+}
+.art-hoth.map-art-illustration {
+  box-shadow: inset 0 0 42px rgba(155, 216, 236, 0.14);
+}
+.art-mustafar.map-art-illustration {
+  box-shadow: inset 0 0 48px rgba(255, 116, 44, 0.18);
+}
+.art-endor.map-art-illustration {
+  box-shadow: inset 0 0 42px rgba(159, 216, 106, 0.12);
+}

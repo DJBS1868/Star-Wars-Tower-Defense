@@ -328,12 +328,12 @@ export const ENEMY_TYPES = {
     color: '#c8a46a',
   },
   scout: {
-    name: 'STAP Scout', short: 'STAP', body: 'speeder', palette: 'stap',
+    name: 'STAP Scout', short: 'STAP', body: 'stap',
     hp: 0.5, speed: 124, radius: 8.5, reward: 1, leak: 1, armor: 0, gap: 0.46,
     color: '#8a9a8e',
   },
   tank: {
-    name: 'Super Battle Droid', short: 'B2', body: 'superdroid', palette: 'b2',
+    name: 'Super Battle Droid', short: 'B2', body: 'b2',
     hp: 4.4, speed: 43, radius: 15, reward: 2.4, leak: 2, armor: 2, gap: 1.15,
     heavy: true, color: '#9b5a44',
   },
@@ -345,7 +345,7 @@ export const ENEMY_TYPES = {
 
   /* —— Hoth: Imperial cold-weather assault —— */
   snowtrooper: {
-    name: 'Snowtrooper', short: 'SNOW', body: 'trooper', palette: 'snow',
+    name: 'Snowtrooper', short: 'SNOW', body: 'snowtrooper',
     hp: 1.15, speed: 62, radius: 11, reward: 1.1, leak: 1, armor: 0, gap: 0.68,
     color: '#dce8ee',
   },
@@ -355,7 +355,7 @@ export const ENEMY_TYPES = {
     color: '#93b6c2',
   },
   atst: {
-    name: 'AT-ST Walker', short: 'AT-ST', body: 'walker', palette: 'hoth',
+    name: 'AT-ST Walker', short: 'AT-ST', body: 'atst',
     hp: 5.2, speed: 40, radius: 16, reward: 2.8, leak: 2, armor: 3, gap: 1.2,
     heavy: true, color: '#9aa9ad',
   },
@@ -367,7 +367,7 @@ export const ENEMY_TYPES = {
 
   /* —— Mustafar: Black Sun mining force —— */
   magma: {
-    name: 'Magma Trooper', short: 'MAGMA', body: 'trooper', palette: 'magma',
+    name: 'Magma Trooper', short: 'MAGMA', body: 'magmatrooper',
     hp: 1.25, speed: 58, radius: 11.5, reward: 1.2, leak: 1, armor: 1, gap: 0.72,
     color: '#b8563d',
   },
@@ -377,7 +377,7 @@ export const ENEMY_TYPES = {
     color: '#ff8a3d',
   },
   miner: {
-    name: 'Mining Droid', short: 'MINER', body: 'superdroid', palette: 'mining',
+    name: 'Mining Droid', short: 'MINER', body: 'miningdroid',
     hp: 5.6, speed: 38, radius: 17, reward: 3, leak: 2, armor: 4, gap: 1.25,
     heavy: true, color: '#8a5a3a',
   },
@@ -389,22 +389,22 @@ export const ENEMY_TYPES = {
 
   /* —— Endor: Imperial forest garrison —— */
   stormtrooper: {
-    name: 'Stormtrooper', short: 'STORM', body: 'trooper', palette: 'storm',
+    name: 'Stormtrooper', short: 'STORM', body: 'stormtrooper',
     hp: 1.1, speed: 64, radius: 11, reward: 1.05, leak: 1, armor: 1, gap: 0.65,
     color: '#eef1ef',
   },
   biker: {
-    name: 'Scout Trooper', short: 'BIKE', body: 'speeder', palette: 'biker',
+    name: 'Scout Trooper', short: 'BIKE', body: 'bikerscout',
     hp: 0.55, speed: 142, radius: 9, reward: 1.05, leak: 1, armor: 0, gap: 0.36,
     color: '#d9dee0',
   },
   commando: {
-    name: 'Storm Commando', short: 'CMDO', body: 'trooper', palette: 'commando',
+    name: 'Storm Commando', short: 'CMDO', body: 'commando',
     hp: 5.2, speed: 44, radius: 14, reward: 2.7, leak: 2, armor: 3, gap: 1.1,
     heavy: true, color: '#4c5157',
   },
   walkerboss: {
-    name: 'AT-ST Commander', short: 'AT-ST', body: 'walker', palette: 'commander', boss: true,
+    name: 'AT-ST Commander', short: 'AT-ST', body: 'commandwalker', boss: true,
     hp: 22, speed: 31, radius: 24, reward: 26, leak: 9, armor: 5, gap: 1.5,
     color: '#8b969b',
   },
@@ -422,10 +422,10 @@ export const MAPS = {
     id: 'tatooine',
     planet: 'TATOOINE',
     site: 'OUTPOST RELAY',
-    region: 'DEEP SPACE',
+    region: 'TATOOINE',
     kicker: 'REBEL ALLIANCE · OUTER RIM',
     desc: 'A remote Rebel signal station under attack. Hold the line and keep the transmission alive.',
-    tag: 'DESERT WORLD',
+    tag: 'TATOOINE',
     difficulty: 'STANDARD',
     theme: 'desert',
     waves: 25,
@@ -448,10 +448,10 @@ export const MAPS = {
     id: 'hoth',
     planet: 'HOTH',
     site: 'ECHO BASE',
-    region: 'ICE WORLD',
+    region: 'HOTH',
     kicker: 'REBEL ALLIANCE · HOTH SYSTEM',
     desc: 'Frozen trenches, howling wind, and Imperial walkers. Hold the ice until the transports are away.',
-    tag: 'ICE WORLD',
+    tag: 'HOTH',
     difficulty: 'VETERAN',
     theme: 'ice',
     waves: 25,
@@ -474,10 +474,10 @@ export const MAPS = {
     id: 'mustafar',
     planet: 'MUSTAFAR',
     site: 'LAVA REFINERY',
-    region: 'VOLCANIC',
+    region: 'MUSTAFAR',
     kicker: 'BLACK SUN · MUSTAFAR',
     desc: 'A captured mining refinery above the lava flows. Heavy armour and Sith enforcers guard the line.',
-    tag: 'VOLCANIC WORLD',
+    tag: 'MUSTAFAR',
     difficulty: 'ELITE',
     theme: 'lava',
     waves: 25,
@@ -500,10 +500,10 @@ export const MAPS = {
     id: 'endor',
     planet: 'ENDOR',
     site: 'SHIELD BUNKER',
-    region: 'FOREST MOON',
+    region: 'ENDOR',
     kicker: 'REBEL ALLIANCE · ENDOR',
     desc: 'Dense forest, narrow sightlines, and an Imperial bunker. Stop the garrison before it reaches the shield.',
-    tag: 'FOREST MOON',
+    tag: 'ENDOR',
     difficulty: 'ELITE',
     theme: 'forest',
     waves: 25,
