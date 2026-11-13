@@ -155,21 +155,36 @@ const HOTH_DECOR = [
 ];
 
 const MUSTAFAR_DECOR = [
-  { type: 'rock', x: 0.045, y: 0.115, r: 0.034, seed: 11 },
-  { type: 'basalt', x: 0.155, y: 0.105, r: 0.028, seed: 19 },
-  { type: 'lavapool', x: 0.615, y: 0.105, r: 0.038, seed: 29 },
-  { type: 'pipe', x: 0.775, y: 0.105, r: 0.034, seed: 37 },
-  { type: 'basalt', x: 0.925, y: 0.125, r: 0.030, seed: 41 },
-  { type: 'lavapool', x: 0.955, y: 0.905, r: 0.036, seed: 47 },
-  { type: 'rock', x: 0.075, y: 0.925, r: 0.030, seed: 53 },
-  { type: 'pipe', x: 0.265, y: 0.925, r: 0.028, seed: 59 },
-  { type: 'basalt', x: 0.655, y: 0.945, r: 0.026, seed: 67 },
-  { type: 'crate', x: 0.355, y: 0.105, r: 0.014, seed: 71 },
-  { type: 'crate', x: 0.405, y: 0.125, r: 0.012, seed: 73 },
-  { type: 'pipe', x: 0.505, y: 0.495, r: 0.020, seed: 79 },
-  { type: 'basalt', x: 0.925, y: 0.495, r: 0.020, seed: 83 },
-  { type: 'lavapool', x: 0.245, y: 0.545, r: 0.022, seed: 89 },
-  { type: 'rock', x: 0.66, y: 0.555, r: 0.016, seed: 97 },
+  /* Northern refinery shelf: processing plant, lava fall and basalt ridge. */
+  { type: 'rock', x: 0.028, y: 0.062, r: 0.030, seed: 11 },
+  { type: 'basalt', x: 0.110, y: 0.095, r: 0.024, seed: 19 },
+  { type: 'refinery', x: 0.232, y: 0.072, r: 0.047, seed: 23 },
+  { type: 'crate', x: 0.305, y: 0.108, r: 0.012, seed: 29 },
+  { type: 'crate', x: 0.340, y: 0.090, r: 0.011, seed: 31 },
+  { type: 'lavafall', x: 0.430, y: 0.060, r: 0.031, seed: 37 },
+  { type: 'obsidian', x: 0.530, y: 0.105, r: 0.024, seed: 41 },
+  { type: 'heatvent', x: 0.640, y: 0.070, r: 0.022, seed: 43 },
+  { type: 'pipe', x: 0.735, y: 0.105, r: 0.030, seed: 47 },
+  { type: 'catwalk', x: 0.865, y: 0.075, r: 0.032, seed: 53 },
+  { type: 'basalt', x: 0.962, y: 0.118, r: 0.026, seed: 59 },
+
+  /* Central flats: vents and glass shards keep the open lanes readable. */
+  { type: 'lavapool', x: 0.505, y: 0.268, r: 0.024, seed: 61 },
+  { type: 'obsidian', x: 0.688, y: 0.318, r: 0.018, seed: 67 },
+  { type: 'heatvent', x: 0.058, y: 0.535, r: 0.020, seed: 71 },
+  { type: 'pipe', x: 0.505, y: 0.585, r: 0.018, seed: 73 },
+  { type: 'basalt', x: 0.722, y: 0.560, r: 0.017, seed: 79 },
+  { type: 'rock', x: 0.958, y: 0.408, r: 0.017, seed: 83 },
+
+  /* Southern crust: a second plant, lava channels and a cracked shelf. */
+  { type: 'catwalk', x: 0.098, y: 0.918, r: 0.030, seed: 89 },
+  { type: 'lavafall', x: 0.205, y: 0.948, r: 0.026, seed: 97 },
+  { type: 'refinery', x: 0.352, y: 0.958, r: 0.040, seed: 101 },
+  { type: 'lavapool', x: 0.548, y: 0.950, r: 0.030, seed: 103 },
+  { type: 'obsidian', x: 0.678, y: 0.942, r: 0.022, seed: 107 },
+  { type: 'pipe', x: 0.782, y: 0.915, r: 0.024, seed: 109 },
+  { type: 'basalt', x: 0.900, y: 0.960, r: 0.024, seed: 113 },
+  { type: 'crate', x: 0.936, y: 0.868, r: 0.012, seed: 127 },
 ];
 
 const ENDOR_DECOR = [
@@ -383,26 +398,21 @@ export const ENEMY_TYPES = {
     color: '#d9ecff', fx: '#bfe9ff',
   },
 
-  /* —— Mustafar: Black Sun mining force —— */
-  magma: {
-    name: 'Magma Trooper', short: 'MAGMA', body: 'magmatrooper',
-    hp: 1.25, speed: 58, radius: 11.5, reward: 1.2, leak: 1, armor: 1, gap: 0.72,
-    color: '#b8563d',
+  /* —— Mustafar: Xandank packs, the refinery garrison, and the beast —— */
+  xandank: {
+    name: 'Xandank', short: 'XANDANK', body: 'xandank',
+    hp: 0.58, speed: 116, radius: 10.5, reward: 0.95, leak: 1, armor: 0, gap: 0.32,
+    color: '#b83b28', fx: '#ff8a32',
   },
-  skitter: {
-    name: 'Lava Skitter', short: 'SKIT', body: 'skitter', palette: 'lava',
-    hp: 0.5, speed: 132, radius: 8, reward: 1, leak: 1, armor: 0, gap: 0.38,
-    color: '#ff8a3d',
+  mustafarian: {
+    name: 'Mustafarian', short: 'MUSTAFAR', body: 'mustafarian',
+    hp: 6.2, speed: 43, radius: 15.5, reward: 3.1, leak: 2, armor: 4, gap: 1.02,
+    heavy: true, color: '#9aa1a8', fx: '#ff8a32',
   },
-  miner: {
-    name: 'Mining Droid', short: 'MINER', body: 'miningdroid',
-    hp: 5.6, speed: 38, radius: 17, reward: 3, leak: 2, armor: 4, gap: 1.25,
-    heavy: true, color: '#8a5a3a',
-  },
-  sith: {
-    name: 'Sith Enforcer', short: 'SITH', body: 'sith', boss: true,
-    hp: 24, speed: 34, radius: 25, reward: 28, leak: 10, armor: 4, gap: 1.5,
-    color: '#d6403a',
+  magmabeast: {
+    name: 'Magma Beast', short: 'MAGMA BEAST', body: 'magmabeast', boss: true,
+    hp: 36, speed: 26, radius: 36, reward: 46, leak: 13, armor: 7, gap: 2.2,
+    color: '#ff6a28', fx: '#ff8a32',
   },
 
   /* —— Endor: forest creatures —— */
@@ -496,7 +506,7 @@ export const MAPS = {
     site: 'LAVA REFINERY',
     region: 'MUSTAFAR',
     kicker: 'BLACK SUN · MUSTAFAR',
-    desc: 'A captured mining refinery above the lava flows. Heavy armour and Sith enforcers guard the line.',
+    desc: 'A captured mining refinery above the lava flows. Xandank packs prowl the basalt flats, dark-armored Mustafarians hold the causeway, and a Magma Beast stirs beneath the crust.',
     tag: 'MUSTAFAR',
     difficulty: 'ELITE',
     theme: 'lava',
@@ -508,11 +518,14 @@ export const MAPS = {
     base: { x: 0.952, y: 0.60 },
     path: MUSTAFAR_PATH,
     decor: MUSTAFAR_DECOR,
-    roster: { line: 'magma', fast: 'skitter', heavy: 'miner', boss: 'sith' },
-    mix: { lineRate: 0.72, fastRate: 0.62, heavyStart: 5, heavyRate: 0.58, fastStart: 3 },
-    flavor: { boss: 'Sith enforcer has entered the refinery', final: 'Final wave — the Sith comes for the relay!' },
-    endWin: 'The refinery is quiet. Lava still flows, but the Sith enforcer is ash on the catwalk.',
-    endLose: 'The Sith cut through the refinery. The relay is slag in the lava channels.',
+    roster: { line: 'xandank', fast: 'xandank', heavy: 'mustafarian', boss: 'magmabeast' },
+    mix: { lineRate: 1.0, fastRate: 0.7, heavyStart: 5, heavyRate: 0.62, fastStart: 2 },
+    bossEvery: 0,
+    finalBossCount: 1,
+    finalBossMul: 1.85,
+    flavor: { boss: 'Armored Mustafarians are forming the line', final: 'Final wave — the Magma Beast has risen from the lava!' },
+    endWin: 'The Magma Beast cools into black slag and the refinery falls silent. The causeway is still yours.',
+    endLose: 'The Magma Beast broke the refinery line. The relay is a molten ruin on the basalt shelf.',
     chips: ['25 WAVES', 'MUSTAFAR', 'ELITE'],
     accent: '#ff8a45',
   },
