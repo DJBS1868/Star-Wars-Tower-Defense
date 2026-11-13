@@ -5468,88 +5468,50 @@ function drawWampaBody(ctx, e, time) {
     }
   }
 
-  /* --- massive arms with hooked claws ----------------------------- */
-  for (const side of [-1, 1]) {
-    const lift = side === -1 ? armSway : -armSway;
-    const shoulderX = 2.0;
-    const shoulderY = side * 18.0;
-    const elbowX = 13.5 + lift * 0.8;
-    const elbowY = side * 29.0;
-    const wristX = 22.0 + lift * 1.2;
-    const wristY = side * 35.0;
-    // upper arm
-    ctx.strokeStyle = '#c0d5e0';
-    ctx.lineWidth = 15.0;
-    ctx.beginPath();
-    ctx.moveTo(shoulderX, shoulderY);
-    ctx.lineTo(elbowX, elbowY);
-    ctx.stroke();
-    // forearm
-    ctx.strokeStyle = '#eaf6fb';
-    ctx.lineWidth = 11.0;
-    ctx.beginPath();
-    ctx.moveTo(elbowX, elbowY);
-    ctx.lineTo(wristX, wristY);
-    ctx.stroke();
-    // shaggy arm fringe
-    for (let i = 0; i < 7; i++) {
-      const t = 0.12 + i * 0.12;
-      const x = shoulderX + (wristX - shoulderX) * t;
-      const y = shoulderY + (wristY - shoulderY) * t;
-      ctx.strokeStyle = i % 3 === 0 ? 'rgba(255, 255, 255, 0.9)' : 'rgba(157, 190, 205, 0.7)';
-      ctx.lineWidth = 0.9;
-      ctx.beginPath();
-      ctx.moveTo(x, y + side * 5.5);
-      ctx.lineTo(x - 2.5, y + side * 9.0);
-      ctx.stroke();
-    }
-    // palm
-    ctx.fillStyle = '#f4fbfe';
-    ctx.beginPath();
-    ctx.ellipse(wristX, wristY, 6.4, 4.8, side * 0.55, 0, TAU);
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(112, 148, 164, 0.6)';
-    ctx.lineWidth = 0.7;
-    ctx.stroke();
-    // four sharp curved claws
-    const handAng = side * 0.55;
-    for (let claw = -1.5; claw <= 1.5; claw++) {
-      const a = handAng + claw * 0.25;
-      const bx = wristX + Math.cos(a) * 4.2;
-      const by = wristY + Math.sin(a) * 4.2;
-      const tx = wristX + Math.cos(a) * 13.6;
-      const ty = wristY + Math.sin(a) * 13.6;
-      ctx.fillStyle = '#222f37';
-      ctx.beginPath();
-      ctx.moveTo(bx + Math.cos(a - 0.16) * 1.5, by + Math.sin(a - 0.16) * 1.5);
-      ctx.quadraticCurveTo(wristX + Math.cos(a) * 9.8, wristY + Math.sin(a) * 9.8 - 1.4, tx, ty);
-      ctx.quadraticCurveTo(wristX + Math.cos(a + 0.16) * 8.0, wristY + Math.sin(a + 0.16) * 8.0, bx + Math.cos(a + 0.16) * 1.5, by + Math.sin(a + 0.16) * 1.5);
-      ctx.closePath();
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(210, 237, 248, 0.55)';
-      ctx.lineWidth = 0.55;
-      ctx.stroke();
-    }
-  }
-
   /* --- giant shaggy torso ----------------------------------------- */
   const bodyGrad = ctx.createLinearGradient(-26, -20, 24, 20);
-  bodyGrad.addColorStop(0, '#c2d8e3');
-  bodyGrad.addColorStop(0.28, '#f4fbfe');
-  bodyGrad.addColorStop(0.62, '#e1f0f7');
-  bodyGrad.addColorStop(1, '#adc7d4');
+  bodyGrad.addColorStop(0, '#a9c5d3');
+  bodyGrad.addColorStop(0.28, '#f1fafd');
+  bodyGrad.addColorStop(0.62, '#d9eaf2');
+  bodyGrad.addColorStop(1, '#8fb2c4');
   ctx.fillStyle = bodyGrad;
   ctx.beginPath();
-  ctx.moveTo(-25.0, 0);
-  ctx.bezierCurveTo(-26.0, -10.0, -22.0, -20.0, -8.0, -23.0);
-  ctx.bezierCurveTo(8.0, -26.0, 22.0, -22.0, 26.0, -13.0);
-  ctx.bezierCurveTo(28.0, -7.0, 28.0, 7.0, 26.0, 13.0);
-  ctx.bezierCurveTo(22.0, 22.0, 8.0, 26.0, -8.0, 23.0);
-  ctx.bezierCurveTo(-22.0, 20.0, -26.0, 10.0, -25.0, 0);
+  ctx.moveTo(-28.0, 0);
+  ctx.bezierCurveTo(-28.0, -7.5, -24.0, -13.5, -17.0, -16.5);
+  ctx.bezierCurveTo(-11.0, -19.5, -5.0, -25.5, 6.0, -26.0);
+  ctx.bezierCurveTo(18.0, -26.5, 25.5, -21.5, 28.0, -14.0);
+  ctx.bezierCurveTo(29.5, -7.5, 29.5, 7.5, 28.0, 14.0);
+  ctx.bezierCurveTo(25.5, 21.5, 18.0, 26.5, 6.0, 26.0);
+  ctx.bezierCurveTo(-5.0, 25.5, -11.0, 19.5, -17.0, 16.5);
+  ctx.bezierCurveTo(-24.0, 13.5, -28.0, 7.5, -28.0, 0);
   ctx.closePath();
   ctx.fill();
   ctx.strokeStyle = 'rgba(104, 139, 155, 0.75)';
   ctx.lineWidth = 1.2;
+  ctx.stroke();
+
+  // layered shoulder and flank fur breaks up the round silhouette
+  for (let i = 0; i < 22; i++) {
+    const t = i / 21;
+    const x = -24.0 + t * 48.0;
+    const spread = Math.sin(t * Math.PI) * 0.92;
+    for (const side of [-1, 1]) {
+      const y = side * (15.5 + spread * 8.0);
+      const len = 1.8 + ((i * 5) % 4) * 0.55;
+      ctx.strokeStyle = i % 4 === 0 ? 'rgba(255, 255, 255, 0.9)' : i % 3 === 0 ? 'rgba(190, 217, 230, 0.8)' : 'rgba(132, 167, 183, 0.65)';
+      ctx.lineWidth = 0.85;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x - 1.0, y + side * len);
+      ctx.stroke();
+    }
+  }
+  // dark crease between the shoulder blades
+  ctx.strokeStyle = 'rgba(120, 153, 169, 0.32)';
+  ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  ctx.moveTo(-15.0, 0);
+  ctx.quadraticCurveTo(0.0, -1.2, 17.0, 0);
   ctx.stroke();
 
   // shaggy pelt fringe, long around the shoulders and hips
@@ -5590,6 +5552,112 @@ function drawWampaBody(ctx, e, time) {
   ctx.ellipse(16.0, 0, 13.0, 11.0, 0, 0, TAU);
   ctx.fill();
 
+  /* --- massive arms with hooked claws ----------------------------- */
+  for (const side of [-1, 1]) {
+    const lift = side === -1 ? armSway : -armSway;
+    const shoulderX = 3.0;
+    const shoulderY = side * 18.5;
+    const elbowX = 21.0 + lift * 0.7;
+    const elbowY = side * 29.0;
+    const wristX = 37.0 + lift * 1.0;
+    const wristY = side * 30.0;
+    // dark rim and drop shadow separate the limb from the shaggy torso
+    ctx.save();
+    ctx.shadowColor = 'rgba(38, 67, 82, 0.55)';
+    ctx.shadowBlur = 7;
+    ctx.shadowOffsetY = 3;
+    ctx.strokeStyle = '#4f7488';
+    ctx.lineWidth = 20.0;
+    ctx.beginPath();
+    ctx.moveTo(shoulderX, shoulderY);
+    ctx.lineTo(elbowX, elbowY);
+    ctx.stroke();
+    ctx.strokeStyle = '#4f7488';
+    ctx.lineWidth = 15.4;
+    ctx.beginPath();
+    ctx.moveTo(elbowX, elbowY);
+    ctx.lineTo(wristX, wristY);
+    ctx.stroke();
+    ctx.restore();
+    // upper arm
+    ctx.strokeStyle = '#9dbfce';
+    ctx.lineWidth = 16.0;
+    ctx.beginPath();
+    ctx.moveTo(shoulderX, shoulderY);
+    ctx.lineTo(elbowX, elbowY);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(233, 247, 252, 0.72)';
+    ctx.lineWidth = 5.2;
+    ctx.beginPath();
+    ctx.moveTo(shoulderX + 1.0, shoulderY - side * 4.0);
+    ctx.lineTo(elbowX + 1.0, elbowY - side * 4.0);
+    ctx.stroke();
+    // forearm
+    ctx.strokeStyle = '#c6e0ea';
+    ctx.lineWidth = 11.8;
+    ctx.beginPath();
+    ctx.moveTo(elbowX, elbowY);
+    ctx.lineTo(wristX, wristY);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(244, 252, 255, 0.78)';
+    ctx.lineWidth = 4.0;
+    ctx.beginPath();
+    ctx.moveTo(elbowX + 1.0, elbowY - side * 3.0);
+    ctx.lineTo(wristX + 1.0, wristY - side * 3.0);
+    ctx.stroke();
+    // thick shoulder tufts
+    for (let i = 0; i < 7; i++) {
+      const a = side * (0.25 + i * 0.14);
+      const bx = shoulderX + Math.cos(a) * 12.0;
+      const by = shoulderY + Math.sin(a) * 9.0;
+      ctx.strokeStyle = i % 2 ? 'rgba(255, 255, 255, 0.9)' : 'rgba(158, 191, 206, 0.72)';
+      ctx.lineWidth = 1.0;
+      ctx.beginPath();
+      ctx.moveTo(bx, by);
+      ctx.lineTo(bx + Math.cos(a) * 4.0, by + Math.sin(a) * 5.2);
+      ctx.stroke();
+    }
+    // shaggy arm fringe
+    for (let i = 0; i < 8; i++) {
+      const t = 0.1 + i * 0.11;
+      const x = shoulderX + (wristX - shoulderX) * t;
+      const y = shoulderY + (wristY - shoulderY) * t;
+      ctx.strokeStyle = i % 3 === 0 ? 'rgba(255, 255, 255, 0.9)' : 'rgba(148, 184, 200, 0.75)';
+      ctx.lineWidth = 0.95;
+      ctx.beginPath();
+      ctx.moveTo(x, y + side * 6.2);
+      ctx.lineTo(x - 3.0, y + side * 10.4);
+      ctx.stroke();
+    }
+    // palm
+    ctx.fillStyle = '#f4fbfe';
+    ctx.beginPath();
+    ctx.ellipse(wristX, wristY, 8.6, 5.8, side * 0.25, 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(105, 143, 160, 0.72)';
+    ctx.lineWidth = 0.85;
+    ctx.stroke();
+    // four long curved claws
+    const handAng = side * 0.38;
+    for (let claw = -1.5; claw <= 1.5; claw++) {
+      const a = handAng + claw * 0.24;
+      const bx = wristX + Math.cos(a) * 5.4;
+      const by = wristY + Math.sin(a) * 5.4;
+      const tx = wristX + Math.cos(a) * 16.5;
+      const ty = wristY + Math.sin(a) * 16.5;
+      ctx.fillStyle = '#202d35';
+      ctx.beginPath();
+      ctx.moveTo(bx + Math.cos(a - 0.18) * 1.9, by + Math.sin(a - 0.18) * 1.9);
+      ctx.quadraticCurveTo(wristX + Math.cos(a) * 11.6, wristY + Math.sin(a) * 11.6, tx, ty);
+      ctx.quadraticCurveTo(wristX + Math.cos(a + 0.18) * 9.2, wristY + Math.sin(a + 0.18) * 9.2, bx + Math.cos(a + 0.18) * 1.9, by + Math.sin(a + 0.18) * 1.9);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(210, 237, 248, 0.5)';
+      ctx.lineWidth = 0.55;
+      ctx.stroke();
+    }
+  }
+
   /* --- skull, face and huge curved horns -------------------------- */
   // thick neck ruff
   for (let i = 0; i < 16; i++) {
@@ -5611,12 +5679,12 @@ function drawWampaBody(ctx, e, time) {
   headGrad.addColorStop(1, '#bfd8e4');
   ctx.fillStyle = headGrad;
   ctx.beginPath();
-  ctx.moveTo(20.0, -11.0);
-  ctx.quadraticCurveTo(28.0, -13.0, 34.0, -8.5);
-  ctx.quadraticCurveTo(39.0, -4.5, 39.6, 0);
-  ctx.quadraticCurveTo(39.0, 4.5, 34.0, 8.5);
-  ctx.quadraticCurveTo(28.0, 13.0, 20.0, 11.0);
-  ctx.quadraticCurveTo(18.0, 0, 20.0, -11.0);
+  ctx.moveTo(19.0, -12.5);
+  ctx.quadraticCurveTo(29.0, -15.2, 36.0, -9.6);
+  ctx.quadraticCurveTo(42.2, -5.2, 43.0, 0);
+  ctx.quadraticCurveTo(42.2, 5.2, 36.0, 9.6);
+  ctx.quadraticCurveTo(29.0, 15.2, 19.0, 12.5);
+  ctx.quadraticCurveTo(16.6, 0, 19.0, -12.5);
   ctx.closePath();
   ctx.fill();
   ctx.strokeStyle = 'rgba(105, 141, 157, 0.8)';
@@ -5629,19 +5697,19 @@ function drawWampaBody(ctx, e, time) {
       ctx.strokeStyle = col;
       ctx.lineWidth = w;
       ctx.beginPath();
-      ctx.moveTo(24.0, side * 8.2);
-      ctx.bezierCurveTo(33.0, side * 10.5, 40.0, side * 16.0, 39.0, side * 24.0);
-      ctx.bezierCurveTo(38.0, side * 30.0, 31.0, side * 31.0, 27.0, side * 27.0);
+      ctx.moveTo(25.0, side * 8.5);
+      ctx.bezierCurveTo(34.0, side * 10.5, 40.5, side * 14.5, 41.5, side * 20.0);
+      ctx.bezierCurveTo(42.0, side * 24.5, 36.0, side * 25.5, 31.5, side * 22.0);
       ctx.stroke();
     };
-    hornPath(8.2, '#6f6557');
-    hornPath(6.6, '#b8a98e');
-    hornPath(3.4, '#e9ddc5');
+    hornPath(7.8, '#6f6557');
+    hornPath(6.2, '#b8a98e');
+    hornPath(3.2, '#e9ddc5');
     // horn ridges
     for (let i = 0; i < 6; i++) {
       const t = i / 6;
-      const hx = 24.0 + 15.0 * t;
-      const hy = side * (8.2 + 18.0 * t);
+      const hx = 25.0 + 13.0 * t;
+      const hy = side * (8.5 + 12.5 * t);
       ctx.strokeStyle = 'rgba(93, 81, 64, 0.5)';
       ctx.lineWidth = 0.65;
       ctx.beginPath();
@@ -5652,7 +5720,7 @@ function drawWampaBody(ctx, e, time) {
     // warm inner-ear / horn root
     ctx.fillStyle = 'rgba(168, 144, 112, 0.55)';
     ctx.beginPath();
-    ctx.ellipse(24.6, side * 8.6, 2.2, 1.6, side * 0.4, 0, TAU);
+    ctx.ellipse(25.6, side * 9.4, 2.2, 1.6, side * 0.4, 0, TAU);
     ctx.fill();
   }
 
@@ -5660,49 +5728,49 @@ function drawWampaBody(ctx, e, time) {
   for (const side of [-1, 1]) {
     ctx.fillStyle = 'rgba(176, 205, 218, 0.85)';
     ctx.beginPath();
-    ctx.ellipse(29.0, side * 6.0, 3.6, 1.9, side * 0.25, 0, TAU);
+    ctx.ellipse(30.0, side * 6.8, 4.1, 2.2, side * 0.25, 0, TAU);
     ctx.fill();
     ctx.fillStyle = '#16232b';
     ctx.beginPath();
-    ctx.ellipse(31.6, side * 4.7, 1.7, 1.3, side * 0.2, 0, TAU);
+    ctx.ellipse(33.2, side * 5.3, 1.9, 1.45, side * 0.2, 0, TAU);
     ctx.fill();
     ctx.fillStyle = 'rgba(255, 184, 92, 0.95)';
     ctx.beginPath();
-    ctx.arc(31.9, side * 4.7, 0.58, 0, TAU);
+    ctx.arc(33.5, side * 5.3, 0.65, 0, TAU);
     ctx.fill();
     ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
     ctx.beginPath();
-    ctx.arc(32.1, side * 4.55, 0.2, 0, TAU);
+    ctx.arc(33.75, side * 5.15, 0.22, 0, TAU);
     ctx.fill();
   }
   // muzzle
   ctx.fillStyle = '#d7e9f1';
   ctx.beginPath();
-  ctx.ellipse(37.0, 0, 5.6, 4.4, 0, 0, TAU);
+  ctx.ellipse(39.0, 0, 6.2, 5.0, 0, 0, TAU);
   ctx.fill();
   ctx.strokeStyle = 'rgba(103, 137, 152, 0.75)';
   ctx.lineWidth = 0.7;
   ctx.stroke();
   ctx.fillStyle = '#3f5058';
   ctx.beginPath();
-  ctx.ellipse(39.2, 0, 1.7, 1.25, 0, 0, TAU);
+  ctx.ellipse(41.6, 0, 1.9, 1.4, 0, 0, TAU);
   ctx.fill();
   // snarl and fangs
   ctx.strokeStyle = 'rgba(76, 105, 118, 0.9)';
   ctx.lineWidth = 0.8;
   ctx.beginPath();
-  ctx.moveTo(33.8, 0);
-  ctx.quadraticCurveTo(36.6, 1.4, 39.0, 0.2);
+  ctx.moveTo(35.8, 0);
+  ctx.quadraticCurveTo(38.6, 1.5, 41.2, 0.2);
   ctx.stroke();
   ctx.fillStyle = '#f8f4e9';
   for (const side of [-1, 1]) {
     for (let i = 0; i < 3; i++) {
-      const fx = 34.4 + i * 1.35;
+      const fx = 36.4 + i * 1.45;
       const fy = side * (1.0 + i * 0.18);
       ctx.beginPath();
       ctx.moveTo(fx, fy);
-      ctx.lineTo(fx + 0.85, fy + side * 1.35);
-      ctx.lineTo(fx + 1.45, fy);
+      ctx.lineTo(fx + 0.9, fy + side * 1.45);
+      ctx.lineTo(fx + 1.55, fy);
       ctx.closePath();
       ctx.fill();
     }
@@ -5711,8 +5779,8 @@ function drawWampaBody(ctx, e, time) {
   const breath = 0.14 + (Math.sin(time * 2.6 + p) * 0.5 + 0.5) * 0.12;
   ctx.fillStyle = `rgba(231, 250, 255, ${breath})`;
   ctx.beginPath();
-  ctx.ellipse(43.0, -1.4, 4.2, 2.1, -0.2, 0, TAU);
-  ctx.ellipse(47.0, -3.0, 3.0, 1.6, -0.3, 0, TAU);
+  ctx.ellipse(45.0, -1.4, 4.4, 2.2, -0.2, 0, TAU);
+  ctx.ellipse(49.2, -3.0, 3.2, 1.7, -0.3, 0, TAU);
   ctx.fill();
 
   // snow crusted into the shoulder fur
