@@ -2659,6 +2659,9 @@ export function drawEnemy(ctx, e, time, S) {
   else if (body === 'skitter') drawSkitterBody(ctx, e, time);
   else if (body === 'miningdroid') drawMiningDroidBody(ctx, e, time);
   else if (body === 'sith') drawSithBody(ctx, e, time);
+  else if (body === 'ewok') drawEwokBody(ctx, e, time);
+  else if (body === 'boarwolf') drawBoarWolfBody(ctx, e, time);
+  else if (body === 'gorax') drawGoraxBody(ctx, e, time);
   else if (body === 'stormtrooper') drawStormtrooperBody(ctx, e, time);
   else if (body === 'bikerscout') drawBikerScoutBody(ctx, e, time);
   else if (body === 'commando') drawCommandoBody(ctx, e, time);
@@ -5335,6 +5338,182 @@ function drawSithBody(ctx, e, time) {
   ctx.lineTo(25, 0);
   ctx.stroke();
   ctx.restore();
+}
+
+/* —— Endor · forest creatures —— */
+function drawEwokBody(ctx, e, time) {
+  const p = e.phase || 0;
+  const step = Math.sin(time * 13 + p) * 1.15;
+  // Little furred feet and round body.
+  ctx.strokeStyle = '#59402f';
+  ctx.lineWidth = 2.2;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(-2, -3.4); ctx.lineTo(-5 + step, -7.1); ctx.lineTo(-2 + step, -8.2);
+  ctx.moveTo(-2, 3.4); ctx.lineTo(-5 - step, 7.1); ctx.lineTo(-2 - step, 8.2);
+  ctx.stroke();
+  ctx.fillStyle = '#65452f';
+  ctx.beginPath();
+  ctx.ellipse(-1.5, 0, 6.4, 5.3, 0, 0, TAU);
+  ctx.fill();
+  // shaggy edge, kept soft and rounded rather than spiky.
+  ctx.fillStyle = '#81583a';
+  for (let i = 0; i < 7; i++) {
+    const a = i * TAU / 7;
+    ctx.beginPath();
+    ctx.arc(-1.5 + Math.cos(a) * 4.7, Math.sin(a) * 4.1, 1.8, 0, TAU);
+    ctx.fill();
+  }
+  // Tan hood and little face.
+  ctx.fillStyle = '#c9a36c';
+  ctx.beginPath();
+  ctx.ellipse(4.2, 0, 5.1, 5.4, 0, -Math.PI / 2, Math.PI / 2);
+  ctx.quadraticCurveTo(8, 0, 4.2, -5.4);
+  ctx.fill();
+  ctx.strokeStyle = '#806144';
+  ctx.lineWidth = 0.8;
+  ctx.stroke();
+  ctx.fillStyle = '#704832';
+  ctx.beginPath();
+  ctx.ellipse(6.7, 0, 2.7, 3, 0, 0, TAU);
+  ctx.fill();
+  ctx.fillStyle = '#f2d89a';
+  ctx.beginPath();
+  ctx.arc(7.5, -1.05, 0.62, 0, TAU);
+  ctx.arc(7.5, 1.05, 0.62, 0, TAU);
+  ctx.fill();
+  ctx.fillStyle = '#241b16';
+  ctx.beginPath();
+  ctx.arc(7.75, -1.05, 0.28, 0, TAU);
+  ctx.arc(7.75, 1.05, 0.28, 0, TAU);
+  ctx.fill();
+  // Wooden spear, carried forward.
+  ctx.strokeStyle = '#704b2e';
+  ctx.lineWidth = 1.25;
+  ctx.beginPath();
+  ctx.moveTo(1, 3.1); ctx.lineTo(19, 2.1);
+  ctx.stroke();
+  ctx.strokeStyle = '#d4c8a7';
+  ctx.lineWidth = 1.35;
+  ctx.beginPath();
+  ctx.moveTo(19, 2.1); ctx.lineTo(23, 1.25); ctx.lineTo(19, 3.1);
+  ctx.stroke();
+  ctx.strokeStyle = '#9b7147';
+  ctx.lineWidth = 1.1;
+  ctx.beginPath();
+  ctx.moveTo(1.7, 2.8); ctx.lineTo(4, 4.2);
+  ctx.stroke();
+}
+
+function drawBoarWolfBody(ctx, e, time) {
+  const p = e.phase || 0;
+  const gait = Math.sin(time * 8 + p) * 1.5;
+  // Four sturdy legs under a broad, muscular body.
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#333a3d';
+  ctx.lineWidth = 3.2;
+  ctx.beginPath();
+  ctx.moveTo(-7, -5); ctx.lineTo(-10 + gait, -10); ctx.lineTo(-8 + gait, -13);
+  ctx.moveTo(5, -5); ctx.lineTo(8 - gait, -10); ctx.lineTo(11 - gait, -12);
+  ctx.moveTo(-7, 5); ctx.lineTo(-10 - gait, 10); ctx.lineTo(-8 - gait, 13);
+  ctx.moveTo(5, 5); ctx.lineTo(8 + gait, 10); ctx.lineTo(11 + gait, 12);
+  ctx.stroke();
+  ctx.fillStyle = '#292f32';
+  for (const [x, y] of [[-8 + gait, -13], [11 - gait, -12], [-8 - gait, 13], [11 + gait, 12]]) {
+    ctx.beginPath(); ctx.ellipse(x, y, 2.5, 1.5, 0, 0, TAU); ctx.fill();
+  }
+  const fur = ctx.createLinearGradient(-7, -8, 8, 8);
+  fur.addColorStop(0, '#596064'); fur.addColorStop(0.52, '#41484c'); fur.addColorStop(1, '#292f32');
+  ctx.fillStyle = fur;
+  ctx.beginPath();
+  ctx.ellipse(-1, 0, 11.5, 8.3, 0, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = '#252b2e'; ctx.lineWidth = 1; ctx.stroke();
+  // Thick neck, angular muzzle and small dark mane ridge.
+  ctx.fillStyle = '#4d5559';
+  ctx.beginPath();
+  ctx.moveTo(3, -6.8); ctx.quadraticCurveTo(8, -8, 10, -4.5);
+  ctx.lineTo(14.5, -3.2); ctx.lineTo(16.2, 0); ctx.lineTo(14.5, 3.2);
+  ctx.lineTo(9, 5); ctx.lineTo(3, 6.8); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#262c2f';
+  ctx.beginPath();
+  ctx.moveTo(2, -6); ctx.lineTo(5, -10); ctx.lineTo(7, -6.7);
+  ctx.lineTo(10, -10); ctx.lineTo(11, -5.7); ctx.closePath(); ctx.fill();
+  // Tusks curve up from the broad snout.
+  ctx.fillStyle = '#d9d4c4';
+  ctx.beginPath();
+  ctx.moveTo(10, -2.2); ctx.quadraticCurveTo(13.2, -3.4, 13.5, -7.1);
+  ctx.quadraticCurveTo(15.8, -3.5, 14.1, 0); ctx.closePath(); ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(10, 2.2); ctx.quadraticCurveTo(13.2, 3.4, 13.5, 7.1);
+  ctx.quadraticCurveTo(15.8, 3.5, 14.1, 0); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#171d20';
+  ctx.beginPath(); ctx.ellipse(15.1, 0, 1.6, 2.2, 0, 0, TAU); ctx.fill();
+  ctx.fillStyle = '#f2c56b';
+  ctx.beginPath(); ctx.arc(8.7, -3.2, 0.8, 0, TAU); ctx.fill();
+  ctx.fillStyle = '#202528';
+  ctx.beginPath(); ctx.arc(9, -3.2, 0.36, 0, TAU); ctx.fill();
+  ctx.strokeStyle = 'rgba(190, 199, 198, 0.28)'; ctx.lineWidth = 0.7;
+  ctx.beginPath(); ctx.arc(-1, -0.5, 8.5, -2.6, -0.7); ctx.stroke();
+}
+
+function drawGoraxBody(ctx, e, time) {
+  const p = e.phase || 0;
+  const swing = Math.sin(time * 5 + p) * 2.2;
+  // Massive legs and long knuckle-dragging arms establish the hulking scale.
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#33251f';
+  ctx.lineWidth = 7;
+  ctx.beginPath();
+  ctx.moveTo(-7, 8); ctx.lineTo(-10 + swing * 0.25, 18); ctx.lineTo(-8, 25);
+  ctx.moveTo(4, 8); ctx.lineTo(8 - swing * 0.25, 18); ctx.lineTo(12, 24);
+  ctx.stroke();
+  ctx.fillStyle = '#241b17';
+  ctx.beginPath(); ctx.ellipse(-5, 26, 6, 3.1, 0, 0, TAU); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(14, 25, 6, 3.1, 0, 0, TAU); ctx.fill();
+  ctx.strokeStyle = '#493327';
+  ctx.lineWidth = 8.5;
+  ctx.beginPath();
+  ctx.moveTo(-8, -7); ctx.lineTo(-16 + swing, 1); ctx.lineTo(-19 + swing, 12); ctx.lineTo(-16 + swing, 23);
+  ctx.moveTo(8, -7); ctx.lineTo(14 - swing, 0); ctx.lineTo(18 - swing, 11); ctx.lineTo(22 - swing, 20);
+  ctx.stroke();
+  ctx.fillStyle = '#38271f';
+  ctx.beginPath(); ctx.ellipse(-16 + swing, 24, 5.6, 3, -0.2, 0, TAU); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(23 - swing, 21, 5.6, 3, 0.25, 0, TAU); ctx.fill();
+  // Broad chest and shoulders.
+  const fur = ctx.createLinearGradient(-11, -12, 12, 12);
+  fur.addColorStop(0, '#684936'); fur.addColorStop(0.48, '#503628'); fur.addColorStop(1, '#35251e');
+  ctx.fillStyle = fur;
+  ctx.beginPath();
+  ctx.moveTo(-10, -8); ctx.quadraticCurveTo(-14, -17, -6, -20);
+  ctx.lineTo(3, -18); ctx.quadraticCurveTo(13, -16, 13, -7);
+  ctx.lineTo(10, 8); ctx.quadraticCurveTo(0, 16, -9, 8); ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#2c201b'; ctx.lineWidth = 1.4; ctx.stroke();
+  // Rounded head, heavy brow and glowing eyes.
+  ctx.fillStyle = '#654632';
+  ctx.beginPath(); ctx.ellipse(8, -12, 8.3, 7.6, 0.15, 0, TAU); ctx.fill();
+  ctx.fillStyle = '#38271f';
+  ctx.beginPath(); ctx.ellipse(12, -9.1, 4.8, 3.2, 0.1, 0, TAU); ctx.fill();
+  ctx.fillStyle = '#ffe16a';
+  ctx.shadowColor = 'rgba(255, 207, 63, 0.95)'; ctx.shadowBlur = 7;
+  ctx.beginPath(); ctx.ellipse(10.3, -12, 1.25, 1.05, 0, 0, TAU); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(14.2, -11.7, 1.25, 1.05, 0, 0, TAU); ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = '#251b17';
+  ctx.beginPath(); ctx.arc(10.6, -12, 0.45, 0, TAU); ctx.arc(14.5, -11.7, 0.45, 0, TAU); ctx.fill();
+  ctx.fillStyle = '#33231c';
+  ctx.beginPath(); ctx.ellipse(16, -7, 3.6, 2.5, 0.1, 0, TAU); ctx.fill();
+  ctx.fillStyle = '#171412';
+  ctx.beginPath(); ctx.arc(17.2, -7, 0.7, 0, TAU); ctx.fill();
+  // Fur grooves and knuckles.
+  ctx.strokeStyle = 'rgba(190, 139, 91, 0.38)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(-6, -7); ctx.quadraticCurveTo(-1, -2, 4, -5);
+  ctx.moveTo(-5, 2); ctx.quadraticCurveTo(1, 7, 7, 3); ctx.stroke();
+  ctx.strokeStyle = '#967253'; ctx.lineWidth = 0.75;
+  for (let i = 0; i < 3; i++) {
+    ctx.beginPath(); ctx.moveTo(19 - swing + i * 2, 20); ctx.lineTo(18 - swing + i * 2, 22.2); ctx.stroke();
+  }
 }
 
 /* —— Endor · stormtrooper —— */

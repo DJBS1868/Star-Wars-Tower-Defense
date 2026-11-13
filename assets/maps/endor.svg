@@ -1,22 +1,64 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-label="Illustrated moon forest with towering trees and a shield bunker">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-label="Endor forest clearing with towering redwood trees, a winding trail, and a shield bunker">
   <defs>
-    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#142831"/><stop offset=".6" stop-color="#55754e"/><stop offset="1" stop-color="#b5a56a"/></linearGradient>
-    <linearGradient id="ground" x2="0" y2="1"><stop stop-color="#665d39"/><stop offset="1" stop-color="#222a22"/></linearGradient>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#101f27"/><stop offset=".52" stop-color="#385c4a"/><stop offset="1" stop-color="#b5a16a"/></linearGradient>
+    <radialGradient id="sunbeam"><stop stop-color="#f3d996" stop-opacity=".64"/><stop offset="1" stop-color="#f3d996" stop-opacity="0"/></radialGradient>
+    <linearGradient id="trunk" x2="1"><stop stop-color="#332923"/><stop offset=".42" stop-color="#78553a"/><stop offset=".72" stop-color="#49392d"/><stop offset="1" stop-color="#241f1b"/></linearGradient>
+    <linearGradient id="trail" x2="0" y2="1"><stop stop-color="#a9945d"/><stop offset="1" stop-color="#514532"/></linearGradient>
+    <linearGradient id="bunker" x2="0" y2="1"><stop stop-color="#777a62"/><stop offset="1" stop-color="#343c36"/></linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="17"/></filter>
   </defs>
   <path fill="url(#sky)" d="M0 0h960v420H0z"/>
-  <circle cx="696" cy="83" r="39" fill="#e0dfba" opacity=".82"/>
-  <path fill="#243b32" d="M57 0h39v274H57zm136 0h32v300h-32zm574 0h43v279h-43zm123 0h33v306h-33z"/>
-  <g fill="#355642">
-    <path d="M10 150 102 14l92 136H10zm83 34 97-158 97 158H93zm526-23 112-174 112 174H619zm135 28L850 18l111 171H754z"/>
-    <path d="M-25 240 75 93l106 147H-25zm683-8 119-174 121 174H658z" fill="#496b48"/>
+  <ellipse cx="523" cy="183" rx="240" ry="155" fill="url(#sunbeam)"/>
+  <circle cx="710" cy="77" r="29" fill="#e4ddb0" opacity=".8"/>
+  <circle cx="710" cy="77" r="44" fill="#e4ddb0" opacity=".12"/>
+  <g fill="#17352f" opacity=".76">
+    <path d="M0 0h170L89 166 0 201zm108 0h201l-108 179-87 32zm475 0h187L675 176l-93 34zm199 0h178L861 176l-79 22z"/>
   </g>
-  <path fill="#9caa68" opacity=".23" d="M274 90h5v235h-5zm291-57h4v275h-4zM481 113h3v209h-3z"/>
-  <path fill="url(#ground)" d="M0 299q117-42 246 0t232-2q127-42 241 2t241-5v126H0z"/>
-  <path fill="#71804e" d="M0 344q120-40 248 2t234-4q140-43 240 1t238-9v86H0z"/>
-  <g fill="#282f2a" stroke="#a8a06a" stroke-width="3">
-    <path d="M407 265h149v62H407zM430 226h94v39h-94zM452 203h51v23h-51z"/>
-    <path d="M392 277h17v65h-17zm162 0h17v65h-17z"/>
-    <path d="M449 284h28v22h-28z" fill="#f2bd61"/>
+  <g fill="#315341" opacity=".92">
+    <path d="M68 178 146 41l87 145h-47l53 80H42l67-75z"/>
+    <path d="M230 169 311 9l96 164h-47l62 87H201l67-85z"/>
+    <path d="M643 181 728 24l92 160h-43l64 84H609l70-84z"/>
+    <path d="M780 165 862 12l96 167h-45l54 82H750l66-84z"/>
   </g>
-  <path fill="none" stroke="#b6c778" stroke-opacity=".7" stroke-width="4" d="M0 377q143-27 279 1t252-3q176-30 429 4"/>
+  <g fill="#50704d" opacity=".88">
+    <path d="M-34 235 58 76l94 163H99l62 75H-65l65-79z"/>
+    <path d="M356 179 436 31l83 150h-38l57 79H325l59-79z"/>
+    <path d="M535 193 602 52l83 141h-38l56 71H506l57-71z"/>
+  </g>
+  <ellipse cx="496" cy="240" rx="230" ry="92" fill="#e5c779" opacity=".16" filter="url(#soft)"/>
+  <path fill="#4c4935" d="M0 274q160-35 297 0t275-2q180-39 388 5v143H0z"/>
+  <path fill="#6b6845" d="M0 316q151-35 294-4t267-7q183-32 399 2v113H0z"/>
+  <path fill="url(#trail)" d="M376 420q53-49 90-91 35-40 8-75-22-29 17-70l47 4q-45 44-21 73 29 38-3 83-28 39-66 76z" opacity=".96"/>
+  <path fill="#302820" opacity=".35" d="M390 420q60-50 98-92 35-39 9-75-19-27 21-69l19 2q-43 46-18 77 30 39-4 82-30 39-70 75z"/>
+  <!-- Monumental foreground redwoods frame the clearing. -->
+  <g>
+    <path fill="url(#trunk)" d="M36 0h81l14 92-10 48 18 42-7 54 18 184H0l16-179-8-62 19-44-12-47z"/>
+    <path fill="#92704a" opacity=".42" d="M74 0h13l-2 137 11 51-9 49 10 183H59l15-183-8-58 12-45z"/>
+    <path fill="url(#trunk)" d="M855 0h88l-9 91 15 56-18 49 18 59 11 162H810l24-171-12-53 18-51-8-58z"/>
+    <path fill="#99734b" opacity=".38" d="M887 0h18l-3 128 11 63-14 54 15 172h-31l10-177-9-56 12-52z"/>
+    <path fill="#30261f" d="M246 0h25l-5 72 9 40-10 50 10 49-6 114h-38l8-121-11-46 12-45-7-48z" opacity=".82"/>
+    <path fill="#352920" d="M710 0h31l-4 80 10 37-13 51 9 49-5 113h-42l13-121-10-47 15-46-8-52z" opacity=".8"/>
+  </g>
+  <!-- Forest floor, ferns, moss and fallen timber. -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M35 366q35-24 69 0m-55 12q38-27 79-2m604 5q41-31 86-5m-51 18q42-23 81-3" stroke="#a3a65b" stroke-width="5" opacity=".75"/>
+    <path d="M172 403l79-22m-68 31 89-24m427 8 64-24m-31 34 85-29" stroke="#8c7949" stroke-width="7" opacity=".78"/>
+  </g>
+  <g fill="#3e6844" stroke="#294833" stroke-width="2">
+    <path d="M139 364q-18-22-31-16 12 4 19 24-21-19-36-11 20 3 33 23-26-12-35 0 25-2 45 14 9-19 34-27-19-5-33 10 4-20 22-31-19-3-31 14z"/>
+    <path d="M769 360q-14-20-30-14 12 5 18 21-19-16-32-8 17 2 29 19-20-11-31 0 22-1 39 13 9-18 30-24-17-5-30 8 4-18 20-27-16-3-27 12z"/>
+  </g>
+  <!-- Shield bunker tucked into the far edge of the clearing. -->
+  <g stroke="#202722" stroke-width="3" stroke-linejoin="round">
+    <path fill="url(#bunker)" d="M610 247h143v69H610z"/>
+    <path fill="#555e4d" d="M628 218h106l19 29H610z"/>
+    <path fill="#343d35" d="M641 208h78l15 10H628z"/>
+    <path fill="#252d29" d="M601 267h12v64h-12zm140 0h12v64h-12z"/>
+    <path fill="#bfaa67" stroke="#e1c97e" d="M663 272h37v44h-37z"/>
+    <path fill="#35453a" stroke="#9b9866" d="M670 279h23v37h-23z"/>
+    <path fill="none" stroke="#9eb37b" stroke-width="2" d="M619 256h124M620 325h126"/>
+  </g>
+  <path fill="#e7c86d" d="M679 290h5v13h-5z" opacity=".9"/>
+  <path fill="none" stroke="#c6d28a" stroke-width="3" stroke-opacity=".68" d="M0 342q146-23 266 1t239-1q184-29 455 1"/>
+  <g fill="#d5cb9a" opacity=".7"><circle cx="317" cy="335" r="2"/><circle cx="542" cy="322" r="1.7"/><circle cx="575" cy="344" r="1.4"/><circle cx="296" cy="364" r="1.3"/></g>
 </svg>

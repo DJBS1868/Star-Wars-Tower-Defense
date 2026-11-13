@@ -390,27 +390,23 @@ export const ENEMY_TYPES = {
     color: '#d6403a',
   },
 
-  /* —— Endor: Imperial forest garrison —— */
-  stormtrooper: {
-    name: 'Stormtrooper', short: 'STORM', body: 'stormtrooper',
-    hp: 1.1, speed: 64, radius: 11, reward: 1.05, leak: 1, armor: 1, gap: 0.65,
-    color: '#eef1ef',
+  /* —— Endor: forest creatures —— */
+  ewok: {
+    name: 'Ewok Warrior', short: 'EWOK', body: 'ewok',
+    hp: 0.78, speed: 76, radius: 8, reward: 1.05, leak: 1, armor: 0, gap: 0.48,
+    color: '#8b5938',
   },
-  biker: {
-    name: 'Scout Trooper', short: 'BIKE', body: 'bikerscout',
-    hp: 0.55, speed: 142, radius: 9, reward: 1.05, leak: 1, armor: 0, gap: 0.36,
-    color: '#d9dee0',
+  boarwolf: {
+    name: 'Boar-Wolf', short: 'BOAR', body: 'boarwolf',
+    hp: 5.4, speed: 39, radius: 16, reward: 2.8, leak: 2, armor: 3, gap: 1.18,
+    heavy: true, color: '#42474a',
   },
-  commando: {
-    name: 'Storm Commando', short: 'CMDO', body: 'commando',
-    hp: 5.2, speed: 44, radius: 14, reward: 2.7, leak: 2, armor: 3, gap: 1.1,
-    heavy: true, color: '#4c5157',
+  gorax: {
+    name: 'Gorax', short: 'GORAX', body: 'gorax', boss: true,
+    hp: 42, speed: 23, radius: 32, reward: 36, leak: 12, armor: 6, gap: 1.8,
+    color: '#493326',
   },
-  walkerboss: {
-    name: 'AT-ST Commander', short: 'AT-ST', body: 'commandwalker', boss: true,
-    hp: 22, speed: 31, radius: 24, reward: 26, leak: 9, armor: 5, gap: 1.5,
-    color: '#8b969b',
-  },
+
 };
 
 const BASE_HP = 14;
@@ -508,7 +504,7 @@ export const MAPS = {
     site: 'SHIELD BUNKER',
     region: 'ENDOR',
     kicker: 'REBEL ALLIANCE · ENDOR',
-    desc: 'Dense forest, narrow sightlines, and an Imperial bunker. Stop the garrison before it reaches the shield.',
+    desc: 'Deep in the moon’s ancient forest, Ewok warriors defend their home from boar-wolves and a towering Gorax. Hold the shield bunker through wave 25.',
     tag: 'ENDOR',
     difficulty: 'ELITE',
     theme: 'forest',
@@ -520,11 +516,14 @@ export const MAPS = {
     base: { x: 0.952, y: 0.60 },
     path: ENDOR_PATH,
     decor: ENDOR_DECOR,
-    roster: { line: 'stormtrooper', fast: 'biker', heavy: 'commando', boss: 'walkerboss' },
-    mix: { lineRate: 1.05, fastRate: 0.6, heavyStart: 7, heavyRate: 0.42, fastStart: 4 },
-    flavor: { boss: 'AT-ST commander is stomping through the trees', final: 'Final wave — the whole garrison is coming!' },
-    endWin: 'The bunker is sealed and the forest is quiet. The shield generator is safe.',
-    endLose: 'The Imperial garrison overran the bunker. The shield generator is lost.',
+    roster: { line: 'ewok', fast: 'ewok', heavy: 'boarwolf', boss: 'gorax' },
+    mix: { lineRate: 1.05, fastRate: 0.6, heavyStart: 5, heavyRate: 0.42, fastStart: 3 },
+    bossEvery: 0,
+    finalBossCount: 1,
+    finalBossMul: 1.35,
+    flavor: { final: 'Final wave — the Gorax has come down from the mountains!' },
+    endWin: 'The Gorax is defeated. Ewok drums echo through the forest as the shield bunker stands.',
+    endLose: 'The forest defenders have fallen. The shield bunker is overrun.',
     chips: ['25 WAVES', 'ENDOR', 'ELITE'],
     accent: '#9fd86a',
   },
