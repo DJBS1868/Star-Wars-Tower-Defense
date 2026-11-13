@@ -383,26 +383,21 @@ export const ENEMY_TYPES = {
     color: '#d9ecff', fx: '#bfe9ff',
   },
 
-  /* —— Mustafar: Black Sun mining force —— */
-  magma: {
-    name: 'Magma Trooper', short: 'MAGMA', body: 'magmatrooper',
-    hp: 1.25, speed: 58, radius: 11.5, reward: 1.2, leak: 1, armor: 1, gap: 0.72,
-    color: '#b8563d',
+  /* —— Mustafar: native predators and the refinery's heat-armoured guard —— */
+  xandank: {
+    name: 'Xandank', short: 'XAND', body: 'xandank',
+    hp: 0.92, speed: 108, radius: 10.5, reward: 1.05, leak: 1, armor: 0, gap: 0.5,
+    color: '#a3332c', fx: '#ff7a2a',
   },
-  skitter: {
-    name: 'Lava Skitter', short: 'SKIT', body: 'skitter', palette: 'lava',
-    hp: 0.5, speed: 132, radius: 8, reward: 1, leak: 1, armor: 0, gap: 0.38,
-    color: '#ff8a3d',
+  mustafarian: {
+    name: 'Mustafarian', short: 'MUSTAF', body: 'mustafarian',
+    hp: 5.4, speed: 44, radius: 14, reward: 3, leak: 2, armor: 4, gap: 1.18,
+    heavy: true, color: '#a76645', fx: '#ff9a3c',
   },
-  miner: {
-    name: 'Mining Droid', short: 'MINER', body: 'miningdroid',
-    hp: 5.6, speed: 38, radius: 17, reward: 3, leak: 2, armor: 4, gap: 1.25,
-    heavy: true, color: '#8a5a3a',
-  },
-  sith: {
-    name: 'Sith Enforcer', short: 'SITH', body: 'sith', boss: true,
-    hp: 24, speed: 34, radius: 25, reward: 28, leak: 10, armor: 4, gap: 1.5,
-    color: '#d6403a',
+  magmabeast: {
+    name: 'Magma Beast', short: 'MAGMA', body: 'magmabeast', boss: true,
+    hp: 38, speed: 24, radius: 31, reward: 36, leak: 12, armor: 6, gap: 1.9,
+    color: '#d2542d', fx: '#ff8a2e',
   },
 
   /* —— Endor: forest creatures —— */
@@ -496,7 +491,7 @@ export const MAPS = {
     site: 'LAVA REFINERY',
     region: 'MUSTAFAR',
     kicker: 'BLACK SUN · MUSTAFAR',
-    desc: 'A captured mining refinery above the lava flows. Heavy armour and Sith enforcers guard the line.',
+    desc: 'A captured mining refinery above the lava flows. Xandank packs race the causeways, heat-armoured Mustafarians hold the line, and a Magma Beast waits beneath the caldera.',
     tag: 'MUSTAFAR',
     difficulty: 'ELITE',
     theme: 'lava',
@@ -508,11 +503,21 @@ export const MAPS = {
     base: { x: 0.952, y: 0.60 },
     path: MUSTAFAR_PATH,
     decor: MUSTAFAR_DECOR,
-    roster: { line: 'magma', fast: 'skitter', heavy: 'miner', boss: 'sith' },
-    mix: { lineRate: 0.72, fastRate: 0.62, heavyStart: 5, heavyRate: 0.58, fastStart: 3 },
-    flavor: { boss: 'Sith enforcer has entered the refinery', final: 'Final wave — the Sith comes for the relay!' },
-    endWin: 'The refinery is quiet. Lava still flows, but the Sith enforcer is ash on the catwalk.',
-    endLose: 'The Sith cut through the refinery. The relay is slag in the lava channels.',
+    roster: { line: 'mustafarian', fast: 'xandank', heavy: 'mustafarian', boss: 'magmabeast' },
+    /* Early waves are Xandank hunting packs. From wave 7 the heat-armoured
+       Mustafarians take the main line, with Xandanks still running the flanks. */
+    phases: [
+      { from: 1, line: 'xandank', fast: 'xandank', heavy: 'xandank', heavyStart: 99 },
+      { from: 7, line: 'xandank', fast: 'xandank', heavy: 'mustafarian' },
+      { from: 13, line: 'mustafarian', fast: 'xandank', heavy: 'mustafarian' },
+    ],
+    mix: { lineRate: 0.8, fastRate: 0.52, heavyStart: 7, heavyRate: 0.46, fastStart: 2 },
+    bossEvery: 0,
+    finalBossCount: 1,
+    finalBossMul: 1.7,
+    flavor: { boss: 'Heat signatures massing at the refinery gate', final: 'Final wave — the Magma Beast has risen from the caldera!' },
+    endWin: 'The Magma Beast cools into black rock. The refinery is quiet, and the relay keeps broadcasting through the ash.',
+    endLose: 'The Magma Beast tore through the refinery. The relay is slag in the lava channels.',
     chips: ['25 WAVES', 'MUSTAFAR', 'ELITE'],
     accent: '#ff8a45',
   },
@@ -553,6 +558,17 @@ export function getMap(id) {
   return MAPS[id] || MAPS.tatooine;
 }
 
+/* Some battlefields change their army as the waves escalate. Phases override
+   the base line/fast/heavy roster without changing the shared wave generator. */
+export function waveRoster(wave, mapId = 'tatooine') {
+  const map = getMap(mapId);
+  let roster = map.roster;
+  for (const phase of map.phases || []) {
+    if (wave >= phase.from) roster = { ...map.roster, ...phase };
+  }
+  return roster;
+}
+
 /* ---------------- waves ---------------- */
 
 export function makeWave(wave, mapId = 'tatooine') {
@@ -580,16 +596,17 @@ export function makeWave(wave, mapId = 'tatooine') {
   const bossWave = (bossEvery > 0 && wave % bossEvery === 0) || wave === map.waves;
   const isFinal = wave === map.waves;
 
+  const roster = waveRoster(wave, mapId);
+  const heavyStart = roster.heavyStart ?? mix.heavyStart;
+
   let lineCount = Math.round((6 + wave * 0.9) * mix.lineRate);
   let fastCount = wave >= mix.fastStart ? Math.max(1, Math.round((wave - 1) * mix.fastRate)) : 0;
-  let heavyCount = wave >= mix.heavyStart ? Math.max(1, Math.floor((wave - mix.heavyStart + 1) * mix.heavyRate)) : 0;
+  let heavyCount = wave >= heavyStart ? Math.max(1, Math.floor((wave - heavyStart + 1) * mix.heavyRate)) : 0;
   if (bossWave) {
     lineCount = Math.round(lineCount * 0.55);
     fastCount = Math.round(fastCount * 0.5);
     heavyCount = Math.max(1, Math.round(heavyCount * 0.5));
   }
-
-  const roster = map.roster;
 
   // Opening skirmishers.
   const openingFast = fastCount ? Math.min(fastCount, Math.ceil(fastCount * 0.45)) : 0;

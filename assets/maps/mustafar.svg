@@ -1,20 +1,439 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-label="Illustrated volcanic refinery above glowing lava rivers">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-label="Mustafar lava refinery beneath a volcanic sky, with a pack of Xandanks, a heat-armoured Mustafarian, and a towering Magma Beast">
   <defs>
-    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#180f1c"/><stop offset=".58" stop-color="#532331"/><stop offset="1" stop-color="#bd4930"/></linearGradient>
-    <linearGradient id="lava" x2="0" y2="1"><stop stop-color="#ffbd43"/><stop offset=".42" stop-color="#f45424"/><stop offset="1" stop-color="#812332"/></linearGradient>
-    <linearGradient id="rock" x2="0" y2="1"><stop stop-color="#4a3035"/><stop offset="1" stop-color="#1a1721"/></linearGradient>
+    <linearGradient id="sky" x2="0" y2="1">
+      <stop offset="0" stop-color="#08060d"/>
+      <stop offset=".28" stop-color="#1b0e18"/>
+      <stop offset=".52" stop-color="#3d1620"/>
+      <stop offset=".72" stop-color="#7b2a25"/>
+      <stop offset=".88" stop-color="#c4542f"/>
+      <stop offset="1" stop-color="#ef8a48"/>
+    </linearGradient>
+    <radialGradient id="sun" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#ffe7ad"/>
+      <stop offset=".38" stop-color="#ffb45f"/>
+      <stop offset=".74" stop-color="#e96732"/>
+      <stop offset="1" stop-color="#a63a20"/>
+    </radialGradient>
+    <radialGradient id="sunGlow">
+      <stop offset="0" stop-color="#ffc06a" stop-opacity=".52"/>
+      <stop offset=".42" stop-color="#ff8c4a" stop-opacity=".18"/>
+      <stop offset="1" stop-color="#ff7a3a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="farMtn" x2="0" y2="1">
+      <stop offset="0" stop-color="#2c1a22"/>
+      <stop offset="1" stop-color="#160e13"/>
+    </linearGradient>
+    <linearGradient id="midMtn" x2="0" y2="1">
+      <stop offset="0" stop-color="#271318"/>
+      <stop offset="1" stop-color="#100a0c"/>
+    </linearGradient>
+    <linearGradient id="lava" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe6a6"/>
+      <stop offset=".16" stop-color="#ffbe61"/>
+      <stop offset=".4" stop-color="#ff812d"/>
+      <stop offset=".68" stop-color="#e34916"/>
+      <stop offset="1" stop-color="#7b1d0c"/>
+    </linearGradient>
+    <linearGradient id="lavaBank" x2="0" y2="1">
+      <stop offset="0" stop-color="#24110d"/>
+      <stop offset="1" stop-color="#090605"/>
+    </linearGradient>
+    <linearGradient id="ash" x2="0" y2="1">
+      <stop offset="0" stop-color="#5d3d44" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#5d3d44" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="metal" x2="1" y2="0">
+      <stop offset="0" stop-color="#171519"/>
+      <stop offset=".5" stop-color="#3a3338"/>
+      <stop offset="1" stop-color="#111013"/>
+    </linearGradient>
+    <linearGradient id="metalHot" x2="1" y2="0">
+      <stop offset="0" stop-color="#6b5244"/>
+      <stop offset=".5" stop-color="#40312e"/>
+      <stop offset="1" stop-color="#1a1518"/>
+    </linearGradient>
+    <linearGradient id="xanScale" x2="0" y2="1">
+      <stop offset="0" stop-color="#b34534"/>
+      <stop offset=".34" stop-color="#8b2a21"/>
+      <stop offset=".72" stop-color="#561512"/>
+      <stop offset="1" stop-color="#2a0908"/>
+    </linearGradient>
+    <linearGradient id="xanLimb" x2="0" y2="1">
+      <stop offset="0" stop-color="#6f2019"/>
+      <stop offset="1" stop-color="#2b0b09"/>
+    </linearGradient>
+    <linearGradient id="armor" x2="0" y2="1">
+      <stop offset="0" stop-color="#59636a"/>
+      <stop offset=".35" stop-color="#3c444a"/>
+      <stop offset=".75" stop-color="#252b30"/>
+      <stop offset="1" stop-color="#121518"/>
+    </linearGradient>
+    <linearGradient id="armorDark" x2="0" y2="1">
+      <stop offset="0" stop-color="#333a40"/>
+      <stop offset="1" stop-color="#101316"/>
+    </linearGradient>
+    <linearGradient id="rock" x2="0" y2="1">
+      <stop offset="0" stop-color="#6b5549"/>
+      <stop offset=".28" stop-color="#493933"/>
+      <stop offset=".66" stop-color="#2a211e"/>
+      <stop offset="1" stop-color="#120e0d"/>
+    </linearGradient>
+    <linearGradient id="rockDark" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d302a"/>
+      <stop offset="1" stop-color="#0d0a09"/>
+    </linearGradient>
+    <linearGradient id="beastMagma" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd98f"/>
+      <stop offset=".45" stop-color="#ff812a"/>
+      <stop offset="1" stop-color="#8e1d08"/>
+    </linearGradient>
+    <radialGradient id="beastCore">
+      <stop offset="0" stop-color="#ffe7a8"/>
+      <stop offset=".32" stop-color="#ff9a3b" stop-opacity=".85"/>
+      <stop offset="1" stop-color="#ff5c18" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="4.4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="shadow">
+      <feGaussianBlur stdDeviation="3.2"/>
+    </filter>
   </defs>
-  <path fill="url(#sky)" d="M0 0h960v420H0z"/>
-  <circle cx="741" cy="108" r="74" fill="#ff6939" opacity=".34"/>
-  <path fill="#241923" d="m0 238 72-44 61 30 88-127 69 102 83-70 74 76 101-141 78 114 66-54 76 59 65-40 67 50v227H0z"/>
-  <path fill="#a43d30" opacity=".55" d="m221 97 38 62 54 46-65-17-47 20 37-54-40-18zm330-33 42 75 67 39-76-11-40 20 28-49-43-28z"/>
-  <path fill="url(#lava)" d="M0 305q123-58 252-7t245-5q116-50 226 3t237-8v132H0z"/>
-  <path fill="#221b24" d="M0 279h90l32 53-47 88H0zm854-15h106v156H839l-38-71z"/>
-  <path fill="none" stroke="#ffd45c" stroke-width="9" stroke-linecap="round" d="M122 361q92-36 174 0t165 2q105-36 203-1t195-5"/>
-  <g fill="#25232a" stroke="#f18449" stroke-width="4">
-    <path d="M365 248h181v63H365zM394 211h83v37h-83zM486 225h74v23h-74z"/>
-    <path d="M380 270h14v78h-14zm140-10h13v88h-13zM410 238v-38h12v38m31 0v-48h12v48"/>
-    <path d="M427 265h28v21h-28z" fill="#ff9e38" stroke="none"/>
+
+  <!-- volcanic sky and ash clouds -->
+  <rect width="960" height="420" fill="url(#sky)"/>
+  <circle cx="723" cy="112" r="128" fill="url(#sunGlow)"/>
+  <circle cx="723" cy="112" r="69" fill="url(#sun)"/>
+  <g fill="url(#ash)" filter="url(#soft)" opacity=".9">
+    <path d="M-60 118C92 73 214 111 338 86c128-26 242 15 370-17 92-23 180-18 294-42v78c-138 36-228 23-350 45-158 29-258-4-384 24-98 22-196 10-268 31z"/>
+    <path d="M-40 178c130-30 224 2 352-21 146-27 252 12 394-18 106-23 186-4 284-22v56c-126 22-206 14-324 38-142 29-260-7-398 20-110 22-206 7-308 30z" opacity=".55"/>
   </g>
-  <path fill="none" stroke="#ffb347" stroke-opacity=".5" stroke-width="3" d="M0 394q154-31 284 2t252-4q187-37 424 1"/>
+  <g fill="#ffb15e" opacity=".55">
+    <circle cx="328" cy="82" r="1.1"/><circle cx="408" cy="52" r=".8"/>
+    <circle cx="536" cy="94" r="1"/><circle cx="853" cy="52" r=".9"/>
+    <circle cx="914" cy="143" r="1.2"/><circle cx="268" cy="132" r=".7"/>
+    <circle cx="648" cy="47" r=".8"/><circle cx="779" cy="186" r=".9"/>
+  </g>
+
+  <!-- distant volcanoes and refinery silhouettes -->
+  <path d="M0 272 88 198l58 35 76-96 63 88 82-56 88 80 91-115 74 89 84-46 96 71 88-58 72 55v79H0z" fill="url(#farMtn)"/>
+  <path d="M0 300 74 251l61 34 77-70 72 60 70-31 86 62 84-72 76 54 82-36 92 54 74-34 86 51v51H0z" fill="url(#midMtn)"/>
+  <g fill="#140d10" stroke="#21161a" stroke-width="1">
+    <path d="M70 269h15v-68h-15zM58 208h39v-10H58zM64 198l8-19 8 19z"/>
+    <path d="M120 268h11v-45h-11zM112 230h27v-7h-27z"/>
+    <path d="M788 271h16v-79h-16zM777 205h39v-9h-39zM785 196l7-18 7 18z"/>
+    <path d="M838 271h13v-49h-13zM830 231h29v-7h-29zM862 268h9v-35h-9z"/>
+  </g>
+  <g fill="#ff9a43" opacity=".82">
+    <rect x="73" y="220" width="4" height="5"/><rect x="82" y="235" width="3" height="4"/>
+    <rect x="114" y="243" width="4" height="5"/><rect x="122" y="252" width="2" height="3"/>
+    <rect x="791" y="213" width="4" height="5"/><rect x="797" y="229" width="3" height="4"/>
+    <rect x="835" y="242" width="3" height="4"/><rect x="840" y="253" width="2" height="3"/>
+  </g>
+  <g stroke="#ff8e3d" stroke-width="2" fill="none" opacity=".48">
+    <path d="M80 214l-10 11 7 12m20-28 10 9-6 10"/>
+    <path d="M795 212l9 10-7 13m21-30 10 11-8 12"/>
+  </g>
+
+  <!-- lava river with cooled banks -->
+  <path d="M0 308c98-27 156-13 238-2 104 14 156 2 250-8 126-13 216-2 312 4 64 4 116 0 160-8v126H0z" fill="url(#lavaBank)"/>
+  <path d="M0 323c96-24 152-12 234-2 108 13 163 1 258-8 123-12 211-3 308 3 62 4 113 0 160-8v51c-50 12-98 16-164 11-101-7-186-14-303-2-96 10-162 18-261 5-82-11-150-15-232 4z" fill="url(#lava)"/>
+  <path d="M0 326c110-22 164-9 241 0 105 12 158-2 255-9 130-9 216-4 310 3 61 5 110 0 154-8" fill="none" stroke="#ffe6a7" stroke-width="4.5" stroke-linecap="round" opacity=".9" filter="url(#glow)"/>
+  <path d="M0 343c112-18 166-5 244 2 104 10 158-3 252-9 126-9 210-1 304 5 58 4 106 0 160-7" fill="none" stroke="#ff9f46" stroke-width="2" opacity=".7"/>
+  <g fill="#36180f" opacity=".9">
+    <ellipse cx="158" cy="342" rx="31" ry="8" transform="rotate(-5 158 342)"/>
+    <ellipse cx="416" cy="354" rx="44" ry="9" transform="rotate(4 416 354)"/>
+    <ellipse cx="620" cy="334" rx="28" ry="7" transform="rotate(-4 620 334)"/>
+    <ellipse cx="822" cy="350" rx="39" ry="8" transform="rotate(6 822 350)"/>
+  </g>
+  <g fill="#ffcf78" opacity=".5">
+    <ellipse cx="247" cy="333" rx="24" ry="4"/><ellipse cx="524" cy="343" rx="33" ry="5"/>
+    <ellipse cx="745" cy="327" rx="27" ry="4"/>
+  </g>
+
+  <!-- refinery gantries on the banks -->
+  <g>
+    <path d="M28 309h180v-10H28z" fill="#1c1719" stroke="#342d31" stroke-width="2"/>
+    <path d="M48 309v-47m18 47v-47m90 47v-47m18 47v-47" stroke="#2a2427" stroke-width="5"/>
+    <path d="M42 263h146v-8H42z" fill="url(#metalHot)" stroke="#3d3333" stroke-width="1.5"/>
+    <path d="M52 263v-35h12v35zm24 0v-22h10v22zm26 0v-44h11v44zm52 0v-30h9v30z" fill="#191518" stroke="#3a3235" stroke-width="1.2"/>
+    <circle cx="149" cy="281" r="13" fill="url(#metalHot)" stroke="#211b1c" stroke-width="1.4"/>
+    <circle cx="149" cy="281" r="5" fill="#ff9a3f" filter="url(#glow)"/>
+    <path d="M132 306h56v-6h-56z" fill="#2c2528"/>
+  </g>
+  <g>
+    <path d="M760 301h176v-9H760z" fill="#1b171b" stroke="#342d31" stroke-width="2"/>
+    <path d="M778 301v-55m22 55v-55m106 55v-55m20 55v-55" stroke="#2b2528" stroke-width="5"/>
+    <path d="M772 245h152v-8H772z" fill="url(#metalHot)" stroke="#3d3333" stroke-width="1.5"/>
+    <path d="M786 245v-30h12v30zm25 0v-41h11v41zm28 0v-23h10v23zm30 0v-35h12v35z" fill="#191518" stroke="#3a3235" stroke-width="1.2"/>
+    <circle cx="862" cy="268" r="15" fill="url(#metalHot)" stroke="#211b1c" stroke-width="1.4"/>
+    <circle cx="862" cy="268" r="5" fill="#ff9a3f" filter="url(#glow)"/>
+    <path d="M842 298h62v-6h-62z" fill="#2c2528"/>
+  </g>
+  <g stroke="#ff9440" stroke-width="1.2" opacity=".55">
+    <path d="M87 213v-12m18 16v-17m91 17v-13m-251 81h25m646 0h29"/>
+  </g>
+
+  <!-- foreground basalt shelf -->
+  <path d="M0 361c73-16 137-9 198 1 74 12 134 3 198-4 92-10 168-1 250 3 126 6 220-8 314-4v63H0z" fill="#100b0a"/>
+  <path d="M0 379c88-13 148-4 221 3 90 9 151-3 233-7 100-5 176 5 258 7 97 3 176-6 248-2v40H0z" fill="#070505"/>
+  <g fill="#231714" stroke="#0a0706" stroke-width="1.4">
+    <path d="M92 381l19-41 27 7 9 39z"/>
+    <path d="M194 379l13-27 22-5 17 36z"/>
+    <path d="M312 384l16-34 25 4 12 33z"/>
+    <path d="M574 385l12-38 26-2 23 40z"/>
+    <path d="M866 380l20-44 29 9 12 38z"/>
+  </g>
+  <g stroke="#ff7c2a" stroke-width="1.4" fill="none" opacity=".55" filter="url(#glow)">
+    <path d="M104 369l9-22 12 4 6 18"/>
+    <path d="M595 370l8-20 12-1 9 16"/>
+    <path d="M882 369l10-24 12 5 5 15"/>
+  </g>
+  <g fill="#0a0707">
+    <ellipse cx="292" cy="391" rx="56" ry="8"/>
+    <ellipse cx="546" cy="398" rx="70" ry="9"/>
+    <ellipse cx="778" cy="394" rx="58" ry="8"/>
+  </g>
+
+  <!-- flying embers -->
+  <g fill="#ffb15f">
+    <circle cx="104" cy="238" r="1.4" opacity=".8"/><circle cx="168" cy="197" r="1" opacity=".6"/>
+    <circle cx="342" cy="248" r="1.3" opacity=".8"/><circle cx="514" cy="207" r=".9" opacity=".6"/>
+    <circle cx="668" cy="248" r="1.2" opacity=".8"/><circle cx="808" cy="198" r="1" opacity=".65"/>
+    <circle cx="902" cy="235" r="1.3" opacity=".8"/><circle cx="422" cy="181" r=".8" opacity=".5"/>
+    <circle cx="586" cy="170" r=".9" opacity=".55"/><circle cx="246" cy="272" r=".8" opacity=".55"/>
+  </g>
+
+  <!-- XANDAHK PACK: dark red armoured hounds with glowing back cracks -->
+  <g id="xandank" transform="translate(342 353) scale(.6)">
+    <ellipse cx="-4" cy="24" rx="76" ry="9" fill="#050404" opacity=".65" filter="url(#shadow)"/>
+    <!-- whip tail -->
+    <path d="M-58-44c-25-9-42-23-57-19 13 9 20 18 26 29 8 13 21 17 33 12z" fill="url(#xanLimb)" stroke="#1c0706" stroke-width="2"/>
+    <path d="M-97-55c8 5 12 13 15 23" fill="none" stroke="#ff7c2c" stroke-width="2" opacity=".8" filter="url(#glow)"/>
+    <!-- far legs -->
+    <path d="M-39 4l-9 30-9 15 15 1 9-17 9-27z" fill="#37100d" stroke="#1d0807" stroke-width="1.6"/>
+    <path d="M26 1l-3 33-10 16 15 1 10-17 4-30z" fill="#37100d" stroke="#1d0807" stroke-width="1.6"/>
+    <path d="M-51 49l-5 7 19 1 3-5zm40 5l-6 7 18 1 4-5zm50-5l-6 6 16 1 4-5z" fill="#160706"/>
+    <!-- body: layered armour -->
+    <path d="M-55-43c12-18 34-26 57-24 18 2 32 4 45 0 18-5 31 2 35 15 4 12-3 27-18 38-13 10-33 17-54 16-28-1-52-12-64-27-9-11-10-22-1-18z" fill="url(#xanScale)" stroke="#190706" stroke-width="2"/>
+    <path d="M-40-50c15-11 38-15 59-11 14 3 26 3 38-3" fill="none" stroke="#c1583f" stroke-width="2.4" opacity=".7"/>
+    <!-- back plates -->
+    <g fill="#76231b" stroke="#1b0706" stroke-width="1.6">
+      <path d="M-42-45c9-7 20-9 30-6l-4 16c-10-4-19-3-28 2z"/>
+      <path d="M-12-52c10-3 20-1 29 3l-5 16c-8-4-16-5-25-2z"/>
+      <path d="M19-49c10 1 19 4 27 9l-8 14c-7-5-14-7-23-6z"/>
+      <path d="M46-38c8 2 14 7 18 13l-11 10c-4-6-9-9-15-10z"/>
+    </g>
+    <g stroke="#ff832f" stroke-width="2.1" fill="none" opacity=".9" filter="url(#glow)">
+      <path d="M-38-34l9-8 8 10 9-13"/>
+      <path d="M-9-38l8-7 9 9"/>
+      <path d="M22-33l10-8 9 6"/>
+      <path d="M48-24l6-5"/>
+      <path d="M-22-21l5 10-7 6"/>
+    </g>
+    <!-- near legs with paws and claws -->
+    <path d="M-44 4l-3 29-11 17 15 1 11-17 3-28z" fill="url(#xanLimb)" stroke="#1b0706" stroke-width="1.8"/>
+    <path d="M22 3l4 31-9 16 15 1 8-16-4-32z" fill="url(#xanLimb)" stroke="#1b0706" stroke-width="1.8"/>
+    <g fill="#1a0806">
+      <path d="M-59 51l-7 7 17 1 5-5z"/><path d="M-49 51l-5 8 11 1 5-6z"/>
+      <path d="M13 51l-6 8 17 1 5-6z"/><path d="M24 51l-4 9 11 1 4-7z"/>
+    </g>
+    <!-- wedge skull -->
+    <path d="M60-34c18 0 33 6 42 17 5 6 4 14-3 18-11 7-28 9-43 4-8-3-11-11-9-19z" fill="url(#xanScale)" stroke="#180706" stroke-width="2"/>
+    <path d="M62-30c15-1 27 4 34 13-9 7-20 10-32 7-6-2-9-7-8-12z" fill="#4c1612" stroke="#200907" stroke-width="1.4"/>
+    <!-- eye and brow -->
+    <path d="M80-33c7-2 14-1 19 2-6 4-12 5-19 3z" fill="#200907"/>
+    <circle cx="88" cy="-28" r="3.3" fill="#ffd474" filter="url(#glow)"/>
+    <ellipse cx="88" cy="-28" rx="1.1" ry="2.2" fill="#3f1103"/>
+    <path d="M74-38c6-4 13-5 20-3" fill="none" stroke="#a23a28" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- jaw and teeth -->
+    <path d="M78-15c12 3 24 2 33-2l-3 8c-11 5-22 5-31 1z" fill="#300d0a" stroke="#190605" stroke-width="1.4"/>
+    <g fill="#efe0c2">
+      <path d="M83-16l2 7 3-8z"/><path d="M91-16l2 7 3-7z"/><path d="M99-16l2 6 3-6z"/>
+      <path d="M84-8l2-6 3 7z"/><path d="M93-8l2-6 3 6z"/>
+    </g>
+    <path d="M63-18c-7 5-9 12-5 18" fill="none" stroke="#2a0b09" stroke-width="3"/>
+    <!-- cheek spikes -->
+    <path d="M70-20l-14-7 8 13zM73-10l-12 1 10 8z" fill="#42130f" stroke="#1a0705" stroke-width="1.2"/>
+  </g>
+  <g transform="translate(300 362) scale(.38) rotate(-5)" opacity=".95">
+    <use href="#xandank"/>
+  </g>
+  <g transform="translate(395 370) scale(.3) rotate(7)" opacity=".82">
+    <use href="#xandank"/>
+  </g>
+
+  <!-- MUSTAFARIAN: tall thin heat armour with a molten staff -->
+  <g id="mustafarian" transform="translate(455 355) scale(.82)">
+    <ellipse cx="2" cy="24" rx="40" ry="7" fill="#050404" opacity=".6" filter="url(#shadow)"/>
+    <!-- staff shaft -->
+    <path d="M-31-185L26 21" stroke="#171517" stroke-width="6" stroke-linecap="round"/>
+    <path d="M-30-181L25 17" stroke="#75604c" stroke-width="2.2" stroke-linecap="round"/>
+    <g stroke="#8c7a6b" stroke-width="3.4">
+      <path d="M-18-114l5 5"/><path d="M-7-60l5 5"/><path d="M4-5l5 5"/><path d="M14 51l5 5"/>
+    </g>
+    <g filter="url(#glow)">
+      <path d="M-31-196l8 16-7 13-10-13z" fill="#ffba55"/>
+      <path d="M-31-188l3 7-3 5-4-5z" fill="#fff0c1"/>
+      <path d="M26 12l8 16-6 13-10-13z" fill="#ffae46"/>
+      <path d="M26 20l3 7-2 4-5-5z" fill="#fff0c1"/>
+    </g>
+    <!-- long legs -->
+    <path d="M-13 1l-3 24-10 21 9 1 15-21 8-25z" fill="url(#armorDark)" stroke="#0d1012" stroke-width="2"/>
+    <path d="M10 0l5 26 12 20-8 2-14-19-7-28z" fill="url(#armor)" stroke="#0d1012" stroke-width="2"/>
+    <path d="M-31 46l-6 7 21 2 4-7zM16 47l-3 8 19 1 3-8z" fill="#14171a" stroke="#080a0b" stroke-width="1.4"/>
+    <g stroke="#ff812e" stroke-width="1.2" opacity=".65">
+      <path d="M-17 16l-2 8"/><path d="M13 12l5 10"/><path d="M5 34l-8 6"/>
+    </g>
+    <!-- tattered heat cloak -->
+    <path d="M-10-54C-34-46-51-22-54 8c-2 19 8 31 17 26 4-21 9-39 23-53l7-24z" fill="#29201f" stroke="#100b0b" stroke-width="1.6"/>
+    <path d="M-36-18c-5 15-6 27-4 38m13-49c-5 13-6 25-4 35" fill="none" stroke="#ff7d2b" stroke-width="1" opacity=".35"/>
+    <!-- narrow plated torso -->
+    <path d="M-17-92c9-10 22-12 34-8l10 26-4 40-19 10-21-10-5-36z" fill="url(#armor)" stroke="#0c1012" stroke-width="2.2"/>
+    <path d="M-10-84l23-6 13 17-2 27-17 8-18-8-5-24z" fill="url(#armorDark)" stroke="#15191c" stroke-width="1.5"/>
+    <g fill="none" stroke="#0b0d0f" stroke-width="1.6">
+      <path d="M-9-80l-2 31m13-36-2 38m14-35-1 30"/>
+    </g>
+    <g stroke="#ff8a30" stroke-width="2.2" filter="url(#glow)">
+      <path d="M-10-73l12-10 3 14-13 11z"/>
+      <path d="M10-63l9 7-11 11-4-12z"/>
+      <path d="M-5-35l10 7-9 12-7-9z"/>
+    </g>
+    <!-- chest furnace vent -->
+    <path d="M-3-49h14l3 13H-6z" fill="#1b1919" stroke="#0b0b0b" stroke-width="1.4"/>
+    <g stroke="#ffae4c" stroke-width="2.2" filter="url(#glow)">
+      <path d="M-1-46h12M-2-42h14M-2-38h12"/>
+    </g>
+    <!-- shoulder pauldrons -->
+    <path d="M-16-94c-12 0-20 7-21 18l15 10 13-12z" fill="url(#armor)" stroke="#0c1012" stroke-width="2"/>
+    <path d="M21-96c14-1 24 6 25 18l-15 10-14-11z" fill="url(#armor)" stroke="#0c1012" stroke-width="2"/>
+    <path d="M-25-83l10 3m32-4l-11 4" stroke="#ff8331" stroke-width="1.4" opacity=".7"/>
+    <!-- arms -->
+    <path d="M-28-74c-9 17-7 33 2 48l8-4c-6-14-5-28 4-40z" fill="url(#armorDark)" stroke="#0b0e10" stroke-width="1.8"/>
+    <path d="M30-76c10 15 9 31 0 47l-9-4c6-13 4-26-5-38z" fill="url(#armor)" stroke="#0b0e10" stroke-width="1.8"/>
+    <path d="M-23-25l9 3-4 13-9-2z" fill="#161a1d" stroke="#090b0c" stroke-width="1.4"/>
+    <path d="M29-27l-9 4 2 12 10-1z" fill="#161a1d" stroke="#090b0c" stroke-width="1.4"/>
+    <!-- narrow helmet and orange visor -->
+    <path d="M-7-132c10-9 24-9 33-2l5 24-8 17-22-1-10-17z" fill="url(#armor)" stroke="#0a0d0f" stroke-width="2"/>
+    <path d="M-4-129c9-6 19-6 27 0l2 16-6 8-16-1-8-9z" fill="url(#armorDark)" stroke="#171b1e" stroke-width="1.4"/>
+    <path d="M2-112h20l4 7-10 5-12-3z" fill="#ff9f3f" filter="url(#glow)"/>
+    <path d="M5-110h15" stroke="#fff0c0" stroke-width="1.4"/>
+    <path d="M-9-116l-5-6 8-2m39 2l7-5-1 9" fill="none" stroke="#5c666c" stroke-width="1.6"/>
+    <!-- respirator -->
+    <path d="M8-102h13l4 10-10 4-8-5z" fill="#171b1d" stroke="#090b0c" stroke-width="1.4"/>
+    <g stroke="#ff7b28" stroke-width="1.4" opacity=".85">
+      <path d="M10-98h10m-9 4h8"/>
+    </g>
+    <!-- heat haze -->
+    <g fill="none" stroke="#ffa14d" stroke-width="1.1" opacity=".28">
+      <path d="M-40-128c-7-10 6-14-1-24m76 15c7-9-4-14 2-23"/>
+    </g>
+  </g>
+
+  <!-- MAGMA BEAST: hulking rock-and-magma golem -->
+  <g id="magmabeast" transform="translate(592 355) scale(.68)">
+    <ellipse cx="0" cy="28" rx="118" ry="18" fill="#050303" opacity=".75" filter="url(#shadow)"/>
+    <ellipse cx="5" cy="-95" rx="90" ry="110" fill="url(#beastCore)" opacity=".38" filter="url(#soft)"/>
+    <!-- legs -->
+    <path d="M-67 2c-19 22-29 45-27 55l32 3c4-13 13-30 25-43z" fill="url(#rockDark)" stroke="#0a0706" stroke-width="2.5"/>
+    <path d="M38 0c11 20 23 37 32 45l27-10c-8-17-17-34-25-49z" fill="url(#rock)" stroke="#0a0706" stroke-width="2.5"/>
+    <path d="M-101 47c-9 5-14 11-14 17l57 1 3-12z" fill="#1a1412" stroke="#080605" stroke-width="2.2"/>
+    <path d="M84 35c14 4 24 10 28 17l-59 2-3-13z" fill="#241b17" stroke="#080605" stroke-width="2.2"/>
+    <g fill="#0a0706">
+      <path d="M-112 62l-17 7 20 3 14-5z"/><path d="M-92 64l-12 8 18 1 12-5z"/>
+      <path d="M102 50l18 6-19 4-14-5z"/><path d="M86 54l13 8-18 1-11-5z"/>
+    </g>
+    <!-- torso mass -->
+    <path d="M-81-112c10-39 39-59 79-59 44 0 75 24 85 65 5 23 1 49-9 70-11 23-31 38-67 40-39 2-66-12-79-36-14-25-16-56-9-80z" fill="url(#rock)" stroke="#0a0706" stroke-width="3"/>
+    <!-- back plates -->
+    <g fill="url(#rockDark)" stroke="#0c0908" stroke-width="2">
+      <path d="M-60-147c12-18 32-28 55-27l-2 35c-18-4-34 1-45 14z"/>
+      <path d="M-6-176c22-3 41 7 54 24l-25 27c-8-13-20-20-34-20z"/>
+      <path d="M49-148c17 12 27 30 30 49l-37-4c-1-16-7-28-17-37z"/>
+      <path d="M-77-103c5-15 15-26 28-32l13 33c-13 3-22 12-27 24z"/>
+      <path d="M72-97c8 13 11 29 10 45l-35-9c2-14-1-26-8-35z"/>
+      <path d="M-71-43c9-14 23-22 41-23l6 35c-14 0-27 6-36 17z"/>
+      <path d="M36-34c13-4 28-2 41 5l-14 31c-10-7-21-8-32-5z"/>
+    </g>
+    <!-- molten veins across torso -->
+    <g stroke="#ff8d37" fill="none" stroke-linejoin="round" filter="url(#glow)">
+      <path d="M-46-127l19-10 8 17 20-18 14 22" stroke-width="3.4"/>
+      <path d="M-63-86l20 6 5-17 18 10 6 21" stroke-width="3"/>
+      <path d="M-40-53l16-8 9 15 17-9 13 17" stroke-width="3.2"/>
+      <path d="M22-142l13 11 9-9 17 12" stroke-width="2.4"/>
+      <path d="M59-83l-8 19-12-3-9 16" stroke-width="2.6"/>
+      <path d="M-27-163l8 13-10 8" stroke-width="2.4"/>
+    </g>
+    <g fill="#ffca79" opacity=".9" filter="url(#glow)">
+      <circle cx="-39" cy="-119" r="2.6"/><circle cx="-13" cy="-73" r="2.2"/>
+      <circle cx="16" cy="-52" r="2.5"/><circle cx="43" cy="-122" r="2.2"/>
+      <circle cx="-41" cy="-32" r="2"/>
+    </g>
+    <!-- shoulder spikes -->
+    <g fill="#3a2d27" stroke="#0b0807" stroke-width="2">
+      <path d="M-82-137l-29-22 12 37z"/>
+      <path d="M-53-169l-17-31 31 23z"/>
+      <path d="M59-165l29-20-7 36z"/>
+      <path d="M84-130l33-10-24 30z"/>
+    </g>
+    <!-- massive arms and fists -->
+    <path d="M-72-121c-31 9-49 34-48 66 1 19 13 32 29 31 16-1 26-14 25-31-1-16 5-28 17-36z" fill="url(#rockDark)" stroke="#090605" stroke-width="2.8"/>
+    <path d="M72-119c30 13 47 39 45 70-2 18-15 30-31 27-16-3-24-17-21-34 3-16-3-29-15-39z" fill="url(#rock)" stroke="#090605" stroke-width="2.8"/>
+    <path d="M-123-32c-15 8-24 21-23 35 2 17 18 28 35 22 15-5 22-20 18-36-3-12-14-22-30-21z" fill="url(#rock)" stroke="#090605" stroke-width="2.8"/>
+    <path d="M124-29c16 9 25 22 22 37-3 16-19 27-36 20-15-7-21-22-16-37 4-13 15-22 30-20z" fill="url(#rockDark)" stroke="#090605" stroke-width="2.8"/>
+    <g fill="#0c0908">
+      <path d="M-143 8l-19 9 20 5 16-7z"/><path d="M-128 19l-15 11 20 1 13-6z"/>
+      <path d="M-119 27l-8 12 16-1 9-7z"/>
+      <path d="M141 13l20 8-19 7-16-6z"/><path d="M128 24l16 10-20 3-14-7z"/>
+      <path d="M117 32l10 12-17-2-10-8z"/>
+    </g>
+    <g stroke="#ff7e2c" fill="none" filter="url(#glow)">
+      <path d="M-96-77l-13 24 18 4-9 23" stroke-width="2.6"/>
+      <path d="M96-72l14 25-18 5 8 24" stroke-width="2.6"/>
+      <path d="M-118-13l-12 17m149-19l12 18" stroke-width="2"/>
+    </g>
+    <!-- low armoured head -->
+    <path d="M-48-191c17-13 39-16 58-8 15 6 26 17 33 30l-15 34c-18 17-44 20-65 9-16-9-27-26-28-43z" fill="url(#rock)" stroke="#090605" stroke-width="2.8"/>
+    <path d="M-32-199c13-9 29-11 43-5l7 22-30 14-20-9z" fill="url(#rockDark)" stroke="#0a0706" stroke-width="2"/>
+    <!-- molten eyes -->
+    <g filter="url(#glow)">
+      <path d="M-26-158c9-5 20-5 28 1l-5 9c-8-3-16-3-23 0z" fill="#ffd17b"/>
+      <path d="M16-157c10-5 21-3 28 4l-7 8c-7-4-14-4-20-2z" fill="#ffbe62"/>
+    </g>
+    <g fill="#2c0c04">
+      <path d="M-9-153l3 4 4-3z"/><path d="M29-152l4 4 4-3z"/>
+    </g>
+    <!-- cracked maw -->
+    <path d="M-20-128c15 5 34 4 49-4l2 12c-14 11-33 13-48 6z" fill="#240c07" stroke="#0b0605" stroke-width="2"/>
+    <g stroke="#ff8d33" stroke-width="2.4" filter="url(#glow)">
+      <path d="M-14-125l10 5 8-7 9 5 9-4"/>
+      <path d="M-7-116l7 3 8-4 8 3 8-4"/>
+    </g>
+    <g fill="#10100e">
+      <path d="M-12-128l4 9 5-9z"/><path d="M1-128l4 10 5-10z"/><path d="M14-127l4 9 5-10z"/>
+    </g>
+    <!-- horn plates -->
+    <path d="M-54-178l-26-22 7 34zM54-177l28-20-10 33z" fill="#4a392f" stroke="#0b0807" stroke-width="2"/>
+    <g stroke="#ff8a30" stroke-width="1.5" opacity=".7" filter="url(#glow)">
+      <path d="M-63-182l-9-8M60-181l10-7M-50-120l-11 5M50-116l12 5"/>
+    </g>
+    <!-- embers rising off the beast -->
+    <g fill="#ffad57" filter="url(#glow)">
+      <circle cx="-58" cy="-211" r="2" opacity=".8"/><circle cx="-37" cy="-226" r="1.4" opacity=".65"/>
+      <circle cx="18" cy="-222" r="1.8" opacity=".75"/><circle cx="62" cy="-205" r="1.5" opacity=".7"/>
+      <circle cx="88" cy="-175" r="1.1" opacity=".55"/><circle cx="-84" cy="-186" r="1.2" opacity=".6"/>
+    </g>
+  </g>
+
+  <!-- sulphur haze and vignette -->
+  <g fill="#ffb269" opacity=".36">
+    <circle cx="220" cy="275" r="1.2"/><circle cx="392" cy="262" r=".9"/><circle cx="548" cy="282" r="1.1"/>
+    <circle cx="704" cy="256" r=".8"/><circle cx="906" cy="276" r="1.2"/>
+  </g>
+  <rect width="960" height="420" fill="none" stroke="#070406" stroke-width="26" opacity=".55"/>
+  <rect width="960" height="420" fill="url(#sky)" opacity=".04"/>
 </svg>

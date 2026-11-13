@@ -10,8 +10,8 @@ Four worlds are available, each with its own route, terrain, weather, and enemy 
 
 - **Tatooine · Outpost Relay** — womp rat packs, bantha stampedes, and a final krayt dragon.
 - **Hoth · Echo Base** — Ice Scrabbler packs, charging Tauntauns, and a wave-25 Wampa.
-- **Mustafar · Lava Refinery** — Magma troopers, lava skitters, mining droids, and a Sith enforcer.
-- **Endor · Shield Bunker** — Stormtroopers, scout troopers, storm commandos, and an AT-ST commander.
+- **Mustafar · Lava Refinery** — Xandank packs, heat-armoured Mustafarians, and a wave-25 Magma Beast.
+- **Endor · Shield Bunker** — Ewok warriors, tusked boar-wolves, and a towering Gorax.
 
 ```bash
 python3 -m http.server 8000

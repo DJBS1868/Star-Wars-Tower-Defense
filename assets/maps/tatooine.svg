@@ -1,301 +1,362 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-label="Tatooine outpost relay beneath twin suns, with banthas on the dunes and a buried krayt skeleton">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-label="Tatooine outpost relay beneath twin suns, with a womp rat, a horned bantha, and a rearing krayt dragon">
   <defs>
-    <linearGradient id="t-sky" x2="0" y2="1">
-      <stop offset="0" stop-color="#081625"/>
-      <stop offset=".28" stop-color="#263247"/>
-      <stop offset=".55" stop-color="#7a4650"/>
-      <stop offset=".76" stop-color="#cf724b"/>
-      <stop offset=".9" stop-color="#f2b06f"/>
-      <stop offset="1" stop-color="#f8cf91"/>
+    <linearGradient id="sky" x2="0" y2="1">
+      <stop offset="0" stop-color="#07131f"/>
+      <stop offset=".26" stop-color="#1d2a3b"/>
+      <stop offset=".48" stop-color="#66404a"/>
+      <stop offset=".68" stop-color="#b96445"/>
+      <stop offset=".83" stop-color="#e99a5a"/>
+      <stop offset="1" stop-color="#f5c989"/>
     </linearGradient>
-    <radialGradient id="t-sun-a">
+    <radialGradient id="sunA">
       <stop offset="0" stop-color="#fffbea"/>
-      <stop offset=".38" stop-color="#ffeeb6"/>
-      <stop offset=".72" stop-color="#ffc76d"/>
-      <stop offset="1" stop-color="#ff9f58" stop-opacity=".16"/>
+      <stop offset=".42" stop-color="#ffe9ac"/>
+      <stop offset=".76" stop-color="#ffc367"/>
+      <stop offset="1" stop-color="#ff9850" stop-opacity=".2"/>
     </radialGradient>
-    <radialGradient id="t-sun-b">
-      <stop offset="0" stop-color="#fff5cf"/>
+    <radialGradient id="sunB">
+      <stop offset="0" stop-color="#fff4cf"/>
       <stop offset=".55" stop-color="#ffd28a"/>
       <stop offset="1" stop-color="#ff9c59" stop-opacity=".12"/>
     </radialGradient>
-    <radialGradient id="t-sun-glow">
-      <stop offset="0" stop-color="#ffd694" stop-opacity=".5"/>
-      <stop offset=".55" stop-color="#ffad64" stop-opacity=".16"/>
-      <stop offset="1" stop-color="#ff9a55" stop-opacity="0"/>
+    <radialGradient id="sunGlow">
+      <stop offset="0" stop-color="#ffd79a" stop-opacity=".58"/>
+      <stop offset=".5" stop-color="#ffb06a" stop-opacity=".17"/>
+      <stop offset="1" stop-color="#ff9955" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="t-far" x2="0" y2="1">
-      <stop offset="0" stop-color="#8e5b4e"/>
-      <stop offset="1" stop-color="#5b3c3d"/>
+    <linearGradient id="farMesa" x2="0" y2="1">
+      <stop offset="0" stop-color="#86574c"/>
+      <stop offset="1" stop-color="#5f3c40"/>
     </linearGradient>
-    <linearGradient id="t-mid" x2="0" y2="1">
-      <stop offset="0" stop-color="#c27950"/>
-      <stop offset="1" stop-color="#8f4e39"/>
+    <linearGradient id="midMesa" x2="0" y2="1">
+      <stop offset="0" stop-color="#b16e4f"/>
+      <stop offset="1" stop-color="#7d483c"/>
     </linearGradient>
-    <linearGradient id="t-dune-a" x2="0" y2="1">
-      <stop offset="0" stop-color="#f0c582"/>
-      <stop offset=".5" stop-color="#d99b5e"/>
-      <stop offset="1" stop-color="#b06a45"/>
+    <linearGradient id="duneA" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2c987"/>
+      <stop offset=".5" stop-color="#dfa667"/>
+      <stop offset="1" stop-color="#b87349"/>
     </linearGradient>
-    <linearGradient id="t-dune-b" x2="0" y2="1">
-      <stop offset="0" stop-color="#e7b06c"/>
-      <stop offset=".62" stop-color="#c27a4a"/>
-      <stop offset="1" stop-color="#8f4c37"/>
+    <linearGradient id="duneB" x2="0" y2="1">
+      <stop offset="0" stop-color="#e7b271"/>
+      <stop offset=".55" stop-color="#ce8b56"/>
+      <stop offset="1" stop-color="#9b5c3e"/>
     </linearGradient>
-    <linearGradient id="t-dune-c" x2="0" y2="1">
-      <stop offset="0" stop-color="#f4cf94"/>
-      <stop offset=".52" stop-color="#dda366"/>
-      <stop offset="1" stop-color="#b97046"/>
+    <linearGradient id="duneC" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6d99d"/>
+      <stop offset=".5" stop-color="#e5b777"/>
+      <stop offset="1" stop-color="#c08050"/>
     </linearGradient>
-    <linearGradient id="t-path" x2="1" y2="0">
-      <stop offset="0" stop-color="#f0cd93" stop-opacity=".0"/>
-      <stop offset=".16" stop-color="#f4d69d" stop-opacity=".55"/>
-      <stop offset=".5" stop-color="#f8e0ab" stop-opacity=".82"/>
-      <stop offset=".86" stop-color="#f0cd91" stop-opacity=".52"/>
-      <stop offset="1" stop-color="#efc98b" stop-opacity="0"/>
+    <linearGradient id="fur" x2="0" y2="1">
+      <stop offset="0" stop-color="#9b7251"/>
+      <stop offset=".32" stop-color="#7f593e"/>
+      <stop offset=".7" stop-color="#5d3d2b"/>
+      <stop offset="1" stop-color="#3e281d"/>
     </linearGradient>
-    <radialGradient id="t-shield" cx=".5" cy=".42" r=".6">
-      <stop offset="0" stop-color="#bfefff" stop-opacity=".03"/>
-      <stop offset=".68" stop-color="#7fdcff" stop-opacity=".12"/>
-      <stop offset=".92" stop-color="#8ce5ff" stop-opacity=".32"/>
-      <stop offset="1" stop-color="#8ce5ff" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="t-dome" x1=".2" y1="0" x2=".82" y2="1">
-      <stop offset="0" stop-color="#f0e2c5"/>
-      <stop offset=".36" stop-color="#cfb994"/>
-      <stop offset=".76" stop-color="#9d825f"/>
-      <stop offset="1" stop-color="#6e573e"/>
+    <linearGradient id="ratFur" x2="0" y2="1">
+      <stop offset="0" stop-color="#c5a682"/>
+      <stop offset=".45" stop-color="#a58362"/>
+      <stop offset="1" stop-color="#73583f"/>
     </linearGradient>
-    <linearGradient id="t-pad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#a9a090"/>
-      <stop offset="1" stop-color="#71695d"/>
+    <linearGradient id="krayt" x2="0" y2="1">
+      <stop offset="0" stop-color="#dbb87f"/>
+      <stop offset=".32" stop-color="#c39a62"/>
+      <stop offset=".72" stop-color="#91683f"/>
+      <stop offset="1" stop-color="#5f4129"/>
     </linearGradient>
-    <linearGradient id="t-hull" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#a86a40"/>
-      <stop offset=".55" stop-color="#7d4a2e"/>
-      <stop offset="1" stop-color="#4b2b1b"/>
+    <linearGradient id="kraytBelly" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0deb8"/>
+      <stop offset="1" stop-color="#b99d72"/>
     </linearGradient>
-    <linearGradient id="t-bone" x1="0" y1="0" x2=".4" y2="1">
-      <stop offset="0" stop-color="#f1dfbb"/>
-      <stop offset=".6" stop-color="#d3bb92"/>
-      <stop offset="1" stop-color="#a98d67"/>
+    <linearGradient id="horn" x2="0" y2="1">
+      <stop offset="0" stop-color="#efe3c8"/>
+      <stop offset=".55" stop-color="#cdbb9a"/>
+      <stop offset="1" stop-color="#8d795a"/>
     </linearGradient>
-    <linearGradient id="t-fore" x2="0" y2="1">
-      <stop offset="0" stop-color="#c17a4a"/>
-      <stop offset=".45" stop-color="#965535"/>
-      <stop offset="1" stop-color="#5f3425"/>
+    <linearGradient id="relayDome" x2="0" y2="1">
+      <stop offset="0" stop-color="#d7d0c0"/>
+      <stop offset=".55" stop-color="#a8a093"/>
+      <stop offset="1" stop-color="#6f6961"/>
     </linearGradient>
-    <linearGradient id="t-vignette" x2="0" y2="1">
-      <stop offset="0" stop-color="#040b12" stop-opacity=".18"/>
-      <stop offset=".5" stop-color="#040b12" stop-opacity="0"/>
-      <stop offset=".82" stop-color="#040b12" stop-opacity=".32"/>
-      <stop offset="1" stop-color="#040b12" stop-opacity=".82"/>
-    </linearGradient>
-    <filter id="t-blur-a" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="13"/></filter>
-    <filter id="t-blur-b" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="4"/></filter>
-    <filter id="t-blur-c" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.2"/></filter>
-    <clipPath id="t-frame"><rect width="960" height="420"/></clipPath>
+    <filter id="soft"><feGaussianBlur stdDeviation="10"/></filter>
+    <filter id="shadow"><feGaussianBlur stdDeviation="3.4"/></filter>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3.6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
   </defs>
 
-  <g clip-path="url(#t-frame)">
-    <!-- night-to-dusk sky -->
-    <rect width="960" height="420" fill="url(#t-sky)"/>
-    <g fill="#fff9e4" opacity=".65">
-      <circle cx="84" cy="38" r="1.5"/><circle cx="152" cy="72" r="1.1"/><circle cx="228" cy="31" r="1.7"/>
-      <circle cx="305" cy="66" r="1"/><circle cx="386" cy="26" r="1.4"/><circle cx="468" cy="55" r="1.2"/>
-      <circle cx="556" cy="22" r="1.5"/><circle cx="632" cy="58" r="1"/><circle cx="720" cy="34" r="1.6"/>
-      <circle cx="812" cy="70" r="1.2"/><circle cx="888" cy="29" r="1.5"/><circle cx="930" cy="88" r="1"/>
-    </g>
-    <g fill="#ffeccd" opacity=".28">
-      <circle cx="116" cy="104" r=".9"/><circle cx="352" cy="95" r="1"/><circle cx="512" cy="110" r=".8"/>
-      <circle cx="698" cy="96" r="1"/><circle cx="860" cy="118" r=".9"/>
-    </g>
-
-    <!-- twin suns -->
-    <circle cx="700" cy="121" r="126" fill="url(#t-sun-glow)" filter="url(#t-blur-a)"/>
-    <circle cx="700" cy="121" r="58" fill="url(#t-sun-a)"/>
-    <circle cx="700" cy="121" r="27" fill="#fff6cf" opacity=".9" filter="url(#t-blur-c)"/>
-    <circle cx="790" cy="151" r="77" fill="url(#t-sun-glow)" opacity=".7" filter="url(#t-blur-a)"/>
-    <circle cx="790" cy="151" r="27" fill="url(#t-sun-b)"/>
-
-    <!-- atmospheric haze bands -->
-    <path d="M0 168q180-24 350-4t310-6 300 12v52H0z" fill="#ffd79a" opacity=".13" filter="url(#t-blur-b)"/>
-    <path d="M0 205q220-22 400 2t286-4 274 8v32H0z" fill="#ffbd7d" opacity=".16" filter="url(#t-blur-b)"/>
-
-    <!-- distant mesa silhouettes -->
-    <path fill="url(#t-far)" opacity=".78" d="M0 243 44 219l34-39 44 11 29-24 40 27 28-11 40 21 26-46 41-3 29 45 39-13 28-33 43 3 22 37 35-19 33 46 41-16 38 19 36-40 44 3 25 34 41-16 43 20 40-25 45 21v80H0z"/>
-    <path fill="#3e2b2f" opacity=".5" d="m0 250 45-26 35 9 37-30 38 12 31 26 27-12 37 23 35-24 32 10 40-18 26 29 40-9 33-21 39 8 30 27 38-14 32 22 42-27 35 10 33 25 38-19 34 20 35-13 32 23v61H0z"/>
-
-    <!-- middle dunes -->
-    <path fill="url(#t-mid)" d="M0 284q118-49 222-10t185 3q96-45 206-7t172 2q86-31 175-9v157H0z"/>
-    <path fill="#f5c98a" opacity=".2" d="M0 293q118-45 220-9t185 2q96-42 206-5t172 4q86-28 177-7v18q-92-18-177 9t-172-3q-110-37-206 5t-185-2Q118 268 0 310z"/>
-
-    <!-- winding route to the relay -->
-    <path d="M-30 338C120 328 190 297 274 288s132 24 204 6 107-48 176-30 111 48 184 34 96-24 152-14" fill="none" stroke="#7b452d" stroke-opacity=".35" stroke-width="31" stroke-linecap="round"/>
-    <path d="M-30 336C120 326 190 295 274 286s132 24 204 6 107-48 176-30 111 48 184 34 96-24 152-14" fill="none" stroke="url(#t-path)" stroke-width="22" stroke-linecap="round"/>
-    <path d="M-30 335C120 325 190 294 274 285s132 24 204 6 107-48 176-30 111 48 184 34 96-24 152-14" fill="none" stroke="#ffe7b5" stroke-opacity=".28" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="12 24"/>
-
-    <!-- sandcrawler on the left flats -->
-    <g transform="translate(154 248) rotate(-2)">
-      <ellipse cx="6" cy="36" rx="70" ry="13" fill="#5b3122" opacity=".34"/>
-      <rect x="-56" y="-8" width="114" height="42" rx="8" fill="url(#t-hull)" stroke="#3d2114" stroke-width="2"/>
-      <rect x="-61" y="3" width="16" height="32" rx="6" fill="#2c211a"/>
-      <rect x="46" y="3" width="16" height="32" rx="6" fill="#2c211a"/>
-      <g stroke="#8c6e4e" stroke-width="1.2" opacity=".45">
-        <path d="M-57 10h9M-57 16h9M-57 22h9M-57 28h9"/>
-        <path d="M47 10h9M47 16h9M47 22h9M47 28h9"/>
-      </g>
-      <path d="M56-5 72 3v20l-16 8z" fill="#8c5634" stroke="#3d2114" stroke-width="2"/>
-      <rect x="62" y="5" width="5" height="10" rx="1.5" fill="#ffcf7e" opacity=".9"/>
-      <path d="M-44-8v42M-20-8v42M6-8v42M32-8v42" stroke="#452718" stroke-opacity=".55"/>
-      <path d="M-24-8v-16h7v16" fill="#57301e" stroke="#2f1b10"/>
-      <path d="M-20-24v-13" stroke="#c7a67c" stroke-width="1.4"/>
-      <circle cx="-20" cy="-38" r="2.2" fill="#ffb45a"/>
-      <path d="M-48-4h20l8 4H-48z" fill="#d09a68" opacity=".25"/>
-    </g>
-
-    <!-- bantha herd on the ridge -->
-    <g fill="#3b251b" opacity=".92">
-      <g transform="translate(548 253) scale(.72)">
-        <ellipse cx="0" cy="0" rx="26" ry="12"/>
-        <ellipse cx="24" cy="-4" rx="10" ry="7"/>
-        <path d="M28-9c8-7 17-6 23-1-8 1-14 5-18 9z" fill="#d5bf98"/>
-        <path d="M28 3c8 7 17 6 23 1-8-1-14-5-18-8z" fill="#d5bf98"/>
-        <path d="M-20 7l-8 18M-8 9l-3 19M10 9l2 19M20 6l8 18" stroke="#3b251b" stroke-width="5" stroke-linecap="round"/>
-      </g>
-      <g transform="translate(612 258) scale(.55)">
-        <ellipse cx="0" cy="0" rx="26" ry="12"/>
-        <ellipse cx="24" cy="-4" rx="10" ry="7"/>
-        <path d="M28-9c8-7 17-6 23-1-8 1-14 5-18 9z" fill="#d5bf98"/>
-        <path d="M28 3c8 7 17 6 23 1-8-1-14-5-18-8z" fill="#d5bf98"/>
-        <path d="M-20 7l-8 18M-8 9l-3 19M10 9l2 19M20 6l8 18" stroke="#3b251b" stroke-width="5" stroke-linecap="round"/>
-      </g>
-      <g transform="translate(660 250) scale(.42)">
-        <ellipse cx="0" cy="0" rx="26" ry="12"/>
-        <ellipse cx="24" cy="-4" rx="10" ry="7"/>
-        <path d="M28-9c8-7 17-6 23-1-8 1-14 5-18 9z" fill="#d5bf98"/>
-        <path d="M28 3c8 7 17 6 23 1-8-1-14-5-18-8z" fill="#d5bf98"/>
-        <path d="M-20 7l-8 18M-8 9l-3 19M10 9l2 19M20 6l8 18" stroke="#3b251b" stroke-width="5" stroke-linecap="round"/>
-      </g>
-    </g>
-
-    <!-- outpost relay -->
-    <g transform="translate(796 273)">
-      <ellipse cx="0" cy="72" rx="132" ry="32" fill="#5f3223" opacity=".32"/>
-      <ellipse cx="0" cy="66" rx="92" ry="24" fill="url(#t-pad)" stroke="#5e5549" stroke-width="2.5"/>
-      <ellipse cx="0" cy="63" rx="62" ry="14" fill="none" stroke="#d9c9a8" stroke-opacity=".4" stroke-width="1.5"/>
-      <path d="M-62 76h124" stroke="#4e473d" stroke-width="2" stroke-dasharray="7 8" opacity=".7"/>
-
-      <!-- shield bubble -->
-      <ellipse cx="0" cy="-4" rx="108" ry="80" fill="url(#t-shield)"/>
-      <ellipse cx="0" cy="-4" rx="94" ry="68" fill="none" stroke="#a8ecff" stroke-opacity=".42" stroke-width="1.6" stroke-dasharray="4 7"/>
-      <ellipse cx="0" cy="-4" rx="72" ry="52" fill="none" stroke="#c4f4ff" stroke-opacity=".18" stroke-width="1"/>
-
-      <!-- relay dome -->
-      <path d="M-42 58c0-38 18-62 42-62s42 24 42 62z" fill="url(#t-dome)" stroke="#5f4a34" stroke-width="2"/>
-      <path d="M-31 58c0-28 13-47 31-47s31 19 31 47z" fill="none" stroke="#f7edda" stroke-opacity=".24" stroke-width="1.5"/>
-      <path d="M-19 37h38v16h-38z" fill="#17323f" stroke="#584c3c" stroke-width="1.6"/>
-      <path d="M-14 40h28v10h-28z" fill="#72dbff"/>
-      <path d="M-14 40h28v4h-28z" fill="#c2f1ff" opacity=".8"/>
-      <path d="M18 49 34 5" stroke="#6b5a44" stroke-width="2.4"/>
-      <circle cx="34" cy="4" r="4" fill="#ffd27a"/>
-      <circle cx="34" cy="4" r="9" fill="none" stroke="#ffd27a" stroke-opacity=".5" stroke-width="1.2"/>
-      <path d="M-48 58v16h96V58" fill="none" stroke="#6c5741" stroke-width="2.6"/>
-      <path d="M-58 74h116" stroke="#5e4d3a" stroke-width="4" stroke-linecap="round"/>
-
-      <!-- ground details -->
-      <g transform="translate(-102 58)">
-        <path d="M-10 6v-38h20v38" fill="#8d887c" stroke="#5b574e" stroke-width="2"/>
-        <path d="M-12-32h24l-4-7h-16z" fill="#b0aa9b" stroke="#5b574e" stroke-width="1.5"/>
-        <path d="M8-25 20-40" stroke="#7a7364" stroke-width="2.2"/>
-        <rect x="13" y="-43" width="15" height="9" rx="1" fill="#25333a" stroke="#6e7d82" stroke-width="1"/>
-        <path d="M-9-10h18M-9-2h18" stroke="#6c675c" stroke-width="1.2"/>
-      </g>
-      <g transform="translate(88 52)">
-        <rect x="0" y="0" width="24" height="18" rx="2" fill="#8a5a35" stroke="#49301d" stroke-width="1.6"/>
-        <rect x="4" y="4" width="16" height="3" fill="#c0905e" opacity=".55"/>
-        <rect x="25" y="8" width="19" height="13" rx="2" fill="#7b4f2e" stroke="#49301d" stroke-width="1.6"/>
-        <path d="M4 10h16M8 15h12" stroke="#5e3d24" stroke-width="1.1"/>
-      </g>
-      <g fill="#d9c6a4" opacity=".55">
-        <circle cx="-70" cy="70" r="3"/><circle cx="-60" cy="74" r="2"/><circle cx="64" cy="72" r="2.4"/>
-      </g>
-      <g stroke="#5b4028" stroke-width="1.2" opacity=".6">
-        <path d="M-82 80l10-6M-72 84l8-8M74 82l9-7"/>
-      </g>
-      <!-- beacon lamps -->
-      <circle cx="-44" cy="52" r="2.4" fill="#ffd47e"/><circle cx="44" cy="52" r="2.4" fill="#ff8c64"/>
-    </g>
-
-    <!-- krayt skeleton half-buried in the left foreground -->
-    <g transform="translate(242 335) rotate(-8)">
-      <ellipse cx="8" cy="29" rx="128" ry="24" fill="#5a2f1f" opacity=".26"/>
-      <path d="M-112 6c48 14 98 16 148 5" fill="none" stroke="#bca57c" stroke-width="5" stroke-linecap="round"/>
-      <g stroke="url(#t-bone)" stroke-width="4.5" fill="none" stroke-linecap="round">
-        <path d="M-90 7c-2-21 8-34 22-38M-90 7c12 4 26 4 38 1"/>
-        <path d="M-64 11c-3-27 9-44 27-49M-64 11c15 5 31 5 45 1"/>
-        <path d="M-35 14c-3-31 11-50 32-55M-35 14c17 6 36 5 52 2"/>
-        <path d="M-3 17c-3-33 13-53 36-58M-3 17c19 6 40 5 58 2"/>
-        <path d="M31 18c-2-29 13-47 34-51M31 18c18 5 37 5 54 2"/>
-      </g>
-      <g fill="#d9c39b">
-        <circle cx="-92" cy="7" r="4"/><circle cx="-64" cy="11" r="4.3"/><circle cx="-35" cy="14" r="4.4"/><circle cx="-3" cy="17" r="4.5"/><circle cx="31" cy="18" r="4.2"/>
-      </g>
-      <!-- skull -->
-      <g transform="translate(99 9) rotate(6)">
-        <path d="M-28-20c14-14 43-18 59-5l18 15c6 5 6 12 0 17L31 25c-17 12-45 8-59-6-10-10-10-29 0-39z" fill="url(#t-bone)" stroke="#8c7350" stroke-width="2"/>
-        <ellipse cx="4" cy="-8" rx="8" ry="6.5" fill="#3d2b1a"/>
-        <ellipse cx="4" cy="12" rx="8" ry="6.5" fill="#3d2b1a"/>
-        <ellipse cx="4" cy="-8" rx="4" ry="3.5" fill="#24170d"/>
-        <ellipse cx="4" cy="12" rx="4" ry="3.5" fill="#24170d"/>
-        <ellipse cx="33" cy="2" rx="4.5" ry="6" fill="#4e3820"/>
-        <path d="M-16 18c13 6 31 5 46-2" fill="none" stroke="#8c7350" stroke-width="2"/>
-        <g fill="#f6ecd5">
-          <path d="M25 2l5 5 4-7z"/><path d="M34 2l5 5 4-7z"/><path d="M25 13l5-5 4 7z"/><path d="M34 13l5-5 4 7z"/>
-        </g>
-        <path d="M-24-17c-22-12-48-12-66 2 19 1 38 8 53 20z" fill="#d9c39b" stroke="#8c7350" stroke-width="1.6"/>
-        <path d="M-24 17c-22 12-48 12-66-2 19-1 38-8 53-20z" fill="#cdb58c" stroke="#8c7350" stroke-width="1.6"/>
-        <path d="M-56-12c-6-8-16-10-24-6M-56 12c-6 8-16 10-24 6" fill="none" stroke="#8c7350" stroke-width="1.4"/>
-      </g>
-      <!-- sand drift burying the bones -->
-      <path d="M-136 17c48-13 94 8 136 13 43 5 84 1 138-8v48h-274z" fill="#d8a268" opacity=".85"/>
-      <path d="M-136 27c51-11 96 10 139 14s87 0 135-8" fill="none" stroke="#f2cd92" stroke-width="2" opacity=".5"/>
-    </g>
-
-    <!-- womp rat tracks, bones and scrub -->
-    <g fill="#6d3f27" opacity=".32">
-      <ellipse cx="402" cy="311" rx="2.2" ry="1.2"/><ellipse cx="410" cy="314" rx="2.2" ry="1.2"/><ellipse cx="418" cy="311" rx="2.2" ry="1.2"/>
-      <ellipse cx="446" cy="323" rx="2.2" ry="1.2"/><ellipse cx="454" cy="326" rx="2.2" ry="1.2"/><ellipse cx="462" cy="323" rx="2.2" ry="1.2"/>
-      <ellipse cx="492" cy="307" rx="2.2" ry="1.2"/><ellipse cx="500" cy="310" rx="2.2" ry="1.2"/><ellipse cx="508" cy="307" rx="2.2" ry="1.2"/>
-    </g>
-    <g stroke="#b9a078" stroke-width="2" stroke-linecap="round" opacity=".75">
-      <path d="M700 365l17-4M704 371l13-8M667 370l13-8"/>
-      <path d="M682 352l9-7M689 356l9-7"/>
-    </g>
-    <g stroke="#8d7a45" stroke-width="1.5" stroke-linecap="round" opacity=".7">
-      <path d="M96 345c-8-9-10-16-10-22M98 345c2-13 8-20 15-25M96 345c-3-14-3-24-1-32"/>
-      <path d="M868 350c-8-9-10-16-10-22M870 350c2-13 8-20 15-25M868 350c-3-14-3-24-1-32"/>
-      <path d="M438 386c-7-8-9-14-9-19M440 386c2-11 7-17 13-22M438 386c-3-12-3-21-1-28"/>
-    </g>
-    <g fill="#7f5935" opacity=".75">
-      <ellipse cx="872" cy="330" rx="7" ry="4"/><ellipse cx="884" cy="334" rx="4" ry="3"/>
-      <ellipse cx="58" cy="315" rx="9" ry="5"/><ellipse cx="72" cy="320" rx="5" ry="3"/>
-      <ellipse cx="902" cy="307" rx="5" ry="3"/>
-    </g>
-
-    <!-- foreground ridge -->
-    <path fill="url(#t-fore)" d="M0 371q96-26 196-4t198 3q104-24 214-4t176-1q88-19 176 4v51H0z"/>
-    <path fill="none" stroke="#f3c083" stroke-opacity=".34" stroke-width="2" d="M0 371q96-26 196-4t198 3q104-24 214-4t176-1q88-19 176 4"/>
-
-    <!-- dust motes -->
-    <g fill="#ffe3b4" opacity=".45" filter="url(#t-blur-c)">
-      <circle cx="154" cy="278" r="1.8"/><circle cx="214" cy="300" r="1.2"/><circle cx="336" cy="268" r="1.5"/>
-      <circle cx="430" cy="292" r="1.3"/><circle cx="520" cy="278" r="1.7"/><circle cx="614" cy="300" r="1.2"/>
-      <circle cx="736" cy="266" r="1.5"/><circle cx="884" cy="288" r="1.3"/>
-    </g>
-
-    <!-- graded overlay for depth and readable UI copy -->
-    <rect width="960" height="420" fill="url(#t-vignette)"/>
-    <rect x="0" y="0" width="960" height="420" fill="#1b2a3a" opacity=".05"/>
+  <!-- twin-sun desert sky -->
+  <rect width="960" height="420" fill="url(#sky)"/>
+  <g fill="#d9ecff">
+    <circle cx="43" cy="37" r="1.2" opacity=".65"/><circle cx="112" cy="68" r=".8" opacity=".45"/>
+    <circle cx="181" cy="29" r="1" opacity=".55"/><circle cx="252" cy="56" r=".7" opacity=".4"/>
+    <circle cx="342" cy="28" r="1.1" opacity=".5"/><circle cx="438" cy="62" r=".8" opacity=".42"/>
+    <circle cx="522" cy="27" r="1" opacity=".5"/><circle cx="590" cy="78" r=".7" opacity=".35"/>
+    <circle cx="856" cy="42" r="1.1" opacity=".5"/><circle cx="920" cy="74" r=".8" opacity=".4"/>
   </g>
+  <circle cx="672" cy="139" r="150" fill="url(#sunGlow)"/>
+  <circle cx="686" cy="137" r="57" fill="url(#sunA)"/>
+  <circle cx="744" cy="157" r="35" fill="url(#sunB)" opacity=".95"/>
+  <circle cx="686" cy="137" r="71" fill="none" stroke="#ffe4ad" stroke-width="1" opacity=".18"/>
+
+  <!-- distant mesas -->
+  <path d="M0 254 63 235l31-41 37 23 37-12 23 48 48 4 54-65 53 46 35-27 45 29 50-49 55 40 54-31 46 41 51-62 53 37 40-17 50 42 49-29 49 39v98H0z" fill="url(#farMesa)" opacity=".8"/>
+  <g fill="url(#midMesa)">
+    <path d="M0 282h90l15-59 39-9 22 22 18-9 19 55h46l31-92 55-12 24 38 15-17 24 83H0z"/>
+    <path d="M688 282l18-49 44-23 37 8 23 29 19-10 30 45h101v-31l38-23 37 18 15 36H688z"/>
+  </g>
+  <g fill="#c4815e" opacity=".55">
+    <path d="M93 282l15-58 38-9 20 21-34 3-16 43z"/>
+    <path d="M520 282l33-91 51-12 23 37-37-8-29 74z"/>
+    <path d="M689 282l19-48 43-23 37 8 21 28-31-13-46 48z"/>
+  </g>
+
+  <!-- dune sea -->
+  <path d="M0 304c94-28 159-18 244-4 92 15 153 2 246-9 126-15 223-5 318 3 57 5 107 2 152-5v131H0z" fill="url(#duneA)"/>
+  <path d="M0 342c105-21 166-8 249 3 103 14 163-4 259-11 125-9 214 3 304 10 55 4 106 0 148-5v81H0z" fill="url(#duneB)"/>
+  <path d="M0 380c92-16 152-7 234 2 108 11 170-5 270-11 124-7 214 3 303 9 59 4 105 0 153-7v47H0z" fill="url(#duneC)"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M26 302c89-20 158-10 235 1 93 13 149 1 238-9 132-15 227-4 323 4 45 4 85 3 123-1" stroke="#ffe4ab" stroke-width="2" opacity=".4"/>
+    <path d="M-8 329c98-17 166-5 244 5 99 12 160-3 253-10 126-9 215 3 310 10 51 4 101 1 145-3" stroke="#f8d190" stroke-width="1.4" opacity=".35"/>
+    <path d="M30 358c91-15 150-3 230 5 102 9 165-5 261-10 119-6 210 4 300 9 51 3 94 0 132-4" stroke="#ffe2a3" stroke-width="1.5" opacity=".35"/>
+    <path d="M76 389c89-10 151-1 230 4 103 7 165-5 257-8 120-5 213 4 306 7" stroke="#c58555" stroke-width="1.2" opacity=".45"/>
+  </g>
+  <g fill="#a96943" opacity=".28">
+    <ellipse cx="159" cy="372" rx="76" ry="10" transform="rotate(-4 159 372)"/>
+    <ellipse cx="521" cy="393" rx="91" ry="11" transform="rotate(3 521 393)"/>
+    <ellipse cx="789" cy="365" rx="65" ry="8" transform="rotate(-4 789 365)"/>
+  </g>
+
+  <!-- buried krayt skeleton, a landmark in the far sand -->
+  <g fill="#d3bd97" opacity=".55" transform="translate(84 334) rotate(-6)">
+    <path d="M-33 6c13-24 39-35 72-34 30 1 56 8 79 20l-24 13c-18-8-37-12-59-11-20 1-36 7-48 20z"/>
+    <path d="M-23 0c8-10 20-15 34-14l7 9-18 6-10 11z"/>
+    <path d="M30-6l38 2-5 7-35 4zM76-2l30 3-7 6-25 1z"/>
+    <path d="M8 8l-12 16 8 2 15-17zm27 1-9 19 7 1 12-18zm27 0-5 18 7 1 8-18z"/>
+    <path d="M-39 2l-26-6 20 12-22 5 29 1z"/>
+  </g>
+
+  <!-- outpost relay on the far dune -->
+  <g transform="translate(838 300)">
+    <ellipse cx="0" cy="38" rx="72" ry="17" fill="#8c593d" opacity=".45"/>
+    <path d="M-60 36c3-23 30-36 67-35 35 1 58 15 64 37z" fill="url(#relayDome)" stroke="#7e776c" stroke-width="1.3"/>
+    <path d="M-40 27c7-13 23-20 42-19" fill="none" stroke="#f0eadb" stroke-width="2" opacity=".7"/>
+    <rect x="-19" y="19" width="38" height="17" rx="3" fill="#273842"/>
+    <rect x="-14" y="22" width="28" height="10" rx="2" fill="#86e8ff" opacity=".9"/>
+    <ellipse cx="0" cy="29" rx="30" ry="10" fill="#7fe3ff" opacity=".2" filter="url(#soft)"/>
+    <path d="M42 21l11-42M53-21l9 8m-9-8l-11 4" stroke="#827a70" stroke-width="2.4" fill="none"/>
+    <circle cx="53" cy="-22" r="2.2" fill="#ffce73" filter="url(#glow)"/>
+  </g>
+  <g fill="#6f4a36" opacity=".7">
+    <rect x="738" y="335" width="23" height="11" rx="2" transform="rotate(-5 749 340)"/>
+    <rect x="765" y="339" width="14" height="8" rx="2" transform="rotate(4 772 343)"/>
+  </g>
+
+  <!-- foreground dune shelf -->
+  <path d="M0 369c97-17 161-7 242 4 105 14 166 0 262-8 119-10 210 1 303 7 59 4 106 1 153-4v52H0z" fill="#e9bf82"/>
+  <path d="M0 396c91-10 151-1 229 4 104 6 164-5 259-8 123-4 215 4 307 7 59 2 108 0 165-3v24H0z" fill="#c88a57"/>
+
+  <!-- WOMP RAT: low desert rodent with huge ears and a bare whip tail -->
+  <g id="womprat" transform="translate(320 361) scale(.58)">
+    <ellipse cx="6" cy="27" rx="73" ry="9" fill="#6c402c" opacity=".34" filter="url(#shadow)"/>
+    <!-- bare tail -->
+    <path d="M-54 4c-34-3-55 7-72 25 24-5 43-5 65 2 18 5 29-1 34-12z" fill="#a17f5e" stroke="#6f5239" stroke-width="1.5"/>
+    <path d="M-123 30c17-4 32-4 48-1m-59 7c15-3 28-2 41 0" fill="none" stroke="#7d5e42" stroke-width="1.2" opacity=".8"/>
+    <!-- hind legs -->
+    <path d="M-45 5c-10 10-16 24-14 35l19 1c1-11 6-22 15-30z" fill="#8a6a4c" stroke="#5d432d" stroke-width="1.6"/>
+    <path d="M-52 39l-9 6 18 4 11-5z" fill="#6b4d35"/>
+    <path d="M16 5c-4 12-2 26 5 35l18-4c-6-10-7-21-3-31z" fill="#a68562" stroke="#5d432d" stroke-width="1.6"/>
+    <path d="M13 38l-8 7 18 2 9-6z" fill="#6b4d35"/>
+    <!-- front paws -->
+    <path d="M34 21c-4 9-2 17 4 22l13-4c-5-6-6-13-2-20z" fill="#a68562" stroke="#5d432d" stroke-width="1.5"/>
+    <path d="M34 42l-6 5 14 1 6-5z" fill="#6b4d35"/>
+    <!-- hunched body -->
+    <path d="M-50-13c11-18 28-27 47-27 17 0 31 7 43 22 10 12 15 26 11 33-6 10-26 13-48 11-29-3-49-10-57-21-4-6-3-12 4-18z" fill="url(#ratFur)" stroke="#5b432e" stroke-width="1.8"/>
+    <path d="M-41 6c9 8 25 12 45 12 13 0 24-2 32-6-9 9-26 13-44 11-19-2-34-8-39-16z" fill="#d8c1a0" opacity=".55"/>
+    <!-- scruffy back fur -->
+    <g stroke="#8b6b4c" stroke-width="1.2" fill="none" opacity=".85">
+      <path d="M-38-22c8-8 18-13 30-14m-25 23c8-7 17-12 28-13m-20 22c7-5 15-9 24-10"/>
+    </g>
+    <!-- big ears -->
+    <path d="M37-35c8-22 23-32 34-26 9 5 9 19 3 30-5 11-14 17-24 16z" fill="#b2926e" stroke="#66492f" stroke-width="1.8"/>
+    <path d="M45-35c5-13 13-19 19-17 5 2 5 11 2 18-3 7-8 10-13 9z" fill="#7d5b3e" opacity=".8"/>
+    <path d="M19-31c2-19 11-29 21-28 11 2 16 14 13 26-3 12-9 18-17 18z" fill="#a28160" stroke="#66492f" stroke-width="1.7"/>
+    <path d="M26-33c2-11 7-17 12-16 5 1 7 9 5 16-2 7-6 10-10 9z" fill="#715238" opacity=".8"/>
+    <!-- head and snout -->
+    <path d="M15-24c13-11 31-11 45-3 11 7 18 17 17 25-2 9-13 14-25 13-14-1-27-7-35-16-5-6-6-12-2-19z" fill="url(#ratFur)" stroke="#5e442e" stroke-width="1.8"/>
+    <path d="M45-6c9 0 18 2 25 7l-9 9c-7-4-14-5-21-4z" fill="#aa8a68" stroke="#6a4d33" stroke-width="1.4"/>
+    <path d="M62 6l9 1-6 5-8-1z" fill="#5b3a35"/>
+    <!-- eye, brow, whiskers -->
+    <path d="M34-15c5-4 12-3 16 1-5 4-11 5-16 2z" fill="#5b3b2b"/>
+    <circle cx="42" cy="-11" r="3" fill="#e25835" filter="url(#glow)"/>
+    <circle cx="42.5" cy="-11.5" r=".9" fill="#32120b"/>
+    <g stroke="#c9b18f" stroke-width=".8" opacity=".75">
+      <path d="M61 9l17 4M61 12l15 8M60 6l18-2"/>
+    </g>
+    <!-- incisors -->
+    <g fill="#f2e4c5">
+      <path d="M59 9l3 13 4-13z"/><path d="M67 10l3 11 3-11z"/>
+    </g>
+    <path d="M52 18c7 3 14 3 20 0" fill="none" stroke="#5e3d2d" stroke-width="1.2"/>
+    <!-- dusty paws and claws -->
+    <g fill="#4c3324">
+      <path d="M-60 44l-7 4 9 2 6-4z"/><path d="M-50 45l-5 5 8 1 5-4z"/>
+      <path d="M7 43l-6 5 10 1 6-4z"/><path d="M16 43l-4 6 9 1 4-4z"/>
+      <path d="M29 46l-5 5 9 1 5-4z"/>
+    </g>
+  </g>
+
+  <!-- BANTHA: shaggy pack beast with curled ram horns -->
+  <g id="bantha" transform="translate(430 358) scale(.68)">
+    <ellipse cx="4" cy="30" rx="92" ry="13" fill="#6e422c" opacity=".38" filter="url(#shadow)"/>
+    <!-- tail -->
+    <path d="M-78-51c-18 7-29 17-30 26 8-6 17-8 27-6 6-6 12-9 19-9z" fill="url(#fur)" stroke="#3c261b" stroke-width="1.6"/>
+    <path d="M-109-24c-7 4-10 8-11 13 6-3 12-4 18-2" fill="none" stroke="#cfae83" stroke-width="2" opacity=".75"/>
+    <!-- legs / shaggy cuffs -->
+    <path d="M-57-15l-5 32-9 13 17 1 10-13 5-31z" fill="#5d3d2b" stroke="#342116" stroke-width="1.8"/>
+    <path d="M-63 39l-10 6 18 4 12-5z" fill="#3b2619"/>
+    <path d="M-13-13l-2 33-8 12 17 2 8-13 2-33z" fill="#6d4934" stroke="#342116" stroke-width="1.8"/>
+    <path d="M-21 40l-10 6 19 3 11-5z" fill="#3b2619"/>
+    <path d="M39-14l5 33 12 14-17 1-12-14-6-33z" fill="#6a4732" stroke="#342116" stroke-width="1.8"/>
+    <path d="M33 41l-11 6 19 3 12-5z" fill="#3b2619"/>
+    <!-- far legs -->
+    <path d="M-35-6l-2 30 7 14-13 1-9-15 1-31z" fill="#4b3021" stroke="#2e1c13" stroke-width="1.5" opacity=".9"/>
+    <path d="M22-5l5 30 10 13-14 2-11-15-5-30z" fill="#4b3021" stroke="#2e1c13" stroke-width="1.5" opacity=".9"/>
+    <!-- massive shaggy body -->
+    <path d="M-82-60c4-25 24-40 50-44 21-3 39 2 57 11 22 11 34 27 34 45 0 15-9 26-28 32-23 8-52 9-78 4-24-4-37-17-38-33 0-5 1-10 3-15z" fill="url(#fur)" stroke="#352015" stroke-width="2"/>
+    <path d="M-58-83c15-13 36-18 59-13 15 3 27 9 38 17-18-5-35-7-51-5-17 2-32 7-46 17z" fill="#b28a62" opacity=".5"/>
+    <!-- shaggy fringe -->
+    <g stroke="#3f291d" stroke-width="1.4" fill="none" opacity=".8">
+      <path d="M-73-42c2 11 0 22-4 33m18-41c0 12-2 24-6 35m20-40c-1 13-3 25-7 36m21-39c0 13-2 25-5 37m21-37c1 12 0 23-3 34m20-31c1 10 0 20-3 29m19-24c0 9-1 17-3 24"/>
+    </g>
+    <g stroke="#a67f58" stroke-width="1" fill="none" opacity=".75">
+      <path d="M-64-66c-3 9-4 18-3 27m17-38c-2 11-3 22-1 32m18-39c-1 12-2 23 0 34m18-37c0 12-1 23 1 34m18-30c1 10 1 20 3 29"/>
+    </g>
+    <!-- saddle blanket and straps -->
+    <path d="M-25-78c22-8 44-6 61 5l-5 21c-19-8-36-8-51-2z" fill="#6b3f2c" stroke="#3d2419" stroke-width="1.4"/>
+    <path d="M-17-76l45 5" stroke="#d0a35f" stroke-width="2" opacity=".65"/>
+    <path d="M-31-58l-7 50m75-45l6 47" stroke="#3b261b" stroke-width="3"/>
+    <path d="M-34-46c23 7 47 8 74 1" fill="none" stroke="#432b1e" stroke-width="2.2"/>
+    <!-- neck mane and head -->
+    <path d="M45-79c13-11 29-13 41-4 8 6 13 16 11 25-2 8-9 13-20 14-16 2-29-5-36-17z" fill="url(#fur)" stroke="#352015" stroke-width="1.8"/>
+    <g stroke="#a47c55" stroke-width="1.4" fill="none" opacity=".8">
+      <path d="M47-77c-2 10 0 19 5 27m10-31c-1 10 1 19 5 27m9-28c0 9 2 17 6 24"/>
+    </g>
+    <path d="M49-83c10-6 22-6 31 0 7 5 11 12 10 18-2 7-11 11-21 10-12-1-21-7-23-15-1-5 0-9 3-13z" fill="#80593e" stroke="#3b261a" stroke-width="1.7"/>
+    <path d="M73-64c7 0 14 2 18 6-3 5-8 7-14 7-5 0-9-2-12-5z" fill="#62412d"/>
+    <circle cx="79" cy="-55" r="1.6" fill="#2a1a12"/>
+    <circle cx="88" cy="-54" r="1.2" fill="#24150e"/>
+    <path d="M61-77c4-3 9-3 13 0" fill="none" stroke="#3d281b" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="76" cy="-75" r="2.1" fill="#1e130d"/>
+    <circle cx="77" cy="-75.5" r=".6" fill="#d7b27c"/>
+    <!-- thick curling ram horns -->
+    <g fill="none" stroke-linecap="round">
+      <path d="M48-83c-9-13-23-19-35-14-8 4-10 13-4 17 5 4 11 1 12-5" stroke="#776549" stroke-width="10"/>
+      <path d="M48-83c-9-13-23-19-35-14-8 4-10 13-4 17 5 4 11 1 12-5" stroke="url(#horn)" stroke-width="7.4"/>
+      <path d="M59-86c-5-17-2-30 10-37 8-5 16-1 15 6-1 6-7 8-11 4" stroke="#776549" stroke-width="9"/>
+      <path d="M59-86c-5-17-2-30 10-37 8-5 16-1 15 6-1 6-7 8-11 4" stroke="url(#horn)" stroke-width="6.6"/>
+      <path d="M17-94c4-8 12-13 22-14m24-14c7-5 15-6 22-2" stroke="#f2e6cd" stroke-width="1.2" opacity=".65"/>
+    </g>
+    <!-- dust and flies -->
+    <g fill="#e5c18d" opacity=".45">
+      <circle cx="-72" cy="30" r="2"/><circle cx="-58" cy="36" r="1.4"/><circle cx="62" cy="35" r="1.6"/>
+    </g>
+  </g>
+
+  <!-- KRAYT DRAGON: enormous spined dragon rising from the dune -->
+  <g id="krayt" transform="translate(580 356) scale(.49)">
+    <ellipse cx="-4" cy="32" rx="125" ry="18" fill="#70462f" opacity=".4" filter="url(#shadow)"/>
+    <!-- heavy tail curling behind -->
+    <path d="M-30 10c-38 14-64 30-82 48 24-8 47-10 70-5 22 5 41-2 53-19z" fill="url(#krayt)" stroke="#513821" stroke-width="2.2"/>
+    <g stroke="#6b4b2e" stroke-width="1.4" opacity=".8" fill="none">
+      <path d="M-44 26c-19 8-35 18-48 29m25-28c-15 8-28 17-38 28"/>
+    </g>
+    <!-- hind legs and claws -->
+    <path d="M-42 3c-15 9-24 22-25 34l26 2c3-11 11-20 23-27z" fill="url(#krayt)" stroke="#513821" stroke-width="2"/>
+    <path d="M-68 37l-11 8 17 4 14-7z" fill="#553a23"/>
+    <path d="M-70 45l-13 4 10 5 12-3zM-54 46l-12 6 14 3 11-5z"/>
+    <!-- far leg -->
+    <path d="M30 2c-2 13 2 24 10 32l18-7c-7-8-10-18-8-29z" fill="#8f683f" stroke="#4c341e" stroke-width="1.6" opacity=".95"/>
+    <!-- muscular body -->
+    <path d="M-37-18c16-34 50-54 86-48 32 5 57 28 63 55 5 20-5 34-28 39-32 7-72-1-99-16-18-10-27-19-22-30z" fill="url(#krayt)" stroke="#4e3520" stroke-width="2.4"/>
+    <path d="M-20-4c21 13 50 19 80 16 19-2 31-8 36-17-4 19-25 30-54 29-30-1-53-11-62-28z" fill="url(#kraytBelly)" opacity=".8"/>
+    <!-- back spikes -->
+    <g fill="#7d5a35" stroke="#4b321e" stroke-width="1.4">
+      <path d="M-24-55l-9-24 21 14z"/><path d="M2-69l-3-27 18 21z"/>
+      <path d="M31-70l8-25 10 30z"/><path d="M58-59l16-19-1 30z"/>
+      <path d="M80-40l23-9-12 25z"/>
+    </g>
+    <g stroke="#b79b70" stroke-width="1.4" opacity=".55" fill="none">
+      <path d="M-18-64l9 9m11-18l8 12m15-12l7 11m15-5l6 10m15 2l6 9"/>
+    </g>
+    <!-- scale ridges -->
+    <g stroke="#6d4b2b" stroke-width="1.2" fill="none" opacity=".65">
+      <path d="M-18-32c19-15 45-20 69-14m-81 28c22-10 47-11 70-5m-62 17c21-7 44-7 65 0"/>
+    </g>
+    <!-- near foreleg planted on the dune -->
+    <path d="M42-14c-4 16-1 30 8 42l23-9c-8-10-11-22-7-35z" fill="url(#krayt)" stroke="#4e3520" stroke-width="2.2"/>
+    <path d="M50 28l-8 9 24 2 13-7z" fill="#553a23"/>
+    <g fill="#24170f">
+      <path d="M45 36l-15 4 13 5 12-5z"/><path d="M59 38l-13 7 14 4 12-7z"/>
+      <path d="M72 36l-8 9 13 3 8-7z"/>
+    </g>
+    <!-- shoulder plate and arm -->
+    <path d="M4-14c14-4 29 1 37 12-4 10-14 15-27 14-12-1-20-7-23-15z" fill="#b08a58" stroke="#513821" stroke-width="1.8"/>
+    <path d="M20-4c-3 12 1 23 10 31l18-7c-8-9-11-19-8-28z" fill="#b08a58" stroke="#513821" stroke-width="1.8"/>
+    <path d="M30 22l-9 8 19 3 12-6z" fill="#553a23"/>
+    <!-- long neck and skull -->
+    <path d="M29-54c6-32 20-57 44-75 17-13 38-16 53-6 13 9 17 24 9 36-7 11-20 15-34 11-9-3-15-9-17-17-10 16-19 33-24 51z" fill="url(#krayt)" stroke="#4e3520" stroke-width="2.2"/>
+    <path d="M42-49c3-18 11-34 24-48" fill="none" stroke="#d3b37e" stroke-width="2" opacity=".45"/>
+    <!-- head -->
+    <path d="M104-137c18-12 42-14 60-5 12 6 20 17 22 29-12 8-26 11-41 9-21-3-39-13-47-27z" fill="url(#krayt)" stroke="#4e3520" stroke-width="2.2"/>
+    <path d="M111-122c12-7 26-10 39-8 11 1 20 5 26 11-10 5-21 7-33 6-13-1-23-4-32-9z" fill="#d7bc8e" opacity=".75"/>
+    <!-- brow horns and cheek spikes -->
+    <path d="M105-145l-14-23 26 14z" fill="#7c5a35" stroke="#4a311d" stroke-width="1.5"/>
+    <path d="M133-150l-4-26 18 21z" fill="#9f7a4c" stroke="#4a311d" stroke-width="1.5"/>
+    <path d="M154-139l15-16-2 25z" fill="#7c5a35" stroke="#4a311d" stroke-width="1.5"/>
+    <path d="M96-120l-20-6 15 15zM101-111l-17 4 16 9z" fill="#77532f" stroke="#4a311d" stroke-width="1.3"/>
+    <!-- eye -->
+    <path d="M143-131c7-4 15-3 20 2-5 5-12 7-18 5z" fill="#4b2f1d"/>
+    <circle cx="154" cy="-127" r="3.4" fill="#ffb34c" filter="url(#glow)"/>
+    <ellipse cx="154" cy="-127" rx="1" ry="2.3" fill="#371006"/>
+    <!-- jaws and teeth -->
+    <path d="M153-109c10-1 21-4 30-9l-6 12c-9 6-19 8-29 6z" fill="#3b2115" stroke="#2a160d" stroke-width="1.4"/>
+    <path d="M147-116c12 2 24 0 34-5" fill="none" stroke="#2c170e" stroke-width="2"/>
+    <g fill="#f1e3c7">
+      <path d="M148-110l3 12 5-12z"/><path d="M158-110l4 12 5-12z"/>
+      <path d="M169-110l4 11 5-12z"/><path d="M180-111l4 10 4-12z"/>
+      <path d="M151-103l2-8 4 9z"/><path d="M164-103l2-8 4 9z"/>
+      <path d="M176-103l2-7 4 8z"/>
+    </g>
+    <path d="M136-113c-7 3-12 8-13 14" fill="none" stroke="#4c321f" stroke-width="2"/>
+    <!-- nostrils and heat breath -->
+    <circle cx="192" cy="-122" r="1.4" fill="#2e190e"/>
+    <circle cx="199" cy="-119" r="1.2" fill="#2e190e"/>
+    <g fill="#f5d49c" opacity=".28" filter="url(#soft)">
+      <ellipse cx="210" cy="-113" rx="18" ry="7"/>
+      <ellipse cx="232" cy="-104" rx="13" ry="5"/>
+    </g>
+    <!-- dorsal neck spines -->
+    <g fill="#7c5a35" stroke="#4a311d" stroke-width="1.3">
+      <path d="M55-99l-14-5 10 17z"/><path d="M67-117l-17-8 13 21z"/>
+      <path d="M80-130l-18-11 16 23z"/><path d="M94-142l-18-13 18 24z"/>
+    </g>
+    <!-- sand kicked up -->
+    <g fill="#eac692" opacity=".55">
+      <circle cx="-92" cy="36" r="2"/><circle cx="-79" cy="42" r="1.4"/><circle cx="-63" cy="39" r="1.7"/>
+      <circle cx="88" cy="40" r="1.5"/><circle cx="100" cy="37" r="1.1"/>
+    </g>
+  </g>
+
+  <!-- heat haze, glints, vignette -->
+  <g fill="#ffe1a7" opacity=".5">
+    <circle cx="298" cy="315" r="1.2"/><circle cx="382" cy="345" r=".8"/>
+    <circle cx="553" cy="321" r="1"/><circle cx="646" cy="296" r=".8"/>
+    <circle cx="914" cy="310" r="1.1"/>
+  </g>
+  <g stroke="#ffe8bb" stroke-width="1" opacity=".22" stroke-linecap="round">
+    <path d="M105 318c45-6 84-6 126-1"/><path d="M578 300c48-6 92-4 132 2"/>
+  </g>
+  <rect width="960" height="420" fill="none" stroke="#1d0f09" stroke-width="26" opacity=".35"/>
 </svg>

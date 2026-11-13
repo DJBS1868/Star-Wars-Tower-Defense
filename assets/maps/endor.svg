@@ -1,77 +1,380 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-label="Endor forest clearing with towering redwood trees, a winding trail, and a shield bunker">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-label="Endor forest clearing with a shield bunker, an Ewok warrior, a tusked boar-wolf, and a towering Gorax">
   <defs>
-    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#101f27"/><stop offset=".52" stop-color="#385c4a"/><stop offset="1" stop-color="#b5a16a"/></linearGradient>
-    <radialGradient id="sunbeam"><stop stop-color="#f3d996" stop-opacity=".64"/><stop offset="1" stop-color="#f3d996" stop-opacity="0"/></radialGradient>
-    <linearGradient id="trunk" x2="1"><stop stop-color="#332923"/><stop offset=".42" stop-color="#78553a"/><stop offset=".72" stop-color="#49392d"/><stop offset="1" stop-color="#241f1b"/></linearGradient>
-    <linearGradient id="trail" x2="0" y2="1"><stop stop-color="#a9945d"/><stop offset="1" stop-color="#514532"/></linearGradient>
-    <linearGradient id="bunker" x2="0" y2="1"><stop stop-color="#777a62"/><stop offset="1" stop-color="#343c36"/></linearGradient>
-    <filter id="soft"><feGaussianBlur stdDeviation="17"/></filter>
+    <linearGradient id="sky" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a1820"/>
+      <stop offset=".34" stop-color="#1b3b34"/>
+      <stop offset=".62" stop-color="#426a4c"/>
+      <stop offset=".84" stop-color="#8e9a61"/>
+      <stop offset="1" stop-color="#c6b777"/>
+    </linearGradient>
+    <linearGradient id="beam" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6dda0" stop-opacity=".62"/>
+      <stop offset=".6" stop-color="#eedb9a" stop-opacity=".17"/>
+      <stop offset="1" stop-color="#eedb9a" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="farTree" x2="0" y2="1">
+      <stop offset="0" stop-color="#193b33"/>
+      <stop offset="1" stop-color="#0d201a"/>
+    </linearGradient>
+    <linearGradient id="midTree" x2="0" y2="1">
+      <stop offset="0" stop-color="#24473a"/>
+      <stop offset="1" stop-color="#10251d"/>
+    </linearGradient>
+    <linearGradient id="trunk" x2="1" y2="0">
+      <stop offset="0" stop-color="#2b211b"/>
+      <stop offset=".34" stop-color="#705238"/>
+      <stop offset=".58" stop-color="#8a6846"/>
+      <stop offset=".78" stop-color="#4c3829"/>
+      <stop offset="1" stop-color="#211a16"/>
+    </linearGradient>
+    <linearGradient id="trunkLight" x2="1" y2="0">
+      <stop offset="0" stop-color="#382a20"/>
+      <stop offset=".52" stop-color="#97744f"/>
+      <stop offset="1" stop-color="#3a2b20"/>
+    </linearGradient>
+    <linearGradient id="forestFloor" x2="0" y2="1">
+      <stop offset="0" stop-color="#445c35"/>
+      <stop offset=".5" stop-color="#34492a"/>
+      <stop offset="1" stop-color="#1e2f1b"/>
+    </linearGradient>
+    <linearGradient id="trail" x2="0" y2="1">
+      <stop offset="0" stop-color="#9b8759"/>
+      <stop offset="1" stop-color="#5a4d32"/>
+    </linearGradient>
+    <linearGradient id="bunker" x2="0" y2="1">
+      <stop offset="0" stop-color="#83866f"/>
+      <stop offset=".5" stop-color="#565d4e"/>
+      <stop offset="1" stop-color="#303832"/>
+    </linearGradient>
+    <linearGradient id="ewokFur" x2="0" y2="1">
+      <stop offset="0" stop-color="#b78558"/>
+      <stop offset=".45" stop-color="#8d603d"/>
+      <stop offset="1" stop-color="#583c29"/>
+    </linearGradient>
+    <linearGradient id="boarFur" x2="0" y2="1">
+      <stop offset="0" stop-color="#57605c"/>
+      <stop offset=".4" stop-color="#3d4543"/>
+      <stop offset="1" stop-color="#202625"/>
+    </linearGradient>
+    <linearGradient id="goraxFur" x2="0" y2="1">
+      <stop offset="0" stop-color="#90765b"/>
+      <stop offset=".34" stop-color="#6e5744"/>
+      <stop offset=".7" stop-color="#4b3a2f"/>
+      <stop offset="1" stop-color="#2b211c"/>
+    </linearGradient>
+    <linearGradient id="goraxLight" x2="0" y2="1">
+      <stop offset="0" stop-color="#b0916e"/>
+      <stop offset="1" stop-color="#6f5742"/>
+    </linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="12"/></filter>
+    <filter id="shadow"><feGaussianBlur stdDeviation="3.4"/></filter>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3.4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
   </defs>
-  <path fill="url(#sky)" d="M0 0h960v420H0z"/>
-  <ellipse cx="523" cy="183" rx="240" ry="155" fill="url(#sunbeam)"/>
-  <circle cx="710" cy="77" r="29" fill="#e4ddb0" opacity=".8"/>
-  <circle cx="710" cy="77" r="44" fill="#e4ddb0" opacity=".12"/>
-  <g fill="#17352f" opacity=".76">
-    <path d="M0 0h170L89 166 0 201zm108 0h201l-108 179-87 32zm475 0h187L675 176l-93 34zm199 0h178L861 176l-79 22z"/>
+
+  <!-- forest sky and light shafts -->
+  <rect width="960" height="420" fill="url(#sky)"/>
+  <circle cx="604" cy="80" r="28" fill="#e7dfb4" opacity=".78"/>
+  <circle cx="604" cy="80" r="50" fill="#e7dfb4" opacity=".12"/>
+  <g filter="url(#soft)">
+    <ellipse cx="528" cy="170" rx="240" ry="145" fill="url(#beam)"/>
+    <path d="M488 0l-104 420h185L570 0z" fill="#f2df9d" opacity=".09"/>
+    <path d="M650 0l-74 420h125L714 0z" fill="#f2df9d" opacity=".055"/>
   </g>
-  <g fill="#315341" opacity=".92">
-    <path d="M68 178 146 41l87 145h-47l53 80H42l67-75z"/>
-    <path d="M230 169 311 9l96 164h-47l62 87H201l67-85z"/>
-    <path d="M643 181 728 24l92 160h-43l64 84H609l70-84z"/>
-    <path d="M780 165 862 12l96 167h-45l54 82H750l66-84z"/>
+
+  <!-- distant forest layers -->
+  <g fill="url(#farTree)" opacity=".86">
+    <path d="M0 0h174L95 155 0 207zm111 0h211L211 149 111 189zm478 0h198L667 146l-78 30zm196 0h175L872 152l-87 26z"/>
   </g>
-  <g fill="#50704d" opacity=".88">
-    <path d="M-34 235 58 76l94 163H99l62 75H-65l65-79z"/>
-    <path d="M356 179 436 31l83 150h-38l57 79H325l59-79z"/>
-    <path d="M535 193 602 52l83 141h-38l56 71H506l57-71z"/>
+  <g fill="url(#midTree)" opacity=".92">
+    <path d="M50 183 139 31l95 158h-48l53 70H35l61-75z"/>
+    <path d="M199 175 284 15l99 166h-45l60 82H172l62-84z"/>
+    <path d="M579 183 667 26l94 160h-42l61 82H548l66-84z"/>
+    <path d="M725 172 811 12l101 168h-47l57 81H696l64-84z"/>
   </g>
-  <ellipse cx="496" cy="240" rx="230" ry="92" fill="#e5c779" opacity=".16" filter="url(#soft)"/>
-  <path fill="#4c4935" d="M0 274q160-35 297 0t275-2q180-39 388 5v143H0z"/>
-  <path fill="#6b6845" d="M0 316q151-35 294-4t267-7q183-32 399 2v113H0z"/>
-  <path fill="url(#trail)" d="M376 420q53-49 90-91 35-40 8-75-22-29 17-70l47 4q-45 44-21 73 29 38-3 83-28 39-66 76z" opacity=".96"/>
-  <path fill="#302820" opacity=".35" d="M390 420q60-50 98-92 35-39 9-75-19-27 21-69l19 2q-43 46-18 77 30 39-4 82-30 39-70 75z"/>
-  <!-- Monumental foreground redwoods frame the clearing. -->
+  <g fill="#36553f" opacity=".85">
+    <path d="M-40 245 52 82l99 167H99l60 76H-68l62-80z"/>
+    <path d="M331 189 412 38l84 153h-38l58 81H299l60-83z"/>
+    <path d="M498 199 568 55l87 144h-38l57 70H470l58-70z"/>
+  </g>
+
+  <!-- monumental foreground trunks -->
   <g>
-    <path fill="url(#trunk)" d="M36 0h81l14 92-10 48 18 42-7 54 18 184H0l16-179-8-62 19-44-12-47z"/>
-    <path fill="#92704a" opacity=".42" d="M74 0h13l-2 137 11 51-9 49 10 183H59l15-183-8-58 12-45z"/>
-    <path fill="url(#trunk)" d="M855 0h88l-9 91 15 56-18 49 18 59 11 162H810l24-171-12-53 18-51-8-58z"/>
-    <path fill="#99734b" opacity=".38" d="M887 0h18l-3 128 11 63-14 54 15 172h-31l10-177-9-56 12-52z"/>
-    <path fill="#30261f" d="M246 0h25l-5 72 9 40-10 50 10 49-6 114h-38l8-121-11-46 12-45-7-48z" opacity=".82"/>
-    <path fill="#352920" d="M710 0h31l-4 80 10 37-13 51 9 49-5 113h-42l13-121-10-47 15-46-8-52z" opacity=".8"/>
+    <path fill="url(#trunk)" d="M18 0h92l10 83-9 48 20 48-11 62 17 179H0l15-173-9-61 19-46-10-51z"/>
+    <path fill="#a17b51" opacity=".28" d="M63 0h15l-2 126 11 56-10 52 12 186H41l16-184-8-59 12-50z"/>
+    <path fill="#1a1512" opacity=".7" d="M38 0h8l-3 104 7 54-8 57 7 205h-17l9-207-6-55 8-55z"/>
+    <path fill="url(#trunk)" d="M854 0h94l-9 86 13 53-17 48 18 67 9 166H810l22-176-11-54 17-50-9-52z"/>
+    <path fill="#a17b51" opacity=".26" d="M890 0h18l-3 119 10 58-14 51 12 192h-30l9-190-9-57 12-53z"/>
+    <path fill="#1a1512" opacity=".65" d="M874 0h9l-3 97 8 56-10 55 9 212h-16l11-211-8-57 9-55z"/>
+    <path fill="#2b211b" d="M196 0h27l-4 65 10 43-9 53 8 55-4 183h-37l7-185-9-53 11-52-7-49z" opacity=".78"/>
+    <path fill="#2b211b" d="M716 0h31l-3 72 9 41-11 51 7 58-6 178h-42l12-180-8-52 13-49-6-51z" opacity=".75"/>
+    <g fill="#4e3928" opacity=".7">
+      <path d="M18 245l-23 53 35-31 8-44z"/><path d="M108 260l43 52-16-65-28-31z"/>
+      <path d="M856 238l-35 57 16-69 26-31z"/><path d="M946 252l19 48-35-35-3-39z"/>
+    </g>
   </g>
-  <!-- Forest floor, ferns, moss and fallen timber. -->
+
+  <!-- forest floor and central trail -->
+  <path d="M0 287c91-18 159-8 241 3 97 13 161-2 251-8 118-8 205 3 302 8 62 3 111 0 166-4v134H0z" fill="url(#forestFloor)"/>
+  <path d="M0 334c91-14 155-3 235 5 101 10 164-3 257-8 116-5 206 4 303 8 60 2 111 0 165-3v84H0z" fill="#2a3c24"/>
+  <path d="M382 420c41-42 72-75 97-111 19-28 12-45-1-64-11-17 0-36 20-55l47 7c-29 33-34 49-22 65 15 20 21 41 4 66-26 38-55 71-78 92z" fill="#5c5035" opacity=".95"/>
+  <path d="M403 420c37-41 65-74 87-107 17-26 11-43-2-62-10-17 1-35 19-52l17 3c-24 31-29 47-18 63 16 21 20 40 5 63-24 35-50 67-72 92z" fill="url(#trail)" opacity=".85"/>
   <g fill="none" stroke-linecap="round">
-    <path d="M35 366q35-24 69 0m-55 12q38-27 79-2m604 5q41-31 86-5m-51 18q42-23 81-3" stroke="#a3a65b" stroke-width="5" opacity=".75"/>
-    <path d="M172 403l79-22m-68 31 89-24m427 8 64-24m-31 34 85-29" stroke="#8c7949" stroke-width="7" opacity=".78"/>
+    <path d="M101 347c35-16 71-18 107-5m-73 24c38-15 76-16 113-2" stroke="#77904d" stroke-width="3" opacity=".6"/>
+    <path d="M641 348c31-17 65-19 99-7m-69 24c35-15 70-17 102-5" stroke="#77904d" stroke-width="2.6" opacity=".55"/>
+    <path d="M836 370c28-13 57-14 85-4" stroke="#5d7841" stroke-width="2.2" opacity=".5"/>
   </g>
-  <g fill="#3e6844" stroke="#294833" stroke-width="2">
-    <path d="M139 364q-18-22-31-16 12 4 19 24-21-19-36-11 20 3 33 23-26-12-35 0 25-2 45 14 9-19 34-27-19-5-33 10 4-20 22-31-19-3-31 14z"/>
-    <path d="M769 360q-14-20-30-14 12 5 18 21-19-16-32-8 17 2 29 19-20-11-31 0 22-1 39 13 9-18 30-24-17-5-30 8 4-18 20-27-16-3-27 12z"/>
+  <g fill="#36532e" opacity=".8">
+    <ellipse cx="144" cy="395" rx="58" ry="10"/><ellipse cx="532" cy="404" rx="71" ry="11"/>
+    <ellipse cx="772" cy="391" rx="56" ry="9"/>
   </g>
-  <!-- Shield bunker tucked into the far edge of the clearing. -->
-  <g stroke="#202722" stroke-width="3" stroke-linejoin="round">
-    <path fill="url(#bunker)" d="M610 247h143v69H610z"/>
-    <path fill="#555e4d" d="M628 218h106l19 29H610z"/>
-    <path fill="#343d35" d="M641 208h78l15 10H628z"/>
-    <path fill="#252d29" d="M601 267h12v64h-12zm140 0h12v64h-12z"/>
-    <path fill="#bfaa67" stroke="#e1c97e" d="M663 272h37v44h-37z"/>
-    <path fill="#35453a" stroke="#9b9866" d="M670 279h23v37h-23z"/>
-    <path fill="none" stroke="#9eb37b" stroke-width="2" d="M619 256h124M620 325h126"/>
+
+  <!-- shield bunker in the far clearing -->
+  <g transform="translate(664 294)">
+    <ellipse cx="1" cy="46" rx="93" ry="18" fill="#263023" opacity=".55"/>
+    <path d="M-68 45v-50h137v50z" fill="url(#bunker)" stroke="#202722" stroke-width="3"/>
+    <path d="M-49 10h101l17 30H-67z" fill="#707963" stroke="#202722" stroke-width="3"/>
+    <path d="M-31 2h69l16 10H-43z" fill="#444c40" stroke="#202722" stroke-width="2.6"/>
+    <path d="M-76 43v-44h11v44zm141-44h11v44h-11z" fill="#252d27" stroke="#1a211c" stroke-width="2"/>
+    <path d="M-10 21h35v25h-35z" fill="#c1a967" stroke="#e0c77e" stroke-width="1.8"/>
+    <path d="M-4 27h23v19h-23z" fill="#3b4736" stroke="#8d936a" stroke-width="1.4"/>
+    <path d="M-57 44h119" stroke="#9ca97d" stroke-width="2" opacity=".55"/>
+    <g fill="#ff6f4c">
+      <circle cx="-57" cy="2" r="2.4" filter="url(#glow)"/><circle cx="60" cy="2" r="2.4" filter="url(#glow)"/>
+    </g>
+    <g stroke="#6d8d4e" stroke-width="2" fill="none" opacity=".7">
+      <path d="M-61 12c-3 13-2 22 1 30m124-31c3 11 2 22-2 31"/>
+    </g>
   </g>
-  <path fill="#e7c86d" d="M679 290h5v13h-5z" opacity=".9"/>
-  <path fill="none" stroke="#c6d28a" stroke-width="3" stroke-opacity=".68" d="M0 342q146-23 266 1t239-1q184-29 455 1"/>
-  <!-- Bark grain, bunker vents, trail stones, and layered fern fronds. -->
-  <g fill="none" stroke-linecap="round">
-    <path d="M27 81q13 28 2 62m23-112q-9 37 2 75m27-93q-8 43 2 84m811-54q-11 38 1 77m22-95q-8 43 4 81m-60-42q-10 38 0 74" stroke="#b08a5b" stroke-width="2" opacity=".32"/>
-    <path d="M627 237h18m12 0h18m12 0h18m12 0h14M626 249v12m128-12v12m-128 22h7m128 0h7" stroke="#c0bd91" stroke-width="2" opacity=".58"/>
-    <path d="M635 286h12m60 0h12m-84 10h12m62 0h12" stroke="#8eaa78" stroke-width="2" opacity=".72"/>
-    <path d="M327 379l10-4m-2 12 13-5m184-45 8-3m13 8 10-4m-281 31 7-3m326-36 9-3" stroke="#d5c28a" stroke-width="3" opacity=".58"/>
+
+  <!-- ferns and undergrowth framing the clearing -->
+  <g fill="#4c754b" stroke="#2e4c31" stroke-width="1.6">
+    <g transform="translate(155 381)">
+      <path d="M0 0c-11-24-27-32-44-29 14 7 22 20 28 35-18-16-36-17-48-7 19 2 34 12 46 27-23-8-41-2-50 10 24-4 45 1 63 12 8-19 24-36 45-44-18-3-34 2-46 15 3-21-2-39-15-53 3 15 6 31 11 46z"/>
+      <path d="M17 6c4-18 13-30 27-36-5 12-5 24 1 37-9-11-18-13-28-8 7 6 12 14 15 23 5-9 16-17 30-20-11 10-17 23-19 39-6-13-15-24-26-35z" opacity=".85"/>
+    </g>
+    <g transform="translate(784 386) scale(.9)">
+      <path d="M0 0c-11-24-27-32-44-29 14 7 22 20 28 35-18-16-36-17-48-7 19 2 34 12 46 27-23-8-41-2-50 10 24-4 45 1 63 12 8-19 24-36 45-44-18-3-34 2-46 15 3-21-2-39-15-53 3 15 6 31 11 46z"/>
+      <path d="M18 7c3-17 12-29 26-35-5 12-5 23 1 35-9-10-18-12-27-7 7 5 12 13 15 21 5-9 16-16 28-19-10 10-16 22-18 36-6-12-14-22-25-31z" opacity=".85"/>
+    </g>
+    <g transform="translate(335 403) scale(.68)" opacity=".78">
+      <path d="M0 0c-11-24-27-32-44-29 14 7 22 20 28 35-18-16-36-17-48-7 19 2 34 12 46 27-23-8-41-2-50 10 24-4 45 1 63 12 8-19 24-36 45-44-18-3-34 2-46 15 3-21-2-39-15-53 3 15 6 31 11 46z"/>
+    </g>
   </g>
-  <g fill="#416b45" stroke="#2b4934" stroke-width="1.5" stroke-linejoin="round">
-    <path d="M49 411q-3-31-24-45 19 7 28 25-2-26 13-40-7 22-2 39 8-17 26-21-19 12-24 34 15-13 34-10-25 7-35 22z"/>
-    <path d="M895 412q-2-29-21-43 18 7 25 23-1-24 13-37-7 21-2 37 8-16 24-19-19 11-24 32 14-12 30-8-23 6-33 20z"/>
-    <path d="M191 418q-2-21-17-31 14 5 20 17 0-19 11-29-5 16-1 29 7-12 21-14-15 9-19 25 11-9 24-6-18 5-26 17z"/>
+
+  <!-- EWOK WARRIOR: small furred hunter with a spear -->
+  <g id="ewok" transform="translate(320 359) scale(.78)">
+    <ellipse cx="0" cy="27" rx="54" ry="8" fill="#172116" opacity=".55" filter="url(#shadow)"/>
+    <!-- spear -->
+    <path d="M22 21L70-117" stroke="#553e29" stroke-width="4" stroke-linecap="round"/>
+    <path d="M66-131l13-22 3 25-11 11z" fill="#c9d0c1" stroke="#596057" stroke-width="1.4"/>
+    <path d="M69-127l6 10 4-10" fill="#7e8b78"/>
+    <g stroke="#8e704c" stroke-width="1" opacity=".7">
+      <path d="M42-24l4 5m6-21l4 5m6-20l4 4"/>
+    </g>
+    <!-- legs and feet -->
+    <path d="M-20-1c-5 8-7 17-6 25l17 1c0-8 3-15 8-21z" fill="#6f4d33" stroke="#462d1d" stroke-width="1.5"/>
+    <path d="M10-1c4 8 6 16 6 24l16-2c-1-8-4-15-9-21z" fill="#7b5738" stroke="#462d1d" stroke-width="1.5"/>
+    <path d="M-29 23l-8 4 19 2 8-4zM20 22l-7 5 19 1 6-5z" fill="#402a1c"/>
+    <!-- hooded fur body -->
+    <path d="M-25-58c6-18 20-29 36-29 17 0 30 10 37 26 6 13 4 27-4 37-8 11-23 16-39 15-19-1-32-9-37-22-3-9-1-19 7-27z" fill="url(#ewokFur)" stroke="#4b3121" stroke-width="2"/>
+    <path d="M-14-63c6-12 17-19 29-19 12 0 22 6 28 16-8-5-17-7-27-6-12 0-22 4-30 9z" fill="#c69968" opacity=".65"/>
+    <!-- fur fringe -->
+    <g stroke="#5b3d28" stroke-width="1.2" fill="none" opacity=".8">
+      <path d="M-29-35c-5 10-6 20-3 29m13-35c-4 11-4 22-1 32m13-36c-2 12-2 23 1 34m13-33c0 11 0 22 4 31m12-28c1 9 2 18 5 26"/>
+    </g>
+    <g stroke="#c09565" stroke-width="1" fill="none" opacity=".7">
+      <path d="M-20-49c-3 8-4 17-2 25m13-31c-2 10-2 20 0 29m13-30c0 10 0 21 2 30m13-27c1 9 2 18 4 26"/>
+    </g>
+    <!-- leather harness and pouch -->
+    <path d="M-18-44c13 5 27 6 41 2" fill="none" stroke="#52351f" stroke-width="3"/>
+    <path d="M-17-10l31-9 6 22-30 9z" fill="#5c3c24" stroke="#352216" stroke-width="1.6"/>
+    <path d="M-14-6l25-7" stroke="#c49a56" stroke-width="1.4" opacity=".7"/>
+    <circle cx="-5" cy="-2" r="3" fill="#af8b52"/>
+    <!-- arms -->
+    <path d="M-23-45c-12 5-20 16-20 28l11 6c3-11 8-18 17-23z" fill="#724e33" stroke="#442c1c" stroke-width="1.6"/>
+    <path d="M21-47c11 2 19 9 24 18l-10 9c-5-8-11-13-20-16z" fill="#8a623f" stroke="#442c1c" stroke-width="1.6"/>
+    <path d="M-40-14c-6 2-10 6-11 11l13 1 7-6z" fill="#4e3423"/>
+    <path d="M43-23c6 1 11 4 14 9l-12 5-8-7z" fill="#533824"/>
+    <!-- hood and face -->
+    <path d="M-18-80c3-18 16-29 31-30 17-1 31 9 36 25 4 13-3 25-16 30-14 5-29 0-38-10-7-7-13-14-13-15z" fill="url(#ewokFur)" stroke="#4c3221" stroke-width="2"/>
+    <path d="M-12-80c3-13 12-21 24-22 11-1 20 5 24 15-8-5-17-6-26-4-9 2-16 6-22 11z" fill="#c79a69" opacity=".7"/>
+    <path d="M-4-68c7-10 18-14 30-11 9 2 15 9 16 18-8 7-18 10-29 8-10-2-16-7-17-15z" fill="#5e422c" stroke="#3a2517" stroke-width="1.5"/>
+    <!-- glowing amber eyes and nose -->
+    <g filter="url(#glow)">
+      <path d="M2-66c3-2 7-2 10 0-3 2-7 3-10 1z" fill="#ffd36e"/>
+      <path d="M18-66c3-2 7-2 10 0-3 2-7 3-10 1z" fill="#ffd36e"/>
+    </g>
+    <g fill="#24150e">
+      <circle cx="7" cy="-65" r="1.4"/><circle cx="23" cy="-65" r="1.4"/>
+    </g>
+    <path d="M10-57c3-2 7-2 10 0-2 3-7 4-10 2z" fill="#3b2619"/>
+    <path d="M6-52c4 3 9 4 14 2" fill="none" stroke="#3c2619" stroke-width="1.4"/>
+    <g fill="#eee2c7">
+      <path d="M8-52l2 5 3-4z"/><path d="M17-51l2 5 3-5z"/>
+    </g>
+    <!-- hood ears / feather -->
+    <path d="M-17-82l-21-8 13 19zM35-84l19-12-7 23z" fill="#7a5538" stroke="#422b1c" stroke-width="1.5"/>
+    <path d="M-22-92l-15-8 6 15zM45-97l15-10-5 17z" fill="#6c4a31"/>
+    <path d="M6-99l5-18 6 17-4 9z" fill="#a47a4f" stroke="#5b3d27" stroke-width="1.1"/>
+    <!-- spear grip hand -->
+    <path d="M17-7c5-3 10-1 12 3l-8 7-7-3z" fill="#5c3e29" stroke="#3b2719" stroke-width="1.2"/>
   </g>
-  <g fill="#bca66c" opacity=".7"><ellipse cx="350" cy="391" rx="8" ry="3"/><ellipse cx="577" cy="370" rx="6" ry="2.5"/><ellipse cx="745" cy="398" rx="9" ry="3"/><ellipse cx="286" cy="345" rx="5" ry="2"/></g>
-  <g fill="#d5cb9a" opacity=".7"><circle cx="317" cy="335" r="2"/><circle cx="542" cy="322" r="1.7"/><circle cx="575" cy="344" r="1.4"/><circle cx="296" cy="364" r="1.3"/></g>
+
+  <!-- BOAR-WOLF: shaggy tusked predator -->
+  <g id="boarwolf" transform="translate(455 363) scale(.68)">
+    <ellipse cx="-2" cy="27" rx="88" ry="11" fill="#172018" opacity=".5" filter="url(#shadow)"/>
+    <!-- tail -->
+    <path d="M-71-26c-20 2-34 10-42 23 14-6 26-7 39-4 8-8 16-12 26-12z" fill="url(#boarFur)" stroke="#171c1b" stroke-width="1.6"/>
+    <!-- rear legs and claws -->
+    <path d="M-52 0c-7 10-10 20-9 29l22 1c0-10 4-19 11-27z" fill="#363e3b" stroke="#1a201f" stroke-width="1.7"/>
+    <path d="M-55 27l-11 6 19 4 12-5z" fill="#202625"/>
+    <path d="M-3-2c-3 12-1 23 5 31l22-2c-7-9-9-19-6-29z" fill="#4a5450" stroke="#1a201f" stroke-width="1.7"/>
+    <path d="M-8 27l-10 6 20 4 12-5z" fill="#202625"/>
+    <!-- far legs -->
+    <path d="M-31 1c-2 10 0 20 5 28l-13 2-8-13 3-21z" fill="#2b3230" stroke="#171c1b" stroke-width="1.4" opacity=".9"/>
+    <path d="M36 0c4 10 5 20 4 29l-13-1-5-16 4-16z" fill="#2b3230" stroke="#171c1b" stroke-width="1.4" opacity=".9"/>
+    <!-- shaggy barrel body -->
+    <path d="M-73-46c8-25 27-39 53-42 24-3 45 4 61 18 15 12 22 28 18 42-4 17-22 27-49 30-31 4-58-2-75-16-12-10-14-20-8-32z" fill="url(#boarFur)" stroke="#151b19" stroke-width="2.2"/>
+    <path d="M-58-66c16-15 39-21 63-15 13 3 23 9 32 17-16-5-31-6-47-4-18 2-34 8-48 18z" fill="#7d8a7c" opacity=".45"/>
+    <!-- bristled back mane -->
+    <g fill="#262d2a" stroke="#121716" stroke-width="1.1">
+      <path d="M-48-72l-12-21 18 14 5-24 10 23 8-27 8 26 11-23 4 24 13-19-1 24 14-11-7 24z"/>
+    </g>
+    <g stroke="#788578" stroke-width="1" fill="none" opacity=".55">
+      <path d="M-45-70l-4-10m16-3l-1-13m14 12l3-15m12 17l6-14m11 18l7-11"/>
+    </g>
+    <!-- shaggy fringe -->
+    <g stroke="#1c2321" stroke-width="1.4" fill="none" opacity=".85">
+      <path d="M-62-62c-4 10-5 20-3 30m16-38c-3 11-3 22 0 33m17-38c-2 12-1 24 2 36m17-35c0 12 1 23 5 33m17-28c2 10 4 19 8 27"/>
+    </g>
+    <g stroke="#7b887b" stroke-width="1" fill="none" opacity=".5">
+      <path d="M-50-64c-2 9-2 18 0 27m16-33c-1 10 0 21 2 31m16-34c1 11 2 22 5 31m16-29c2 9 5 18 8 26"/>
+    </g>
+    <!-- head: low, tusked and angry -->
+    <path d="M44-55c12-15 30-20 47-13 14 6 23 18 23 31-1 14-12 24-28 26-19 3-35-4-44-17-6-9-5-19 2-27z" fill="url(#boarFur)" stroke="#171c1a" stroke-width="1.9"/>
+    <path d="M53-53c10-10 24-13 36-8-8 2-15 6-20 12-6-3-11-4-16-4z" fill="#8b9788" opacity=".55"/>
+    <!-- ears -->
+    <path d="M41-62c-4-17 1-28 10-30 7 7 10 19 9 31z" fill="#3d4642" stroke="#171c1a" stroke-width="1.6"/>
+    <path d="M32-61c-9-13-9-24-3-29 8 3 14 13 17 25z" fill="#4f5953" stroke="#171c1a" stroke-width="1.6"/>
+    <!-- glowing red eyes -->
+    <g filter="url(#glow)">
+      <path d="M72-50c5-3 11-3 16 0-5 4-11 5-16 1z" fill="#ff8a55"/>
+      <path d="M92-48c5-3 11-2 16 1-5 3-11 4-16 0z" fill="#ff7d4a"/>
+    </g>
+    <g fill="#360f0b">
+      <circle cx="80" cy="-48" r="1.6"/><circle cx="100" cy="-47" r="1.5"/>
+    </g>
+    <path d="M71-57c5-3 10-4 15-3m15 5c4-1 9 0 13 2" fill="none" stroke="#222926" stroke-width="2.4" stroke-linecap="round"/>
+    <!-- snout and tusks -->
+    <path d="M88-31c11-2 23-1 32 4l-1 14c-10 4-21 4-31-1z" fill="#4b514b" stroke="#171c1a" stroke-width="1.7"/>
+    <path d="M96-24c8 0 15 1 22 4" fill="none" stroke="#7f8a7c" stroke-width="1.6" opacity=".7"/>
+    <circle cx="108" cy="-20" r="1.9" fill="#202523"/>
+    <circle cx="107" cy="-12" r="1.9" fill="#202523"/>
+    <g fill="#e9ddc0" stroke="#6e654f" stroke-width="1">
+      <path d="M98-14c-3 7-4 15-2 22 4-5 5-13 6-20z"/>
+      <path d="M88-10c-7 5-12 12-13 19 7-3 12-9 17-15z"/>
+    </g>
+    <path d="M88-20c6 5 13 7 21 5" fill="none" stroke="#1a1f1d" stroke-width="2"/>
+    <g fill="#d6ccb3">
+      <path d="M89-20l2 7 3-6z"/><path d="M98-19l2 7 3-6z"/><path d="M106-18l2 6 3-5z"/>
+    </g>
+    <!-- fur shadows and wound scar -->
+    <path d="M48-40c12 4 22 9 30 18" fill="none" stroke="#7a8779" stroke-width="2" opacity=".4"/>
+    <path d="M35-38l-12 8 11 3 9-8z" fill="#2b3330" opacity=".75"/>
+    <g fill="#ddb67f" opacity=".35">
+      <circle cx="-61" cy="33" r="2"/><circle cx="-48" cy="38" r="1.3"/><circle cx="72" cy="36" r="1.7"/>
+    </g>
+  </g>
+
+  <!-- GORAX: towering forest giant with a stone club -->
+  <g id="gorax" transform="translate(598 357) scale(.64)">
+    <ellipse cx="2" cy="31" rx="113" ry="17" fill="#182016" opacity=".62" filter="url(#shadow)"/>
+    <!-- legs -->
+    <path d="M-65-62c-13 22-19 48-19 77l39 2c2-27 9-49 20-65z" fill="url(#goraxFur)" stroke="#241b15" stroke-width="2.4"/>
+    <path d="M30-61c8 22 16 46 22 72l38-8c-9-25-16-48-18-70z" fill="url(#goraxFur)" stroke="#241b15" stroke-width="2.4"/>
+    <path d="M-85 12c-6 5-9 11-8 17l54 3 2-16z" fill="#423328" stroke="#201813" stroke-width="2"/>
+    <path d="M52 9c8 5 13 10 14 16l-54 6-3-16z" fill="#4e3c2e" stroke="#201813" stroke-width="2"/>
+    <g fill="#1a1411">
+      <path d="M-99 25l-20 5 18 5 16-5z"/><path d="M-83 28l-15 8 19 1 12-6z"/>
+      <path d="M83 22l19 5-18 6-15-5z"/><path d="M68 26l13 8-18 2-12-6z"/>
+    </g>
+    <!-- fur on legs -->
+    <g stroke="#a0805f" stroke-width="1.1" fill="none" opacity=".5">
+      <path d="M-69-31c-4 15-5 31-4 46m18-54c-5 17-6 34-4 51m75-47c5 14 8 29 10 43m14-38c4 13 7 25 9 37"/>
+    </g>
+    <!-- massive torso -->
+    <path d="M-70-171c8-34 34-54 72-57 41-3 73 15 87 50 9 23 8 50-2 74-8 20-24 33-52 39-34 7-65 1-83-17-17-16-24-39-25-61 0-10 1-19 3-28z" fill="url(#goraxFur)" stroke="#241b15" stroke-width="2.8"/>
+    <!-- back/shoulder fur ridges -->
+    <g stroke="#b08b66" stroke-width="1.3" fill="none" opacity=".5">
+      <path d="M-61-166c12-22 33-35 58-38m-48 54c14-17 33-26 53-26m-39 44c12-12 27-19 43-19m-30 37c11-9 23-13 36-12"/>
+    </g>
+    <path d="M-58-178c11-17 28-28 49-32-12 8-21 18-28 29 10-5 20-7 31-7-14 6-24 14-32 24z" fill="#b08d67" opacity=".35"/>
+    <!-- chest patch -->
+    <path d="M-32-151c17-18 41-24 63-17 17 5 28 19 30 36-8-13-20-21-35-23-20-3-39 3-55 15z" fill="#c1a17b" opacity=".45"/>
+    <!-- left arm and fist -->
+    <path d="M-67-151c-29 8-47 31-50 60-2 20 8 36 25 37 17 1 29-13 30-31 1-18 9-31 22-39z" fill="url(#goraxFur)" stroke="#241b15" stroke-width="2.6"/>
+    <path d="M-94 4c-18 3-31 13-33 27-2 15 10 27 27 26 18-1 29-13 29-29 0-11-10-21-23-24z" fill="url(#goraxLight)" stroke="#241b15" stroke-width="2.4"/>
+    <g fill="#1b1511">
+      <path d="M-126 18l-19 6 18 5 16-6z"/><path d="M-112 26l-14 9 18 1 13-6z"/>
+      <path d="M-96 29l-7 10 14-1 8-7z"/>
+    </g>
+    <!-- right arm raised with club -->
+    <path d="M62-158c30 8 48 34 50 64 1 20-9 35-27 36-17 1-29-13-29-32 0-17-8-30-21-38z" fill="url(#goraxFur)" stroke="#241b15" stroke-width="2.6"/>
+    <path d="M92-35c18 0 32 10 35 24 3 15-8 28-24 29-18 1-31-10-32-26-1-12 8-23 21-27z" fill="url(#goraxLight)" stroke="#241b15" stroke-width="2.4"/>
+    <g fill="#1b1511">
+      <path d="M126-19l19 6-18 5-16-6z"/><path d="M112-11l14 9-18 1-13-6z"/>
+      <path d="M96-8l7 10-14-1-8-7z"/>
+    </g>
+    <!-- crude stone club -->
+    <path d="M104-196l30-78-15-6-38 80z" fill="#543f2f" stroke="#241a13" stroke-width="2.4"/>
+    <path d="M114-267l-22-13 4-17 27 12 9 16-14 12z" fill="#5f5648" stroke="#241f19" stroke-width="2.4"/>
+    <path d="M97-282l13 4 10-8 12 6-7 14-24-4z" fill="#7d7464" opacity=".8"/>
+    <g stroke="#302a23" stroke-width="1.4">
+      <path d="M111-285l5 17m7-23l6 19m-48 47l12 8"/>
+    </g>
+    <!-- head and mane -->
+    <path d="M-50-216c3-26 22-43 47-46 29-3 51 12 57 36 5 20-7 38-30 45-27 8-52-1-64-18-5-7-9-12-10-17z" fill="url(#goraxFur)" stroke="#241b15" stroke-width="2.6"/>
+    <path d="M-43-217c4-17 15-29 31-34-6 8-8 18-6 28 8-13 20-21 34-23-9 7-14 16-15 26 9-8 19-12 30-12-11 7-18 17-21 28 8-7 17-10 27-10-12 9-20 19-24 31l-32 2z" fill="#b2906c" opacity=".35"/>
+    <path d="M-54-203c-12-9-17-23-12-36 4-12 16-20 30-20 9 0 17 3 23 9-10 2-18 7-24 15-6-4-13-3-18 2-4 6-3 14 2 18z" fill="url(#goraxFur)" stroke="#241b15" stroke-width="1.8"/>
+    <path d="M59-203c12-10 16-24 11-36-4-12-16-19-29-19-9 0-17 3-23 9 10 2 18 7 23 15 6-4 13-3 18 2 5 6 4 14 0 18z" fill="url(#goraxFur)" stroke="#241b15" stroke-width="1.8"/>
+    <!-- face -->
+    <path d="M-28-211c10-14 27-19 43-14 14 4 23 16 23 29-1 14-11 24-27 27-20 4-36-3-43-17-4-9-3-18 4-25z" fill="#7f624b" stroke="#2b2018" stroke-width="1.8"/>
+    <path d="M-18-221c8-6 19-8 29-5-8 2-14 6-19 12z" fill="#b28f69" opacity=".55"/>
+    <!-- glowing eyes and heavy brow -->
+    <path d="M-18-207c7-5 16-4 22 1-7 5-15 6-22 1z" fill="#2b2018"/>
+    <path d="M14-207c7-5 16-4 22 1-7 5-15 6-22 1z" fill="#2b2018"/>
+    <g filter="url(#glow)">
+      <circle cx="-6" cy="-204" r="3.2" fill="#ffd35f"/>
+      <circle cx="24" cy="-204" r="3.2" fill="#ffd35f"/>
+    </g>
+    <g fill="#2b1306">
+      <ellipse cx="-6" cy="-204" rx="1" ry="2.2"/><ellipse cx="24" cy="-204" rx="1" ry="2.2"/>
+    </g>
+    <!-- broad nose and tusked mouth -->
+    <path d="M0-191c6-4 12-4 18 0-2 6-7 9-13 9-5 0-8-3-9-7z" fill="#3b2c21"/>
+    <path d="M-14-178c12 5 26 5 38 0" fill="none" stroke="#2b1c13" stroke-width="2.6"/>
+    <g fill="#e7dcc2">
+      <path d="M-13-177l4 11 5-11z"/><path d="M0-176l5 12 5-12z"/><path d="M13-176l4 11 5-11z"/>
+      <path d="M-8-165l3-8 4 9z"/><path d="M8-165l4-8 4 9z"/>
+    </g>
+    <path d="M-24-182c-12 3-21 9-27 18 9-3 18-3 27 1m43-19c12 3 21 9 27 18-9-3-18-3-27 1" fill="none" stroke="#3a2a1e" stroke-width="2"/>
+    <!-- fur strokes over chest and shoulders -->
+    <g stroke="#261d17" stroke-width="1.4" fill="none" opacity=".5">
+      <path d="M-58-133c10 16 13 34 9 51m21-65c7 18 7 37 1 55m20-60c4 18 2 36-5 53m20-50c2 15-1 30-7 44"/>
+    </g>
+    <!-- hanging vines / forest debris -->
+    <path d="M-42-239c-3 13-9 22-18 29m93-37c4 12 10 21 19 27" fill="none" stroke="#6d8c4f" stroke-width="2" opacity=".7"/>
+  </g>
+
+  <!-- motes of forest light -->
+  <g fill="#f1e1a2">
+    <circle cx="215" cy="301" r="1.3" opacity=".7"/><circle cx="332" cy="332" r=".9" opacity=".5"/>
+    <circle cx="398" cy="286" r="1.1" opacity=".65"/><circle cx="540" cy="308" r=".8" opacity=".5"/>
+    <circle cx="624" cy="335" r="1.2" opacity=".6"/><circle cx="860" cy="303" r=".9" opacity=".5"/>
+    <circle cx="914" cy="344" r="1.1" opacity=".6"/><circle cx="149" cy="334" r=".8" opacity=".45"/>
+  </g>
+  <rect width="960" height="420" fill="none" stroke="#07120a" stroke-width="28" opacity=".5"/>
 </svg>

@@ -2,7 +2,7 @@
    UI wiring, drag & drop, input, loop
    ============================================================ */
 
-import { TOWERS, TOWER_ORDER, TARGET_MODES, getMap, MAPS, MAP_ORDER, makeWave, ENEMY_TYPES, waveReward, towerLevel, sellValue } from './data.js';
+import { TOWERS, TOWER_ORDER, TARGET_MODES, getMap, MAPS, MAP_ORDER, makeWave, waveRoster, ENEMY_TYPES, waveReward, towerLevel, sellValue } from './data.js';
 import { Game } from './game.js';
 import { AudioEngine } from './audio.js';
 
@@ -516,7 +516,7 @@ function syncIntel(h) {
   const specs = makeWave(h.wave, activeMap.id);
   const counts = {};
   for (const s of specs) counts[s.type] = (counts[s.type] || 0) + 1;
-  const roster = activeMap.roster;
+  const roster = waveRoster(h.wave, activeMap.id);
   const order = [...new Set([roster.line, roster.fast, roster.heavy, roster.boss])];
   body.innerHTML = order
     .filter(t => counts[t])
