@@ -5356,22 +5356,26 @@ function drawEwokBody(ctx, e, time) {
   ctx.beginPath();
   ctx.ellipse(-1.5, 0, 6.4, 5.3, 0, 0, TAU);
   ctx.fill();
+  // A warm rim keeps the small silhouette legible against Endor's dark trail.
+  ctx.strokeStyle = '#e0c58f';
+  ctx.lineWidth = 1.25;
+  ctx.stroke();
   // shaggy edge, kept soft and rounded rather than spiky.
-  ctx.fillStyle = '#81583a';
+  ctx.fillStyle = '#a87546';
   for (let i = 0; i < 7; i++) {
     const a = i * TAU / 7;
     ctx.beginPath();
     ctx.arc(-1.5 + Math.cos(a) * 4.7, Math.sin(a) * 4.1, 1.8, 0, TAU);
     ctx.fill();
   }
-  // Tan hood and little face.
-  ctx.fillStyle = '#c9a36c';
+  // Bright hood and little face stay distinct when several Ewoks bunch together.
+  ctx.fillStyle = '#e6c783';
   ctx.beginPath();
   ctx.ellipse(4.2, 0, 5.1, 5.4, 0, -Math.PI / 2, Math.PI / 2);
   ctx.quadraticCurveTo(8, 0, 4.2, -5.4);
   ctx.fill();
-  ctx.strokeStyle = '#806144';
-  ctx.lineWidth = 0.8;
+  ctx.strokeStyle = '#49372a';
+  ctx.lineWidth = 1.05;
   ctx.stroke();
   ctx.fillStyle = '#704832';
   ctx.beginPath();
@@ -5387,9 +5391,14 @@ function drawEwokBody(ctx, e, time) {
   ctx.arc(7.75, -1.05, 0.28, 0, TAU);
   ctx.arc(7.75, 1.05, 0.28, 0, TAU);
   ctx.fill();
-  // Wooden spear, carried forward.
-  ctx.strokeStyle = '#704b2e';
-  ctx.lineWidth = 1.25;
+  // Wooden spear, carried forward with a pale edge for gameplay readability.
+  ctx.strokeStyle = '#493425';
+  ctx.lineWidth = 2.4;
+  ctx.beginPath();
+  ctx.moveTo(1, 3.1); ctx.lineTo(19, 2.1);
+  ctx.stroke();
+  ctx.strokeStyle = '#d6bd89';
+  ctx.lineWidth = 1.05;
   ctx.beginPath();
   ctx.moveTo(1, 3.1); ctx.lineTo(19, 2.1);
   ctx.stroke();
@@ -5410,27 +5419,29 @@ function drawBoarWolfBody(ctx, e, time) {
   const gait = Math.sin(time * 8 + p) * 1.5;
   // Four sturdy legs under a broad, muscular body.
   ctx.lineCap = 'round';
-  ctx.strokeStyle = '#333a3d';
-  ctx.lineWidth = 3.2;
+  ctx.strokeStyle = '#566365';
+  ctx.lineWidth = 3.4;
   ctx.beginPath();
   ctx.moveTo(-7, -5); ctx.lineTo(-10 + gait, -10); ctx.lineTo(-8 + gait, -13);
   ctx.moveTo(5, -5); ctx.lineTo(8 - gait, -10); ctx.lineTo(11 - gait, -12);
   ctx.moveTo(-7, 5); ctx.lineTo(-10 - gait, 10); ctx.lineTo(-8 - gait, 13);
   ctx.moveTo(5, 5); ctx.lineTo(8 + gait, 10); ctx.lineTo(11 + gait, 12);
   ctx.stroke();
-  ctx.fillStyle = '#292f32';
+  ctx.fillStyle = '#41494b';
   for (const [x, y] of [[-8 + gait, -13], [11 - gait, -12], [-8 - gait, 13], [11 + gait, 12]]) {
     ctx.beginPath(); ctx.ellipse(x, y, 2.5, 1.5, 0, 0, TAU); ctx.fill();
   }
   const fur = ctx.createLinearGradient(-7, -8, 8, 8);
-  fur.addColorStop(0, '#596064'); fur.addColorStop(0.52, '#41484c'); fur.addColorStop(1, '#292f32');
+  fur.addColorStop(0, '#788183'); fur.addColorStop(0.52, '#596368'); fur.addColorStop(1, '#434c4f');
   ctx.fillStyle = fur;
   ctx.beginPath();
   ctx.ellipse(-1, 0, 11.5, 8.3, 0, 0, TAU);
   ctx.fill();
-  ctx.strokeStyle = '#252b2e'; ctx.lineWidth = 1; ctx.stroke();
+  ctx.strokeStyle = 'rgba(207, 218, 202, 0.82)'; ctx.lineWidth = 1.35; ctx.stroke();
+  ctx.strokeStyle = 'rgba(231, 226, 194, 0.55)'; ctx.lineWidth = 0.9;
+  ctx.beginPath(); ctx.arc(-1, 0, 10.3, -2.55, -0.75); ctx.stroke();
   // Thick neck, angular muzzle and small dark mane ridge.
-  ctx.fillStyle = '#4d5559';
+  ctx.fillStyle = '#667276';
   ctx.beginPath();
   ctx.moveTo(3, -6.8); ctx.quadraticCurveTo(8, -8, 10, -4.5);
   ctx.lineTo(14.5, -3.2); ctx.lineTo(16.2, 0); ctx.lineTo(14.5, 3.2);
@@ -5471,7 +5482,7 @@ function drawGoraxBody(ctx, e, time) {
   ctx.fillStyle = '#241b17';
   ctx.beginPath(); ctx.ellipse(-5, 26, 6, 3.1, 0, 0, TAU); ctx.fill();
   ctx.beginPath(); ctx.ellipse(14, 25, 6, 3.1, 0, 0, TAU); ctx.fill();
-  ctx.strokeStyle = '#493327';
+  ctx.strokeStyle = '#644b37';
   ctx.lineWidth = 8.5;
   ctx.beginPath();
   ctx.moveTo(-8, -7); ctx.lineTo(-16 + swing, 1); ctx.lineTo(-19 + swing, 12); ctx.lineTo(-16 + swing, 23);
@@ -5482,16 +5493,18 @@ function drawGoraxBody(ctx, e, time) {
   ctx.beginPath(); ctx.ellipse(23 - swing, 21, 5.6, 3, 0.25, 0, TAU); ctx.fill();
   // Broad chest and shoulders.
   const fur = ctx.createLinearGradient(-11, -12, 12, 12);
-  fur.addColorStop(0, '#684936'); fur.addColorStop(0.48, '#503628'); fur.addColorStop(1, '#35251e');
+  fur.addColorStop(0, '#8a694b'); fur.addColorStop(0.48, '#6b4d36'); fur.addColorStop(1, '#493629');
   ctx.fillStyle = fur;
   ctx.beginPath();
   ctx.moveTo(-10, -8); ctx.quadraticCurveTo(-14, -17, -6, -20);
   ctx.lineTo(3, -18); ctx.quadraticCurveTo(13, -16, 13, -7);
   ctx.lineTo(10, 8); ctx.quadraticCurveTo(0, 16, -9, 8); ctx.closePath();
   ctx.fill();
-  ctx.strokeStyle = '#2c201b'; ctx.lineWidth = 1.4; ctx.stroke();
+  ctx.strokeStyle = 'rgba(190, 157, 118, 0.88)'; ctx.lineWidth = 1.6; ctx.stroke();
+  ctx.strokeStyle = 'rgba(229, 199, 155, 0.55)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(-8, -8); ctx.quadraticCurveTo(-10, -16, -4, -18); ctx.stroke();
   // Rounded head, heavy brow and glowing eyes.
-  ctx.fillStyle = '#654632';
+  ctx.fillStyle = '#856246';
   ctx.beginPath(); ctx.ellipse(8, -12, 8.3, 7.6, 0.15, 0, TAU); ctx.fill();
   ctx.fillStyle = '#38271f';
   ctx.beginPath(); ctx.ellipse(12, -9.1, 4.8, 3.2, 0.1, 0, TAU); ctx.fill();
