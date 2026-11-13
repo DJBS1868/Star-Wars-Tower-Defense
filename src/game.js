@@ -358,7 +358,7 @@ export class Game {
     this.callbacks.onWaveStart?.(this.waveNumber);
     if (this.waveNumber === this.map.waves && !this.endless) {
       this.callbacks.toast?.(this.map.flavor?.final || 'Final wave — hold the relay!', 'bad');
-    } else if (this.waveNumber % 10 === 0) {
+    } else if ((this.map.bossEvery ?? 10) > 0 && this.waveNumber % (this.map.bossEvery ?? 10) === 0) {
       this.callbacks.toast?.(this.map.flavor?.boss || 'Enemy commander inbound', 'bad');
     }
     return true;

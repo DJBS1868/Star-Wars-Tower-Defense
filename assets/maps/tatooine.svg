@@ -1,20 +1,301 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-label="Illustrated desert outpost beneath twin suns">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-label="Tatooine outpost relay beneath twin suns, with banthas on the dunes and a buried krayt skeleton">
   <defs>
-    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#182638"/><stop offset=".58" stop-color="#c56d46"/><stop offset="1" stop-color="#f3bb70"/></linearGradient>
-    <linearGradient id="dune" x2="0" y2="1"><stop stop-color="#e9b46b"/><stop offset="1" stop-color="#8d4b37"/></linearGradient>
-    <radialGradient id="sun"><stop stop-color="#fff5c8"/><stop offset=".7" stop-color="#ffcd72"/><stop offset="1" stop-color="#ff9a58" stop-opacity=".2"/></radialGradient>
+    <linearGradient id="t-sky" x2="0" y2="1">
+      <stop offset="0" stop-color="#081625"/>
+      <stop offset=".28" stop-color="#263247"/>
+      <stop offset=".55" stop-color="#7a4650"/>
+      <stop offset=".76" stop-color="#cf724b"/>
+      <stop offset=".9" stop-color="#f2b06f"/>
+      <stop offset="1" stop-color="#f8cf91"/>
+    </linearGradient>
+    <radialGradient id="t-sun-a">
+      <stop offset="0" stop-color="#fffbea"/>
+      <stop offset=".38" stop-color="#ffeeb6"/>
+      <stop offset=".72" stop-color="#ffc76d"/>
+      <stop offset="1" stop-color="#ff9f58" stop-opacity=".16"/>
+    </radialGradient>
+    <radialGradient id="t-sun-b">
+      <stop offset="0" stop-color="#fff5cf"/>
+      <stop offset=".55" stop-color="#ffd28a"/>
+      <stop offset="1" stop-color="#ff9c59" stop-opacity=".12"/>
+    </radialGradient>
+    <radialGradient id="t-sun-glow">
+      <stop offset="0" stop-color="#ffd694" stop-opacity=".5"/>
+      <stop offset=".55" stop-color="#ffad64" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#ff9a55" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="t-far" x2="0" y2="1">
+      <stop offset="0" stop-color="#8e5b4e"/>
+      <stop offset="1" stop-color="#5b3c3d"/>
+    </linearGradient>
+    <linearGradient id="t-mid" x2="0" y2="1">
+      <stop offset="0" stop-color="#c27950"/>
+      <stop offset="1" stop-color="#8f4e39"/>
+    </linearGradient>
+    <linearGradient id="t-dune-a" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0c582"/>
+      <stop offset=".5" stop-color="#d99b5e"/>
+      <stop offset="1" stop-color="#b06a45"/>
+    </linearGradient>
+    <linearGradient id="t-dune-b" x2="0" y2="1">
+      <stop offset="0" stop-color="#e7b06c"/>
+      <stop offset=".62" stop-color="#c27a4a"/>
+      <stop offset="1" stop-color="#8f4c37"/>
+    </linearGradient>
+    <linearGradient id="t-dune-c" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4cf94"/>
+      <stop offset=".52" stop-color="#dda366"/>
+      <stop offset="1" stop-color="#b97046"/>
+    </linearGradient>
+    <linearGradient id="t-path" x2="1" y2="0">
+      <stop offset="0" stop-color="#f0cd93" stop-opacity=".0"/>
+      <stop offset=".16" stop-color="#f4d69d" stop-opacity=".55"/>
+      <stop offset=".5" stop-color="#f8e0ab" stop-opacity=".82"/>
+      <stop offset=".86" stop-color="#f0cd91" stop-opacity=".52"/>
+      <stop offset="1" stop-color="#efc98b" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="t-shield" cx=".5" cy=".42" r=".6">
+      <stop offset="0" stop-color="#bfefff" stop-opacity=".03"/>
+      <stop offset=".68" stop-color="#7fdcff" stop-opacity=".12"/>
+      <stop offset=".92" stop-color="#8ce5ff" stop-opacity=".32"/>
+      <stop offset="1" stop-color="#8ce5ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="t-dome" x1=".2" y1="0" x2=".82" y2="1">
+      <stop offset="0" stop-color="#f0e2c5"/>
+      <stop offset=".36" stop-color="#cfb994"/>
+      <stop offset=".76" stop-color="#9d825f"/>
+      <stop offset="1" stop-color="#6e573e"/>
+    </linearGradient>
+    <linearGradient id="t-pad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a9a090"/>
+      <stop offset="1" stop-color="#71695d"/>
+    </linearGradient>
+    <linearGradient id="t-hull" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a86a40"/>
+      <stop offset=".55" stop-color="#7d4a2e"/>
+      <stop offset="1" stop-color="#4b2b1b"/>
+    </linearGradient>
+    <linearGradient id="t-bone" x1="0" y1="0" x2=".4" y2="1">
+      <stop offset="0" stop-color="#f1dfbb"/>
+      <stop offset=".6" stop-color="#d3bb92"/>
+      <stop offset="1" stop-color="#a98d67"/>
+    </linearGradient>
+    <linearGradient id="t-fore" x2="0" y2="1">
+      <stop offset="0" stop-color="#c17a4a"/>
+      <stop offset=".45" stop-color="#965535"/>
+      <stop offset="1" stop-color="#5f3425"/>
+    </linearGradient>
+    <linearGradient id="t-vignette" x2="0" y2="1">
+      <stop offset="0" stop-color="#040b12" stop-opacity=".18"/>
+      <stop offset=".5" stop-color="#040b12" stop-opacity="0"/>
+      <stop offset=".82" stop-color="#040b12" stop-opacity=".32"/>
+      <stop offset="1" stop-color="#040b12" stop-opacity=".82"/>
+    </linearGradient>
+    <filter id="t-blur-a" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="13"/></filter>
+    <filter id="t-blur-b" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="t-blur-c" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.2"/></filter>
+    <clipPath id="t-frame"><rect width="960" height="420"/></clipPath>
   </defs>
-  <path fill="url(#sky)" d="M0 0h960v420H0z"/>
-  <circle cx="690" cy="112" r="58" fill="url(#sun)"/><circle cx="779" cy="137" r="25" fill="#ffdca0" opacity=".8"/>
-  <path fill="#65434a" opacity=".6" d="M0 220 70 180l58 22 67-55 56 34 71-60 61 46 73-25 60 49 75-38 62 45 82-33 74 55 65-19 46 31v100H0z"/>
-  <path fill="#b76a4a" d="M0 272q130-50 262-4t260 0q122-37 224 3t214-6v155H0z"/>
-  <path fill="url(#dune)" d="M0 325q130-67 270-17t242 2q140-58 253-4t195-10v124H0z"/>
-  <path fill="#f2c27a" opacity=".7" d="M0 362q155-36 288-3t248-1q167-44 256-4t168-5v71H0z"/>
-  <g fill="#493a37" stroke="#d78a56" stroke-width="4">
-    <path d="M365 273h108v70H365zM386 242h52v31h-52zM451 253h38v20h-38z"/>
-    <path d="M353 267h12v76h-12zM474 263h11v80h-11z"/>
-    <path d="M402 287h22v18h-22z" fill="#f8c768" stroke="none"/>
-    <path d="M518 296v-67h30v67m-38 0h47v12h-47zM532 220h4v-18h4v18"/>
+
+  <g clip-path="url(#t-frame)">
+    <!-- night-to-dusk sky -->
+    <rect width="960" height="420" fill="url(#t-sky)"/>
+    <g fill="#fff9e4" opacity=".65">
+      <circle cx="84" cy="38" r="1.5"/><circle cx="152" cy="72" r="1.1"/><circle cx="228" cy="31" r="1.7"/>
+      <circle cx="305" cy="66" r="1"/><circle cx="386" cy="26" r="1.4"/><circle cx="468" cy="55" r="1.2"/>
+      <circle cx="556" cy="22" r="1.5"/><circle cx="632" cy="58" r="1"/><circle cx="720" cy="34" r="1.6"/>
+      <circle cx="812" cy="70" r="1.2"/><circle cx="888" cy="29" r="1.5"/><circle cx="930" cy="88" r="1"/>
+    </g>
+    <g fill="#ffeccd" opacity=".28">
+      <circle cx="116" cy="104" r=".9"/><circle cx="352" cy="95" r="1"/><circle cx="512" cy="110" r=".8"/>
+      <circle cx="698" cy="96" r="1"/><circle cx="860" cy="118" r=".9"/>
+    </g>
+
+    <!-- twin suns -->
+    <circle cx="700" cy="121" r="126" fill="url(#t-sun-glow)" filter="url(#t-blur-a)"/>
+    <circle cx="700" cy="121" r="58" fill="url(#t-sun-a)"/>
+    <circle cx="700" cy="121" r="27" fill="#fff6cf" opacity=".9" filter="url(#t-blur-c)"/>
+    <circle cx="790" cy="151" r="77" fill="url(#t-sun-glow)" opacity=".7" filter="url(#t-blur-a)"/>
+    <circle cx="790" cy="151" r="27" fill="url(#t-sun-b)"/>
+
+    <!-- atmospheric haze bands -->
+    <path d="M0 168q180-24 350-4t310-6 300 12v52H0z" fill="#ffd79a" opacity=".13" filter="url(#t-blur-b)"/>
+    <path d="M0 205q220-22 400 2t286-4 274 8v32H0z" fill="#ffbd7d" opacity=".16" filter="url(#t-blur-b)"/>
+
+    <!-- distant mesa silhouettes -->
+    <path fill="url(#t-far)" opacity=".78" d="M0 243 44 219l34-39 44 11 29-24 40 27 28-11 40 21 26-46 41-3 29 45 39-13 28-33 43 3 22 37 35-19 33 46 41-16 38 19 36-40 44 3 25 34 41-16 43 20 40-25 45 21v80H0z"/>
+    <path fill="#3e2b2f" opacity=".5" d="m0 250 45-26 35 9 37-30 38 12 31 26 27-12 37 23 35-24 32 10 40-18 26 29 40-9 33-21 39 8 30 27 38-14 32 22 42-27 35 10 33 25 38-19 34 20 35-13 32 23v61H0z"/>
+
+    <!-- middle dunes -->
+    <path fill="url(#t-mid)" d="M0 284q118-49 222-10t185 3q96-45 206-7t172 2q86-31 175-9v157H0z"/>
+    <path fill="#f5c98a" opacity=".2" d="M0 293q118-45 220-9t185 2q96-42 206-5t172 4q86-28 177-7v18q-92-18-177 9t-172-3q-110-37-206 5t-185-2Q118 268 0 310z"/>
+
+    <!-- winding route to the relay -->
+    <path d="M-30 338C120 328 190 297 274 288s132 24 204 6 107-48 176-30 111 48 184 34 96-24 152-14" fill="none" stroke="#7b452d" stroke-opacity=".35" stroke-width="31" stroke-linecap="round"/>
+    <path d="M-30 336C120 326 190 295 274 286s132 24 204 6 107-48 176-30 111 48 184 34 96-24 152-14" fill="none" stroke="url(#t-path)" stroke-width="22" stroke-linecap="round"/>
+    <path d="M-30 335C120 325 190 294 274 285s132 24 204 6 107-48 176-30 111 48 184 34 96-24 152-14" fill="none" stroke="#ffe7b5" stroke-opacity=".28" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="12 24"/>
+
+    <!-- sandcrawler on the left flats -->
+    <g transform="translate(154 248) rotate(-2)">
+      <ellipse cx="6" cy="36" rx="70" ry="13" fill="#5b3122" opacity=".34"/>
+      <rect x="-56" y="-8" width="114" height="42" rx="8" fill="url(#t-hull)" stroke="#3d2114" stroke-width="2"/>
+      <rect x="-61" y="3" width="16" height="32" rx="6" fill="#2c211a"/>
+      <rect x="46" y="3" width="16" height="32" rx="6" fill="#2c211a"/>
+      <g stroke="#8c6e4e" stroke-width="1.2" opacity=".45">
+        <path d="M-57 10h9M-57 16h9M-57 22h9M-57 28h9"/>
+        <path d="M47 10h9M47 16h9M47 22h9M47 28h9"/>
+      </g>
+      <path d="M56-5 72 3v20l-16 8z" fill="#8c5634" stroke="#3d2114" stroke-width="2"/>
+      <rect x="62" y="5" width="5" height="10" rx="1.5" fill="#ffcf7e" opacity=".9"/>
+      <path d="M-44-8v42M-20-8v42M6-8v42M32-8v42" stroke="#452718" stroke-opacity=".55"/>
+      <path d="M-24-8v-16h7v16" fill="#57301e" stroke="#2f1b10"/>
+      <path d="M-20-24v-13" stroke="#c7a67c" stroke-width="1.4"/>
+      <circle cx="-20" cy="-38" r="2.2" fill="#ffb45a"/>
+      <path d="M-48-4h20l8 4H-48z" fill="#d09a68" opacity=".25"/>
+    </g>
+
+    <!-- bantha herd on the ridge -->
+    <g fill="#3b251b" opacity=".92">
+      <g transform="translate(548 253) scale(.72)">
+        <ellipse cx="0" cy="0" rx="26" ry="12"/>
+        <ellipse cx="24" cy="-4" rx="10" ry="7"/>
+        <path d="M28-9c8-7 17-6 23-1-8 1-14 5-18 9z" fill="#d5bf98"/>
+        <path d="M28 3c8 7 17 6 23 1-8-1-14-5-18-8z" fill="#d5bf98"/>
+        <path d="M-20 7l-8 18M-8 9l-3 19M10 9l2 19M20 6l8 18" stroke="#3b251b" stroke-width="5" stroke-linecap="round"/>
+      </g>
+      <g transform="translate(612 258) scale(.55)">
+        <ellipse cx="0" cy="0" rx="26" ry="12"/>
+        <ellipse cx="24" cy="-4" rx="10" ry="7"/>
+        <path d="M28-9c8-7 17-6 23-1-8 1-14 5-18 9z" fill="#d5bf98"/>
+        <path d="M28 3c8 7 17 6 23 1-8-1-14-5-18-8z" fill="#d5bf98"/>
+        <path d="M-20 7l-8 18M-8 9l-3 19M10 9l2 19M20 6l8 18" stroke="#3b251b" stroke-width="5" stroke-linecap="round"/>
+      </g>
+      <g transform="translate(660 250) scale(.42)">
+        <ellipse cx="0" cy="0" rx="26" ry="12"/>
+        <ellipse cx="24" cy="-4" rx="10" ry="7"/>
+        <path d="M28-9c8-7 17-6 23-1-8 1-14 5-18 9z" fill="#d5bf98"/>
+        <path d="M28 3c8 7 17 6 23 1-8-1-14-5-18-8z" fill="#d5bf98"/>
+        <path d="M-20 7l-8 18M-8 9l-3 19M10 9l2 19M20 6l8 18" stroke="#3b251b" stroke-width="5" stroke-linecap="round"/>
+      </g>
+    </g>
+
+    <!-- outpost relay -->
+    <g transform="translate(796 273)">
+      <ellipse cx="0" cy="72" rx="132" ry="32" fill="#5f3223" opacity=".32"/>
+      <ellipse cx="0" cy="66" rx="92" ry="24" fill="url(#t-pad)" stroke="#5e5549" stroke-width="2.5"/>
+      <ellipse cx="0" cy="63" rx="62" ry="14" fill="none" stroke="#d9c9a8" stroke-opacity=".4" stroke-width="1.5"/>
+      <path d="M-62 76h124" stroke="#4e473d" stroke-width="2" stroke-dasharray="7 8" opacity=".7"/>
+
+      <!-- shield bubble -->
+      <ellipse cx="0" cy="-4" rx="108" ry="80" fill="url(#t-shield)"/>
+      <ellipse cx="0" cy="-4" rx="94" ry="68" fill="none" stroke="#a8ecff" stroke-opacity=".42" stroke-width="1.6" stroke-dasharray="4 7"/>
+      <ellipse cx="0" cy="-4" rx="72" ry="52" fill="none" stroke="#c4f4ff" stroke-opacity=".18" stroke-width="1"/>
+
+      <!-- relay dome -->
+      <path d="M-42 58c0-38 18-62 42-62s42 24 42 62z" fill="url(#t-dome)" stroke="#5f4a34" stroke-width="2"/>
+      <path d="M-31 58c0-28 13-47 31-47s31 19 31 47z" fill="none" stroke="#f7edda" stroke-opacity=".24" stroke-width="1.5"/>
+      <path d="M-19 37h38v16h-38z" fill="#17323f" stroke="#584c3c" stroke-width="1.6"/>
+      <path d="M-14 40h28v10h-28z" fill="#72dbff"/>
+      <path d="M-14 40h28v4h-28z" fill="#c2f1ff" opacity=".8"/>
+      <path d="M18 49 34 5" stroke="#6b5a44" stroke-width="2.4"/>
+      <circle cx="34" cy="4" r="4" fill="#ffd27a"/>
+      <circle cx="34" cy="4" r="9" fill="none" stroke="#ffd27a" stroke-opacity=".5" stroke-width="1.2"/>
+      <path d="M-48 58v16h96V58" fill="none" stroke="#6c5741" stroke-width="2.6"/>
+      <path d="M-58 74h116" stroke="#5e4d3a" stroke-width="4" stroke-linecap="round"/>
+
+      <!-- ground details -->
+      <g transform="translate(-102 58)">
+        <path d="M-10 6v-38h20v38" fill="#8d887c" stroke="#5b574e" stroke-width="2"/>
+        <path d="M-12-32h24l-4-7h-16z" fill="#b0aa9b" stroke="#5b574e" stroke-width="1.5"/>
+        <path d="M8-25 20-40" stroke="#7a7364" stroke-width="2.2"/>
+        <rect x="13" y="-43" width="15" height="9" rx="1" fill="#25333a" stroke="#6e7d82" stroke-width="1"/>
+        <path d="M-9-10h18M-9-2h18" stroke="#6c675c" stroke-width="1.2"/>
+      </g>
+      <g transform="translate(88 52)">
+        <rect x="0" y="0" width="24" height="18" rx="2" fill="#8a5a35" stroke="#49301d" stroke-width="1.6"/>
+        <rect x="4" y="4" width="16" height="3" fill="#c0905e" opacity=".55"/>
+        <rect x="25" y="8" width="19" height="13" rx="2" fill="#7b4f2e" stroke="#49301d" stroke-width="1.6"/>
+        <path d="M4 10h16M8 15h12" stroke="#5e3d24" stroke-width="1.1"/>
+      </g>
+      <g fill="#d9c6a4" opacity=".55">
+        <circle cx="-70" cy="70" r="3"/><circle cx="-60" cy="74" r="2"/><circle cx="64" cy="72" r="2.4"/>
+      </g>
+      <g stroke="#5b4028" stroke-width="1.2" opacity=".6">
+        <path d="M-82 80l10-6M-72 84l8-8M74 82l9-7"/>
+      </g>
+      <!-- beacon lamps -->
+      <circle cx="-44" cy="52" r="2.4" fill="#ffd47e"/><circle cx="44" cy="52" r="2.4" fill="#ff8c64"/>
+    </g>
+
+    <!-- krayt skeleton half-buried in the left foreground -->
+    <g transform="translate(242 335) rotate(-8)">
+      <ellipse cx="8" cy="29" rx="128" ry="24" fill="#5a2f1f" opacity=".26"/>
+      <path d="M-112 6c48 14 98 16 148 5" fill="none" stroke="#bca57c" stroke-width="5" stroke-linecap="round"/>
+      <g stroke="url(#t-bone)" stroke-width="4.5" fill="none" stroke-linecap="round">
+        <path d="M-90 7c-2-21 8-34 22-38M-90 7c12 4 26 4 38 1"/>
+        <path d="M-64 11c-3-27 9-44 27-49M-64 11c15 5 31 5 45 1"/>
+        <path d="M-35 14c-3-31 11-50 32-55M-35 14c17 6 36 5 52 2"/>
+        <path d="M-3 17c-3-33 13-53 36-58M-3 17c19 6 40 5 58 2"/>
+        <path d="M31 18c-2-29 13-47 34-51M31 18c18 5 37 5 54 2"/>
+      </g>
+      <g fill="#d9c39b">
+        <circle cx="-92" cy="7" r="4"/><circle cx="-64" cy="11" r="4.3"/><circle cx="-35" cy="14" r="4.4"/><circle cx="-3" cy="17" r="4.5"/><circle cx="31" cy="18" r="4.2"/>
+      </g>
+      <!-- skull -->
+      <g transform="translate(99 9) rotate(6)">
+        <path d="M-28-20c14-14 43-18 59-5l18 15c6 5 6 12 0 17L31 25c-17 12-45 8-59-6-10-10-10-29 0-39z" fill="url(#t-bone)" stroke="#8c7350" stroke-width="2"/>
+        <ellipse cx="4" cy="-8" rx="8" ry="6.5" fill="#3d2b1a"/>
+        <ellipse cx="4" cy="12" rx="8" ry="6.5" fill="#3d2b1a"/>
+        <ellipse cx="4" cy="-8" rx="4" ry="3.5" fill="#24170d"/>
+        <ellipse cx="4" cy="12" rx="4" ry="3.5" fill="#24170d"/>
+        <ellipse cx="33" cy="2" rx="4.5" ry="6" fill="#4e3820"/>
+        <path d="M-16 18c13 6 31 5 46-2" fill="none" stroke="#8c7350" stroke-width="2"/>
+        <g fill="#f6ecd5">
+          <path d="M25 2l5 5 4-7z"/><path d="M34 2l5 5 4-7z"/><path d="M25 13l5-5 4 7z"/><path d="M34 13l5-5 4 7z"/>
+        </g>
+        <path d="M-24-17c-22-12-48-12-66 2 19 1 38 8 53 20z" fill="#d9c39b" stroke="#8c7350" stroke-width="1.6"/>
+        <path d="M-24 17c-22 12-48 12-66-2 19-1 38-8 53-20z" fill="#cdb58c" stroke="#8c7350" stroke-width="1.6"/>
+        <path d="M-56-12c-6-8-16-10-24-6M-56 12c-6 8-16 10-24 6" fill="none" stroke="#8c7350" stroke-width="1.4"/>
+      </g>
+      <!-- sand drift burying the bones -->
+      <path d="M-136 17c48-13 94 8 136 13 43 5 84 1 138-8v48h-274z" fill="#d8a268" opacity=".85"/>
+      <path d="M-136 27c51-11 96 10 139 14s87 0 135-8" fill="none" stroke="#f2cd92" stroke-width="2" opacity=".5"/>
+    </g>
+
+    <!-- womp rat tracks, bones and scrub -->
+    <g fill="#6d3f27" opacity=".32">
+      <ellipse cx="402" cy="311" rx="2.2" ry="1.2"/><ellipse cx="410" cy="314" rx="2.2" ry="1.2"/><ellipse cx="418" cy="311" rx="2.2" ry="1.2"/>
+      <ellipse cx="446" cy="323" rx="2.2" ry="1.2"/><ellipse cx="454" cy="326" rx="2.2" ry="1.2"/><ellipse cx="462" cy="323" rx="2.2" ry="1.2"/>
+      <ellipse cx="492" cy="307" rx="2.2" ry="1.2"/><ellipse cx="500" cy="310" rx="2.2" ry="1.2"/><ellipse cx="508" cy="307" rx="2.2" ry="1.2"/>
+    </g>
+    <g stroke="#b9a078" stroke-width="2" stroke-linecap="round" opacity=".75">
+      <path d="M700 365l17-4M704 371l13-8M667 370l13-8"/>
+      <path d="M682 352l9-7M689 356l9-7"/>
+    </g>
+    <g stroke="#8d7a45" stroke-width="1.5" stroke-linecap="round" opacity=".7">
+      <path d="M96 345c-8-9-10-16-10-22M98 345c2-13 8-20 15-25M96 345c-3-14-3-24-1-32"/>
+      <path d="M868 350c-8-9-10-16-10-22M870 350c2-13 8-20 15-25M868 350c-3-14-3-24-1-32"/>
+      <path d="M438 386c-7-8-9-14-9-19M440 386c2-11 7-17 13-22M438 386c-3-12-3-21-1-28"/>
+    </g>
+    <g fill="#7f5935" opacity=".75">
+      <ellipse cx="872" cy="330" rx="7" ry="4"/><ellipse cx="884" cy="334" rx="4" ry="3"/>
+      <ellipse cx="58" cy="315" rx="9" ry="5"/><ellipse cx="72" cy="320" rx="5" ry="3"/>
+      <ellipse cx="902" cy="307" rx="5" ry="3"/>
+    </g>
+
+    <!-- foreground ridge -->
+    <path fill="url(#t-fore)" d="M0 371q96-26 196-4t198 3q104-24 214-4t176-1q88-19 176 4v51H0z"/>
+    <path fill="none" stroke="#f3c083" stroke-opacity=".34" stroke-width="2" d="M0 371q96-26 196-4t198 3q104-24 214-4t176-1q88-19 176 4"/>
+
+    <!-- dust motes -->
+    <g fill="#ffe3b4" opacity=".45" filter="url(#t-blur-c)">
+      <circle cx="154" cy="278" r="1.8"/><circle cx="214" cy="300" r="1.2"/><circle cx="336" cy="268" r="1.5"/>
+      <circle cx="430" cy="292" r="1.3"/><circle cx="520" cy="278" r="1.7"/><circle cx="614" cy="300" r="1.2"/>
+      <circle cx="736" cy="266" r="1.5"/><circle cx="884" cy="288" r="1.3"/>
+    </g>
+
+    <!-- graded overlay for depth and readable UI copy -->
+    <rect width="960" height="420" fill="url(#t-vignette)"/>
+    <rect x="0" y="0" width="960" height="420" fill="#1b2a3a" opacity=".05"/>
   </g>
-  <path fill="none" stroke="#ffd48a" stroke-opacity=".45" stroke-width="3" d="M0 388q150-26 285 2t270-4q175-34 405 1"/>
 </svg>

@@ -501,7 +501,7 @@ function syncIntel(h) {
   const title = $('#intelTitle');
   if (!body) return;
   if (!game.started) {
-    body.innerHTML = '<span class="intel-tip">Deploy the outpost to see droid movements.</span>';
+    body.innerHTML = '<span class="intel-tip">Deploy the outpost to see enemy movements.</span>';
     threat.textContent = 'STANDBY';
     threat.className = 'threat';
     return;
@@ -526,7 +526,9 @@ function syncIntel(h) {
     })
     .join('');
   let level = 'LOW';
-  if (h.wave > 18 || h.wave % 10 === 0) level = 'EXTREME';
+  const bossEvery = activeMap.bossEvery ?? 10;
+  const bossWave = (bossEvery > 0 && h.wave % bossEvery === 0) || h.wave === activeMap.waves;
+  if (h.wave > 18 || bossWave) level = 'EXTREME';
   else if (h.wave > 11) level = 'HIGH';
   else if (h.wave > 4) level = 'MODERATE';
   threat.textContent = `${level} THREAT`;

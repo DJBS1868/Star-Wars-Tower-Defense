@@ -105,6 +105,14 @@ export const DECOR = [
   { type: 'cactus', x: 0.795, y: 0.235, r: 0.011, seed: 197 },
   { type: 'cactus', x: 0.505, y: 0.64, r: 0.010, seed: 199 },
   { type: 'cactus', x: 0.375, y: 0.925, r: 0.010, seed: 211 },
+  /* Tatooine landmarks: layered mesas, a half-buried krayt skeleton,
+     and a distant sandcrawler caravan. */
+  { type: 'mesa', x: 0.034, y: 0.115, r: 0.046, seed: 223 },
+  { type: 'mesa', x: 0.665, y: 0.052, r: 0.042, seed: 227 },
+  { type: 'mesa', x: 0.968, y: 0.942, r: 0.048, seed: 229 },
+  { type: 'sandcrawler', x: 0.455, y: 0.055, r: 0.043, seed: 233 },
+  { type: 'kraytskull', x: 0.178, y: 0.928, r: 0.050, seed: 239 },
+  { type: 'bone', x: 0.615, y: 0.955, r: 0.022, seed: 241 },
 ];
 
 const HOTH_DECOR = [
@@ -321,26 +329,21 @@ export function sellValue(tower) {
 /* Every planet fields its own army. `body` selects the canvas silhouette,
    `palette` recolors it, and short/boss/heavy drive the UI and combat rules. */
 export const ENEMY_TYPES = {
-  /* —— Tatooine: Separatist droid army —— */
-  droid: {
-    name: 'B1 Battle Droid', short: 'B1', body: 'droid',
-    hp: 1, speed: 67, radius: 11, reward: 1, leak: 1, armor: 0, gap: 0.7,
-    color: '#c8a46a',
+  /* —— Tatooine: dune-sea wildlife —— */
+  womprat: {
+    name: 'Womp Rat', short: 'RAT', body: 'womprat',
+    hp: 0.62, speed: 98, radius: 8.5, reward: 0.9, leak: 1, armor: 0, gap: 0.42,
+    color: '#a8896a',
   },
-  scout: {
-    name: 'STAP Scout', short: 'STAP', body: 'stap',
-    hp: 0.5, speed: 124, radius: 8.5, reward: 1, leak: 1, armor: 0, gap: 0.46,
-    color: '#8a9a8e',
+  bantha: {
+    name: 'Bantha', short: 'BANTHA', body: 'bantha',
+    hp: 5.8, speed: 37, radius: 17, reward: 2.8, leak: 2, armor: 3, gap: 1.35,
+    heavy: true, color: '#75503a',
   },
-  tank: {
-    name: 'Super Battle Droid', short: 'B2', body: 'b2',
-    hp: 4.4, speed: 43, radius: 15, reward: 2.4, leak: 2, armor: 2, gap: 1.15,
-    heavy: true, color: '#9b5a44',
-  },
-  boss: {
-    name: 'Droid Commander', short: 'CMD', body: 'droidboss', boss: true,
-    hp: 16, speed: 32, radius: 27, reward: 22, leak: 8, armor: 4, gap: 1.4,
-    color: '#7c5e4d',
+  krayt: {
+    name: 'Krayt Dragon', short: 'KRAYT', body: 'krayt', boss: true,
+    hp: 34, speed: 27, radius: 31, reward: 34, leak: 12, armor: 6, gap: 1.8,
+    color: '#c7a06a',
   },
 
   /* —— Hoth: Imperial cold-weather assault —— */
@@ -424,7 +427,7 @@ export const MAPS = {
     site: 'OUTPOST RELAY',
     region: 'TATOOINE',
     kicker: 'REBEL ALLIANCE · OUTER RIM',
-    desc: 'A remote Rebel signal station under attack. Hold the line and keep the transmission alive.',
+    desc: 'A remote Rebel signal station under the twin suns. Womp rat packs swarm the dunes, bantha herds stampede the pass, and an ancient krayt dragon stirs beneath the sand.',
     tag: 'TATOOINE',
     difficulty: 'STANDARD',
     theme: 'desert',
@@ -436,11 +439,14 @@ export const MAPS = {
     base: { x: 0.952, y: 0.60 },
     path: PATH_POINTS,
     decor: DECOR,
-    roster: { line: 'droid', fast: 'scout', heavy: 'tank', boss: 'boss' },
-    mix: { lineRate: 0.9, fastRate: 0.58, heavyStart: 6, heavyRate: 0.45, fastStart: 3 },
-    flavor: { boss: 'Droid commander on the field', final: 'Final wave — hold the relay!' },
-    endWin: 'The droid column is scrap. The relay is still broadcasting — and the Rebellion is still listening.',
-    endLose: 'The droid army broke through the perimeter. The relay has gone dark.',
+    roster: { line: 'womprat', fast: 'womprat', heavy: 'bantha', boss: 'krayt' },
+    mix: { lineRate: 0.88, fastRate: 0.52, heavyStart: 6, heavyRate: 0.4, fastStart: 2 },
+    bossEvery: 0,
+    finalBossCount: 1,
+    finalBossMul: 1.55,
+    flavor: { boss: 'A bantha herd is stampeding the pass', final: 'Final wave — the Krayt Dragon has risen!' },
+    endWin: 'The Krayt Dragon is down and the dune sea is quiet. The relay is still broadcasting — and the Rebellion is still listening.',
+    endLose: 'The desert horde overran the perimeter. The relay is silent beneath the twin suns.',
     chips: ['25 WAVES', 'TATOOINE', 'STANDARD'],
     accent: '#f4c14d',
   },
@@ -553,7 +559,8 @@ export function makeWave(wave, mapId = 'tatooine') {
     delay += 0.35;
   };
 
-  const bossWave = wave % 10 === 0 || wave === map.waves;
+  const bossEvery = map.bossEvery == null ? 10 : map.bossEvery;
+  const bossWave = (bossEvery > 0 && wave % bossEvery === 0) || wave === map.waves;
   const isFinal = wave === map.waves;
 
   let lineCount = Math.round((6 + wave * 0.9) * mix.lineRate);
@@ -591,8 +598,8 @@ export function makeWave(wave, mapId = 'tatooine') {
   if (restFast > 0) push(roster.fast, restFast, 1, Math.max(0.28, ENEMY_TYPES[roster.fast].gap * 0.8));
 
   if (bossWave) {
-    const bossMul = isFinal ? 1.45 : 1;
-    push(roster.boss, isFinal ? 2 : 1, bossMul, 1.6);
+    const bossMul = isFinal ? (map.finalBossMul ?? 1.45) : 1;
+    push(roster.boss, isFinal ? (map.finalBossCount ?? 2) : 1, bossMul, 1.6);
     if (isFinal) push(roster.heavy, 3, 1.3, 1.0);
   }
 
