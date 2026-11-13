@@ -2,7 +2,7 @@
    UI wiring, drag & drop, input, loop
    ============================================================ */
 
-import { TOWERS, TOWER_ORDER, TARGET_MODES, TOTAL_WAVES, waveReward, towerLevel, sellValue, makeWave, ENEMY_TYPES } from './data.js';
+import { TOWERS, TOWER_ORDER, TARGET_MODES, getMap, MAPS, MAP_ORDER, makeWave, ENEMY_TYPES, waveReward, towerLevel, sellValue } from './data.js';
 import { Game } from './game.js';
 import { AudioEngine } from './audio.js';
 
@@ -22,9 +22,6 @@ const hangarScreen = $('#hangarScreen');
 const endScreen = $('#endScreen');
 const pauseModal = $('#pauseModal');
 
-const MAPS = {
-  rebel: { id: 'rebel', planet: 'REBEL', site: 'OUTPOST RELAY' },
-};
 const menuScreens = { start: startScreen, home: homeScreen, map: mapScreen, hangar: hangarScreen };
 
 const audio = new AudioEngine();
@@ -33,7 +30,7 @@ let selectedType = null;
 let ghostVisible = false;
 let activeCard = null;
 let bestWave = Number(localStorage.getItem('to-best') || 0);
-let selectedMap = MAPS.rebel;
+let selectedMap = getMap(localStorage.getItem('to-map') || MAP_ORDER[0]);
 
 const callbacks = {
   toast: (message, type) => toast(message, type),
@@ -128,8 +125,22 @@ function renderMenuRoster() {
 }
 
 function setSelectedMap(map) {
-  selectedMap = map || MAPS.rebel;
-  $('.map-name').innerHTML = `<span class="dot"></span>${selectedMap.planet} · ${selectedMap.site}`;
+  selectedMap = getMap(map && map.id ? map.id : map);
+  localStorage.setItem('to-map', selectedMap.id);
+  const label = `${selectedMap.planet} · ${selectedMap.site}`;
+  const nameEl = $('.map-name');
+  if (nameEl) nameEl.innerHTML = `<span class="dot"></span>${label}`;
+  for (const tile of document.querySelectorAll('.map-tile[data-map]')) {
+    const active = tile.dataset.map === selectedMap.id;
+    tile.classList.toggle('selected', active);
+    tile.setAttribute('aria-pressed', active ? 'true' : 'false');
+    const ready = tile.querySelector('.map-ready');
+    if (ready) ready.textContent = active ? 'SELECTED' : 'READY';
+    const action = tile.querySelector('.map-status b');
+    if (action) action.textContent = active ? 'DEPLOY' : 'SELECT';
+  }
+  const dockSub = $('#mapDockPlayBtn small');
+  if (dockSub) dockSub.textContent = selectedMap.site;
   syncMenuLabels();
 }
 
@@ -477,11 +488,12 @@ $('#sellBtn').addEventListener('click', () => {
 
 /* ---------------- HUD / wave ---------------- */
 
-let lastHud = { credits: -1, lives: -1, wave: -1, started: false };
+let lastHud = { credits: -1, lives: -1, wave: -1, started: false, map: '' };
 let lastIntelKey = '';
 
 function syncIntel(h) {
-  const key = `${game.started}:${h.wave}:${h.phase}`;
+  const activeMap = game.started ? game.map : selectedMap;
+  const key = `${activeMap.id}:${game.started}:${h.wave}:${h.phase}`;
   if (key === lastIntelKey) return;
   lastIntelKey = key;
   const body = $('#intelBody');
@@ -501,14 +513,17 @@ function syncIntel(h) {
     return;
   }
   title.textContent = h.phase === 'wave' ? 'WAVE INTEL' : 'NEXT WAVE INTEL';
-  const specs = makeWave(h.wave);
+  const specs = makeWave(h.wave, activeMap.id);
   const counts = {};
   for (const s of specs) counts[s.type] = (counts[s.type] || 0) + 1;
-  const order = ['droid', 'scout', 'tank', 'boss'];
-  const labels = { droid: 'B1', scout: 'STAP', tank: 'B2', boss: 'CMD' };
+  const roster = activeMap.roster;
+  const order = [...new Set([roster.line, roster.fast, roster.heavy, roster.boss])];
   body.innerHTML = order
     .filter(t => counts[t])
-    .map(t => `<span class="intel-chip"><i class="enemy-dot ${t === 'boss' ? 'boss' : ''}" style="--dotc:${ENEMY_TYPES[t].color}"></i><b>${counts[t]}</b>${labels[t]}</span>`)
+    .map((t) => {
+      const def = ENEMY_TYPES[t];
+      return `<span class="intel-chip"><i class="enemy-dot ${def.boss ? 'boss' : ''}" style="--dotc:${def.color}"></i><b>${counts[t]}</b>${def.short}</span>`;
+    })
     .join('');
   let level = 'LOW';
   if (h.wave > 18 || h.wave % 10 === 0) level = 'EXTREME';
@@ -521,6 +536,13 @@ function syncIntel(h) {
 function syncUI(force = false) {
   if (!game) return;
   const h = game.hud();
+  const activeMap = game.started ? game.map : selectedMap;
+
+  if (force || activeMap.id !== lastHud.map) {
+    const mapName = $('.map-name');
+    if (mapName) mapName.innerHTML = `<span class="dot"></span>${activeMap.planet} · ${activeMap.site}`;
+    lastHud.map = activeMap.id;
+  }
 
   const creditsEl = $('#credits');
   const livesEl = $('#lives');
@@ -540,7 +562,7 @@ function syncUI(force = false) {
   }
 
   const waveEl = $('#waveTag');
-  const cap = h.endless ? '&infin;' : TOTAL_WAVES;
+  const cap = h.endless ? '&infin;' : activeMap.waves;
   waveEl.innerHTML = `WAVE ${h.wave} <i>/ ${cap}</i>`;
   $('#waveSub').textContent = h.phase === 'wave' ? `${h.alive + h.queue} hostile${h.alive + h.queue === 1 ? '' : 's'}` : h.phase === 'build' ? (h.wave > 1 ? 'Build phase' : 'Prepare defenses') : h.phase === 'victory' ? 'Relay held' : 'Relay lost';
   $('#waveProgress').style.width = `${(h.phase === 'wave' ? h.progress : 0) * 100}%`;
@@ -735,6 +757,7 @@ function startGame(auto = false) {
   pauseModal.classList.add('hidden');
   runFinished = false;
   lastIntelKey = '';
+  game.setMap(selectedMap.id);
   game.reset();
   game.started = false;
   game.begin();
@@ -784,12 +807,18 @@ $('#hangarDockMapBtn')?.addEventListener('click', () => { audio.ui(); showMenuSc
 $('#hangarDockHomeBtn')?.addEventListener('click', () => { audio.ui(); showMenuScreen('home'); });
 
 for (const tile of document.querySelectorAll('.map-tile-available[data-map]')) {
+  tile.setAttribute('aria-pressed', 'false');
   tile.addEventListener('click', () => {
     const map = MAPS[tile.dataset.map];
     if (!map) return;
     audio.ensure();
     audio.ui();
-    launchSelectedMap(map);
+    if (selectedMap.id === map.id) {
+      launchSelectedMap(map);
+    } else {
+      setSelectedMap(map);
+      toast(`${map.planet} selected — press Deploy`, 'good');
+    }
   });
 }
 
@@ -816,21 +845,20 @@ function updateBest(held) {
 function finishRun(win) {
   if (runFinished) return;
   runFinished = true;
-  const held = win ? (game.endless ? game.waveNumber - 1 : TOTAL_WAVES) : Math.max(0, game.waveNumber - 1);
+  const playedMap = game.map || selectedMap;
+  const held = win ? (game.endless ? game.waveNumber - 1 : playedMap.waves) : Math.max(0, game.waveNumber - 1);
   updateBest(held);
   game.paused = false;
   pauseModal.classList.add('hidden');
   cancelPlacement(true);
   closeInspector(true);
 
-  const title = win ? 'RELAY HELD' : 'RELAY LOST';
+  const title = win ? `${playedMap.site} HELD` : `${playedMap.site} LOST`;
   const wrap = endScreen.querySelector('.end-wrap');
   wrap.classList.toggle('defeat', !win);
   $('#endTitle').textContent = title;
   $('#endEyebrow').innerHTML = `<span></span>${win ? 'MISSION COMPLETE' : 'MISSION REPORT'}<span></span>`;
-  $('#endText').textContent = win
-    ? 'The droid column is scrap. The relay is still broadcasting — and the Rebellion is still listening.'
-    : 'The droid army broke through the perimeter. The relay has gone dark.';
+  $('#endText').textContent = win ? playedMap.endWin : playedMap.endLose;
   $('#endWaves').textContent = fmt(held);
   $('#endKills').textContent = fmt(game.kills);
   $('#endCredits').textContent = fmt(game.creditsEarned);
@@ -951,6 +979,7 @@ function loop(now) {
 buildCards();
 renderMenuRoster();
 updateBest(0);
+setSelectedMap(selectedMap);
 applyMuteClass();
 syncUI(true);
 

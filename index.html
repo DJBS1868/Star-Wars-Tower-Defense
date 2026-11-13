@@ -148,7 +148,7 @@
 
       <div class="hud">
         <div class="hud-left">
-          <div class="map-name"><span class="dot"></span>REBEL · OUTPOST RELAY</div>
+          <div class="map-name"><span class="dot"></span>TATOOINE · OUTPOST RELAY</div>
           <div class="wave-line">
             <span id="waveTag">WAVE 1 <i>/ 25</i></span>
             <span id="waveSub" class="wave-sub">Build phase</span>
@@ -416,8 +416,8 @@
           <span class="feature-copy">
             <span class="section-tag">CAMPAIGN</span>
             <span class="feature-title">COMMAND<br />CENTER</span>
-            <span class="feature-desc">Pick a planet, drop your defenses, and hold the line against the droid army.</span>
-            <span class="feature-map" id="hubMapLabel">REBEL · OUTPOST RELAY</span>
+            <span class="feature-desc">Pick a planet, drop your defenses, and hold the line against each world's army.</span>
+            <span class="feature-map" id="hubMapLabel">TATOOINE · OUTPOST RELAY</span>
             <span class="feature-cta">DEPLOY TO STAR MAP <i>→</i></span>
           </span>
         </button>
@@ -513,11 +513,11 @@
             <h1>SELECT A BATTLEFIELD</h1>
             <p>Choose a world. Every battlefield changes the route, the pressure, and your defense.</p>
           </div>
-          <span class="menu-side-note"><b>1</b> / 3 BATTLEFIELDS<br />SECTOR 77</span>
+          <span class="menu-side-note"><b>4</b> / 4 BATTLEFIELDS<br />SECTOR 77</span>
         </div>
 
         <div class="map-grid">
-          <button class="map-tile map-tile-available" data-map="rebel" data-planet="REBEL" data-site="OUTPOST RELAY" aria-label="Deploy to Rebel Outpost Relay">
+          <button class="map-tile map-tile-available" data-map="tatooine" data-planet="TATOOINE" data-site="OUTPOST RELAY" aria-label="Select Tatooine, Outpost Relay">
             <span class="map-art art-rebel" aria-hidden="true">
               <i class="rebel-planet"></i><b class="rebel-ship"></b><i class="rebel-star rebel-star-a"></i><i class="rebel-star rebel-star-b"></i><i class="rebel-star rebel-star-c"></i>
               <span class="map-art-tag">DEEP SPACE</span>
@@ -527,12 +527,12 @@
               <span class="map-title">OUTPOST RELAY</span>
               <span class="map-desc">A remote Rebel signal station under attack. Hold the line and keep the transmission alive.</span>
               <span class="map-chip-row"><span>25 WAVES</span><span>TATOOINE</span><span>STANDARD</span></span>
-              <span class="map-status"><b>DEPLOY</b><em>25 WAVES</em></span>
+              <span class="map-status"><b>SELECT</b><em>25 WAVES</em></span>
             </span>
             <span class="map-ready">READY</span>
           </button>
 
-          <div class="map-tile map-tile-locked" aria-label="Hoth, locked">
+          <button class="map-tile map-tile-available" data-map="hoth" data-planet="HOTH" data-site="ECHO BASE" aria-label="Select Hoth, Echo Base">
             <span class="map-art art-hoth" aria-hidden="true">
               <i class="m-sun m-sun-a"></i>
               <span class="m-ridge m-ridge-back"></span>
@@ -542,14 +542,33 @@
             <span class="map-info">
               <span class="map-kicker">REBEL ALLIANCE · HOTH SYSTEM</span>
               <span class="map-title">ECHO BASE</span>
-              <span class="map-desc">Frozen trenches and a shield generator. Complete the Outpost Relay campaign to unlock.</span>
-              <span class="map-chip-row"><span>30 WAVES</span><span>HOTH</span><span>VETERAN</span></span>
-              <span class="map-status"><b>LOCKED</b><em>CAMPAIGN</em></span>
+              <span class="map-desc">Frozen trenches, howling wind, and Imperial walkers. Hold the ice until the transports are away.</span>
+              <span class="map-chip-row"><span>25 WAVES</span><span>HOTH</span><span>VETERAN</span></span>
+              <span class="map-status"><b>SELECT</b><em>25 WAVES</em></span>
             </span>
-            <span class="map-lock">LOCKED</span>
-          </div>
+            <span class="map-ready">READY</span>
+          </button>
 
-          <div class="map-tile map-tile-locked" aria-label="Endor, locked">
+          <button class="map-tile map-tile-available" data-map="mustafar" data-planet="MUSTAFAR" data-site="LAVA REFINERY" aria-label="Select Mustafar, Lava Refinery">
+            <span class="map-art art-mustafar" aria-hidden="true">
+              <i class="m-sun m-sun-a"></i>
+              <span class="m-ridge m-ridge-back"></span>
+              <span class="m-ridge"></span>
+              <span class="lava-vein lava-vein-a"></span>
+              <span class="lava-vein lava-vein-b"></span>
+              <span class="map-art-tag">VOLCANIC WORLD</span>
+            </span>
+            <span class="map-info">
+              <span class="map-kicker">BLACK SUN · MUSTAFAR</span>
+              <span class="map-title">LAVA REFINERY</span>
+              <span class="map-desc">A captured mining refinery above the lava flows. Heavy armour and Sith enforcers guard the line.</span>
+              <span class="map-chip-row"><span>25 WAVES</span><span>MUSTAFAR</span><span>ELITE</span></span>
+              <span class="map-status"><b>SELECT</b><em>25 WAVES</em></span>
+            </span>
+            <span class="map-ready">READY</span>
+          </button>
+
+          <button class="map-tile map-tile-available" data-map="endor" data-planet="ENDOR" data-site="SHIELD BUNKER" aria-label="Select Endor, Shield Bunker">
             <span class="map-art art-endor" aria-hidden="true">
               <span class="m-ridge m-ridge-back"></span>
               <span class="m-ridge"></span>
@@ -558,12 +577,12 @@
             <span class="map-info">
               <span class="map-kicker">REBEL ALLIANCE · ENDOR</span>
               <span class="map-title">SHIELD BUNKER</span>
-              <span class="map-desc">Dense forest, narrow sightlines, and an Imperial shield bunker. Unlocks later.</span>
-              <span class="map-chip-row"><span>35 WAVES</span><span>ENDOR</span><span>ELITE</span></span>
-              <span class="map-status"><b>LOCKED</b><em>CAMPAIGN</em></span>
+              <span class="map-desc">Dense forest, narrow sightlines, and an Imperial bunker. Stop the garrison before it reaches the shield.</span>
+              <span class="map-chip-row"><span>25 WAVES</span><span>ENDOR</span><span>ELITE</span></span>
+              <span class="map-status"><b>SELECT</b><em>25 WAVES</em></span>
             </span>
-            <span class="map-lock">LOCKED</span>
-          </div>
+            <span class="map-ready">READY</span>
+          </button>
         </div>
       </main>
 

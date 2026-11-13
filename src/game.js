@@ -3,18 +3,17 @@
    ============================================================ */
 
 import {
-  TOWERS, TOWER_ORDER, TARGET_MODES, ENEMY_TYPES, TOTAL_WAVES,
-  START_CREDITS, START_LIVES, DECOR, PATH_POINTS, makeWave, waveReward,
+  TOWERS, TOWER_ORDER, TARGET_MODES, ENEMY_TYPES,
+  START_CREDITS, START_LIVES, getMap, makeWave, waveReward,
   enemyReward, towerLevel, sellValue, clamp,
 } from './data.js';
 import {
   buildBackground, drawBaseShield, drawTower, drawTowerShadow, drawRange,
   drawEnemy, drawProjectile, drawParticles, drawEffects, drawAura, drawPreview,
-  drawSpawnGlow,
+  drawSpawnGlow, getTheme,
 } from './art.js';
 
 const TAU = Math.PI * 2;
-const BASE = { x: 0.952, y: 0.60 };
 
 function angleLerp(a, b, t) {
   let d = ((b - a + Math.PI) % TAU + TAU) % TAU - Math.PI;
@@ -83,6 +82,8 @@ export class Game {
     this.baseFlash = 0;
     this.dustTimer = 0;
     this.uid = 1;
+    this.map = getMap('tatooine');
+    this.theme = getTheme(this.map.theme);
     this.reset();
     this.resize(
       canvas.clientWidth || 800,
@@ -91,9 +92,19 @@ export class Game {
     );
   }
 
+  setMap(id) {
+    const next = getMap(id);
+    if (this.map && this.map.id === next.id) return;
+    this.map = next;
+    this.theme = getTheme(next.theme);
+    this.reset();
+    if (this.w > 1) this.resize(this.w, this.h, this.dpr);
+  }
+
   reset() {
-    this.credits = START_CREDITS;
-    this.lives = START_LIVES;
+    const map = this.map || getMap('tatooine');
+    this.credits = map.startCredits ?? START_CREDITS;
+    this.lives = map.startLives ?? START_LIVES;
     this.waveNumber = 1;
     this.waveActive = false;
     this.spawnQueue = null;
@@ -127,14 +138,14 @@ export class Game {
     this.canvas.height = Math.floor(this.h * dpr);
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     this.S = clamp(Math.min(this.w / 960, this.h / 640), 0.58, 1.55);
-    this.pathPts = samplePath(PATH_POINTS, this.w, this.h);
+    this.pathPts = samplePath(this.map.path, this.w, this.h);
     let len = 0;
     for (let i = 1; i < this.pathPts.length; i++) {
       len += Math.hypot(this.pathPts[i][0] - this.pathPts[i - 1][0], this.pathPts[i][1] - this.pathPts[i - 1][1]);
     }
     this.pathLen = Math.max(1, len);
     this.spawnPoint = this.pathPts[0] || [0, 0];
-    this.bg = buildBackground(this.w, this.h, this.pathPts, this.S, Math.min(dpr, 2));
+    this.bg = buildBackground(this.w, this.h, this.pathPts, this.S, Math.min(dpr, 2), this.map);
     for (const t of this.towers) {
       t.x = t.nx * this.w;
       t.y = t.ny * this.h;
@@ -148,8 +159,8 @@ export class Game {
     if (this.started) return;
     this.started = true;
     this.phase = 'build';
-    this.credits = START_CREDITS;
-    this.lives = START_LIVES;
+    this.credits = this.map.startCredits ?? START_CREDITS;
+    this.lives = this.map.startLives ?? START_LIVES;
   }
 
   setSpeed(s) {
@@ -182,19 +193,19 @@ export class Game {
       return { ok: false, reason: 'Too close to the edge' };
     }
     if (this.distanceToPath(x, y) < this.pathWidth() / 2 + 26 * S) {
-      return { ok: false, reason: "Can't build on the droid route" };
+      return { ok: false, reason: "Can't build on the enemy route" };
     }
     const m = Math.min(this.w, this.h);
-    for (const d of DECOR) {
+    for (const d of (this.map.decor || [])) {
       const dx = d.x * this.w;
       const dy = d.y * this.h;
       const dr = d.r * m;
       if (Math.hypot(x - dx, y - dy) < dr + 24 * S) {
-        return { ok: false, reason: 'Obstructed — pick clear sand' };
+        return { ok: false, reason: 'Obstructed — pick open ground' };
       }
     }
-    const baseX = BASE.x * this.w;
-    const baseY = BASE.y * this.h;
+    const baseX = this.map.base.x * this.w;
+    const baseY = this.map.base.y * this.h;
     if (Math.hypot(x - baseX, y - baseY) < clamp(m * 0.085, 44, 96) + 16 * S) {
       return { ok: false, reason: 'Too close to the relay' };
     }
@@ -329,7 +340,7 @@ export class Game {
   startWave() {
     if (!this.started || this.paused || this.waveActive) return false;
     if (this.phase !== 'build') return false;
-    const specs = makeWave(this.waveNumber);
+    const specs = makeWave(this.waveNumber, this.map.id);
     let last = 0;
     this.spawnQueue = specs.map(s => {
       const gap = Math.max(0.08, s.delay - last);
@@ -343,12 +354,12 @@ export class Game {
     this.phase = 'wave';
     this.bossRef = null;
     this.audio.waveStart();
-    this.effects.push({ kind: 'ring', x: this.w * 0.04, y: this.h * 0.64, r: 8 * this.S, maxR: 64 * this.S, color: '#ff8a63', width: 2, life: 0.7, max: 0.7 });
+    this.effects.push({ kind: 'ring', x: this.spawnPoint[0], y: this.spawnPoint[1], r: 8 * this.S, maxR: 64 * this.S, color: '#ff8a63', width: 2, life: 0.7, max: 0.7 });
     this.callbacks.onWaveStart?.(this.waveNumber);
-    if (this.waveNumber === TOTAL_WAVES && !this.endless) {
-      this.callbacks.toast?.('Final wave — hold the relay!', 'bad');
+    if (this.waveNumber === this.map.waves && !this.endless) {
+      this.callbacks.toast?.(this.map.flavor?.final || 'Final wave — hold the relay!', 'bad');
     } else if (this.waveNumber % 10 === 0) {
-      this.callbacks.toast?.('Command droid inbound', 'bad');
+      this.callbacks.toast?.(this.map.flavor?.boss || 'Enemy commander inbound', 'bad');
     }
     return true;
   }
@@ -373,7 +384,7 @@ export class Game {
       dead: false,
       reward: enemyReward(spec.type, this.waveNumber),
       leak: def.leak,
-      isBoss: spec.type === 'boss',
+      isBoss: !!def.boss,
     };
     this.positionEnemy(e);
     this.enemies.push(e);
@@ -383,7 +394,7 @@ export class Game {
       this.audio.bossWarn();
       this.shake = Math.max(this.shake, 5);
       this.callbacks.onBoss?.();
-      this.callbacks.toast?.('Droid commander on the field', 'bad');
+      this.callbacks.toast?.(`${def.name} on the field`, 'bad');
       this.effects.push({ kind: 'ring', x: e.x, y: e.y, r: 10 * this.S, maxR: 90 * this.S, color: '#ff8a63', width: 3, life: 0.7, max: 0.7 });
     }
   }
@@ -411,9 +422,9 @@ export class Game {
     this.creditsEarned += bonus;
     this.audio.waveClear();
     this.callbacks.toast?.(`Wave ${this.waveNumber} cleared  +${bonus} credits`, 'good');
-    this.effects.push({ kind: 'ring', x: BASE.x * this.w, y: BASE.y * this.h, r: 12 * this.S, maxR: 90 * this.S, color: '#8ff0b0', width: 2, life: 0.8, max: 0.8 });
+    this.effects.push({ kind: 'ring', x: this.map.base.x * this.w, y: this.map.base.y * this.h, r: 12 * this.S, maxR: 90 * this.S, color: '#8ff0b0', width: 2, life: 0.8, max: 0.8 });
 
-    if (!this.endless && this.waveNumber >= TOTAL_WAVES) {
+    if (!this.endless && this.waveNumber >= this.map.waves) {
       this.win();
       return;
     }
@@ -443,11 +454,11 @@ export class Game {
   continueEndless() {
     this.endless = true;
     this.phase = 'build';
-    if (this.waveNumber <= TOTAL_WAVES) this.waveNumber = TOTAL_WAVES + 1;
+    if (this.waveNumber <= this.map.waves) this.waveNumber = this.map.waves + 1;
     this.lives = Math.max(this.lives, 10);
     this.selected = null;
     this.paused = false;
-    this.callbacks.toast?.('Endless mode — the droid army is endless too', 'bad');
+    this.callbacks.toast?.('Endless mode — the enemy army is endless too', 'bad');
   }
 
   /* ---------------- update ---------------- */
@@ -472,24 +483,74 @@ export class Game {
   stepSim(dt) {
     this.time += dt;
 
-    // ambient dust
+    // ambient weather
     this.dustTimer -= dt;
     if (this.dustTimer <= 0) {
-      this.dustTimer = 0.35 + Math.random() * 0.5;
-      if (this.particles.length < 260) {
-        this.particles.push({
-          x: Math.random() * this.w,
-          y: this.h * (0.25 + Math.random() * 0.7),
-          vx: (10 + Math.random() * 26) * this.S,
-          vy: (2 + Math.random() * 8) * this.S,
-          life: 3.5 + Math.random() * 4,
-          max: 7,
-          size: (0.7 + Math.random() * 1.2) * this.S,
-          color: 'rgba(255, 233, 185, 0.35)',
-          glow: false,
-          gravity: 0,
-          drag: 0.99,
-        });
+      const amb = this.theme.ambient || { mode: 'dust', color: 'rgba(255, 233, 185, 0.35)', density: 1 };
+      this.dustTimer = (0.35 + Math.random() * 0.5) / (amb.density || 1);
+      if (this.particles.length < 300) {
+        const w = this.w;
+        const h = this.h;
+        const S = this.S;
+        let p;
+        if (amb.mode === 'snow') {
+          p = {
+            x: Math.random() * w * 1.1,
+            y: -10,
+            vx: (6 + Math.random() * 18) * S,
+            vy: (26 + Math.random() * 42) * S,
+            life: 5 + Math.random() * 4,
+            max: 9,
+            size: (0.8 + Math.random() * 1.9) * S,
+            color: amb.color,
+            glow: Math.random() > 0.6,
+            gravity: 0,
+            drag: 0.998,
+          };
+        } else if (amb.mode === 'ember') {
+          p = {
+            x: Math.random() * w,
+            y: h * (0.4 + Math.random() * 0.7),
+            vx: (6 + Math.random() * 22) * S,
+            vy: -(14 + Math.random() * 34) * S,
+            life: 2 + Math.random() * 3,
+            max: 5,
+            size: (0.7 + Math.random() * 1.6) * S,
+            color: amb.color,
+            glow: true,
+            gravity: -6,
+            drag: 0.995,
+          };
+        } else if (amb.mode === 'mote') {
+          p = {
+            x: Math.random() * w,
+            y: h * (0.3 + Math.random() * 0.7),
+            vx: (4 + Math.random() * 14) * S,
+            vy: -(2 + Math.random() * 12) * S,
+            life: 3 + Math.random() * 3,
+            max: 6,
+            size: (0.7 + Math.random() * 1.3) * S,
+            color: amb.color,
+            glow: true,
+            gravity: 0,
+            drag: 0.997,
+          };
+        } else {
+          p = {
+            x: Math.random() * w,
+            y: h * (0.25 + Math.random() * 0.7),
+            vx: (10 + Math.random() * 26) * S,
+            vy: (2 + Math.random() * 8) * S,
+            life: 3.5 + Math.random() * 4,
+            max: 7,
+            size: (0.7 + Math.random() * 1.2) * S,
+            color: amb.color,
+            glow: false,
+            gravity: 0,
+            drag: 0.99,
+          };
+        }
+        this.particles.push(p);
       }
     }
 
@@ -554,8 +615,8 @@ export class Game {
     this.baseFlash = 1;
     this.shake = Math.max(this.shake, 8);
     this.audio.leak();
-    this.effects.push({ kind: 'ring', x: BASE.x * this.w, y: BASE.y * this.h, r: 20 * this.S, maxR: 105 * this.S, color: '#ff6e58', width: 3, life: 0.7, max: 0.7 });
-    this.effects.push({ kind: 'flash', x: BASE.x * this.w, y: BASE.y * this.h, r: 100 * this.S, color: 'rgba(255, 90, 70, 0.5)', life: 0.5, max: 0.5 });
+    this.effects.push({ kind: 'ring', x: this.map.base.x * this.w, y: this.map.base.y * this.h, r: 20 * this.S, maxR: 105 * this.S, color: '#ff6e58', width: 3, life: 0.7, max: 0.7 });
+    this.effects.push({ kind: 'flash', x: this.map.base.x * this.w, y: this.map.base.y * this.h, r: 100 * this.S, color: 'rgba(255, 90, 70, 0.5)', life: 0.5, max: 0.5 });
     this.callbacks.toast?.(`Relay hit!  −${e.leak} integrity`, 'bad');
     this.callbacks.onLeak?.(e.leak);
     if (this.bossRef === e) this.bossRef = null;
@@ -664,14 +725,14 @@ export class Game {
       this.audio.shot('laser');
       this.effects.push({ kind: 'flash', x: muzzle.x, y: muzzle.y, r: 14 * this.S, color: 'rgba(255, 110, 90, 0.5)', life: 0.1, max: 0.1 });
     } else if (def.attack === 'sniper') {
-      const bonus = target.type === 'boss' ? def.bossBonus : 1;
+      const bonus = ENEMY_TYPES[target.type].boss ? def.bossBonus : 1;
       const dmg = t.damage * bonus;
       this.effects.push({ kind: 'beam', x1: muzzle.x, y1: muzzle.y, x2: target.x, y2: target.y, color: '#ffce7c', width: 2.2 * this.S, life: 0.16, max: 0.16 });
       this.effects.push({ kind: 'flash', x: target.x, y: target.y, r: 22 * this.S, color: 'rgba(255, 220, 150, 0.55)', life: 0.18, max: 0.18 });
       this.damageEnemy(target, dmg, { tower: t });
       this.spark(target.x, target.y, 8, '#ffd98a', 2.8);
       this.audio.shot('sniper');
-      this.shake = Math.max(this.shake, target.type === 'boss' ? 2.5 : 0.7);
+      this.shake = Math.max(this.shake, ENEMY_TYPES[target.type].boss ? 2.5 : 0.7);
     } else if (def.attack === 'aura') {
       const R2 = (t.range * this.S) ** 2;
       let hurt = 0;
@@ -704,16 +765,17 @@ export class Game {
     this.kills++;
     this.credits += e.reward;
     this.creditsEarned += e.reward;
-    const big = e.type === 'boss' || e.type === 'tank';
+    const edef = ENEMY_TYPES[e.type];
+    const big = !!edef.boss || !!edef.heavy;
     this.audio.kill(big);
-    this.spark(e.x, e.y, big ? 14 : 7, e.type === 'scout' ? '#b4ff86' : '#ffb36b', big ? 3 : 2);
-    if (e.type === 'boss') {
+    this.spark(e.x, e.y, big ? 14 : 7, edef.boss ? '#ff8a6a' : edef.heavy ? '#ffb36b' : edef.color || '#ffb36b', big ? 3 : 2);
+    if (edef.boss) {
       this.explosion(e.x, e.y, 100 * this.S, true);
       this.shake = Math.max(this.shake, 12);
       this.effects.push({ kind: 'text', x: e.x, y: e.y - 20 * this.S, text: `+${e.reward}`, color: '#ffe6a1', size: 16 * this.S, life: 1.1, max: 1.1 });
-      this.callbacks.toast?.(`Droid commander destroyed  +${e.reward} credits`, 'good');
+      this.callbacks.toast?.(`${edef.name} destroyed  +${e.reward} credits`, 'good');
       this.bossRef = null;
-    } else if (e.type === 'tank') {
+    } else if (edef.heavy) {
       this.explosion(e.x, e.y, 26 * this.S, false);
     } else {
       this.effects.push({ kind: 'ring', x: e.x, y: e.y, r: 2, maxR: 14 * this.S, color: 'rgba(255, 190, 110, 0.7)', width: 1.2, life: 0.25, max: 0.25, alpha: 0.5 });
@@ -894,11 +956,12 @@ export class Game {
   bossInfo() {
     let boss = null;
     for (const e of this.enemies) {
-      if (e.type === 'boss' && !e.dead && (!boss || e.hp > boss.hp)) boss = e;
+      if (ENEMY_TYPES[e.type].boss && !e.dead && (!boss || e.hp > boss.hp)) boss = e;
     }
     if (!boss) return null;
+    const def = ENEMY_TYPES[boss.type];
     return {
-      name: this.waveNumber >= TOTAL_WAVES ? 'TACTICAL DROID COMMANDER' : 'DROID COMMANDER',
+      name: this.waveNumber >= this.map.waves && !this.endless ? `ELITE ${def.name.toUpperCase()}` : def.name.toUpperCase(),
       pct: clamp(boss.hp / boss.maxHp, 0, 1),
       hp: Math.max(0, Math.ceil(boss.hp)),
     };
@@ -949,7 +1012,7 @@ export class Game {
     }
 
     drawSpawnGlow(ctx, this.pathPts, this.realTime);
-    drawBaseShield(ctx, this.w, this.h, this.realTime, this.baseFlash);
+    drawBaseShield(ctx, this.w, this.h, this.realTime, this.baseFlash, this.map.base);
 
     // range circles
     if (this.selected) {

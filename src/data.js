@@ -1,5 +1,5 @@
 /* ============================================================
-   Game data — towers, enemies, waves, map
+   Game data — towers, enemies, waves, planets
    ============================================================ */
 
 export const TOTAL_WAVES = 25;
@@ -21,6 +21,59 @@ export const PATH_POINTS = [
   [0.855, 0.335],
   [0.785, 0.645],
   [0.885, 0.775],
+  [1.07, 0.60],
+];
+
+/* Hoth — a frozen trench line curling through drifts and ice ridges. */
+const HOTH_PATH = [
+  [-0.05, 0.30],
+  [0.10, 0.30],
+  [0.175, 0.60],
+  [0.32, 0.72],
+  [0.42, 0.40],
+  [0.55, 0.29],
+  [0.63, 0.64],
+  [0.50, 0.855],
+  [0.70, 0.885],
+  [0.795, 0.58],
+  [0.875, 0.31],
+  [0.945, 0.545],
+  [1.07, 0.60],
+];
+
+/* Mustafar — a mining route forced around lava channels and basalt spires. */
+const MUSTAFAR_PATH = [
+  [-0.05, 0.70],
+  [0.10, 0.70],
+  [0.16, 0.40],
+  [0.30, 0.235],
+  [0.405, 0.52],
+  [0.30, 0.775],
+  [0.455, 0.90],
+  [0.615, 0.755],
+  [0.575, 0.42],
+  [0.715, 0.215],
+  [0.845, 0.405],
+  [0.765, 0.68],
+  [0.885, 0.835],
+  [1.07, 0.60],
+];
+
+/* Endor — a narrow forest trail that doubles back on itself. */
+const ENDOR_PATH = [
+  [-0.05, 0.78],
+  [0.08, 0.78],
+  [0.14, 0.50],
+  [0.26, 0.30],
+  [0.38, 0.46],
+  [0.34, 0.70],
+  [0.48, 0.86],
+  [0.60, 0.62],
+  [0.555, 0.32],
+  [0.70, 0.16],
+  [0.82, 0.32],
+  [0.775, 0.62],
+  [0.90, 0.78],
   [1.07, 0.60],
 ];
 
@@ -52,6 +105,65 @@ export const DECOR = [
   { type: 'cactus', x: 0.795, y: 0.235, r: 0.011, seed: 197 },
   { type: 'cactus', x: 0.505, y: 0.64, r: 0.010, seed: 199 },
   { type: 'cactus', x: 0.375, y: 0.925, r: 0.010, seed: 211 },
+];
+
+const HOTH_DECOR = [
+  { type: 'rock', x: 0.055, y: 0.135, r: 0.032, seed: 11 },
+  { type: 'ice', x: 0.145, y: 0.105, r: 0.030, seed: 23 },
+  { type: 'snowdrift', x: 0.295, y: 0.115, r: 0.040, seed: 31 },
+  { type: 'ice', x: 0.475, y: 0.115, r: 0.026, seed: 41 },
+  { type: 'rock', x: 0.735, y: 0.095, r: 0.024, seed: 53 },
+  { type: 'antenna', x: 0.935, y: 0.145, r: 0.030, seed: 61 },
+  { type: 'crate', x: 0.875, y: 0.245, r: 0.014, seed: 67 },
+  { type: 'snowdrift', x: 0.955, y: 0.895, r: 0.044, seed: 71 },
+  { type: 'ice', x: 0.855, y: 0.955, r: 0.028, seed: 79 },
+  { type: 'rock', x: 0.105, y: 0.925, r: 0.030, seed: 83 },
+  { type: 'snowdrift', x: 0.305, y: 0.945, r: 0.036, seed: 89 },
+  { type: 'crate', x: 0.655, y: 0.115, r: 0.015, seed: 97 },
+  { type: 'ice', x: 0.635, y: 0.955, r: 0.024, seed: 101 },
+  { type: 'antenna', x: 0.045, y: 0.545, r: 0.026, seed: 103 },
+  { type: 'snowdrift', x: 0.495, y: 0.495, r: 0.024, seed: 107 },
+  { type: 'ice', x: 0.245, y: 0.465, r: 0.018, seed: 109 },
+];
+
+const MUSTAFAR_DECOR = [
+  { type: 'rock', x: 0.045, y: 0.115, r: 0.034, seed: 11 },
+  { type: 'basalt', x: 0.155, y: 0.105, r: 0.028, seed: 19 },
+  { type: 'lavapool', x: 0.615, y: 0.105, r: 0.038, seed: 29 },
+  { type: 'pipe', x: 0.775, y: 0.105, r: 0.034, seed: 37 },
+  { type: 'basalt', x: 0.925, y: 0.125, r: 0.030, seed: 41 },
+  { type: 'lavapool', x: 0.955, y: 0.905, r: 0.036, seed: 47 },
+  { type: 'rock', x: 0.075, y: 0.925, r: 0.030, seed: 53 },
+  { type: 'pipe', x: 0.265, y: 0.925, r: 0.028, seed: 59 },
+  { type: 'basalt', x: 0.655, y: 0.945, r: 0.026, seed: 67 },
+  { type: 'crate', x: 0.355, y: 0.105, r: 0.014, seed: 71 },
+  { type: 'crate', x: 0.405, y: 0.125, r: 0.012, seed: 73 },
+  { type: 'pipe', x: 0.505, y: 0.495, r: 0.020, seed: 79 },
+  { type: 'basalt', x: 0.925, y: 0.495, r: 0.020, seed: 83 },
+  { type: 'lavapool', x: 0.245, y: 0.545, r: 0.022, seed: 89 },
+  { type: 'rock', x: 0.66, y: 0.555, r: 0.016, seed: 97 },
+];
+
+const ENDOR_DECOR = [
+  { type: 'tree', x: 0.045, y: 0.095, r: 0.062, seed: 11 },
+  { type: 'tree', x: 0.155, y: 0.105, r: 0.050, seed: 17 },
+  { type: 'fern', x: 0.255, y: 0.115, r: 0.020, seed: 19 },
+  { type: 'tree', x: 0.465, y: 0.105, r: 0.058, seed: 23 },
+  { type: 'tree', x: 0.585, y: 0.105, r: 0.046, seed: 29 },
+  { type: 'fern', x: 0.665, y: 0.115, r: 0.018, seed: 31 },
+  { type: 'tree', x: 0.775, y: 0.105, r: 0.052, seed: 37 },
+  { type: 'bunker', x: 0.915, y: 0.145, r: 0.040, seed: 41 },
+  { type: 'tree', x: 0.965, y: 0.925, r: 0.058, seed: 43 },
+  { type: 'fern', x: 0.875, y: 0.955, r: 0.022, seed: 47 },
+  { type: 'log', x: 0.075, y: 0.945, r: 0.036, seed: 53 },
+  { type: 'tree', x: 0.215, y: 0.945, r: 0.048, seed: 59 },
+  { type: 'fern', x: 0.335, y: 0.925, r: 0.020, seed: 61 },
+  { type: 'tree', x: 0.655, y: 0.945, r: 0.044, seed: 67 },
+  { type: 'fern', x: 0.745, y: 0.935, r: 0.018, seed: 71 },
+  { type: 'fern', x: 0.045, y: 0.565, r: 0.020, seed: 73 },
+  { type: 'tree', x: 0.235, y: 0.475, r: 0.040, seed: 79 },
+  { type: 'fern', x: 0.725, y: 0.475, r: 0.018, seed: 83 },
+  { type: 'log', x: 0.925, y: 0.585, r: 0.030, seed: 89 },
 ];
 
 /* ---------------- towers ---------------- */
@@ -206,58 +318,224 @@ export function sellValue(tower) {
 
 /* ---------------- enemies ---------------- */
 
+/* Every planet fields its own army. `body` selects the canvas silhouette,
+   `palette` recolors it, and short/boss/heavy drive the UI and combat rules. */
 export const ENEMY_TYPES = {
+  /* —— Tatooine: Separatist droid army —— */
   droid: {
-    name: 'B1 Battle Droid',
-    hp: 1,
-    speed: 67,
-    radius: 11,
-    reward: 1,
-    leak: 1,
-    armor: 0,
-    gap: 0.7,
+    name: 'B1 Battle Droid', short: 'B1', body: 'droid',
+    hp: 1, speed: 67, radius: 11, reward: 1, leak: 1, armor: 0, gap: 0.7,
     color: '#c8a46a',
   },
   scout: {
-    name: 'STAP Scout',
-    hp: 0.5,
-    speed: 124,
-    radius: 8.5,
-    reward: 1,
-    leak: 1,
-    armor: 0,
-    gap: 0.46,
+    name: 'STAP Scout', short: 'STAP', body: 'speeder', palette: 'stap',
+    hp: 0.5, speed: 124, radius: 8.5, reward: 1, leak: 1, armor: 0, gap: 0.46,
     color: '#8a9a8e',
   },
   tank: {
-    name: 'Super Battle Droid',
-    hp: 4.4,
-    speed: 43,
-    radius: 15,
-    reward: 2.4,
-    leak: 2,
-    armor: 2,
-    gap: 1.15,
-    color: '#9b5a44',
+    name: 'Super Battle Droid', short: 'B2', body: 'superdroid', palette: 'b2',
+    hp: 4.4, speed: 43, radius: 15, reward: 2.4, leak: 2, armor: 2, gap: 1.15,
+    heavy: true, color: '#9b5a44',
   },
   boss: {
-    name: 'Droid Commander',
-    hp: 16,
-    speed: 32,
-    radius: 27,
-    reward: 22,
-    leak: 8,
-    armor: 4,
-    gap: 1.4,
+    name: 'Droid Commander', short: 'CMD', body: 'droidboss', boss: true,
+    hp: 16, speed: 32, radius: 27, reward: 22, leak: 8, armor: 4, gap: 1.4,
     color: '#7c5e4d',
+  },
+
+  /* —— Hoth: Imperial cold-weather assault —— */
+  snowtrooper: {
+    name: 'Snowtrooper', short: 'SNOW', body: 'trooper', palette: 'snow',
+    hp: 1.15, speed: 62, radius: 11, reward: 1.1, leak: 1, armor: 0, gap: 0.68,
+    color: '#dce8ee',
+  },
+  probe: {
+    name: 'Probe Droid', short: 'PROBE', body: 'probe', palette: 'probe',
+    hp: 0.55, speed: 138, radius: 8.5, reward: 1.1, leak: 1, armor: 0, gap: 0.42,
+    color: '#93b6c2',
+  },
+  atst: {
+    name: 'AT-ST Walker', short: 'AT-ST', body: 'walker', palette: 'hoth',
+    hp: 5.2, speed: 40, radius: 16, reward: 2.8, leak: 2, armor: 3, gap: 1.2,
+    heavy: true, color: '#9aa9ad',
+  },
+  atat: {
+    name: 'AT-AT Walker', short: 'AT-AT', body: 'atat', boss: true,
+    hp: 20, speed: 30, radius: 28, reward: 26, leak: 9, armor: 5, gap: 1.6,
+    color: '#aebcc0',
+  },
+
+  /* —— Mustafar: Black Sun mining force —— */
+  magma: {
+    name: 'Magma Trooper', short: 'MAGMA', body: 'trooper', palette: 'magma',
+    hp: 1.25, speed: 58, radius: 11.5, reward: 1.2, leak: 1, armor: 1, gap: 0.72,
+    color: '#b8563d',
+  },
+  skitter: {
+    name: 'Lava Skitter', short: 'SKIT', body: 'skitter', palette: 'lava',
+    hp: 0.5, speed: 132, radius: 8, reward: 1, leak: 1, armor: 0, gap: 0.38,
+    color: '#ff8a3d',
+  },
+  miner: {
+    name: 'Mining Droid', short: 'MINER', body: 'superdroid', palette: 'mining',
+    hp: 5.6, speed: 38, radius: 17, reward: 3, leak: 2, armor: 4, gap: 1.25,
+    heavy: true, color: '#8a5a3a',
+  },
+  sith: {
+    name: 'Sith Enforcer', short: 'SITH', body: 'sith', boss: true,
+    hp: 24, speed: 34, radius: 25, reward: 28, leak: 10, armor: 4, gap: 1.5,
+    color: '#d6403a',
+  },
+
+  /* —— Endor: Imperial forest garrison —— */
+  stormtrooper: {
+    name: 'Stormtrooper', short: 'STORM', body: 'trooper', palette: 'storm',
+    hp: 1.1, speed: 64, radius: 11, reward: 1.05, leak: 1, armor: 1, gap: 0.65,
+    color: '#eef1ef',
+  },
+  biker: {
+    name: 'Scout Trooper', short: 'BIKE', body: 'speeder', palette: 'biker',
+    hp: 0.55, speed: 142, radius: 9, reward: 1.05, leak: 1, armor: 0, gap: 0.36,
+    color: '#d9dee0',
+  },
+  commando: {
+    name: 'Storm Commando', short: 'CMDO', body: 'trooper', palette: 'commando',
+    hp: 5.2, speed: 44, radius: 14, reward: 2.7, leak: 2, armor: 3, gap: 1.1,
+    heavy: true, color: '#4c5157',
+  },
+  walkerboss: {
+    name: 'AT-ST Commander', short: 'AT-ST', body: 'walker', palette: 'commander', boss: true,
+    hp: 22, speed: 31, radius: 24, reward: 26, leak: 9, armor: 5, gap: 1.5,
+    color: '#8b969b',
   },
 };
 
 const BASE_HP = 14;
 const HP_GROWTH = 1.166;
 
-export function makeWave(wave) {
-  const growth = Math.pow(HP_GROWTH, wave - 1);
+/* ---------------- planets ---------------- */
+
+/* Each battlefield defines its own route, set dressing, army roster and
+   wave pacing, so every planet plays differently. */
+export const MAPS = {
+  tatooine: {
+    id: 'tatooine',
+    planet: 'TATOOINE',
+    site: 'OUTPOST RELAY',
+    region: 'DEEP SPACE',
+    kicker: 'REBEL ALLIANCE · OUTER RIM',
+    desc: 'A remote Rebel signal station under attack. Hold the line and keep the transmission alive.',
+    tag: 'DESERT WORLD',
+    difficulty: 'STANDARD',
+    theme: 'desert',
+    waves: 25,
+    startCredits: 500,
+    startLives: 20,
+    hpBase: BASE_HP,
+    hpGrowth: HP_GROWTH,
+    base: { x: 0.952, y: 0.60 },
+    path: PATH_POINTS,
+    decor: DECOR,
+    roster: { line: 'droid', fast: 'scout', heavy: 'tank', boss: 'boss' },
+    mix: { lineRate: 0.9, fastRate: 0.58, heavyStart: 6, heavyRate: 0.45, fastStart: 3 },
+    flavor: { boss: 'Droid commander on the field', final: 'Final wave — hold the relay!' },
+    endWin: 'The droid column is scrap. The relay is still broadcasting — and the Rebellion is still listening.',
+    endLose: 'The droid army broke through the perimeter. The relay has gone dark.',
+    chips: ['25 WAVES', 'TATOOINE', 'STANDARD'],
+    accent: '#f4c14d',
+  },
+  hoth: {
+    id: 'hoth',
+    planet: 'HOTH',
+    site: 'ECHO BASE',
+    region: 'ICE WORLD',
+    kicker: 'REBEL ALLIANCE · HOTH SYSTEM',
+    desc: 'Frozen trenches, howling wind, and Imperial walkers. Hold the ice until the transports are away.',
+    tag: 'ICE WORLD',
+    difficulty: 'VETERAN',
+    theme: 'ice',
+    waves: 25,
+    startCredits: 520,
+    startLives: 18,
+    hpBase: 15,
+    hpGrowth: 1.174,
+    base: { x: 0.952, y: 0.60 },
+    path: HOTH_PATH,
+    decor: HOTH_DECOR,
+    roster: { line: 'snowtrooper', fast: 'probe', heavy: 'atst', boss: 'atat' },
+    mix: { lineRate: 0.8, fastRate: 0.7, heavyStart: 5, heavyRate: 0.5, fastStart: 2 },
+    flavor: { boss: 'AT-AT walker inbound — focus fire!', final: 'Final wave — the walkers are coming!' },
+    endWin: 'The last walker is down in the snow. Echo Base holds, and the transports are clear.',
+    endLose: 'The shield generator is gone. Imperial walkers overrun the frozen trenches.',
+    chips: ['25 WAVES', 'HOTH', 'VETERAN'],
+    accent: '#9bd8ec',
+  },
+  mustafar: {
+    id: 'mustafar',
+    planet: 'MUSTAFAR',
+    site: 'LAVA REFINERY',
+    region: 'VOLCANIC',
+    kicker: 'BLACK SUN · MUSTAFAR',
+    desc: 'A captured mining refinery above the lava flows. Heavy armour and Sith enforcers guard the line.',
+    tag: 'VOLCANIC WORLD',
+    difficulty: 'ELITE',
+    theme: 'lava',
+    waves: 25,
+    startCredits: 560,
+    startLives: 16,
+    hpBase: 16,
+    hpGrowth: 1.18,
+    base: { x: 0.952, y: 0.60 },
+    path: MUSTAFAR_PATH,
+    decor: MUSTAFAR_DECOR,
+    roster: { line: 'magma', fast: 'skitter', heavy: 'miner', boss: 'sith' },
+    mix: { lineRate: 0.72, fastRate: 0.62, heavyStart: 5, heavyRate: 0.58, fastStart: 3 },
+    flavor: { boss: 'Sith enforcer has entered the refinery', final: 'Final wave — the Sith comes for the relay!' },
+    endWin: 'The refinery is quiet. Lava still flows, but the Sith enforcer is ash on the catwalk.',
+    endLose: 'The Sith cut through the refinery. The relay is slag in the lava channels.',
+    chips: ['25 WAVES', 'MUSTAFAR', 'ELITE'],
+    accent: '#ff8a45',
+  },
+  endor: {
+    id: 'endor',
+    planet: 'ENDOR',
+    site: 'SHIELD BUNKER',
+    region: 'FOREST MOON',
+    kicker: 'REBEL ALLIANCE · ENDOR',
+    desc: 'Dense forest, narrow sightlines, and an Imperial bunker. Stop the garrison before it reaches the shield.',
+    tag: 'FOREST MOON',
+    difficulty: 'ELITE',
+    theme: 'forest',
+    waves: 25,
+    startCredits: 540,
+    startLives: 20,
+    hpBase: 15,
+    hpGrowth: 1.176,
+    base: { x: 0.952, y: 0.60 },
+    path: ENDOR_PATH,
+    decor: ENDOR_DECOR,
+    roster: { line: 'stormtrooper', fast: 'biker', heavy: 'commando', boss: 'walkerboss' },
+    mix: { lineRate: 1.05, fastRate: 0.6, heavyStart: 7, heavyRate: 0.42, fastStart: 4 },
+    flavor: { boss: 'AT-ST commander is stomping through the trees', final: 'Final wave — the whole garrison is coming!' },
+    endWin: 'The bunker is sealed and the forest is quiet. The shield generator is safe.',
+    endLose: 'The Imperial garrison overran the bunker. The shield generator is lost.',
+    chips: ['25 WAVES', 'ENDOR', 'ELITE'],
+    accent: '#9fd86a',
+  },
+};
+
+export const MAP_ORDER = ['tatooine', 'hoth', 'mustafar', 'endor'];
+
+export function getMap(id) {
+  return MAPS[id] || MAPS.tatooine;
+}
+
+/* ---------------- waves ---------------- */
+
+export function makeWave(wave, mapId = 'tatooine') {
+  const map = getMap(mapId);
+  const growth = Math.pow(map.hpGrowth, wave - 1);
+  const mix = map.mix;
   const specs = [];
   let delay = 0.6;
   const push = (type, count, hpMul = 1, gapOverride = 0) => {
@@ -267,7 +545,7 @@ export function makeWave(wave) {
       delay += gap;
       specs.push({
         type,
-        hp: Math.round(BASE_HP * growth * def.hp * hpMul),
+        hp: Math.round(map.hpBase * growth * def.hp * hpMul),
         speed: def.speed,
         delay,
       });
@@ -275,54 +553,54 @@ export function makeWave(wave) {
     delay += 0.35;
   };
 
-  const bossWave = wave % 10 === 0 || wave === TOTAL_WAVES;
-  const isFinal = wave === TOTAL_WAVES;
+  const bossWave = wave % 10 === 0 || wave === map.waves;
+  const isFinal = wave === map.waves;
 
-  let droidCount = Math.round(6 + wave * 0.9);
-  let scoutCount = wave >= 3 ? Math.max(1, Math.round((wave - 1) * 0.58)) : 0;
-  let tankCount = wave >= 6 ? Math.max(1, Math.floor((wave - 5) * 0.45)) : 0;
+  let lineCount = Math.round((6 + wave * 0.9) * mix.lineRate);
+  let fastCount = wave >= mix.fastStart ? Math.max(1, Math.round((wave - 1) * mix.fastRate)) : 0;
+  let heavyCount = wave >= mix.heavyStart ? Math.max(1, Math.floor((wave - mix.heavyStart + 1) * mix.heavyRate)) : 0;
   if (bossWave) {
-    droidCount = Math.round(droidCount * 0.55);
-    scoutCount = Math.round(scoutCount * 0.5);
-    tankCount = Math.max(1, Math.round(tankCount * 0.5));
+    lineCount = Math.round(lineCount * 0.55);
+    fastCount = Math.round(fastCount * 0.5);
+    heavyCount = Math.max(1, Math.round(heavyCount * 0.5));
   }
 
-  // Opening skirmishers (scouts) on later waves.
-  if (scoutCount) push('scout', Math.min(scoutCount, Math.ceil(scoutCount * 0.45)), 1, 0.38);
+  const roster = map.roster;
 
-  // Battle droid blocks with small pauses between squads.
-  const squads = Math.max(1, Math.ceil(droidCount / 9));
-  const perSquad = Math.ceil(droidCount / squads);
+  // Opening skirmishers.
+  const openingFast = fastCount ? Math.min(fastCount, Math.ceil(fastCount * 0.45)) : 0;
+  if (openingFast) push(roster.fast, openingFast, 1, Math.max(0.28, ENEMY_TYPES[roster.fast].gap * 0.82));
+
+  // Main line squads with short pauses between them.
+  const squads = Math.max(1, Math.ceil(lineCount / 9));
+  const perSquad = Math.ceil(lineCount / squads);
   for (let s = 0; s < squads; s++) {
-    const count = Math.min(perSquad, droidCount - s * perSquad);
-    if (count > 0) push('droid', count, 1);
+    const count = Math.min(perSquad, lineCount - s * perSquad);
+    if (count > 0) push(roster.line, count, 1);
     if (s < squads - 1) delay += 0.55;
   }
 
-  // Heavy units.
-  if (tankCount) {
-    const heavyDelay = delay;
-    delay = heavyDelay + 0.2;
-    push('tank', tankCount, 1, 0.9);
+  // Heavy armour.
+  if (heavyCount) {
+    delay += 0.2;
+    push(roster.heavy, heavyCount, 1, Math.max(0.8, ENEMY_TYPES[roster.heavy].gap * 0.86));
   }
 
-  // Remaining fast scouts harass the back line.
-  if (scoutCount) {
-    const rest = scoutCount - Math.min(scoutCount, Math.ceil(scoutCount * 0.45));
-    if (rest > 0) push('scout', rest, 1, 0.36);
-  }
+  // Remaining fast units harass the back line.
+  const restFast = fastCount - openingFast;
+  if (restFast > 0) push(roster.fast, restFast, 1, Math.max(0.28, ENEMY_TYPES[roster.fast].gap * 0.8));
 
   if (bossWave) {
     const bossMul = isFinal ? 1.45 : 1;
-    push('boss', isFinal ? 2 : 1, bossMul, 1.6);
-    if (isFinal) push('tank', 4, 1.35, 1.0);
+    push(roster.boss, isFinal ? 2 : 1, bossMul, 1.6);
+    if (isFinal) push(roster.heavy, 3, 1.3, 1.0);
   }
 
   return specs;
 }
 
-export function waveTotal(wave) {
-  return makeWave(wave).length;
+export function waveTotal(wave, mapId = 'tatooine') {
+  return makeWave(wave, mapId).length;
 }
 
 export function waveReward(wave) {
