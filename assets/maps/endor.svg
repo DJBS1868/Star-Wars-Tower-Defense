@@ -60,5 +60,18 @@
   </g>
   <path fill="#e7c86d" d="M679 290h5v13h-5z" opacity=".9"/>
   <path fill="none" stroke="#c6d28a" stroke-width="3" stroke-opacity=".68" d="M0 342q146-23 266 1t239-1q184-29 455 1"/>
+  <!-- Bark grain, bunker vents, trail stones, and layered fern fronds. -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M27 81q13 28 2 62m23-112q-9 37 2 75m27-93q-8 43 2 84m811-54q-11 38 1 77m22-95q-8 43 4 81m-60-42q-10 38 0 74" stroke="#b08a5b" stroke-width="2" opacity=".32"/>
+    <path d="M627 237h18m12 0h18m12 0h18m12 0h14M626 249v12m128-12v12m-128 22h7m128 0h7" stroke="#c0bd91" stroke-width="2" opacity=".58"/>
+    <path d="M635 286h12m60 0h12m-84 10h12m62 0h12" stroke="#8eaa78" stroke-width="2" opacity=".72"/>
+    <path d="M327 379l10-4m-2 12 13-5m184-45 8-3m13 8 10-4m-281 31 7-3m326-36 9-3" stroke="#d5c28a" stroke-width="3" opacity=".58"/>
+  </g>
+  <g fill="#416b45" stroke="#2b4934" stroke-width="1.5" stroke-linejoin="round">
+    <path d="M49 411q-3-31-24-45 19 7 28 25-2-26 13-40-7 22-2 39 8-17 26-21-19 12-24 34 15-13 34-10-25 7-35 22z"/>
+    <path d="M895 412q-2-29-21-43 18 7 25 23-1-24 13-37-7 21-2 37 8-16 24-19-19 11-24 32 14-12 30-8-23 6-33 20z"/>
+    <path d="M191 418q-2-21-17-31 14 5 20 17 0-19 11-29-5 16-1 29 7-12 21-14-15 9-19 25 11-9 24-6-18 5-26 17z"/>
+  </g>
+  <g fill="#bca66c" opacity=".7"><ellipse cx="350" cy="391" rx="8" ry="3"/><ellipse cx="577" cy="370" rx="6" ry="2.5"/><ellipse cx="745" cy="398" rx="9" ry="3"/><ellipse cx="286" cy="345" rx="5" ry="2"/></g>
   <g fill="#d5cb9a" opacity=".7"><circle cx="317" cy="335" r="2"/><circle cx="542" cy="322" r="1.7"/><circle cx="575" cy="344" r="1.4"/><circle cx="296" cy="364" r="1.3"/></g>
 </svg>
