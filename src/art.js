@@ -3133,10 +3133,9 @@ export function drawEnemy(ctx, e, time, S) {
   else if (body === 'probe') drawProbeBody(ctx, e, time);
   else if (body === 'atst') drawAtstBody(ctx, e, time);
   else if (body === 'atat') drawAtAtBody(ctx, e, time);
-  else if (body === 'magmatrooper') drawMagmaTrooperBody(ctx, e, time);
-  else if (body === 'skitter') drawSkitterBody(ctx, e, time);
-  else if (body === 'miningdroid') drawMiningDroidBody(ctx, e, time);
-  else if (body === 'sith') drawSithBody(ctx, e, time);
+  else if (body === 'xandank') drawXandankBody(ctx, e, time);
+  else if (body === 'mustafarian') drawMustafarianBody(ctx, e, time);
+  else if (body === 'magmabeast') drawMagmaBeastBody(ctx, e, time);
   else if (body === 'ewok') drawEwokBody(ctx, e, time);
   else if (body === 'boarwolf') drawBoarWolfBody(ctx, e, time);
   else if (body === 'gorax') drawGoraxBody(ctx, e, time);

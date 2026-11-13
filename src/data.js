@@ -383,26 +383,21 @@ export const ENEMY_TYPES = {
     color: '#d9ecff', fx: '#bfe9ff',
   },
 
-  /* —— Mustafar: Black Sun mining force —— */
-  magma: {
-    name: 'Magma Trooper', short: 'MAGMA', body: 'magmatrooper',
-    hp: 1.25, speed: 58, radius: 11.5, reward: 1.2, leak: 1, armor: 1, gap: 0.72,
-    color: '#b8563d',
+  /* —— Mustafar: native lava-field creatures and their masters —— */
+  xandank: {
+    name: 'Xandank', short: 'XAND', body: 'xandank',
+    hp: 0.7, speed: 124, radius: 10, reward: 1, leak: 1, armor: 1, gap: 0.4,
+    color: '#c34a30', fx: '#ff8a3d',
   },
-  skitter: {
-    name: 'Lava Skitter', short: 'SKIT', body: 'skitter', palette: 'lava',
-    hp: 0.5, speed: 132, radius: 8, reward: 1, leak: 1, armor: 0, gap: 0.38,
-    color: '#ff8a3d',
+  mustafarian: {
+    name: 'Mustafarian', short: 'MUST', body: 'mustafarian',
+    hp: 4.8, speed: 46, radius: 15.5, reward: 2.7, leak: 2, armor: 4, gap: 1.05,
+    heavy: true, color: '#85817a', fx: '#ff7a2a',
   },
-  miner: {
-    name: 'Mining Droid', short: 'MINER', body: 'miningdroid',
-    hp: 5.6, speed: 38, radius: 17, reward: 3, leak: 2, armor: 4, gap: 1.25,
-    heavy: true, color: '#8a5a3a',
-  },
-  sith: {
-    name: 'Sith Enforcer', short: 'SITH', body: 'sith', boss: true,
-    hp: 24, speed: 34, radius: 25, reward: 28, leak: 10, armor: 4, gap: 1.5,
-    color: '#d6403a',
+  magmabeast: {
+    name: 'Magma Beast', short: 'BEAST', body: 'magmabeast', boss: true,
+    hp: 32, speed: 24, radius: 34, reward: 42, leak: 14, armor: 8, gap: 1.8,
+    color: '#ff6a1e', fx: '#ffc06a',
   },
 
   /* —— Endor: forest creatures —— */
@@ -496,7 +491,7 @@ export const MAPS = {
     site: 'LAVA REFINERY',
     region: 'MUSTAFAR',
     kicker: 'BLACK SUN · MUSTAFAR',
-    desc: 'A captured mining refinery above the lava flows. Heavy armour and Sith enforcers guard the line.',
+    desc: 'A captured mining refinery above the lava flows. Xandank packs prowl the black basalt, heat-armoured Mustafarians guard the catwalks, and a Magma Beast stirs in the deep vents.',
     tag: 'MUSTAFAR',
     difficulty: 'ELITE',
     theme: 'lava',
@@ -508,11 +503,15 @@ export const MAPS = {
     base: { x: 0.952, y: 0.60 },
     path: MUSTAFAR_PATH,
     decor: MUSTAFAR_DECOR,
-    roster: { line: 'magma', fast: 'skitter', heavy: 'miner', boss: 'sith' },
-    mix: { lineRate: 0.72, fastRate: 0.62, heavyStart: 5, heavyRate: 0.58, fastStart: 3 },
-    flavor: { boss: 'Sith enforcer has entered the refinery', final: 'Final wave — the Sith comes for the relay!' },
-    endWin: 'The refinery is quiet. Lava still flows, but the Sith enforcer is ash on the catwalk.',
-    endLose: 'The Sith cut through the refinery. The relay is slag in the lava channels.',
+    roster: { line: 'xandank', fast: 'xandank', heavy: 'mustafarian', boss: 'magmabeast' },
+    lineSwap: { wave: 9, type: 'mustafarian' },
+    mix: { lineRate: 1.0, fastRate: 0.55, heavyStart: 8, heavyRate: 0.5, fastStart: 3 },
+    bossEvery: 0,
+    finalBossCount: 1,
+    finalBossMul: 1.45,
+    flavor: { boss: 'Heat-armoured Mustafarians hold the refinery line', final: 'Final wave — the Magma Beast has risen from the lava!' },
+    endWin: 'The Magma Beast cools into black rock and the refinery falls silent. The lava still glows, but Mustafar is yours.',
+    endLose: 'The Magma Beast broke the relay line. The refinery burns, and the lava takes the rest.',
     chips: ['25 WAVES', 'MUSTAFAR', 'ELITE'],
     accent: '#ff8a45',
   },
@@ -590,6 +589,7 @@ export function makeWave(wave, mapId = 'tatooine') {
   }
 
   const roster = map.roster;
+  const lineType = map.lineSwap && wave >= map.lineSwap.wave ? map.lineSwap.type : roster.line;
 
   // Opening skirmishers.
   const openingFast = fastCount ? Math.min(fastCount, Math.ceil(fastCount * 0.45)) : 0;
@@ -600,7 +600,7 @@ export function makeWave(wave, mapId = 'tatooine') {
   const perSquad = Math.ceil(lineCount / squads);
   for (let s = 0; s < squads; s++) {
     const count = Math.min(perSquad, lineCount - s * perSquad);
-    if (count > 0) push(roster.line, count, 1);
+    if (count > 0) push(lineType, count, 1);
     if (s < squads - 1) delay += 0.55;
   }
 
