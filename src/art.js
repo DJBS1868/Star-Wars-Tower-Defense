@@ -589,11 +589,46 @@ function drawTerrainDetail(ctx, w, h, S, rng, pathPts, theme) {
       const y = rng() * h;
       if (distanceToPath(x, y, pathPts) < 46 * S) continue;
       const rx = (16 + rng() * 42) * S;
-      ctx.fillStyle = `rgba(120, 156, 70, ${0.05 + rng() * 0.09})`;
+      const moss = ctx.createRadialGradient(x, y, 0, x, y, rx);
+      moss.addColorStop(0, `rgba(139, 165, 77, ${0.12 + rng() * 0.08})`);
+      moss.addColorStop(0.62, 'rgba(86, 119, 53, 0.08)');
+      moss.addColorStop(1, 'rgba(62, 91, 43, 0)');
+      ctx.fillStyle = moss;
       ctx.beginPath();
-      ctx.ellipse(x, y, rx, rx * 0.5, rng() * TAU, 0, TAU);
+      ctx.ellipse(x, y, rx, rx * (0.38 + rng() * 0.2), rng() * TAU, 0, TAU);
       ctx.fill();
     }
+    // Fallen leaves and root-like traces add scale without muddying the route.
+    for (let i = 0; i < 72; i++) {
+      const x = rng() * w;
+      const y = rng() * h;
+      if (distanceToPath(x, y, pathPts) < 34 * S) continue;
+      const a = rng() * TAU;
+      const len = (2.2 + rng() * 5.2) * S;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(a);
+      ctx.fillStyle = rng() > 0.5 ? 'rgba(190, 151, 78, 0.25)' : 'rgba(92, 119, 49, 0.30)';
+      ctx.beginPath();
+      ctx.ellipse(0, 0, len, (0.7 + rng() * 0.55) * S, 0, 0, TAU);
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.save();
+    ctx.lineCap = 'round';
+    for (let i = 0; i < 24; i++) {
+      const x = rng() * w;
+      const y = rng() * h;
+      if (distanceToPath(x, y, pathPts) < 58 * S) continue;
+      const len = (12 + rng() * 28) * S;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.quadraticCurveTo(x + len * 0.35, y + (rng() - 0.5) * 9 * S, x + len, y + (rng() - 0.5) * 15 * S);
+      ctx.strokeStyle = `rgba(35, 54, 29, ${0.12 + rng() * 0.12})`;
+      ctx.lineWidth = (1 + rng() * 1.8) * S;
+      ctx.stroke();
+    }
+    ctx.restore();
   }
 }
 
@@ -5419,27 +5454,30 @@ function drawBoarWolfBody(ctx, e, time) {
   const gait = Math.sin(time * 8 + p) * 1.5;
   // Four sturdy legs under a broad, muscular body.
   ctx.lineCap = 'round';
-  ctx.strokeStyle = '#566365';
-  ctx.lineWidth = 3.4;
+  ctx.strokeStyle = '#424b4e';
+  ctx.lineWidth = 4.1;
   ctx.beginPath();
   ctx.moveTo(-7, -5); ctx.lineTo(-10 + gait, -10); ctx.lineTo(-8 + gait, -13);
   ctx.moveTo(5, -5); ctx.lineTo(8 - gait, -10); ctx.lineTo(11 - gait, -12);
   ctx.moveTo(-7, 5); ctx.lineTo(-10 - gait, 10); ctx.lineTo(-8 - gait, 13);
   ctx.moveTo(5, 5); ctx.lineTo(8 + gait, 10); ctx.lineTo(11 + gait, 12);
   ctx.stroke();
-  ctx.fillStyle = '#41494b';
+  ctx.fillStyle = '#30383b';
   for (const [x, y] of [[-8 + gait, -13], [11 - gait, -12], [-8 - gait, 13], [11 + gait, 12]]) {
-    ctx.beginPath(); ctx.ellipse(x, y, 2.5, 1.5, 0, 0, TAU); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(x, y, 3.2, 1.9, 0, 0, TAU); ctx.fill();
   }
   const fur = ctx.createLinearGradient(-7, -8, 8, 8);
-  fur.addColorStop(0, '#788183'); fur.addColorStop(0.52, '#596368'); fur.addColorStop(1, '#434c4f');
+  fur.addColorStop(0, '#697477'); fur.addColorStop(0.52, '#515b5f'); fur.addColorStop(1, '#394346');
   ctx.fillStyle = fur;
   ctx.beginPath();
   ctx.ellipse(-1, 0, 11.5, 8.3, 0, 0, TAU);
   ctx.fill();
-  ctx.strokeStyle = 'rgba(207, 218, 202, 0.82)'; ctx.lineWidth = 1.35; ctx.stroke();
-  ctx.strokeStyle = 'rgba(231, 226, 194, 0.55)'; ctx.lineWidth = 0.9;
+  ctx.strokeStyle = 'rgba(207, 218, 202, 0.54)'; ctx.lineWidth = 1.15; ctx.stroke();
+  ctx.strokeStyle = 'rgba(231, 226, 194, 0.42)'; ctx.lineWidth = 0.9;
   ctx.beginPath(); ctx.arc(-1, 0, 10.3, -2.55, -0.75); ctx.stroke();
+  // Heavy shoulder blends into the thick neck and forward-set boar muzzle.
+  ctx.fillStyle = '#4b5659';
+  ctx.beginPath(); ctx.ellipse(5, 0, 6, 7.5, 0, 0, TAU); ctx.fill();
   // Thick neck, angular muzzle and small dark mane ridge.
   ctx.fillStyle = '#667276';
   ctx.beginPath();
@@ -5464,7 +5502,7 @@ function drawBoarWolfBody(ctx, e, time) {
   ctx.beginPath(); ctx.arc(8.7, -3.2, 0.8, 0, TAU); ctx.fill();
   ctx.fillStyle = '#202528';
   ctx.beginPath(); ctx.arc(9, -3.2, 0.36, 0, TAU); ctx.fill();
-  ctx.strokeStyle = 'rgba(190, 199, 198, 0.28)'; ctx.lineWidth = 0.7;
+  ctx.strokeStyle = 'rgba(190, 199, 198, 0.22)'; ctx.lineWidth = 0.8;
   ctx.beginPath(); ctx.arc(-1, -0.5, 8.5, -2.6, -0.7); ctx.stroke();
 }
 
