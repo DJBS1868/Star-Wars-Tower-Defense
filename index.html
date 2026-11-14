@@ -759,15 +759,23 @@
       <div class="eyebrow">SYSTEM CONFIG</div>
       <h2>SETTINGS</h2>
       <p>Tune the outpost to your preference.</p>
-      <button id="settingsSoundBtn" class="settings-row sound-toggle" aria-label="Toggle sound">
+      <button id="settingsSoundBtn" class="settings-row sound-toggle" aria-label="Toggle all audio">
         <span class="settings-row-icon" aria-hidden="true">
           <svg class="ico-sound" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5c1.2 1 1.8 2.2 1.8 3.5s-.6 2.5-1.8 3.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
           <svg class="ico-muted" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M17 9l5 6m0-6l-5 6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
         </span>
-        <span class="settings-row-copy"><b>SOUND</b><small>Music and combat effects</small></span>
+        <span class="settings-row-copy"><b>ALL AUDIO</b><small>Quick mute for music and effects</small></span>
         <span class="settings-switch" aria-hidden="true"><i></i></span>
         <span class="sound-state">ON</span>
       </button>
+      <div class="volume-control">
+        <div class="volume-heading"><label for="musicVolume">MUSIC &amp; AMBIENCE</label><output id="musicVolumeValue" for="musicVolume">70%</output></div>
+        <input id="musicVolume" type="range" min="0" max="100" value="70" aria-label="Music and ambience volume" />
+      </div>
+      <div class="volume-control">
+        <div class="volume-heading"><label for="effectsVolume">GAME SOUNDS</label><output id="effectsVolumeValue" for="effectsVolume">100%</output></div>
+        <input id="effectsVolume" type="range" min="0" max="100" value="100" aria-label="Game sounds volume" />
+      </div>
       <div class="modal-actions">
         <button id="settingsCloseBtn" class="btn-primary">DONE</button>
       </div>

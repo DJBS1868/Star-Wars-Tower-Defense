@@ -688,6 +688,25 @@ function toggleSound() {
 }
 document.querySelectorAll('.sound-toggle').forEach((btn) => btn.addEventListener('click', toggleSound));
 
+function bindVolumeSlider(id, outputId, category, initialVolume) {
+  const slider = $(`#${id}`);
+  const output = $(`#${outputId}`);
+  const initialPercent = Math.round(initialVolume * 100);
+  slider.value = String(initialPercent);
+  output.value = `${initialPercent}%`;
+  output.textContent = `${initialPercent}%`;
+  slider.addEventListener('input', () => {
+    const percent = Number(slider.value);
+    output.value = `${percent}%`;
+    output.textContent = `${percent}%`;
+    audio.ensure();
+    audio.setVolume(category, percent / 100);
+  });
+}
+
+bindVolumeSlider('musicVolume', 'musicVolumeValue', 'music', audio.musicVolume);
+bindVolumeSlider('effectsVolume', 'effectsVolumeValue', 'effects', audio.effectsVolume);
+
 $('#btnPause').addEventListener('click', () => setPaused(!game.paused));
 $('#resumeBtn').addEventListener('click', () => setPaused(false));
 $('#restartBtn').addEventListener('click', () => restartRun());

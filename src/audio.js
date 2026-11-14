@@ -6,10 +6,21 @@ export class AudioEngine {
   constructor() {
     this.ctx = null;
     this.master = null;
+    this.musicBus = null;
+    this.effectsBus = null;
     this.muted = localStorage.getItem('to-muted') === '1';
+    this.musicVolume = this.loadVolume('to-music-volume', 0.7);
+    this.effectsVolume = this.loadVolume('to-sfx-volume', 1);
     this.last = {};
     this.ambience = null;
     this.noiseBuffer = null;
+  }
+
+  loadVolume(key, fallback) {
+    const stored = Number(localStorage.getItem(key));
+    return Number.isFinite(stored) && localStorage.getItem(key) !== null
+      ? clampGain(stored)
+      : fallback;
   }
 
   ensure() {
@@ -23,6 +34,12 @@ export class AudioEngine {
       this.ctx = new AC();
       this.master = this.ctx.createGain();
       this.master.gain.value = this.muted ? 0 : 0.72;
+      this.musicBus = this.ctx.createGain();
+      this.musicBus.gain.value = this.musicVolume;
+      this.effectsBus = this.ctx.createGain();
+      this.effectsBus.gain.value = this.effectsVolume;
+      this.musicBus.connect(this.master);
+      this.effectsBus.connect(this.master);
       this.master.connect(this.ctx.destination);
       this.noiseBuffer = this.makeNoise();
       this.startAmbience();
@@ -60,7 +77,7 @@ export class AudioEngine {
       lfo.frequency.value = 0.07;
       lfoGain.gain.value = 0.005;
       lfo.connect(lfoGain).connect(g.gain);
-      src.connect(lp).connect(g).connect(this.master);
+      src.connect(lp).connect(g).connect(this.musicBus);
       src.start();
       lfo.start();
       this.ambience = { src, g, lfo };
@@ -73,6 +90,20 @@ export class AudioEngine {
     if (this.master && this.ctx) {
       this.master.gain.cancelScheduledValues(this.ctx.currentTime);
       this.master.gain.linearRampToValueAtTime(muted ? 0 : 0.72, this.ctx.currentTime + 0.08);
+    }
+  }
+
+  setVolume(category, value) {
+    const volume = clampGain(Number(value));
+    const isMusic = category === 'music';
+    const key = isMusic ? 'to-music-volume' : 'to-sfx-volume';
+    const bus = isMusic ? this.musicBus : this.effectsBus;
+    if (isMusic) this.musicVolume = volume;
+    else this.effectsVolume = volume;
+    localStorage.setItem(key, String(volume));
+    if (bus && this.ctx) {
+      bus.gain.cancelScheduledValues(this.ctx.currentTime);
+      bus.gain.linearRampToValueAtTime(volume, this.ctx.currentTime + 0.06);
     }
   }
 
@@ -108,7 +139,7 @@ export class AudioEngine {
       node.connect(f);
       node = f;
     }
-    node.connect(g).connect(this.master);
+    node.connect(g).connect(this.effectsBus);
     osc.start(t0);
     osc.stop(t0 + dur + 0.02);
   }
@@ -127,7 +158,7 @@ export class AudioEngine {
     const g = this.ctx.createGain();
     g.gain.setValueAtTime(gain, t0);
     g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-    src.connect(f).connect(g).connect(this.master);
+    src.connect(f).connect(g).connect(this.effectsBus);
     src.start(t0);
     src.stop(t0 + dur + 0.02);
   }
