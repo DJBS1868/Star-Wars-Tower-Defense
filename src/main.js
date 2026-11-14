@@ -141,6 +141,11 @@ function setSelectedMap(map) {
   }
   const dockSub = $('#mapDockPlayBtn small');
   if (dockSub) dockSub.textContent = selectedMap.site;
+  const scenery = $('#mapScenery');
+  if (scenery) {
+    const nextScene = `assets/maps/${selectedMap.id}.svg`;
+    if (scenery.getAttribute('src') !== nextScene) scenery.src = nextScene;
+  }
   syncMenuLabels();
 }
 

@@ -482,6 +482,9 @@
     <div class="stars stars-a"></div>
     <div class="stars stars-b"></div>
     <div class="screen-vignette"></div>
+    <div class="map-scenery" aria-hidden="true">
+      <img id="mapScenery" src="assets/maps/tatooine.svg" alt="" />
+    </div>
 
     <div class="menu-shell map-shell">
       <header class="menu-topbar">
@@ -506,108 +509,146 @@
       </header>
 
       <main class="map-main">
-        <div class="page-head">
+        <div class="page-head map-page-head">
           <button id="mapBackBtn" class="menu-back">← HOME BASE</button>
           <div class="page-title">
             <span class="start-eyebrow"><span></span>STAR MAP<span></span></span>
             <h1>SELECT A BATTLEFIELD</h1>
-            <p>Choose a world. Every battlefield changes the route, the pressure, and your defense.</p>
           </div>
-          <span class="menu-side-note"><b>4</b> / 6 BATTLEFIELDS<br />SECTOR 77</span>
+          <span class="menu-side-note"><b>6</b> MAP SLOTS<br />PAGE 1 / 1</span>
         </div>
 
-        <div class="map-grid">
-          <button class="map-tile map-tile-available" data-map="tatooine" data-planet="TATOOINE" data-site="OUTPOST RELAY" aria-label="Select Tatooine, Outpost Relay">
-            <span class="map-art art-rebel map-art-illustration" aria-hidden="true">
-              <img class="map-illustration" src="assets/maps/tatooine.svg" alt="" loading="eager" />
-              <span class="map-art-tag">TATOOINE</span>
-            </span>
-            <span class="map-info">
-              <span class="map-kicker">OUTPOST RELAY · REBEL ALLIANCE</span>
-              <span class="map-title">TATOOINE</span>
-              <span class="map-desc">A remote Rebel signal station under the twin suns. Hold the line against womp rat packs, bantha stampedes, and the krayt dragon.</span>
-              <span class="map-chip-row"><span>25 WAVES</span><span>OUTPOST RELAY</span><span>STANDARD</span></span>
-              <span class="map-status"><b>SELECT</b><em>25 WAVES</em></span>
-            </span>
-            <span class="map-ready">READY</span>
+        <div class="map-stage">
+          <button class="map-arrow map-arrow-prev" type="button" aria-label="Previous map page" disabled>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M32 5.5 11.5 24 32 42.5z" fill="currentColor" stroke="#ffe9a8" stroke-width="3" stroke-linejoin="round"/></svg>
           </button>
 
-          <button class="map-tile map-tile-available" data-map="hoth" data-planet="HOTH" data-site="ECHO BASE" aria-label="Select Hoth, Echo Base">
-            <span class="map-art art-hoth map-art-illustration" aria-hidden="true">
-              <img class="map-illustration" src="assets/maps/hoth.svg" alt="" loading="eager" />
-              <span class="map-art-tag">HOTH</span>
-            </span>
-            <span class="map-info">
-              <span class="map-kicker">ECHO BASE · REBEL ALLIANCE</span>
-              <span class="map-title">HOTH</span>
-              <span class="map-desc">A whiteout over the frozen trench line. Ice Scrabbler packs swarm the drifts, Tauntaun bulls charge the relay, and a Wampa stalks the glacier.</span>
-              <span class="map-chip-row"><span>25 WAVES</span><span>ECHO BASE</span><span>VETERAN</span></span>
-              <span class="map-status"><b>SELECT</b><em>25 WAVES</em></span>
-            </span>
-            <span class="map-ready">READY</span>
-          </button>
+          <div class="map-page" id="mapPage" role="group" aria-label="Map page 1 of 1">
+            <div class="map-grid">
+              <button class="map-tile map-tile-available" data-map="tatooine" data-planet="TATOOINE" data-site="OUTPOST RELAY" aria-label="Select Tatooine, Outpost Relay" title="Tatooine · Outpost Relay — womp rats, banthas, and a krayt dragon">
+                <span class="map-art art-rebel map-art-illustration" aria-hidden="true">
+                  <img class="map-illustration" src="assets/maps/tatooine.svg" alt="" loading="eager" />
+                </span>
+                <span class="map-topline" aria-hidden="true">
+                  <span class="map-site">OUTPOST RELAY</span>
+                  <span class="map-title">TATOOINE</span>
+                </span>
+                <span class="map-bottomline" aria-hidden="true">
+                  <span class="map-medal medal-standard">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="currentColor"/><path d="M12 5.8l1.8 3.7 4.1.6-3 2.9.7 4.1-3.6-1.9-3.6 1.9.7-4.1-3-2.9 4.1-.6z" fill="#1c1308"/></svg>
+                    <b>STANDARD</b>
+                  </span>
+                  <span class="map-waves"><b>25</b> WAVES</span>
+                </span>
+              </button>
 
-          <button class="map-tile map-tile-available" data-map="mustafar" data-planet="MUSTAFAR" data-site="LAVA REFINERY" aria-label="Select Mustafar, Lava Refinery">
-            <span class="map-art art-mustafar map-art-illustration" aria-hidden="true">
-              <img class="map-illustration" src="assets/maps/mustafar.svg" alt="" loading="eager" />
-              <span class="map-art-tag">MUSTAFAR</span>
-            </span>
-            <span class="map-info">
-              <span class="map-kicker">LAVA REFINERY · BLACK SUN</span>
-              <span class="map-title">MUSTAFAR</span>
-              <span class="map-desc">A captured mining refinery above the lava flows. Xandank packs race the causeways, heat-armoured Mustafarians hold the line, and a Magma Beast waits beneath the caldera.</span>
-              <span class="map-chip-row"><span>25 WAVES</span><span>LAVA REFINERY</span><span>ELITE</span></span>
-              <span class="map-status"><b>SELECT</b><em>25 WAVES</em></span>
-            </span>
-            <span class="map-ready">READY</span>
-          </button>
+              <button class="map-tile map-tile-available" data-map="hoth" data-planet="HOTH" data-site="ECHO BASE" aria-label="Select Hoth, Echo Base" title="Hoth · Echo Base — Ice Scrabblers, Tauntauns, and a Wampa">
+                <span class="map-art art-hoth map-art-illustration" aria-hidden="true">
+                  <img class="map-illustration" src="assets/maps/hoth.svg" alt="" loading="eager" />
+                </span>
+                <span class="map-topline" aria-hidden="true">
+                  <span class="map-site">ECHO BASE</span>
+                  <span class="map-title">HOTH</span>
+                </span>
+                <span class="map-bottomline" aria-hidden="true">
+                  <span class="map-medal medal-veteran">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="currentColor"/><path d="M12 5.8l1.8 3.7 4.1.6-3 2.9.7 4.1-3.6-1.9-3.6 1.9.7-4.1-3-2.9 4.1-.6z" fill="#1c1308"/></svg>
+                    <b>VETERAN</b>
+                  </span>
+                  <span class="map-waves"><b>25</b> WAVES</span>
+                </span>
+              </button>
 
-          <button class="map-tile map-tile-available" data-map="endor" data-planet="ENDOR" data-site="SHIELD BUNKER" aria-label="Select Endor, Shield Bunker">
-            <span class="map-art art-endor map-art-illustration" aria-hidden="true">
-              <img class="map-illustration" src="assets/maps/endor.svg" alt="" loading="eager" />
-              <span class="map-art-tag">ENDOR</span>
-            </span>
-            <span class="map-info">
-              <span class="map-kicker">SHIELD BUNKER · EWOK DEFENSE</span>
-              <span class="map-title">ENDOR</span>
-              <span class="map-desc">Ewok warriors defend their forest home from boar-wolves and a towering Gorax. Hold the shield bunker through wave 25.</span>
-              <span class="map-chip-row"><span>25 WAVES</span><span>SHIELD BUNKER</span><span>ELITE</span></span>
-              <span class="map-status"><b>SELECT</b><em>25 WAVES</em></span>
-            </span>
-            <span class="map-ready">READY</span>
-          </button>
+              <button class="map-tile map-tile-available" data-map="mustafar" data-planet="MUSTAFAR" data-site="LAVA REFINERY" aria-label="Select Mustafar, Lava Refinery" title="Mustafar · Lava Refinery — Xandanks, Mustafarians, and a Magma Beast">
+                <span class="map-art art-mustafar map-art-illustration" aria-hidden="true">
+                  <img class="map-illustration" src="assets/maps/mustafar.svg" alt="" loading="eager" />
+                </span>
+                <span class="map-topline" aria-hidden="true">
+                  <span class="map-site">LAVA REFINERY</span>
+                  <span class="map-title">MUSTAFAR</span>
+                </span>
+                <span class="map-bottomline" aria-hidden="true">
+                  <span class="map-medal medal-elite">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="currentColor"/><path d="M12 5.8l1.8 3.7 4.1.6-3 2.9.7 4.1-3.6-1.9-3.6 1.9.7-4.1-3-2.9 4.1-.6z" fill="#1c1308"/></svg>
+                    <b>ELITE</b>
+                  </span>
+                  <span class="map-waves"><b>25</b> WAVES</span>
+                </span>
+              </button>
 
-          <button class="map-tile map-tile-locked map-tile-placeholder" type="button" disabled aria-label="Future battlefield slot, sector 78, classified">
-            <span class="map-art placeholder-art" aria-hidden="true">
-              <span class="placeholder-grid"></span>
-              <span class="placeholder-orbit"></span>
-              <span class="placeholder-planet"></span>
-              <span class="placeholder-moon"></span>
-              <span class="map-art-tag">SECTOR 78</span>
-              <span class="map-lock">LOCKED</span>
-            </span>
-            <span class="map-info">
-              <span class="map-kicker">UNCHARTED SYSTEM · FUTURE CAMPAIGN</span>
-              <span class="map-title">CLASSIFIED</span>
-              <span class="map-chip-row"><span>COMING SOON</span></span>
-            </span>
-          </button>
+              <button class="map-tile map-tile-available" data-map="endor" data-planet="ENDOR" data-site="SHIELD BUNKER" aria-label="Select Endor, Shield Bunker" title="Endor · Shield Bunker — Ewok warriors, boar-wolves, and a Gorax">
+                <span class="map-art art-endor map-art-illustration" aria-hidden="true">
+                  <img class="map-illustration" src="assets/maps/endor.svg" alt="" loading="eager" />
+                </span>
+                <span class="map-topline" aria-hidden="true">
+                  <span class="map-site">SHIELD BUNKER</span>
+                  <span class="map-title">ENDOR</span>
+                </span>
+                <span class="map-bottomline" aria-hidden="true">
+                  <span class="map-medal medal-elite">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="currentColor"/><path d="M12 5.8l1.8 3.7 4.1.6-3 2.9.7 4.1-3.6-1.9-3.6 1.9.7-4.1-3-2.9 4.1-.6z" fill="#1c1308"/></svg>
+                    <b>ELITE</b>
+                  </span>
+                  <span class="map-waves"><b>25</b> WAVES</span>
+                </span>
+              </button>
 
-          <button class="map-tile map-tile-locked map-tile-placeholder" type="button" disabled aria-label="Future battlefield slot, sector 79, classified">
-            <span class="map-art placeholder-art" aria-hidden="true">
-              <span class="placeholder-grid"></span>
-              <span class="placeholder-orbit"></span>
-              <span class="placeholder-planet"></span>
-              <span class="placeholder-moon"></span>
-              <span class="map-art-tag">SECTOR 79</span>
-              <span class="map-lock">LOCKED</span>
-            </span>
-            <span class="map-info">
-              <span class="map-kicker">UNCHARTED SYSTEM · FUTURE CAMPAIGN</span>
-              <span class="map-title">CLASSIFIED</span>
-              <span class="map-chip-row"><span>COMING SOON</span></span>
-            </span>
+              <button class="map-tile map-tile-locked map-tile-placeholder" type="button" disabled aria-label="Future battlefield slot, sector 78, classified" title="Sector 78 — future battlefield">
+                <span class="map-art placeholder-art" aria-hidden="true">
+                  <span class="placeholder-grid"></span>
+                  <span class="placeholder-orbit"></span>
+                  <span class="placeholder-planet"></span>
+                  <span class="placeholder-moon"></span>
+                </span>
+                <span class="map-topline" aria-hidden="true">
+                  <span class="map-site">SECTOR 78 · UNCHARTED</span>
+                  <span class="map-title">CLASSIFIED</span>
+                </span>
+                <span class="placeholder-lock" aria-hidden="true">
+                  <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="25" fill="#07131c" opacity=".82" stroke="rgba(199,230,242,.35)" stroke-width="2"/><rect x="21" y="30" width="22" height="17" rx="3" fill="currentColor"/><path d="M25 30v-5a7 7 0 0 1 14 0v5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="32" cy="38" r="2.4" fill="#0a151f"/></svg>
+                </span>
+                <span class="map-bottomline" aria-hidden="true">
+                  <span class="map-medal medal-locked">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="currentColor"/><path d="M12 5.8l1.8 3.7 4.1.6-3 2.9.7 4.1-3.6-1.9-3.6 1.9.7-4.1-3-2.9 4.1-.6z" fill="#1c1308"/></svg>
+                    <b>LOCKED</b>
+                  </span>
+                  <span class="map-waves">COMING SOON</span>
+                </span>
+              </button>
+
+              <button class="map-tile map-tile-locked map-tile-placeholder" type="button" disabled aria-label="Future battlefield slot, sector 79, classified" title="Sector 79 — future battlefield">
+                <span class="map-art placeholder-art" aria-hidden="true">
+                  <span class="placeholder-grid"></span>
+                  <span class="placeholder-orbit"></span>
+                  <span class="placeholder-planet"></span>
+                  <span class="placeholder-moon"></span>
+                </span>
+                <span class="map-topline" aria-hidden="true">
+                  <span class="map-site">SECTOR 79 · UNCHARTED</span>
+                  <span class="map-title">CLASSIFIED</span>
+                </span>
+                <span class="placeholder-lock" aria-hidden="true">
+                  <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="25" fill="#07131c" opacity=".82" stroke="rgba(199,230,242,.35)" stroke-width="2"/><rect x="21" y="30" width="22" height="17" rx="3" fill="currentColor"/><path d="M25 30v-5a7 7 0 0 1 14 0v5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="32" cy="38" r="2.4" fill="#0a151f"/></svg>
+                </span>
+                <span class="map-bottomline" aria-hidden="true">
+                  <span class="map-medal medal-locked">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="currentColor"/><path d="M12 5.8l1.8 3.7 4.1.6-3 2.9.7 4.1-3.6-1.9-3.6 1.9.7-4.1-3-2.9 4.1-.6z" fill="#1c1308"/></svg>
+                    <b>LOCKED</b>
+                  </span>
+                  <span class="map-waves">COMING SOON</span>
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <button class="map-arrow map-arrow-next" type="button" aria-label="Next map page" disabled>
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M16 5.5 36.5 24 16 42.5z" fill="currentColor" stroke="#ffe9a8" stroke-width="3" stroke-linejoin="round"/></svg>
           </button>
+        </div>
+
+        <div class="map-pagebar">
+          <span class="map-dots" aria-hidden="true"><span class="map-dot active"></span></span>
+          <span class="map-pagecount">PAGE 1 / 1 · 6 MAPS</span>
         </div>
       </main>
 
