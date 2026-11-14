@@ -21,6 +21,7 @@ const mapScreen = $('#mapScreen');
 const hangarScreen = $('#hangarScreen');
 const endScreen = $('#endScreen');
 const pauseModal = $('#pauseModal');
+const settingsModal = $('#settingsModal');
 
 const menuScreens = { start: startScreen, home: homeScreen, map: mapScreen, hangar: hangarScreen };
 
@@ -57,6 +58,7 @@ function showMenuScreen(name) {
   }
   endScreen.classList.add('hidden');
   pauseModal.classList.add('hidden');
+  settingsModal.classList.add('hidden');
   if (name === 'home') syncMenuLabels();
 }
 
@@ -644,6 +646,9 @@ function syncUI(force = false) {
     if (label) label.textContent = audio.muted ? 'OFF' : 'ON';
     else el.textContent = `SOUND: ${audio.muted ? 'OFF' : 'ON'}`;
   });
+  document.querySelectorAll('.settings-row.sound-toggle').forEach((el) => {
+    el.setAttribute('aria-pressed', String(!audio.muted));
+  });
   $('#btnMute').setAttribute('aria-label', audio.muted ? 'Unmute sound' : 'Mute sound');
 
   placeHint.classList.toggle('hidden', !game.pendingType || game.paused || !game.started);
@@ -762,6 +767,7 @@ function startGame(auto = false) {
   hideMenuScreens();
   endScreen.classList.add('hidden');
   pauseModal.classList.add('hidden');
+  settingsModal.classList.add('hidden');
   runFinished = false;
   lastIntelKey = '';
   game.setMap(selectedMap.id);
@@ -796,22 +802,35 @@ $('#playBtn').addEventListener('click', () => {
   showMenuScreen('home');
 });
 $('#hubBackBtn').addEventListener('click', () => { audio.ui(); showMenuScreen('start'); });
+$('#settingsBtn')?.addEventListener('click', () => {
+  audio.ensure();
+  audio.ui();
+  settingsModal.classList.remove('hidden');
+});
+$('#settingsCloseBtn')?.addEventListener('click', () => {
+  audio.ui();
+  settingsModal.classList.add('hidden');
+});
+settingsModal?.addEventListener('click', (e) => {
+  if (e.target === settingsModal) settingsModal.classList.add('hidden');
+});
 $('#chooseMapBtn').addEventListener('click', () => { audio.ui(); showMenuScreen('map'); });
 $('#mapBackBtn').addEventListener('click', () => { audio.ui(); showMenuScreen('home'); });
 $('#upgradesBtn').addEventListener('click', () => { audio.ui(); showMenuScreen('hangar'); });
 $('#hangarBackBtn').addEventListener('click', () => { audio.ui(); showMenuScreen('home'); });
-$('#hangarMapBtn').addEventListener('click', () => { audio.ui(); showMenuScreen('map'); });
 
 /* extra command-deck navigation */
-$('#startMapBtn')?.addEventListener('click', () => { audio.ensure(); audio.ui(); showMenuScreen('map'); });
 $('#startHangarBtn')?.addEventListener('click', () => { audio.ensure(); audio.ui(); showMenuScreen('hangar'); });
-$('#dockMapBtn')?.addEventListener('click', () => { audio.ui(); showMenuScreen('map'); });
-$('#dockHangarBtn')?.addEventListener('click', () => { audio.ui(); showMenuScreen('hangar'); });
 $('#mapDockPlayBtn')?.addEventListener('click', () => { audio.ensure(); audio.ui(); launchSelectedMap(selectedMap); });
 $('#mapDockHomeBtn')?.addEventListener('click', () => { audio.ui(); showMenuScreen('home'); });
-$('#mapDockHangarBtn')?.addEventListener('click', () => { audio.ui(); showMenuScreen('hangar'); });
-$('#hangarDockMapBtn')?.addEventListener('click', () => { audio.ui(); showMenuScreen('map'); });
 $('#hangarDockHomeBtn')?.addEventListener('click', () => { audio.ui(); showMenuScreen('home'); });
+document.querySelectorAll('.settings-open').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    audio.ensure();
+    audio.ui();
+    settingsModal.classList.remove('hidden');
+  });
+});
 
 for (const tile of document.querySelectorAll('.map-tile-available[data-map]')) {
   tile.setAttribute('aria-pressed', 'false');
@@ -895,6 +914,13 @@ $('#endlessBtn').addEventListener('click', () => {
 
 window.addEventListener('keydown', (e) => {
   if (e.repeat) return;
+  if (!settingsModal.classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      settingsModal.classList.add('hidden');
+      audio.ui();
+    }
+    return;
+  }
   if (!game.started && e.key === 'Escape') {
     if (!mapScreen.classList.contains('hidden') || !hangarScreen.classList.contains('hidden')) { showMenuScreen('home'); return; }
     if (!homeScreen.classList.contains('hidden')) { showMenuScreen('start'); return; }

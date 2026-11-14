@@ -140,6 +140,9 @@
       <g fill="#b9edff"><circle cx="56" cy="72" r="5"/><circle cx="56" cy="90" r="6"/><circle cx="56" cy="108" r="5"/></g>
       <g fill="#d6e8f0" opacity=".65"><circle cx="210" cy="78" r="2"/><circle cx="270" cy="73" r="2"/><circle cx="330" cy="76" r="2"/><circle cx="388" cy="82" r="1.7"/></g>
     </symbol>
+    <symbol id="icon-cog" viewBox="0 0 24 24">
+      <path d="M19.14 12.94a7.07 7.07 0 0 0 0-1.88l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.61-.22l-2.39 1a7.3 7.3 0 0 0-1.62-.94l-.36-2.54a.5.5 0 0 0-.5-.42H9.09a.5.5 0 0 0-.5.42l-.36 2.54a7.3 7.3 0 0 0-1.62.94l-2.39-1a.5.5 0 0 0-.61.22L1.69 8.81a.5.5 0 0 0 .12.64L3.84 11a7.07 7.07 0 0 0 0 1.88l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32a.5.5 0 0 0 .61.22l2.39-1a7.3 7.3 0 0 0 1.62.94l.36 2.54a.5.5 0 0 0 .5.42h3.84a.5.5 0 0 0 .5-.42l.36-2.54a7.3 7.3 0 0 0 1.62-.94l2.39 1a.5.5 0 0 0 .61-.22l1.92-3.32a.5.5 0 0 0-.12-.64ZM12 15.6A3.6 3.6 0 1 1 15.6 12 3.6 3.6 0 0 1 12 15.6Z" fill="currentColor"/>
+    </symbol>
   </svg>
 
   <div id="app" class="app" aria-hidden="false">
@@ -291,12 +294,6 @@
 
     <div class="menu-shell start-shell">
       <header class="menu-topbar">
-        <div class="menu-brand">
-          <span class="brand-emblem" aria-hidden="true">
-            <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".65"/><path d="M16 4.5l2.9 8.6L27.5 16l-8.6 2.9L16 27.5l-2.9-8.6L4.5 16l8.6-2.9z" fill="currentColor"/></svg>
-          </span>
-          <div class="menu-brand-copy"><b>REBEL COMMAND</b><span>SECTOR 77 · OUTER RIM</span></div>
-        </div>
         <div class="menu-topright">
           <div class="commander-chip">
             <span class="commander-avatar" aria-hidden="true">
@@ -320,13 +317,6 @@
           <div class="start-cta-row">
             <button id="playBtn" class="deploy-btn big-deploy">
               <span>PLAY</span>
-              <small>ENTER COMMAND CENTER</small>
-            </button>
-            <button id="startMapBtn" class="btn-metal">
-              <span class="btn-metal-icon" aria-hidden="true">
-                <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="15" fill="none" stroke="currentColor" stroke-width="1.5"/><ellipse cx="32" cy="32" rx="27" ry="10" fill="none" stroke="currentColor" stroke-width="1" transform="rotate(-18 32 32)"/><circle cx="43" cy="22" r="2.2" fill="currentColor"/></svg>
-              </span>
-              <span class="btn-metal-copy"><b>STAR MAP</b><small>25-WAVE CAMPAIGN</small></span>
             </button>
           </div>
           <div class="how-row">
@@ -384,12 +374,6 @@
 
     <div class="menu-shell hub-shell">
       <header class="menu-topbar">
-        <div class="menu-brand">
-          <span class="brand-emblem" aria-hidden="true">
-            <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".65"/><path d="M16 4.5l2.9 8.6L27.5 16l-8.6 2.9L16 27.5l-2.9-8.6L4.5 16l8.6-2.9z" fill="currentColor"/></svg>
-          </span>
-          <div class="menu-brand-copy"><b>REBEL COMMAND</b><span>HOME BASE · SECTOR 77</span></div>
-        </div>
         <div class="menu-topright">
           <div class="commander-chip">
             <span class="commander-avatar" aria-hidden="true">
@@ -446,21 +430,13 @@
       </main>
 
       <nav class="menu-dock" aria-label="Command navigation">
-        <button id="dockMapBtn" class="dock-btn dock-primary">
-          <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="15" fill="none" stroke="currentColor" stroke-width="2"/><ellipse cx="32" cy="32" rx="28" ry="10" fill="none" stroke="currentColor" stroke-width="1.4" transform="rotate(-18 32 32)"/><circle cx="44" cy="22" r="2.6" fill="currentColor"/></svg>
-          <b>CAMPAIGN</b><small>PLAY</small>
-        </button>
-        <button id="dockHangarBtn" class="dock-btn">
-          <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 8 48 18v20L32 56 16 38V18z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M32 20v18M25 31l7 7 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <b>HANGAR</b><small>UNITS</small>
-        </button>
         <button id="hubBackBtn" class="dock-btn">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5l-7 7 7 7M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <b>MAIN MENU</b><small>BACK</small>
         </button>
-        <button id="dockSoundBtn" class="dock-btn sound-toggle" aria-label="Toggle sound">
-          <svg class="ico-sound" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5c1.2 1 1.8 2.2 1.8 3.5s-.6 2.5-1.8 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <b>SOUND</b><small><span class="sound-state">ON</span></small>
+        <button id="settingsBtn" class="dock-btn" aria-label="Open settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-cog"/></svg>
+          <b>SETTINGS</b><small>OPTIONS</small>
         </button>
       </nav>
     </div>
@@ -657,17 +633,13 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg>
           <b>DEPLOY</b><small>OUTPOST RELAY</small>
         </button>
-        <button id="mapDockHangarBtn" class="dock-btn">
-          <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 8 48 18v20L32 56 16 38V18z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M32 20v18M25 31l7 7 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <b>HANGAR</b><small>UNITS</small>
-        </button>
         <button id="mapDockHomeBtn" class="dock-btn">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5l-7 7 7 7M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <b>HOME</b><small>BACK</small>
         </button>
-        <button id="mapDockSoundBtn" class="dock-btn sound-toggle" aria-label="Toggle sound">
-          <svg class="ico-sound" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5c1.2 1 1.8 2.2 1.8 3.5s-.6 2.5-1.8 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <b>SOUND</b><small><span class="sound-state">ON</span></small>
+        <button class="dock-btn settings-open" aria-label="Open settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-cog"/></svg>
+          <b>SETTINGS</b><small>OPTIONS</small>
         </button>
       </nav>
     </div>
@@ -736,22 +708,17 @@
 
         <div class="hangar-foot">
           <span>ALL SIX UNIT CLASSES ARE AVAILABLE IN EVERY MISSION</span>
-          <button id="hangarMapBtn" class="deploy-btn"><span>CHOOSE MAP</span><small>DEPLOY YOUR DEFENSES</small></button>
         </div>
       </main>
 
       <nav class="menu-dock" aria-label="Hangar navigation">
-        <button id="hangarDockMapBtn" class="dock-btn dock-primary">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg>
-          <b>DEPLOY</b><small>STAR MAP</small>
-        </button>
         <button id="hangarDockHomeBtn" class="dock-btn">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5l-7 7 7 7M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <b>HOME</b><small>BACK</small>
         </button>
-        <button id="hangarDockSoundBtn" class="dock-btn sound-toggle" aria-label="Toggle sound">
-          <svg class="ico-sound" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5c1.2 1 1.8 2.2 1.8 3.5s-.6 2.5-1.8 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <b>SOUND</b><small><span class="sound-state">ON</span></small>
+        <button class="dock-btn settings-open" aria-label="Open settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-cog"/></svg>
+          <b>SETTINGS</b><small>OPTIONS</small>
         </button>
       </nav>
     </div>
@@ -784,6 +751,26 @@
         <button id="endMapBtn" class="btn-ghost">MAP SELECT</button>
       </div>
       <div id="endBest" class="start-foot"></div>
+    </div>
+  </div>
+
+  <div id="settingsModal" class="modal settings-modal hidden" role="dialog" aria-modal="true" aria-label="Settings">
+    <div class="modal-card settings-card">
+      <div class="eyebrow">SYSTEM CONFIG</div>
+      <h2>SETTINGS</h2>
+      <p>Tune the outpost to your preference.</p>
+      <button id="settingsSoundBtn" class="settings-row sound-toggle" aria-label="Toggle sound">
+        <span class="settings-row-icon" aria-hidden="true">
+          <svg class="ico-sound" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5c1.2 1 1.8 2.2 1.8 3.5s-.6 2.5-1.8 3.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+          <svg class="ico-muted" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M17 9l5 6m0-6l-5 6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+        </span>
+        <span class="settings-row-copy"><b>SOUND</b><small>Music and combat effects</small></span>
+        <span class="settings-switch" aria-hidden="true"><i></i></span>
+        <span class="sound-state">ON</span>
+      </button>
+      <div class="modal-actions">
+        <button id="settingsCloseBtn" class="btn-primary">DONE</button>
+      </div>
     </div>
   </div>
 

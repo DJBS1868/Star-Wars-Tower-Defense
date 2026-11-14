@@ -17,7 +17,7 @@ Four worlds are available, each with its own route, terrain, weather, and enemy 
 python3 -m http.server 8000
 ```
 
-Then open <http://localhost:8000/>, tap **Play**, open **Campaign** from the command deck, select a world, and deploy. Visit the **Hangar** to review all six unit classes before a run.
+Then open <http://localhost:8000/>, tap **Play**, open **Campaign** from the command center, select a world, and deploy. Visit the **Hangar** to review all six unit classes before a run.
 
 - **Drag** a tower card from the hangar onto the battlefield, or **tap** a card and then tap the map.
 - Tap a placed tower to upgrade it, change its priority, or sell it.
