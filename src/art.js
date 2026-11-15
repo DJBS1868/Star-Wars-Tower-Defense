@@ -10194,13 +10194,29 @@ export function drawWeather(ctx, w, h, time, S, theme) {
   ctx.restore();
 }
 
-export function drawParticles(ctx, particles) {
+export function drawParticles(ctx, particles, waterOnly = false) {
   ctx.save();
   for (const p of particles) {
+    if (waterOnly !== (p.kind === 'waterTrail')) continue;
     const life = p.life / p.max;
     if (life <= 0) continue;
     ctx.globalAlpha = Math.min(1, life * 1.4);
-    if (p.glow) {
+    if (p.kind === 'waterTrail') {
+      const pulse = 0.92 + Math.sin((1 - life) * 9 + p.x * 0.04) * 0.08;
+      const rx = p.size * (1.35 + (1 - life) * 0.35) * pulse;
+      const ry = p.size * 0.58 * pulse;
+      ctx.globalAlpha = Math.min(0.58, life * 0.62);
+      ctx.fillStyle = 'rgba(80, 190, 220, 0.72)';
+      ctx.beginPath();
+      ctx.ellipse(p.x, p.y, rx, ry, 0, 0, TAU);
+      ctx.fill();
+      ctx.globalAlpha *= 0.72;
+      ctx.strokeStyle = '#d4fbff';
+      ctx.lineWidth = Math.max(0.7, p.size * 0.055);
+      ctx.beginPath();
+      ctx.ellipse(p.x - p.size * 0.12, p.y - p.size * 0.08, rx * 0.56, ry * 0.48, 0, Math.PI * 1.08, Math.PI * 1.78);
+      ctx.stroke();
+    } else if (p.glow) {
       ctx.globalCompositeOperation = 'lighter';
       const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 3);
       g.addColorStop(0, p.color);
