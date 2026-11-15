@@ -3220,6 +3220,9 @@ body.muted .sound-ico { color: #7a8b98; }
 .art-endor.map-art-illustration {
   box-shadow: inset 0 0 42px rgba(159, 216, 106, 0.12);
 }
+.art-kamino.map-art-illustration {
+  box-shadow: inset 0 0 48px rgba(112, 205, 244, 0.16);
+}
 
 /* ---------- Bloons-style six-slot star map page ---------- */
 .map-screen {

@@ -160,6 +160,42 @@ const THEMES = {
     vignette: 'rgba(5, 16, 6, 0.46)',
     ambient: { mode: 'mote', color: 'rgba(220, 255, 170, 0.40)', density: 1 },
   },
+  ocean: {
+    extra: 'ocean',
+    ground: ['#0a2233', '#07182a', '#04101d'],
+    dunes: [
+      { x: -0.05, y: 0.00, w: 0.58, h: 0.28, c: 'rgba(96, 168, 205, 0.13)' },
+      { x: 0.42, y: 0.02, w: 0.66, h: 0.24, c: 'rgba(72, 138, 178, 0.11)' },
+      { x: 0.00, y: 0.74, w: 0.50, h: 0.34, c: 'rgba(2, 8, 17, 0.36)' },
+      { x: 0.52, y: 0.70, w: 0.54, h: 0.38, c: 'rgba(110, 186, 220, 0.07)' },
+      { x: 0.30, y: 0.36, w: 0.40, h: 0.26, c: 'rgba(120, 196, 228, 0.06)' },
+    ],
+    ripple: '150, 214, 240',
+    speckleDark: '2, 9, 16',
+    speckleLight: '178, 230, 250',
+    pathShadow: 'rgba(0, 8, 16, 0.50)',
+    pathBank: '#5b7284',
+    pathFill: ['#e9f0f4', '#ccd9e0', '#a9bcc7'],
+    pathHi: 'rgba(255, 255, 255, 0.6)',
+    track: 'rgba(92, 116, 132, 0.28)',
+    scrub: '130, 190, 210',
+    caveRim: ['#dbe7ee', '#aebdc7', '#7c8f9c'],
+    caveDark: ['#041220', '#0b2233'],
+    caveLip: 'rgba(190, 235, 255, 0.65)',
+    caveEdge: 'rgba(74, 112, 136, 0.6)',
+    caveStyle: 'hangar',
+    rock: ['#b9c6ce', '#8fa0ab', '#667885'],
+    rockLit: 'rgba(236, 250, 255, 0.55)',
+    rockShadow: 'rgba(6, 18, 28, 0.38)',
+    pebbleShadow: 'rgba(4, 14, 24, 0.32)',
+    pebble: ['#9fb3c0', '#7b909e'],
+    pebbleLit: 'rgba(230, 248, 255, 0.5)',
+    pad: '#dbe6ec',
+    padEdge: '#94a7b3',
+    dome: ['#eef4f7', '#c3d2da', '#8ba0ad'],
+    vignette: 'rgba(2, 8, 16, 0.54)',
+    ambient: { mode: 'rain', color: 'rgba(196, 230, 245, 0.55)', density: 8 },
+  },
 };
 
 export function getTheme(name) {
@@ -207,6 +243,243 @@ function offsetPath(pts, off) {
     out.push([p[0] - dy * off, p[1] + dx * off]);
   }
   return out;
+}
+
+/* ============================================================
+   KAMINO — storm ocean and Tipoca City bridge network
+   ============================================================ */
+
+/* Dark, rain-lashed water: rolling swells, deep troughs and whitecaps. */
+function drawKaminoOcean(ctx, w, h, S, rng, pathPts) {
+  ctx.save();
+  ctx.lineCap = 'round';
+
+  // deep troughs first, so the swell highlights ride on top of them
+  for (let i = 0; i < 11; i++) {
+    const x = rng() * w;
+    const y = rng() * h;
+    const rx = (120 + rng() * 240) * S;
+    const ry = rx * (0.16 + rng() * 0.2);
+    const g = ctx.createRadialGradient(x, y, 0, x, y, rx);
+    g.addColorStop(0, 'rgba(1, 7, 14, 0.3)');
+    g.addColorStop(1, 'rgba(1, 7, 14, 0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.ellipse(x, y, rx, ry, (rng() - 0.5) * 0.35, 0, TAU);
+    ctx.fill();
+  }
+
+  // long storm swells
+  for (let i = 0; i < 30; i++) {
+    const x = rng() * w;
+    const y = rng() * h;
+    if (distanceToPath(x, y, pathPts) < 34 * S) continue;
+    const len = (90 + rng() * 280) * S;
+    const amp = (4 + rng() * 11) * S;
+    ctx.strokeStyle = `rgba(140, 205, 232, ${0.035 + rng() * 0.07})`;
+    ctx.lineWidth = (0.9 + rng() * 3.2) * S;
+    ctx.beginPath();
+    ctx.moveTo(x - len * 0.5, y);
+    ctx.bezierCurveTo(x - len * 0.2, y - amp, x + len * 0.2, y + amp, x + len * 0.5, y);
+    ctx.stroke();
+  }
+
+  // scattered whitecaps
+  for (let i = 0; i < 190; i++) {
+    const x = rng() * w;
+    const y = rng() * h;
+    if (distanceToPath(x, y, pathPts) < 30 * S) continue;
+    const len = (3 + rng() * 12) * S;
+    ctx.strokeStyle = `rgba(212, 241, 252, ${0.05 + rng() * 0.14})`;
+    ctx.lineWidth = (0.55 + rng() * 1.05) * S;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.quadraticCurveTo(x + len * 0.5, y - 1.6 * S, x + len, y);
+    ctx.stroke();
+  }
+
+  // cold storm light bleeding in from the horizon
+  const glow = ctx.createRadialGradient(w * 0.82, -h * 0.12, 0, w * 0.82, -h * 0.12, Math.max(w, h) * 0.85);
+  glow.addColorStop(0, 'rgba(146, 216, 246, 0.11)');
+  glow.addColorStop(0.5, 'rgba(96, 172, 214, 0.035)');
+  glow.addColorStop(1, 'rgba(96, 172, 214, 0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, w, h);
+  ctx.restore();
+}
+
+/* Clean white-and-steel platform bridges joining circular landing pads. */
+function drawKaminoBridges(ctx, w, h, S, pathPts, pw, pads) {
+  if (!pathPts.length) return;
+  ctx.save();
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+
+  // shadow cast onto the water
+  tracePoints(ctx, offsetPath(pathPts, 6 * S));
+  ctx.strokeStyle = 'rgba(0, 9, 18, 0.5)';
+  ctx.lineWidth = pw + 21 * S;
+  ctx.stroke();
+
+  // outer metallic edge girder
+  tracePoints(ctx, pathPts);
+  ctx.strokeStyle = '#8fa3b1';
+  ctx.lineWidth = pw + 10 * S;
+  ctx.stroke();
+  tracePoints(ctx, pathPts);
+  ctx.strokeStyle = '#dbe6ec';
+  ctx.lineWidth = pw + 5 * S;
+  ctx.stroke();
+
+  // clean deck
+  const deck = ctx.createLinearGradient(0, 0, w, h);
+  deck.addColorStop(0, '#f4f8fa');
+  deck.addColorStop(0.45, '#dfe8ed');
+  deck.addColorStop(1, '#bcccd5');
+  tracePoints(ctx, pathPts);
+  ctx.strokeStyle = deck;
+  ctx.lineWidth = pw;
+  ctx.stroke();
+
+  // border rails
+  for (const side of [-1, 1]) {
+    tracePoints(ctx, offsetPath(pathPts, side * (pw / 2 - 3 * S)));
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+    ctx.lineWidth = 2.4 * S;
+    ctx.stroke();
+    tracePoints(ctx, offsetPath(pathPts, side * (pw / 2 - 5.4 * S)));
+    ctx.strokeStyle = 'rgba(112, 138, 154, 0.35)';
+    ctx.lineWidth = 1 * S;
+    ctx.stroke();
+  }
+
+  // centre guide stripe
+  tracePoints(ctx, pathPts);
+  ctx.setLineDash([10 * S, 16 * S]);
+  ctx.strokeStyle = 'rgba(120, 148, 165, 0.38)';
+  ctx.lineWidth = 1.8 * S;
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // transverse deck seams
+  let run = 0;
+  for (let i = 1; i < pathPts.length; i++) {
+    const a = pathPts[i - 1];
+    const b = pathPts[i];
+    const seg = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    const dx = (b[0] - a[0]) / (seg || 1);
+    const dy = (b[1] - a[1]) / (seg || 1);
+    const nx = -dy;
+    const ny = dx;
+    run += seg;
+    const step = 27 * S;
+    while (run >= step) {
+      run -= step;
+      const px = b[0] - dx * run;
+      const py = b[1] - dy * run;
+      ctx.strokeStyle = 'rgba(104, 132, 150, 0.34)';
+      ctx.lineWidth = 1.1 * S;
+      ctx.beginPath();
+      ctx.moveTo(px - nx * pw * 0.46, py - ny * pw * 0.46);
+      ctx.lineTo(px + nx * pw * 0.46, py + ny * pw * 0.46);
+      ctx.stroke();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
+      ctx.beginPath();
+      ctx.moveTo(px - nx * pw * 0.46 + dx * 1.6 * S, py - ny * pw * 0.46 + dy * 1.6 * S);
+      ctx.lineTo(px + nx * pw * 0.46 + dx * 1.6 * S, py + ny * pw * 0.46 + dy * 1.6 * S);
+      ctx.stroke();
+    }
+  }
+
+  // glowing edge marker lights
+  ctx.save();
+  ctx.shadowColor = 'rgba(130, 224, 255, 0.9)';
+  ctx.shadowBlur = 7 * S;
+  run = 0;
+  for (let i = 1; i < pathPts.length; i++) {
+    const a = pathPts[i - 1];
+    const b = pathPts[i];
+    const seg = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    run += seg;
+    if (run < 52 * S) continue;
+    run = 0;
+    const dx = (b[0] - a[0]) / (seg || 1);
+    const dy = (b[1] - a[1]) / (seg || 1);
+    for (const side of [-1, 1]) {
+      ctx.fillStyle = 'rgba(168, 240, 255, 0.92)';
+      ctx.beginPath();
+      ctx.arc(b[0] - dy * (pw * 0.5 + 2 * S) * side, b[1] + dx * (pw * 0.5 + 2 * S) * side, 1.5 * S, 0, TAU);
+      ctx.fill();
+    }
+  }
+  ctx.restore();
+
+  // circular landing pads at every bridge junction
+  for (const pad of pads) {
+    const cx = pad[0] * w;
+    const cy = pad[1] * h;
+    const r = Math.max(pw * 1.03, 24 * S);
+
+    ctx.fillStyle = 'rgba(0, 10, 20, 0.45)';
+    ctx.beginPath();
+    ctx.ellipse(cx + 4 * S, cy + 6 * S, r * 1.06, r * 1.06, 0, 0, TAU);
+    ctx.fill();
+
+    // outer steel rim
+    const rim = ctx.createRadialGradient(cx - r * 0.3, cy - r * 0.35, r * 0.2, cx, cy, r);
+    rim.addColorStop(0, '#f6fafc');
+    rim.addColorStop(0.62, '#d3dfe6');
+    rim.addColorStop(1, '#93a7b3');
+    ctx.fillStyle = rim;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = '#7e93a0';
+    ctx.lineWidth = 1.8 * S;
+    ctx.stroke();
+
+    // inset deck and ring markings
+    ctx.fillStyle = '#c6d5dd';
+    ctx.beginPath();
+    ctx.arc(cx, cy, r * 0.82, 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.75)';
+    ctx.lineWidth = 1.6 * S;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r * 0.66, 0, TAU);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(108, 138, 156, 0.45)';
+    ctx.lineWidth = 1.2 * S;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r * 0.5, 0, TAU);
+    ctx.stroke();
+
+    // landing chevrons
+    ctx.strokeStyle = 'rgba(120, 150, 168, 0.4)';
+    ctx.lineWidth = 1.4 * S;
+    for (let k = 0; k < 4; k++) {
+      const a = k * Math.PI / 2 + Math.PI / 4;
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(a) * r * 0.56, cy + Math.sin(a) * r * 0.56);
+      ctx.lineTo(cx + Math.cos(a) * r * 0.76, cy + Math.sin(a) * r * 0.76);
+      ctx.stroke();
+    }
+
+    // cool running lights around the rim
+    ctx.save();
+    ctx.shadowColor = 'rgba(140, 228, 255, 0.85)';
+    ctx.shadowBlur = 6 * S;
+    ctx.fillStyle = 'rgba(186, 245, 255, 0.9)';
+    for (let k = 0; k < 6; k++) {
+      const a = k * TAU / 6 + 0.3;
+      ctx.beginPath();
+      ctx.arc(cx + Math.cos(a) * r * 0.92, cy + Math.sin(a) * r * 0.92, 1.35 * S, 0, TAU);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  ctx.restore();
 }
 
 /* ============================================================
@@ -953,7 +1226,11 @@ export function buildBackground(w, h, pathPts, S, dpr = 1, map = {}) {
   }
 
   // --- the route ------------------------------------------------
-  const pw = clamp(34 * S, 28, 54);
+  const ocean = theme.extra === 'ocean';
+  const pw = clamp((ocean ? 29 : 34) * S, ocean ? 24 : 28, 54);
+  if (ocean) {
+    drawKaminoBridges(ctx, w, h, S, pathPts, pw, map.landingPads || []);
+  } else {
   ctx.save();
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
@@ -1037,6 +1314,7 @@ export function buildBackground(w, h, pathPts, S, dpr = 1, map = {}) {
     }
     ctx.stroke();
   }
+  }
 
   // --- army entrance ---------------------------------------------
   drawSpawnCave(ctx, w, h, S, rng, theme, pathPts);
@@ -1096,6 +1374,10 @@ function hashString(s) {
 
 /* Terrain-specific marks drawn under the route. */
 function drawTerrainDetail(ctx, w, h, S, rng, pathPts, theme) {
+  if (theme.extra === 'ocean') {
+    drawKaminoOcean(ctx, w, h, S, rng, pathPts);
+    return;
+  }
   if (theme.extra === 'desert') {
     // Wind-carved dune crests: a soft shadow under each ridge and a sunlit lip.
     ctx.save();
@@ -1482,6 +1764,29 @@ function drawPathEdges(ctx, w, h, S, rng, pathPts, pw, theme) {
 
 /* Arcade foreground layers: canopy shade, snow haze, heat shimmer. */
 function drawForeground(ctx, w, h, S, rng, theme, pathPts) {
+  if (theme.extra === 'ocean') {
+    ctx.save();
+    // drifting curtains of rain haze
+    for (let i = 0; i < 8; i++) {
+      const x = (0.02 + rng() * 0.96) * w;
+      const y = (0.05 + rng() * 0.9) * h;
+      const rx = (90 + rng() * 170) * S;
+      const g = ctx.createRadialGradient(x, y, 0, x, y, rx);
+      g.addColorStop(0, 'rgba(150, 214, 240, 0.05)');
+      g.addColorStop(1, 'rgba(150, 214, 240, 0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(x - rx, y - rx, rx * 2, rx * 2);
+    }
+    // faint sheet-lightning bloom near the horizon
+    const bloom = ctx.createRadialGradient(w * 0.18, h * 0.02, 0, w * 0.18, h * 0.02, Math.max(w, h) * 0.7);
+    bloom.addColorStop(0, 'rgba(176, 232, 255, 0.055)');
+    bloom.addColorStop(0.55, 'rgba(120, 198, 236, 0.02)');
+    bloom.addColorStop(1, 'rgba(120, 198, 236, 0)');
+    ctx.fillStyle = bloom;
+    ctx.fillRect(0, 0, w, h);
+    ctx.restore();
+    return;
+  }
   if (theme.extra === 'forest') {
     ctx.save();
     for (let i = 0; i < 7; i++) {
@@ -1565,6 +1870,11 @@ function drawSpawnCave(ctx, w, h, S, rng, theme, pathPts) {
   const style = theme.caveStyle;
 
   ctx.save();
+  if (style === 'hangar') {
+    drawKaminoHangar(ctx, cx, cy, S, rng, theme);
+    ctx.restore();
+    return;
+  }
   if (style === 'bunker') {
     drawBunkerGate(ctx, cx, cy, S, rng, theme);
     ctx.restore();
@@ -1705,6 +2015,87 @@ function drawSpawnCave(ctx, w, h, S, rng, theme, pathPts) {
     ctx.fill();
     ctx.shadowBlur = 0;
   }
+  ctx.restore();
+}
+
+/* White Tipoca City hangar mouth at the left edge of the field. */
+function drawKaminoHangar(ctx, cx, cy, S, rng, theme) {
+  const r = 60 * S;
+  ctx.save();
+
+  // cold light spilling out of the hangar
+  const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * 2.1);
+  glow.addColorStop(0, 'rgba(126, 216, 255, 0.28)');
+  glow.addColorStop(0.5, 'rgba(96, 186, 226, 0.09)');
+  glow.addColorStop(1, 'rgba(96, 186, 226, 0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(cx - r * 2.2, cy - r * 2.2, r * 4.4, r * 4.4);
+
+  // platform disc
+  const disc = ctx.createRadialGradient(cx - r * 0.3, cy - r * 0.35, r * 0.1, cx, cy, r);
+  disc.addColorStop(0, '#f4f9fb');
+  disc.addColorStop(0.65, '#d6e2e8');
+  disc.addColorStop(1, '#9db0bb');
+  ctx.fillStyle = disc;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = '#7f94a0';
+  ctx.lineWidth = 2.4 * S;
+  ctx.stroke();
+
+  // concentric deck rings
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+  ctx.lineWidth = 1.8 * S;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r * 0.8, 0, TAU);
+  ctx.stroke();
+  ctx.strokeStyle = 'rgba(112, 142, 158, 0.4)';
+  ctx.lineWidth = 1.2 * S;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r * 0.62, 0, TAU);
+  ctx.stroke();
+
+  // dark hangar mouth facing the bridge
+  ctx.fillStyle = '#05121d';
+  ctx.beginPath();
+  ctx.ellipse(cx + r * 0.3, cy, r * 0.63, r * 0.78, 0, -Math.PI / 2, Math.PI / 2, false);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(24, 52, 70, 0.9)';
+  ctx.lineWidth = 2 * S;
+  ctx.stroke();
+
+  // lit inner lip
+  ctx.strokeStyle = 'rgba(126, 224, 255, 0.85)';
+  ctx.lineWidth = 3 * S;
+  ctx.beginPath();
+  ctx.ellipse(cx + r * 0.3, cy, r * 0.6, r * 0.76, 0, -Math.PI / 2.2, Math.PI / 2.2);
+  ctx.stroke();
+
+  // amber approach strobes on the rim
+  for (const side of [-1, 1]) {
+    ctx.save();
+    ctx.shadowColor = 'rgba(255, 196, 84, 0.9)';
+    ctx.shadowBlur = 9 * S;
+    ctx.fillStyle = 'rgba(255, 214, 120, 0.95)';
+    ctx.beginPath();
+    ctx.arc(cx + r * 0.72, cy + side * r * 0.62, 2.2 * S, 0, TAU);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // deck grime
+  ctx.strokeStyle = 'rgba(90, 118, 134, 0.22)';
+  ctx.lineWidth = 1.1 * S;
+  for (let i = 0; i < 5; i++) {
+    const a = -1.2 + rng() * 2.4;
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(a) * r * 0.34, cy + Math.sin(a) * r * 0.34);
+    ctx.lineTo(cx + Math.cos(a) * r * 0.86, cy + Math.sin(a) * r * 0.86);
+    ctx.stroke();
+  }
+
   ctx.restore();
 }
 
@@ -2744,6 +3135,308 @@ function drawBunker(ctx, x, y, r, S, rng) {
   ctx.restore();
 }
 
+/* Tipoca City dome platform: white rings, a lit dome cap and support struts. */
+function drawKaminoDome(ctx, x, y, r, S, rng) {
+  ctx.save();
+  ctx.translate(x, y);
+
+  // deep water shadow, offset away from the storm light
+  ctx.fillStyle = 'rgba(0, 7, 14, 0.32)';
+  ctx.beginPath();
+  ctx.ellipse(r * 0.18, r * 0.24, r * 1.1, r * 1.0, 0.1, 0, TAU);
+  ctx.fill();
+
+  // outer landing ring: bright white deck with a dark metallic edge
+  const rim = ctx.createRadialGradient(-r * 0.34, -r * 0.36, r * 0.06, 0, 0, r);
+  rim.addColorStop(0, '#ffffff');
+  rim.addColorStop(0.55, '#e6eef3');
+  rim.addColorStop(1, '#8ea4b1');
+  ctx.fillStyle = rim;
+  ctx.beginPath();
+  ctx.arc(0, 0, r, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = '#5c7484';
+  ctx.lineWidth = 2.4 * S;
+  ctx.stroke();
+
+  // inner deck plate, deliberately darker so the white rim pops
+  ctx.fillStyle = '#c2d1da';
+  ctx.beginPath();
+  ctx.arc(0, 0, r * 0.86, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(69, 92, 107, 0.55)';
+  ctx.lineWidth = 1.2 * S;
+  ctx.stroke();
+
+  // service ring and radial struts
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.95)';
+  ctx.lineWidth = 1.9 * S;
+  ctx.beginPath();
+  ctx.arc(0, 0, r * 0.78, 0, TAU);
+  ctx.stroke();
+  ctx.strokeStyle = 'rgba(78, 102, 119, 0.45)';
+  ctx.lineWidth = 1.2 * S;
+  for (let i = 0; i < 8; i++) {
+    const a = i * TAU / 8 + 0.2;
+    ctx.beginPath();
+    ctx.moveTo(Math.cos(a) * r * 0.62, Math.sin(a) * r * 0.62);
+    ctx.lineTo(Math.cos(a) * r * 0.85, Math.sin(a) * r * 0.85);
+    ctx.stroke();
+  }
+
+  // dark foundation seam under the dome cap
+  ctx.fillStyle = 'rgba(46, 68, 84, 0.5)';
+  ctx.beginPath();
+  ctx.arc(r * 0.05, r * 0.08, r * 0.64, 0, TAU);
+  ctx.fill();
+
+  // dome itself, lit from the upper left
+  const dome = ctx.createRadialGradient(-r * 0.26, -r * 0.3, r * 0.03, 0, 0, r * 0.62);
+  dome.addColorStop(0, '#ffffff');
+  dome.addColorStop(0.34, '#f4f9fb');
+  dome.addColorStop(0.72, '#ccdae3');
+  dome.addColorStop(1, '#7d94a1');
+  ctx.fillStyle = dome;
+  ctx.beginPath();
+  ctx.arc(0, 0, r * 0.6, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = '#5d7686';
+  ctx.lineWidth = 1.5 * S;
+  ctx.stroke();
+
+  // crisp specular arc and lower bounce light
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.95)';
+  ctx.lineWidth = 2.2 * S;
+  ctx.beginPath();
+  ctx.arc(-r * 0.02, -r * 0.03, r * 0.47, -2.55, -1.05);
+  ctx.stroke();
+  ctx.strokeStyle = 'rgba(160, 226, 250, 0.5)';
+  ctx.lineWidth = 1.2 * S;
+  ctx.beginPath();
+  ctx.arc(0, 0, r * 0.56, 0.7, 2.1);
+  ctx.stroke();
+
+  // concentric dome seams
+  ctx.strokeStyle = 'rgba(94, 120, 136, 0.5)';
+  ctx.lineWidth = 1 * S;
+  ctx.beginPath();
+  ctx.arc(0, 0, r * 0.4, 0, TAU);
+  ctx.stroke();
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.55)';
+  ctx.lineWidth = 0.8 * S;
+  ctx.beginPath();
+  ctx.arc(-r * 0.02, -r * 0.02, r * 0.4, -2.6, -1.2);
+  ctx.stroke();
+
+  // dark viewport slots around the base and lit landing beacons
+  ctx.fillStyle = 'rgba(28, 48, 62, 0.65)';
+  for (let i = 0; i < 8; i++) {
+    const a = i * TAU / 8 + 0.39;
+    ctx.save();
+    ctx.translate(Math.cos(a) * r * 0.7, Math.sin(a) * r * 0.7);
+    ctx.rotate(a + Math.PI / 2);
+    roundRect(ctx, -r * 0.055, -r * 0.02, r * 0.11, r * 0.04, r * 0.015);
+    ctx.fill();
+    ctx.restore();
+  }
+  ctx.save();
+  ctx.shadowColor = 'rgba(132, 224, 255, 0.95)';
+  ctx.shadowBlur = 6 * S;
+  ctx.fillStyle = 'rgba(198, 248, 255, 0.95)';
+  for (let i = 0; i < 6; i++) {
+    const a = i * TAU / 6 + 0.5;
+    ctx.beginPath();
+    ctx.arc(Math.cos(a) * r * 0.91, Math.sin(a) * r * 0.91, Math.max(0.8 * S, r * 0.024), 0, TAU);
+    ctx.fill();
+  }
+  ctx.restore();
+  ctx.restore();
+}
+
+/* Slender city spire seen from above: stacked white rings climbing to a point. */
+function drawKaminoSpire(ctx, x, y, r, S, rng) {
+  ctx.save();
+  ctx.translate(x, y);
+
+  ctx.fillStyle = 'rgba(0, 9, 18, 0.38)';
+  ctx.beginPath();
+  ctx.ellipse(r * 0.34, r * 0.4, r * 0.96, r * 0.42, 0.35, 0, TAU);
+  ctx.fill();
+
+  for (let i = 0; i < 4; i++) {
+    const rr = r * (1 - i * 0.19);
+    const shade = 0.9 - i * 0.06;
+    ctx.fillStyle = `rgba(${224 * shade + 12}, ${235 * shade + 12}, ${242 * shade + 10}, 1)`;
+    ctx.beginPath();
+    ctx.arc(-i * r * 0.06, -i * r * 0.07, rr, 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = `rgba(110, 138, 154, ${0.3 + i * 0.08})`;
+    ctx.lineWidth = 1 * S;
+    ctx.stroke();
+  }
+
+  ctx.fillStyle = '#f8fcfd';
+  ctx.beginPath();
+  ctx.arc(-r * 0.18, -r * 0.21, r * 0.16, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(130, 220, 250, 0.7)';
+  ctx.lineWidth = 1.2 * S;
+  ctx.stroke();
+
+  // signal light
+  ctx.save();
+  ctx.shadowColor = 'rgba(255, 92, 72, 0.9)';
+  ctx.shadowBlur = 7 * S;
+  ctx.fillStyle = 'rgba(255, 120, 98, 0.95)';
+  ctx.beginPath();
+  ctx.arc(-r * 0.18, -r * 0.21, Math.max(0.8 * S, r * 0.045), 0, TAU);
+  ctx.fill();
+  ctx.restore();
+  ctx.restore();
+}
+
+/* Small comms platform with a cross-arm mast and dish. */
+function drawKaminoAntenna(ctx, x, y, r, S, rng) {
+  ctx.save();
+  ctx.translate(x, y);
+
+  ctx.fillStyle = 'rgba(0, 9, 18, 0.36)';
+  ctx.beginPath();
+  ctx.ellipse(r * 0.18, r * 0.24, r * 1.05, r * 0.72, 0.15, 0, TAU);
+  ctx.fill();
+
+  const g = ctx.createRadialGradient(-r * 0.3, -r * 0.3, 0, 0, 0, r);
+  g.addColorStop(0, '#f3f9fb');
+  g.addColorStop(0.7, '#cfdde4');
+  g.addColorStop(1, '#93a7b2');
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.arc(0, 0, r, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = '#7d929e';
+  ctx.lineWidth = 1.2 * S;
+  ctx.stroke();
+
+  ctx.strokeStyle = 'rgba(116, 144, 160, 0.55)';
+  ctx.lineWidth = 1 * S;
+  ctx.beginPath();
+  ctx.arc(0, 0, r * 0.62, 0, TAU);
+  ctx.stroke();
+
+  // mast and cross arms
+  ctx.strokeStyle = '#9fb2bd';
+  ctx.lineWidth = Math.max(1.2 * S, r * 0.12);
+  ctx.beginPath();
+  ctx.moveTo(0, r * 0.1);
+  ctx.lineTo(0, -r * 0.92);
+  ctx.moveTo(-r * 0.5, -r * 0.55);
+  ctx.lineTo(r * 0.5, -r * 0.55);
+  ctx.stroke();
+  ctx.fillStyle = '#eef6f9';
+  ctx.beginPath();
+  ctx.arc(0, -r * 0.95, Math.max(1.1 * S, r * 0.12), 0, TAU);
+  ctx.fill();
+
+  // dish
+  ctx.fillStyle = '#dbe7ed';
+  ctx.strokeStyle = '#8fa4af';
+  ctx.lineWidth = 1 * S;
+  ctx.beginPath();
+  ctx.ellipse(-r * 0.36, -r * 0.5, r * 0.3, r * 0.17, -0.6, 0, TAU);
+  ctx.fill();
+  ctx.stroke();
+
+  // beacon
+  ctx.save();
+  ctx.shadowColor = 'rgba(130, 224, 255, 0.9)';
+  ctx.shadowBlur = 6 * S;
+  ctx.fillStyle = 'rgba(184, 244, 255, 0.95)';
+  ctx.beginPath();
+  ctx.arc(0, -r * 0.95, Math.max(0.8 * S, r * 0.08), 0, TAU);
+  ctx.fill();
+  ctx.restore();
+  ctx.restore();
+}
+
+/* Open-water construction pad: the preferred tower mount on Kamino. */
+function drawKaminoBuildPad(ctx, x, y, r, S, rng) {
+  ctx.save();
+  ctx.translate(x, y);
+
+  ctx.fillStyle = 'rgba(0, 8, 16, 0.34)';
+  ctx.beginPath();
+  ctx.ellipse(r * 0.12, r * 0.18, r * 1.06, r * 1.0, 0, 0, TAU);
+  ctx.fill();
+
+  const deck = ctx.createRadialGradient(-r * 0.32, -r * 0.36, r * 0.06, 0, 0, r);
+  deck.addColorStop(0, '#ffffff');
+  deck.addColorStop(0.52, '#e2ecf1');
+  deck.addColorStop(1, '#869caa');
+  ctx.fillStyle = deck;
+  ctx.beginPath();
+  ctx.arc(0, 0, r, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = '#546c7c';
+  ctx.lineWidth = 2.1 * S;
+  ctx.stroke();
+
+  const plate = ctx.createRadialGradient(-r * 0.24, -r * 0.26, r * 0.05, 0, 0, r * 0.8);
+  plate.addColorStop(0, '#c8d7df');
+  plate.addColorStop(1, '#93a8b5');
+  ctx.fillStyle = plate;
+  ctx.beginPath();
+  ctx.arc(0, 0, r * 0.8, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+  ctx.lineWidth = 1.2 * S;
+  ctx.stroke();
+
+  // amber construction ring — reads as "mount a tower here"
+  ctx.save();
+  ctx.shadowColor = 'rgba(255, 206, 122, 0.9)';
+  ctx.shadowBlur = 8 * S;
+  ctx.strokeStyle = 'rgba(255, 219, 148, 0.95)';
+  ctx.lineWidth = Math.max(1.4 * S, r * 0.055);
+  ctx.setLineDash([r * 0.34, r * 0.2]);
+  ctx.beginPath();
+  ctx.arc(0, 0, r * 0.74, 0, TAU);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+
+  // inward construction chevrons
+  ctx.strokeStyle = 'rgba(255, 224, 164, 0.8)';
+  ctx.lineWidth = Math.max(1 * S, r * 0.04);
+  for (let i = 0; i < 4; i++) {
+    const a = i * TAU / 4;
+    const ox = Math.cos(a);
+    const oy = Math.sin(a);
+    ctx.beginPath();
+    ctx.moveTo(ox * r * 0.58 - oy * r * 0.1, oy * r * 0.58 + ox * r * 0.1);
+    ctx.lineTo(ox * r * 0.44, oy * r * 0.44);
+    ctx.lineTo(ox * r * 0.58 + oy * r * 0.1, oy * r * 0.58 - ox * r * 0.1);
+    ctx.stroke();
+  }
+
+  // inner cross and corner clamps
+  ctx.strokeStyle = 'rgba(102, 132, 148, 0.5)';
+  ctx.lineWidth = 1.2 * S;
+  ctx.beginPath();
+  ctx.moveTo(-r * 0.34, 0);
+  ctx.lineTo(r * 0.34, 0);
+  ctx.moveTo(0, -r * 0.34);
+  ctx.lineTo(0, r * 0.34);
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(122, 150, 166, 0.6)';
+  for (let i = 0; i < 4; i++) {
+    const a = i * TAU / 4 + Math.PI / 4;
+    ctx.beginPath();
+    ctx.arc(Math.cos(a) * r * 0.55, Math.sin(a) * r * 0.55, Math.max(0.9 * S, r * 0.05), 0, TAU);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
 /* Layered sandstone butte. Drawn with a sunlit cap and deep strata
    so the desert map reads as a real Tatooine landmark, not a pebble. */
 function drawMesa(ctx, x, y, r, S, rng) {
@@ -3154,6 +3847,10 @@ function drawDecor(ctx, d, x, y, r, S, rng, theme = THEMES.desert) {
     case 'fern': drawFern(ctx, x, y, r, S, rng); break;
     case 'log': drawLog(ctx, x, y, r, S, rng); break;
     case 'bunker': drawBunker(ctx, x, y, r, S, rng); break;
+    case 'kaminodome': drawKaminoDome(ctx, x, y, r, S, rng); break;
+    case 'kaminospire': drawKaminoSpire(ctx, x, y, r, S, rng); break;
+    case 'kaminoantenna': drawKaminoAntenna(ctx, x, y, r, S, rng); break;
+    case 'buildpad': drawKaminoBuildPad(ctx, x, y, r, S, rng); break;
     default: break;
   }
 }
@@ -3803,7 +4500,7 @@ export function drawEnemy(ctx, e, time, S) {
   ctx.translate(e.x, e.y);
   // shadow
   const body = def.body || 'droid';
-  const flying = body === 'stap' || body === 'probe' || body === 'droidboss' || body === 'bikerscout';
+  const flying = body === 'stap' || body === 'probe' || body === 'droidboss' || body === 'bikerscout' || body === 'aiwha';
   const bob = flying ? Math.sin(time * 8 + e.phase) * 1.4 * V : 0;
   ctx.fillStyle = 'rgba(20, 16, 12, 0.28)';
   ctx.beginPath();
@@ -3834,6 +4531,9 @@ export function drawEnemy(ctx, e, time, S) {
   else if (body === 'ewok') drawEwokBody(ctx, e, time);
   else if (body === 'boarwolf') drawBoarWolfBody(ctx, e, time);
   else if (body === 'gorax') drawGoraxBody(ctx, e, time);
+  else if (body === 'aquadroid') drawAquaDroidBody(ctx, e, time);
+  else if (body === 'aiwha') drawAiwhasBody(ctx, e, time);
+  else if (body === 'seamonster') drawSeaMonsterBody(ctx, e, time);
   else if (body === 'stormtrooper') drawStormtrooperBody(ctx, e, time);
   else if (body === 'bikerscout') drawBikerScoutBody(ctx, e, time);
   else if (body === 'commando') drawCommandoBody(ctx, e, time);
@@ -8142,6 +8842,710 @@ function drawGoraxBody(ctx, e, time) {
   }
 }
 
+/* ============================================================
+   KAMINO — custom enemy art
+   ============================================================ */
+
+/* —— Kamino · Aqua Droid ————————————————————————————————
+   Sleek silver-blue humanoid battle droid with a narrow visor,
+   layered shoulder armour and long finned legs trailing behind. */
+function drawAquaDroidBody(ctx, e, time) {
+  const p = e.phase || 0;
+  const stride = Math.sin(time * 13 + p);
+  const strideB = Math.sin(time * 13 + p + Math.PI);
+  const sway = Math.sin(time * 2.2 + p);
+
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  /* finned legs */
+  const legs = [
+    { hx: -4.2, hy: -3.0, kx: -8.4 + stride * 0.8, ky: -8.2, fx: -10.8 + stride * 1.6, fy: -13.4, side: -1 },
+    { hx: -4.2, hy: 3.0, kx: -8.4 + strideB * 0.8, ky: 8.2, fx: -10.8 + strideB * 1.6, fy: 13.4, side: 1 },
+  ];
+  for (const leg of legs) {
+    ctx.strokeStyle = '#7f97a8';
+    ctx.lineWidth = 3.0;
+    ctx.beginPath();
+    ctx.moveTo(leg.hx, leg.hy);
+    ctx.lineTo(leg.kx, leg.ky);
+    ctx.stroke();
+    ctx.strokeStyle = '#c8d8e1';
+    ctx.lineWidth = 2.4;
+    ctx.beginPath();
+    ctx.moveTo(leg.kx, leg.ky);
+    ctx.lineTo(leg.fx, leg.fy);
+    ctx.stroke();
+
+    // curved swim fin along the outside of the shin
+    const mx = (leg.kx + leg.fx) / 2;
+    const my = (leg.ky + leg.fy) / 2;
+    const fin = ctx.createLinearGradient(mx, my, mx - 1.5, my + leg.side * 9);
+    fin.addColorStop(0, 'rgba(138, 210, 238, 0.92)');
+    fin.addColorStop(0.55, 'rgba(92, 168, 204, 0.7)');
+    fin.addColorStop(1, 'rgba(48, 108, 146, 0.12)');
+    ctx.fillStyle = fin;
+    ctx.beginPath();
+    ctx.moveTo(leg.kx, leg.ky);
+    ctx.quadraticCurveTo(mx - 1.6, my + leg.side * 8.4, leg.fx, leg.fy);
+    ctx.quadraticCurveTo(mx + 1.4, my + leg.side * 2.4, leg.kx, leg.ky);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(206, 242, 255, 0.62)';
+    ctx.lineWidth = 0.42;
+    ctx.stroke();
+
+    // fin ribs
+    ctx.strokeStyle = 'rgba(214, 246, 255, 0.4)';
+    ctx.lineWidth = 0.32;
+    for (let k = 1; k <= 3; k++) {
+      const t = k / 4;
+      const rx = leg.kx + (leg.fx - leg.kx) * t;
+      const ry = leg.ky + (leg.fy - leg.ky) * t;
+      ctx.beginPath();
+      ctx.moveTo(rx, ry);
+      ctx.lineTo(rx - 1.6, ry + leg.side * 3.2);
+      ctx.stroke();
+    }
+
+    // hip actuator
+    ctx.fillStyle = '#91a9b8';
+    ctx.beginPath();
+    ctx.arc(leg.hx, leg.hy, 1.5, 0, TAU);
+    ctx.fill();
+
+    // armoured foot
+    ctx.fillStyle = '#b6c8d3';
+    ctx.beginPath();
+    ctx.ellipse(leg.fx, leg.fy, 2.15, 1.15, 0, 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(88, 118, 136, 0.6)';
+    ctx.lineWidth = 0.35;
+    ctx.stroke();
+  }
+
+  /* sleek torso */
+  const body = ctx.createLinearGradient(-7, -6, 6, 6);
+  body.addColorStop(0, '#a9bdc9');
+  body.addColorStop(0.44, '#eaf1f5');
+  body.addColorStop(1, '#7f98a8');
+  ctx.fillStyle = body;
+  ctx.beginPath();
+  ctx.moveTo(6.4, 0);
+  ctx.quadraticCurveTo(4.6, -5.2, -1.8, -5.9);
+  ctx.quadraticCurveTo(-5.8, -5.4, -6.9, -2.6);
+  ctx.lineTo(-6.9, 2.6);
+  ctx.quadraticCurveTo(-5.8, 5.4, -1.8, 5.9);
+  ctx.quadraticCurveTo(4.6, 5.2, 6.4, 0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#58798c';
+  ctx.lineWidth = 0.75;
+  ctx.stroke();
+
+  // blue dorsal seam and chest core
+  ctx.strokeStyle = 'rgba(96, 178, 214, 0.85)';
+  ctx.lineWidth = 0.9;
+  ctx.beginPath();
+  ctx.moveTo(-5.4, 0);
+  ctx.lineTo(3.6, 0);
+  ctx.stroke();
+  ctx.save();
+  ctx.shadowColor = 'rgba(130, 232, 255, 0.95)';
+  ctx.shadowBlur = 4;
+  ctx.fillStyle = 'rgba(186, 246, 255, 0.95)';
+  ctx.beginPath();
+  ctx.arc(0.6, 0, 1.15, 0, TAU);
+  ctx.fill();
+  ctx.restore();
+
+  /* shoulder pauldrons */
+  for (const side of [-1, 1]) {
+    const pg = ctx.createLinearGradient(0, side * 3, 2, side * 7.5);
+    pg.addColorStop(0, '#f2f7fa');
+    pg.addColorStop(0.55, '#c3d3dd');
+    pg.addColorStop(1, '#7e97a7');
+    ctx.fillStyle = pg;
+    ctx.beginPath();
+    ctx.ellipse(2.4 + sway * 0.15, side * 5.0, 3.7, 2.5, side * 0.28, 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = '#5d7d90';
+    ctx.lineWidth = 0.6;
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(104, 190, 230, 0.85)';
+    ctx.lineWidth = 0.75;
+    ctx.beginPath();
+    ctx.arc(2.4 + sway * 0.15, side * 5.0, 2.4, side > 0 ? 0.2 : 2.9, side > 0 ? 2.4 : 5.1);
+    ctx.stroke();
+  }
+
+  /* forward arms and blaster */
+  for (const side of [-1, 1]) {
+    ctx.strokeStyle = side < 0 ? '#8ea6b6' : '#b7cad5';
+    ctx.lineWidth = 1.9;
+    ctx.beginPath();
+    ctx.moveTo(3.6, side * 3.9);
+    ctx.lineTo(8.4 + sway * 0.35, side * 2.9);
+    ctx.lineTo(10.4, side * 1.4);
+    ctx.stroke();
+    ctx.fillStyle = '#d8e5ec';
+    ctx.beginPath();
+    ctx.ellipse(10.7, side * 1.2, 1.15, 0.85, 0, 0, TAU);
+    ctx.fill();
+  }
+
+  // blaster rifle held level
+  ctx.strokeStyle = '#26333d';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(7.6, 2.4);
+  ctx.lineTo(16.2, 0.4);
+  ctx.stroke();
+  ctx.strokeStyle = '#718b9c';
+  ctx.lineWidth = 0.55;
+  ctx.beginPath();
+  ctx.moveTo(7.6, 2.0);
+  ctx.lineTo(16.2, 0.0);
+  ctx.stroke();
+  ctx.fillStyle = '#334754';
+  ctx.beginPath();
+  ctx.ellipse(10.2, 1.55, 1.8, 0.85, -0.14, 0, TAU);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(130, 236, 255, 0.9)';
+  ctx.beginPath();
+  ctx.arc(16.5, 0.35, 0.5, 0, TAU);
+  ctx.fill();
+
+  /* narrow helmet with cyan visor */
+  const head = ctx.createLinearGradient(5, -4, 10, 4);
+  head.addColorStop(0, '#eef5f8');
+  head.addColorStop(0.55, '#b9cbd6');
+  head.addColorStop(1, '#7690a1');
+  ctx.fillStyle = head;
+  ctx.beginPath();
+  ctx.moveTo(5.2, -3.6);
+  ctx.quadraticCurveTo(8.2, -4.3, 10.9, -2.3);
+  ctx.lineTo(12.0, 0);
+  ctx.lineTo(10.9, 2.3);
+  ctx.quadraticCurveTo(8.2, 4.3, 5.2, 3.6);
+  ctx.quadraticCurveTo(4.4, 0, 5.2, -3.6);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#547487';
+  ctx.lineWidth = 0.65;
+  ctx.stroke();
+
+  ctx.save();
+  ctx.shadowColor = 'rgba(133, 238, 255, 0.95)';
+  ctx.shadowBlur = 4;
+  ctx.fillStyle = 'rgba(178, 244, 255, 0.95)';
+  ctx.beginPath();
+  ctx.ellipse(9.15, 0, 1.35, 2.35, 0, 0, TAU);
+  ctx.fill();
+  ctx.restore();
+  ctx.fillStyle = '#0d3646';
+  ctx.beginPath();
+  ctx.ellipse(9.4, 0, 0.55, 1.75, 0, 0, TAU);
+  ctx.fill();
+
+  // swept head fin behind the helmet
+  ctx.fillStyle = 'rgba(116, 198, 232, 0.85)';
+  ctx.beginPath();
+  ctx.moveTo(5.6, -2.6);
+  ctx.quadraticCurveTo(2.6, 0, 5.6, 2.6);
+  ctx.quadraticCurveTo(3.4, 0, 5.6, -2.6);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(196, 240, 255, 0.6)';
+  ctx.lineWidth = 0.4;
+  ctx.stroke();
+
+  // crown stripe and rim light
+  ctx.strokeStyle = 'rgba(104, 194, 232, 0.9)';
+  ctx.lineWidth = 0.6;
+  ctx.beginPath();
+  ctx.moveTo(5.8, 0);
+  ctx.lineTo(10.2, 0);
+  ctx.stroke();
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+  ctx.lineWidth = 0.5;
+  ctx.beginPath();
+  ctx.arc(-1.0, 0, 4.8, -2.4, -1.1);
+  ctx.stroke();
+}
+
+/* —— Kamino · Aiwhas ————————————————————————————————————
+   Large grey-blue gliding whale with a broad manta-like wingspan,
+   a pale belly stripe and a long forked tail. */
+function drawAiwhasBody(ctx, e, time) {
+  const p = e.phase || 0;
+  const flap = Math.sin(time * 3.4 + p);
+  const drift = Math.sin(time * 1.5 + p * 0.7);
+  const tail = Math.sin(time * 2.5 + p);
+
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  /* long tail with a forked fluke */
+  const tailGrad = ctx.createLinearGradient(-12, 0, -30, 0);
+  tailGrad.addColorStop(0, '#6d8ba0');
+  tailGrad.addColorStop(0.6, '#557289');
+  tailGrad.addColorStop(1, '#3b576c');
+  ctx.fillStyle = tailGrad;
+  ctx.beginPath();
+  ctx.moveTo(-10, -5.2);
+  ctx.quadraticCurveTo(-20, -3.0 + tail * 1.4, -29, -2.8 + tail * 3.8);
+  ctx.quadraticCurveTo(-26, 0, -29, 2.8 + tail * 3.8);
+  ctx.quadraticCurveTo(-20, 3.0 + tail * 1.4, -10, 5.2);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(32, 54, 72, 0.85)';
+  ctx.lineWidth = 0.7;
+  ctx.stroke();
+
+  // broad fluke lobes
+  ctx.fillStyle = '#4e6a80';
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(-28, side * 1.2 + tail * 3.8);
+    ctx.quadraticCurveTo(-36, side * 5.6 + tail * 4.8, -38.6, side * 10.4 + tail * 5.0);
+    ctx.quadraticCurveTo(-32, side * 5.8 + tail * 4.2, -27, side * 3.4 + tail * 4.0);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(26, 46, 62, 0.7)';
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+  }
+
+  /* huge gliding wings, manta-broad but whale-soft along the edges */
+  for (const side of [-1, 1]) {
+    const span = 1 + flap * 0.05;
+    ctx.save();
+    ctx.translate(2, 0);
+    ctx.rotate(side * flap * 0.05);
+    const wing = ctx.createLinearGradient(2, side * 5, -6, side * 30 * span);
+    wing.addColorStop(0, '#b3c9d7');
+    wing.addColorStop(0.34, '#93aec0');
+    wing.addColorStop(0.68, '#7290a5');
+    wing.addColorStop(0.9, '#547186');
+    wing.addColorStop(1, '#3f5b70');
+    ctx.fillStyle = wing;
+    ctx.beginPath();
+    ctx.moveTo(10.0, side * 4.6);
+    ctx.bezierCurveTo(5.0, side * 14.0, -1.0, side * 24.0 * span, -8.0, side * 29.6 * span);
+    ctx.bezierCurveTo(-13.0, side * 33.0 * span, -20.0, side * 31.4 * span, -23.0, side * 27.0 * span);
+    ctx.bezierCurveTo(-19.5, side * 20.0, -16.0, side * 13.0, -12.0, side * 8.2);
+    ctx.quadraticCurveTo(-5.0, side * 4.6, 10.0, side * 4.6);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(36, 62, 80, 0.75)';
+    ctx.lineWidth = 0.75;
+    ctx.stroke();
+
+    // membrane ribs fanning to the wingtip
+    ctx.strokeStyle = 'rgba(202, 228, 242, 0.28)';
+    ctx.lineWidth = 0.4;
+    for (let k = 0; k < 4; k++) {
+      const t = 0.26 + k * 0.18;
+      ctx.beginPath();
+      ctx.moveTo(4.5 - k * 1.6, side * (5.4 + k * 0.8));
+      ctx.quadraticCurveTo(-7.0 - k * 1.2, side * (12 + k * 2.4), -11.0 - k * 1.6, side * (23 + k * 1.6) * span);
+      ctx.stroke();
+    }
+    // pale leading edge
+    ctx.strokeStyle = 'rgba(232, 246, 252, 0.6)';
+    ctx.lineWidth = 0.7;
+    ctx.beginPath();
+    ctx.moveTo(10.0, side * 4.6);
+    ctx.bezierCurveTo(5.0, side * 14.0, -1.0, side * 24.0 * span, -8.0, side * 29.6 * span);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  /* heavy whale body */
+  const body = ctx.createLinearGradient(-12, 0, 18, 0);
+  body.addColorStop(0, '#4c6a80');
+  body.addColorStop(0.28, '#7e9cb0');
+  body.addColorStop(0.62, '#a8c1d0');
+  body.addColorStop(0.86, '#b9cfdb');
+  body.addColorStop(1, '#7c98ab');
+  ctx.fillStyle = body;
+  ctx.beginPath();
+  ctx.moveTo(17.4, 0);
+  ctx.quadraticCurveTo(17.0, -5.8, 11.0, -8.4);
+  ctx.quadraticCurveTo(4.0, -10.2, -3.0, -8.6);
+  ctx.quadraticCurveTo(-9.5, -6.8, -11.5, -2.4);
+  ctx.quadraticCurveTo(-12.5, 1.6, -11.0, 4.8);
+  ctx.quadraticCurveTo(-8.0, 8.8, -1.0, 9.6);
+  ctx.quadraticCurveTo(7.0, 10.2, 12.4, 7.2);
+  ctx.quadraticCurveTo(16.8, 4.4, 17.4, 0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(38, 62, 78, 0.9)';
+  ctx.lineWidth = 0.85;
+  ctx.stroke();
+
+  /* bulbous rostrum over the front of the body */
+  const snout = ctx.createLinearGradient(12, -6, 22, 6);
+  snout.addColorStop(0, '#c4d8e3');
+  snout.addColorStop(0.6, '#a8c1d0');
+  snout.addColorStop(1, '#7d99ac');
+  ctx.fillStyle = snout;
+  ctx.beginPath();
+  ctx.moveTo(11.0, -6.6);
+  ctx.quadraticCurveTo(19.5, -5.0, 22.4, 0);
+  ctx.quadraticCurveTo(19.5, 5.0, 11.0, 6.6);
+  ctx.quadraticCurveTo(8.6, 0, 11.0, -6.6);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(46, 74, 92, 0.65)';
+  ctx.lineWidth = 0.55;
+  ctx.stroke();
+
+  /* pale throat grooves under the head */
+  ctx.strokeStyle = 'rgba(214, 234, 244, 0.6)';
+  ctx.lineWidth = 0.55;
+  for (let i = 0; i < 3; i++) {
+    ctx.beginPath();
+    ctx.moveTo(20.4 - i * 1.2, 2.2 + i * 1.5);
+    ctx.quadraticCurveTo(15.4 - i * 1.0, 4.4 + i * 1.4, 11.4 - i * 0.8, 4.8 + i * 1.2);
+    ctx.stroke();
+  }
+
+  /* eyes, blowhole and mouth */
+  for (const side of [-1, 1]) {
+    ctx.fillStyle = '#eef6fa';
+    ctx.beginPath();
+    ctx.ellipse(13.6, side * 4.5, 1.35, 0.95, side * 0.24, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = '#16303e';
+    ctx.beginPath();
+    ctx.ellipse(13.8, side * 4.5, 0.65, 0.66, 0, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+    ctx.beginPath();
+    ctx.arc(13.4, side * 4.2, 0.28, 0, TAU);
+    ctx.fill();
+  }
+  ctx.strokeStyle = 'rgba(40, 68, 86, 0.85)';
+  ctx.lineWidth = 0.7;
+  ctx.beginPath();
+  ctx.moveTo(22.0, 0.3);
+  ctx.quadraticCurveTo(18.6, 3.4, 13.8, 4.0);
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(28, 52, 70, 0.9)';
+  ctx.beginPath();
+  ctx.ellipse(6.6, 0, 0.95, 0.6, 0, 0, TAU);
+  ctx.fill();
+
+  /* back mottling and a soft gliding highlight */
+  ctx.fillStyle = 'rgba(52, 86, 108, 0.3)';
+  for (let i = 0; i < 6; i++) {
+    const x = -6 + i * 3.4;
+    ctx.beginPath();
+    ctx.ellipse(x + drift * 0.14, (i % 2 ? 1.6 : -1.6), 1.15, 0.6, 0.4, 0, TAU);
+    ctx.fill();
+  }
+  ctx.strokeStyle = 'rgba(240, 250, 254, 0.5)';
+  ctx.lineWidth = 0.6;
+  ctx.beginPath();
+  ctx.arc(1.0, 0, 7.3, -2.15, -0.85);
+  ctx.stroke();
+}
+
+/* —— Kamino · Giant Sea Monster ——————————————————————————
+   A massive dark-blue leviathan: four broad flippers, a long
+   whipping tail, armoured back ridges and glowing yellow eyes. */
+function drawSeaMonsterBody(ctx, e, time) {
+  const p = e.phase || 0;
+  const swim = Math.sin(time * 3.2 + p);
+  const swimB = Math.sin(time * 3.2 + p + 1.7);
+  const tailWave = Math.sin(time * 2.6 + p);
+  const pulse = 0.72 + Math.sin(time * 3.4 + p) * 0.28;
+
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  /* long tapering tail */
+  const N = 16;
+  const upper = [];
+  const lower = [];
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    const x = -13 - 47 * t;
+    const cy = Math.sin(time * 2.6 + p + t * 3.2) * 8.5 * t * t;
+    const w = 8.4 * Math.pow(1 - t, 0.72) + 0.8;
+    upper.push([x, cy - w]);
+    lower.push([x, cy + w]);
+  }
+  const tailGrad = ctx.createLinearGradient(-14, 0, -58, 0);
+  tailGrad.addColorStop(0, '#2f6f9b');
+  tailGrad.addColorStop(0.55, '#1f5578');
+  tailGrad.addColorStop(1, '#0c2b42');
+  ctx.fillStyle = tailGrad;
+  ctx.beginPath();
+  ctx.moveTo(upper[0][0], upper[0][1]);
+  for (let i = 1; i <= N; i++) ctx.lineTo(upper[i][0], upper[i][1]);
+  for (let i = N; i >= 0; i--) ctx.lineTo(lower[i][0], lower[i][1]);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(6, 24, 38, 0.9)';
+  ctx.lineWidth = 1.1;
+  ctx.stroke();
+
+  // tail fluke
+  const tipX = -59;
+  const tipY = Math.sin(time * 2.6 + p + 3.2) * 8.5;
+  ctx.fillStyle = '#1d4d70';
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(tipX + 3, tipY);
+    ctx.quadraticCurveTo(tipX - 3, tipY + side * 7, tipX - 7, tipY + side * 12);
+    ctx.quadraticCurveTo(tipX - 1, tipY + side * 6, tipX + 5, tipY + side * 2.6);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(6, 24, 38, 0.75)';
+    ctx.lineWidth = 0.7;
+    ctx.stroke();
+  }
+
+  /* four broad flippers */
+  const flippers = [
+    { x: 10, y: -10, tx: 32, ty: -31, s: swim, len: 1.05 },
+    { x: 10, y: 10, tx: 32, ty: 31, s: swimB, len: 1.05 },
+    { x: -9, y: -8.5, tx: -20, ty: -25, s: swimB, len: 0.82 },
+    { x: -9, y: 8.5, tx: -20, ty: 25, s: swim, len: 0.82 },
+  ];
+  for (const f of flippers) {
+    const dx = f.tx - f.x;
+    const dy = f.ty - f.y;
+    const len = Math.hypot(dx, dy);
+    const ang = Math.atan2(dy, dx) + f.s * 0.1;
+    ctx.save();
+    ctx.translate(f.x, f.y);
+    ctx.rotate(ang);
+    const wg = ctx.createLinearGradient(0, 0, len, 0);
+    wg.addColorStop(0, '#2a638a');
+    wg.addColorStop(0.7, '#1d4a6b');
+    wg.addColorStop(1, '#113451');
+    ctx.fillStyle = wg;
+    ctx.beginPath();
+    ctx.moveTo(0, -5.6 * f.len);
+    ctx.quadraticCurveTo(len * 0.5, -8.4 * f.len, len, -1.2);
+    ctx.quadraticCurveTo(len * 1.04, 0.2, len * 0.96, 2.2);
+    ctx.quadraticCurveTo(len * 0.5, 7.6 * f.len, 0, 5.6 * f.len);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(5, 22, 36, 0.85)';
+    ctx.lineWidth = 0.9;
+    ctx.stroke();
+    // paddle ridges
+    ctx.strokeStyle = 'rgba(120, 178, 210, 0.34)';
+    ctx.lineWidth = 0.5;
+    for (let k = -1; k <= 1; k++) {
+      ctx.beginPath();
+      ctx.moveTo(len * 0.1, k * 2.4 * f.len);
+      ctx.quadraticCurveTo(len * 0.55, k * 4.6 * f.len, len * 0.9, k * 1.4);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  /* massive muscular body */
+  const body = ctx.createRadialGradient(2, -3, 4, 0, 0, 30);
+  body.addColorStop(0, '#3f85b2');
+  body.addColorStop(0.42, '#255f88');
+  body.addColorStop(0.78, '#143e5d');
+  body.addColorStop(1, '#0a2438');
+  ctx.fillStyle = body;
+  ctx.beginPath();
+  ctx.moveTo(31.0, 0);
+  ctx.quadraticCurveTo(29.0, -9.6, 17.0, -15.2);
+  ctx.quadraticCurveTo(1.0, -18.4, -12.0, -11.0);
+  ctx.quadraticCurveTo(-18.0, -5.2, -17.0, 0);
+  ctx.quadraticCurveTo(-18.0, 5.2, -12.0, 11.0);
+  ctx.quadraticCurveTo(1.0, 18.4, 17.0, 15.2);
+  ctx.quadraticCurveTo(29.0, 9.6, 31.0, 0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#061c2c';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // heavy shoulder muscle bulges
+  ctx.fillStyle = 'rgba(56, 126, 164, 0.42)';
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.ellipse(11, side * 12.4, 8.4, 4.4, side * 0.32, 0, TAU);
+    ctx.fill();
+  }
+
+  // pectoral / flank musculature
+  ctx.strokeStyle = 'rgba(120, 184, 216, 0.3)';
+  ctx.lineWidth = 0.9;
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(12, side * 6.5);
+    ctx.quadraticCurveTo(4, side * 12.5, -7, side * 9.5);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(14, side * 2.5);
+    ctx.quadraticCurveTo(5, side * 4.5, -3, side * 3.5);
+    ctx.stroke();
+  }
+
+  // pale underbelly wedge
+  const belly = ctx.createLinearGradient(0, 10, 0, -10);
+  belly.addColorStop(0, 'rgba(122, 180, 208, 0.34)');
+  belly.addColorStop(0.5, 'rgba(122, 180, 208, 0.08)');
+  belly.addColorStop(1, 'rgba(122, 180, 208, 0.34)');
+  ctx.fillStyle = belly;
+  ctx.beginPath();
+  ctx.ellipse(-1, 0, 17.5, 7.2, 0, 0, TAU);
+  ctx.fill();
+
+  /* armoured dorsal ridge */
+  for (let i = 0; i < 6; i++) {
+    const x = 1 + i * 4.2;
+    const s = 1 - i * 0.08;
+    ctx.fillStyle = i % 2 ? '#2a5f83' : '#337398';
+    ctx.beginPath();
+    ctx.moveTo(x - 2.4 * s, 0);
+    ctx.lineTo(x, -2.6 * s);
+    ctx.lineTo(x + 2.4 * s, 0);
+    ctx.lineTo(x, 2.6 * s);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(8, 30, 46, 0.5)';
+    ctx.lineWidth = 0.4;
+    ctx.stroke();
+  }
+
+  /* broad head and jaw */
+  const head = ctx.createLinearGradient(19, -12, 37, 12);
+  head.addColorStop(0, '#3a7ba6');
+  head.addColorStop(0.55, '#215879');
+  head.addColorStop(1, '#0e3148');
+  ctx.fillStyle = head;
+  ctx.beginPath();
+  ctx.moveTo(19.0, -10.5);
+  ctx.quadraticCurveTo(30.0, -10.2, 35.0, -3.6);
+  ctx.lineTo(36.6, 0);
+  ctx.lineTo(35.0, 3.6);
+  ctx.quadraticCurveTo(30.0, 10.2, 19.0, 10.5);
+  ctx.quadraticCurveTo(15.5, 0, 19.0, -10.5);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#051a29';
+  ctx.lineWidth = 1.1;
+  ctx.stroke();
+
+  // snout highlight and nostrils
+  ctx.strokeStyle = 'rgba(150, 210, 236, 0.45)';
+  ctx.lineWidth = 0.9;
+  ctx.beginPath();
+  ctx.moveTo(22, -8.2);
+  ctx.quadraticCurveTo(30, -5.4, 34, -1.2);
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(4, 20, 32, 0.85)';
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.ellipse(33.2, side * 2.1, 1.1, 0.65, side * 0.2, 0, TAU);
+    ctx.fill();
+  }
+
+  // jaw line and teeth
+  ctx.strokeStyle = 'rgba(4, 18, 30, 0.95)';
+  ctx.lineWidth = 1.35;
+  ctx.beginPath();
+  ctx.moveTo(35.8, 0.4);
+  ctx.quadraticCurveTo(32.0, 8.8, 20.5, 9.8);
+  ctx.stroke();
+  ctx.fillStyle = '#e8eee4';
+  for (let i = 0; i < 7; i++) {
+    const t = i / 6;
+    const x = 35.0 - t * 13.4;
+    const y = 0.9 + t * 8.0;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - 0.85, y + 0.95);
+    ctx.lineTo(x + 0.35, y + 1.2);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // gill slits behind the jaw
+  ctx.strokeStyle = 'rgba(9, 34, 50, 0.8)';
+  ctx.lineWidth = 0.9;
+  for (const side of [-1, 1]) {
+    for (let i = 0; i < 3; i++) {
+      ctx.beginPath();
+      ctx.moveTo(18.4 + i * 1.8, side * 7.6);
+      ctx.quadraticCurveTo(17.6 + i * 1.8, side * 10.2, 18.8 + i * 1.8, side * 12.2);
+      ctx.stroke();
+    }
+  }
+
+  // glowing yellow eyes
+  for (const side of [-1, 1]) {
+    ctx.save();
+    ctx.shadowColor = 'rgba(255, 214, 70, 0.95)';
+    ctx.shadowBlur = 10 * pulse;
+    ctx.fillStyle = `rgba(255, 224, 104, ${0.88 + pulse * 0.12})`;
+    ctx.beginPath();
+    ctx.ellipse(26.2, side * 8.2, 2.9, 1.8, side * 0.24, 0, TAU);
+    ctx.fill();
+    ctx.restore();
+    ctx.fillStyle = '#1b1405';
+    ctx.beginPath();
+    ctx.ellipse(26.8, side * 8.2, 0.85, 1.55, 0, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(255, 255, 220, 0.9)';
+    ctx.beginPath();
+    ctx.arc(26.0, side * 7.7, 0.5, 0, TAU);
+    ctx.fill();
+  }
+
+  // brow ridges over the eyes
+  ctx.strokeStyle = 'rgba(10, 36, 54, 0.9)';
+  ctx.lineWidth = 1.6;
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(22.5, side * 10.0);
+    ctx.quadraticCurveTo(26.0, side * 11.4, 30.0, side * 9.0);
+    ctx.stroke();
+  }
+
+  // scarred flank detail
+  ctx.strokeStyle = 'rgba(160, 210, 232, 0.26)';
+  ctx.lineWidth = 0.7;
+  ctx.beginPath();
+  ctx.moveTo(-4, -8.5);
+  ctx.lineTo(2, -6.8);
+  ctx.lineTo(6, -8.0);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(-8, 6.5);
+  ctx.lineTo(-2, 8.0);
+  ctx.stroke();
+
+  // bioluminescent spots along the flanks
+  ctx.fillStyle = 'rgba(122, 226, 255, 0.55)';
+  for (const side of [-1, 1]) {
+    for (let i = 0; i < 4; i++) {
+      ctx.beginPath();
+      ctx.arc(-12 + i * 6.5, side * 13.2, 0.75, 0, TAU);
+      ctx.fill();
+    }
+  }
+
+  // shifting surface highlight
+  ctx.strokeStyle = 'rgba(198, 236, 252, 0.34)';
+  ctx.lineWidth = 0.85;
+  ctx.beginPath();
+  ctx.arc(1.5, 0, 12.5, -2.5, -1.0);
+  ctx.stroke();
+}
+
 /* —— Endor · stormtrooper —— */
 function drawStormtrooperBody(ctx, e, time) {
   const walk = Math.sin(time * 10.5 + (e.phase || 0)) * 1.15;
@@ -8747,6 +10151,46 @@ export function drawProjectile(ctx, p, S) {
     }
     ctx.restore();
   }
+  ctx.restore();
+}
+
+/* Animated storm weather overlay. Currently used by Kamino's rain, but
+   keyed off the theme so other planets can add weather without new hooks. */
+export function drawWeather(ctx, w, h, time, S, theme) {
+  const amb = theme && theme.ambient;
+  if (!amb || amb.mode !== 'rain') return;
+  ctx.save();
+
+  // distant sheet lightning
+  const flash = Math.pow(Math.max(0, Math.sin(time * 0.62 + 0.9)), 28);
+  if (flash > 0.004) {
+    ctx.fillStyle = `rgba(186, 232, 255, ${0.16 * flash})`;
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  ctx.lineCap = 'round';
+  const layers = [
+    { count: 150, speed: 640, len: 15, alpha: 0.20, width: 1.0, drift: 64, slant: 0.24 },
+    { count: 100, speed: 940, len: 27, alpha: 0.28, width: 1.5, drift: 96, slant: 0.3 },
+  ];
+  for (const layer of layers) {
+    ctx.strokeStyle = 'rgba(198, 232, 248, 1)';
+    ctx.lineWidth = layer.width * S;
+    for (let i = 0; i < layer.count; i++) {
+      const seed = i * 97.13 + layer.count * 7.3;
+      const spanX = w + 260 * S;
+      const x = (seed * 3.7 + time * layer.drift) % spanX - 130 * S;
+      const y = (seed * 7.9 + time * layer.speed) % (h + 200 * S) - 100 * S;
+      const len = layer.len * S;
+      ctx.globalAlpha = layer.alpha * (0.65 + ((i * 17) % 7) / 10);
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x - layer.slant * len, y - len);
+      ctx.stroke();
+    }
+  }
+
+  ctx.globalAlpha = 1;
   ctx.restore();
 }
 
