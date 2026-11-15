@@ -10,7 +10,7 @@ import {
 import {
   buildBackground, drawBaseShield, drawTower, drawTowerShadow, drawRange,
   drawEnemy, drawProjectile, drawParticles, drawEffects, drawAura, drawPreview,
-  drawSpawnGlow, getTheme,
+  drawSpawnGlow, drawWeather, getTheme,
 } from './art.js';
 
 const TAU = Math.PI * 2;
@@ -170,11 +170,20 @@ export class Game {
   /* ---------------- path & placement ---------------- */
 
   pathWidth() {
-    return clamp(34 * this.S, 28, 54);
+    const lane = this.map && this.map.theme === 'ocean' ? 29 : 34;
+    return clamp(lane * this.S, 24, 54);
   }
 
   distanceToPath(x, y) {
     return pointDistanceToPath(x, y, this.pathPts);
+  }
+
+  /* Construction pads are drawn with a radius relative to the smaller canvas
+     dimension, so hit-test them in pixels rather than normalized space. */
+  padAt(nx, ny) {
+    const m = Math.min(this.w, this.h);
+    return (this.map.buildPads || []).find((p) =>
+      Math.hypot((nx - p.x) * this.w, (ny - p.y) * this.h) <= p.r * m) || null;
   }
 
   canPlace(type, nx, ny) {
@@ -197,12 +206,20 @@ export class Game {
     }
     const m = Math.min(this.w, this.h);
     for (const d of (this.map.decor || [])) {
+      if (d.zone === 'pad') continue;
       const dx = d.x * this.w;
       const dy = d.y * this.h;
       const dr = d.r * m;
       if (Math.hypot(x - dx, y - dy) < dr + 24 * S) {
         return { ok: false, reason: 'Obstructed — pick open ground' };
       }
+    }
+    // Kamino: towers stand on the platform pads or in the surrounding open water.
+    // The route and decor checks above already reject the white bridges and the
+    // Tipoca City towers, so any clear sea position is a legal footing.
+    const laneClear = this.distanceToPath(x, y) >= this.pathWidth() / 2 + 26 * S;
+    if (this.map.placement === 'pads-or-water' && !laneClear && !this.padAt(nx, ny)) {
+      return { ok: false, reason: 'Build on a platform pad or open water' };
     }
     const baseX = this.map.base.x * this.w;
     const baseY = this.map.base.y * this.h;
@@ -218,6 +235,17 @@ export class Game {
   }
 
   placeTower(type, nx, ny) {
+    // Snap to a construction pad when the player taps close to its centre so the
+    // tower sits cleanly on the white deck instead of straddling the rim.
+    const pads = this.map.buildPads || [];
+    const m = Math.min(this.w, this.h);
+    for (const p of pads) {
+      if (Math.hypot((nx - p.x) * this.w, (ny - p.y) * this.h) <= p.r * m * 0.7) {
+        nx = p.x;
+        ny = p.y;
+        break;
+      }
+    }
     const check = this.canPlace(type, nx, ny);
     if (!check.ok) return check;
     const def = TOWERS[type];
@@ -1041,6 +1069,9 @@ export class Game {
     // particles / effects
     drawParticles(ctx, this.particles);
     drawEffects(ctx, this.effects, this.realTime);
+
+    // storm rain / planet weather
+    drawWeather(ctx, this.w, this.h, this.realTime, this.S, this.theme);
 
     // placement preview
     if (this.preview && this.pendingType) {

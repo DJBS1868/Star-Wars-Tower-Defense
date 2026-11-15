@@ -1,0 +1,444 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-label="Kamino's stormy ocean beneath Tipoca City, with an Aqua Droid, a gliding Aiwhas, and a giant sea monster with glowing yellow eyes">
+  <defs>
+    <linearGradient id="kSky" x2="0" y2="1">
+      <stop offset="0" stop-color="#020c18"/>
+      <stop offset=".34" stop-color="#071c2d"/>
+      <stop offset=".64" stop-color="#0e3148"/>
+      <stop offset=".86" stop-color="#1c5069"/>
+      <stop offset="1" stop-color="#2b6c85"/>
+    </linearGradient>
+    <radialGradient id="kPlanet">
+      <stop offset="0" stop-color="#e7f6fc"/>
+      <stop offset=".32" stop-color="#b8dcea"/>
+      <stop offset=".64" stop-color="#74aec7"/>
+      <stop offset=".86" stop-color="#427e9c"/>
+      <stop offset="1" stop-color="#1f4d6a"/>
+    </radialGradient>
+    <radialGradient id="kPlanetGlow">
+      <stop offset=".42" stop-color="#8fd4ee" stop-opacity=".34"/>
+      <stop offset=".66" stop-color="#61b2d6" stop-opacity=".14"/>
+      <stop offset="1" stop-color="#4aa0c8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="kSea" x2="0" y2="1">
+      <stop offset="0" stop-color="#2d6f89"/>
+      <stop offset=".3" stop-color="#1a4a65"/>
+      <stop offset=".68" stop-color="#0c2b42"/>
+      <stop offset="1" stop-color="#04131f"/>
+    </linearGradient>
+    <linearGradient id="kDeck" x2="0" y2="1">
+      <stop offset="0" stop-color="#f8fbfc"/>
+      <stop offset=".55" stop-color="#dbe7ed"/>
+      <stop offset="1" stop-color="#b3c6d1"/>
+    </linearGradient>
+    <linearGradient id="kDeckSide" x2="0" y2="1">
+      <stop offset="0" stop-color="#8ba0ad"/>
+      <stop offset="1" stop-color="#5b7282"/>
+    </linearGradient>
+    <linearGradient id="kCity" x2="0" y2="1">
+      <stop offset="0" stop-color="#e7f2f7"/>
+      <stop offset=".55" stop-color="#b8ccd7"/>
+      <stop offset="1" stop-color="#738b9b"/>
+    </linearGradient>
+    <linearGradient id="kDroid" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4fafc"/>
+      <stop offset=".42" stop-color="#cddde6"/>
+      <stop offset=".74" stop-color="#9db4c2"/>
+      <stop offset="1" stop-color="#6f8797"/>
+    </linearGradient>
+    <linearGradient id="kDroidLeg" x2="0" y2="1">
+      <stop offset="0" stop-color="#b9cbd6"/>
+      <stop offset="1" stop-color="#6d8797"/>
+    </linearGradient>
+    <linearGradient id="kFin" x2="1" y2="1">
+      <stop offset="0" stop-color="#9fe0f5" stop-opacity=".92"/>
+      <stop offset=".55" stop-color="#58b0d4" stop-opacity=".72"/>
+      <stop offset="1" stop-color="#2b789c" stop-opacity=".16"/>
+    </linearGradient>
+    <linearGradient id="kAiwha" x2="0" y2="1">
+      <stop offset="0" stop-color="#b6cedd"/>
+      <stop offset=".42" stop-color="#8aa8bc"/>
+      <stop offset=".78" stop-color="#5d7a8f"/>
+      <stop offset="1" stop-color="#3a566b"/>
+    </linearGradient>
+    <linearGradient id="kWing" x2="1" y2="1">
+      <stop offset="0" stop-color="#a9c2d2"/>
+      <stop offset=".4" stop-color="#7e9caf"/>
+      <stop offset=".76" stop-color="#557287"/>
+      <stop offset="1" stop-color="#354f63"/>
+    </linearGradient>
+    <linearGradient id="kMonster" x2="0" y2="1">
+      <stop offset="0" stop-color="#4b93bc"/>
+      <stop offset=".34" stop-color="#2b6b93"/>
+      <stop offset=".7" stop-color="#164563"/>
+      <stop offset="1" stop-color="#082335"/>
+    </linearGradient>
+    <linearGradient id="kFlipper" x2="1" y2="1">
+      <stop offset="0" stop-color="#34789f"/>
+      <stop offset=".7" stop-color="#1b4c6c"/>
+      <stop offset="1" stop-color="#0b2c43"/>
+    </linearGradient>
+    <radialGradient id="kEye">
+      <stop offset="0" stop-color="#fffbe0"/>
+      <stop offset=".42" stop-color="#ffe066"/>
+      <stop offset=".78" stop-color="#f5ad27"/>
+      <stop offset="1" stop-color="#b46a08"/>
+    </radialGradient>
+    <radialGradient id="kLamp">
+      <stop offset="0" stop-color="#d8f7ff"/>
+      <stop offset=".45" stop-color="#7fdcff" stop-opacity=".8"/>
+      <stop offset="1" stop-color="#4ab4e0" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="kSplash" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9f2fb" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#8fc9df" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="kRain" x2="0" y2="1">
+      <stop offset="0" stop-color="#b9e6f8" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#b9e6f8" stop-opacity=".05"/>
+    </linearGradient>
+    <linearGradient id="kFade" x2="0" y2="1">
+      <stop offset="0" stop-color="#04121f" stop-opacity="0"/>
+      <stop offset=".6" stop-color="#04121f" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#020a13" stop-opacity=".8"/>
+    </linearGradient>
+    <clipPath id="kPlanetClip"><circle cx="752" cy="102" r="92"/></clipPath>
+  </defs>
+
+  <!-- storm sky -->
+  <rect width="960" height="540" fill="url(#kSky)"/>
+  <g fill="#03101d" opacity=".6">
+    <path d="M0 42c58-24 108-14 158 2 54 17 96 8 148-6 72-20 118-8 172 8 58 17 108 9 160-4 64-16 120-12 182 6 44 13 92 15 140 6v62c-56 10-102 4-152-8-62-15-116-12-176 2-54 13-102 12-154-2-58-16-110-13-168 2-58 15-110 12-166-2C92 92 48 92 0 106Z" opacity=".8"/>
+    <path d="M0 138c74-18 128-6 184 8 52 13 100 8 150-4 66-16 118-6 174 10 54 15 108 10 162-2 62-14 114-10 170 4 44 11 90 10 120 5v46c-68 10-118 2-172-10-58-13-112-8-168 4-60 13-112 8-170-6-58-13-110-9-168 4-60 14-112 10-170-2C66 180 32 176 0 184Z" opacity=".55"/>
+  </g>
+
+  <!-- distant storm moon, mostly swallowed by cloud -->
+  <g opacity=".62">
+    <circle cx="752" cy="102" r="132" fill="url(#kPlanetGlow)" opacity=".6"/>
+    <circle cx="752" cy="102" r="92" fill="url(#kPlanet)"/>
+    <g clip-path="url(#kPlanetClip)">
+      <ellipse cx="728" cy="58" rx="112" ry="15" fill="#ecf8fd" opacity=".34"/>
+      <ellipse cx="784" cy="92" rx="104" ry="11" fill="#e4f4fb" opacity=".26"/>
+      <ellipse cx="722" cy="122" rx="96" ry="9" fill="#dceff8" opacity=".2"/>
+      <ellipse cx="786" cy="146" rx="96" ry="12" fill="#e8f6fc" opacity=".26"/>
+      <path d="M664 130c36 14 68 20 104 18 38-2 70-10 96-24 8 26 2 52-16 72-28 28-74 38-120 24-36-12-60-40-64-90Z" fill="#0a2438" opacity=".3"/>
+    </g>
+    <circle cx="752" cy="102" r="92" fill="none" stroke="#c4e9f8" stroke-width="1.6" opacity=".35"/>
+    <!-- cloud rags dragged across the disc -->
+    <g fill="#071c2d" opacity=".5">
+      <ellipse cx="712" cy="82" rx="86" ry="14" transform="rotate(-8 712 82)"/>
+      <ellipse cx="788" cy="126" rx="80" ry="12" transform="rotate(-6 788 126)"/>
+      <ellipse cx="742" cy="154" rx="92" ry="16" transform="rotate(-4 742 154)"/>
+    </g>
+  </g>
+
+  <!-- sheet lightning and rain haze -->
+  <g opacity=".3" stroke="#b9e6f8" stroke-width="2" stroke-linecap="round">
+    <path d="M298 20l-14 48 24 6-12 60" fill="none"/>
+    <path d="M312 42l16 26-18 18 12 24" fill="none" opacity=".6"/>
+  </g>
+  <ellipse cx="300" cy="34" rx="120" ry="60" fill="#a8dff5" opacity=".07"/>
+
+  <!-- Tipoca City skyline -->
+  <g opacity=".78">
+    <g fill="url(#kCity)" opacity=".85">
+      <path d="M52 300V228a14 24 0 0 1 28 0V300Z"/>
+      <path d="M96 300V240a12 24 0 0 1 24 0V300Z"/>
+      <path d="M146 300V210a16 24 0 0 1 32 0V300Z"/>
+      <path d="M206 300V240a12 20 0 0 1 24 0V300Z"/>
+      <path d="M840 300V230a14 24 0 0 1 28 0V300Z"/>
+      <path d="M890 300V202a16 24 0 0 1 32 0V300Z"/>
+      <path d="M774 300V252a11 18 0 0 1 22 0V300Z"/>
+    </g>
+    <g fill="#a7c2d1" opacity=".55">
+      <path d="M52 300v-40h28v40Z"/>
+      <path d="M146 300v-46h32v46Z"/>
+      <path d="M890 300v-52h32v52Z"/>
+    </g>
+    <!-- stacked platform discs so the skyline reads as Tipoca City towers -->
+    <g fill="none" stroke-linecap="round">
+      <g stroke="#f2fafd" stroke-width="2" opacity=".55">
+        <ellipse cx="66" cy="236" rx="14" ry="3.4"/><ellipse cx="66" cy="266" rx="14" ry="3.4"/>
+        <ellipse cx="108" cy="252" rx="12" ry="3"/><ellipse cx="108" cy="278" rx="12" ry="3"/>
+        <ellipse cx="162" cy="212" rx="16" ry="4"/><ellipse cx="162" cy="244" rx="16" ry="4"/><ellipse cx="162" cy="276" rx="16" ry="4"/>
+        <ellipse cx="218" cy="248" rx="12" ry="3"/><ellipse cx="218" cy="276" rx="12" ry="3"/>
+        <ellipse cx="854" cy="238" rx="14" ry="3.4"/><ellipse cx="854" cy="268" rx="14" ry="3.4"/>
+        <ellipse cx="906" cy="204" rx="16" ry="4"/><ellipse cx="906" cy="238" rx="16" ry="4"/><ellipse cx="906" cy="272" rx="16" ry="4"/>
+        <ellipse cx="785" cy="256" rx="11" ry="2.8"/><ellipse cx="785" cy="280" rx="11" ry="2.8"/>
+      </g>
+      <g stroke="#5d7484" stroke-width="1" opacity=".5">
+        <ellipse cx="66" cy="239" rx="14" ry="3.4"/><ellipse cx="108" cy="255" rx="12" ry="3"/>
+        <ellipse cx="162" cy="215" rx="16" ry="4"/><ellipse cx="162" cy="247" rx="16" ry="4"/>
+        <ellipse cx="906" cy="207" rx="16" ry="4"/><ellipse cx="906" cy="241" rx="16" ry="4"/>
+      </g>
+    </g>
+    <g fill="#8ee3ff" opacity=".85">
+      <rect x="63" y="240" width="4" height="5" rx="1"/>
+      <rect x="76" y="252" width="4" height="5" rx="1"/>
+      <rect x="107" y="262" width="4" height="5" rx="1"/>
+      <rect x="158" y="226" width="4" height="5" rx="1"/>
+      <rect x="170" y="244" width="4" height="5" rx="1"/>
+      <rect x="218" y="256" width="4" height="5" rx="1"/>
+      <rect x="851" y="244" width="4" height="5" rx="1"/>
+      <rect x="864" y="232" width="4" height="5" rx="1"/>
+      <rect x="901" y="220" width="4" height="5" rx="1"/>
+      <rect x="914" y="240" width="4" height="5" rx="1"/>
+      <rect x="785" y="264" width="4" height="5" rx="1"/>
+    </g>
+    <g fill="#e3f3fa" opacity=".5">
+      <ellipse cx="162" cy="188" rx="13" ry="5"/>
+      <ellipse cx="906" cy="180" rx="13" ry="5"/>
+      <ellipse cx="66" cy="206" rx="10" ry="4"/>
+      <ellipse cx="854" cy="208" rx="10" ry="4"/>
+    </g>
+    <!-- skybridges linking the towers into one city -->
+    <g stroke="url(#kCity)" stroke-width="6" opacity=".8" stroke-linecap="round">
+      <path d="M80 262h16M120 248h26M178 240h28M230 262h14M840 258h14M868 244h22M796 270h44"/>
+    </g>
+    <g stroke="#9db4c2" stroke-width="1.4" opacity=".5" stroke-linecap="round">
+      <path d="M80 266h16M120 252h26M178 244h28M230 266h14M840 262h14M868 248h22M796 274h44"/>
+    </g>
+    <!-- support struts and landing beacons -->
+    <g stroke="#7f98a8" stroke-width="3" opacity=".6">
+      <path d="M60 300v38M84 300v26M150 300v44M174 300v32M848 300v30M880 300v46M906 300v34M782 300v22"/>
+    </g>
+    <g fill="#85e6ff">
+      <circle cx="150" cy="286" r="2.6"/><circle cx="890" cy="286" r="2.6"/><circle cx="96" cy="292" r="2"/>
+    </g>
+  </g>
+
+  <!-- storm ocean -->
+  <rect y="298" width="960" height="242" fill="url(#kSea)"/>
+  <path d="M0 312c80-12 138-4 206 8 74 13 132 6 206-6 86-14 148-6 222 8 76 15 138 8 216-4 44-7 78-8 110-4v18c-42-2-80 2-126 10-82 14-146 10-224-6-72-14-132-10-208 4-82 15-146 10-226-4C102 322 54 322 0 332Z" fill="#4c93ad" opacity=".3"/>
+  <path d="M0 366c96-16 162-6 244 8 82 15 144 8 226-6 92-16 156-8 244 6 86 14 148 8 246-6v20c-92 12-154 14-244 2-96-13-158-8-248 6-88 14-150 10-238-4-80-13-140-12-230 2Z" fill="#6fb4cb" opacity=".18"/>
+  <g stroke="#bfe6f4" stroke-width="2" stroke-linecap="round" opacity=".45">
+    <path d="M64 348c22-5 40-5 62 0M132 384c26-6 48-6 74 0M268 340c24-5 44-5 68 0M352 398c30-7 54-7 84 0M540 350c26-6 46-6 72 0M642 404c28-6 50-6 78 0M756 352c24-5 44-5 68 0M828 396c30-6 56-6 86 0M42 430c26-5 46-5 72 0M208 452c30-6 54-6 84 0M366 470c28-5 50-5 78 0M512 440c28-5 50-5 78 0M690 462c30-6 54-6 84 0M842 446c26-5 46-5 72 0"/>
+  </g>
+  <g stroke="#e8f8ff" stroke-width="1.6" stroke-linecap="round" opacity=".55">
+    <path d="M96 360l18-4M298 372l16-3M468 356l18-4M604 380l20-4M742 368l18-4M884 388l16-3"/>
+  </g>
+
+  <!-- bridge and circular landing pads -->
+  <g>
+    <!-- support pylons -->
+    <g fill="#22323d" opacity=".75">
+      <path d="M214 412l10 0 6 52-22 0Z"/>
+      <path d="M436 382l9 0 5 46-20 0Z"/>
+      <path d="M724 356l8 0 5 42-18 0Z"/>
+    </g>
+    <!-- connector from the left pad up to the rear deck -->
+    <path d="M392 424l52-30 16 20-56 26Z" fill="url(#kDeckSide)" opacity=".95"/>
+    <path d="M392 418l52-30 12 14-52 26Z" fill="url(#kDeck)"/>
+    <path d="M394 418l50-29" fill="none" stroke="#ffffff" stroke-width="2" opacity=".65"/>
+    <!-- rear deck -->
+    <path d="M430 366h330l40 18-38 16H428Z" fill="#93a7b3"/>
+    <path d="M430 366h330l40 18H430Z" fill="url(#kDeck)"/>
+    <path d="M430 384h370v6H430Z" fill="#6d8494" opacity=".7"/>
+    <!-- main deck sweeping in from the left -->
+    <path d="M-20 400c84-8 178-6 260 4l104 8-4 26-106-8c-82-10-172-12-254-4Z" fill="url(#kDeck)"/>
+    <path d="M-20 426c84 8 174 10 254 4l106-8 4 18-106 8c-82 8-172 6-258-2Z" fill="url(#kDeckSide)"/>
+    <path d="M-20 402c84-8 178-6 260 4" fill="none" stroke="#ffffff" stroke-width="2.4" opacity=".75"/>
+    <!-- pad shadow + side -->
+    <ellipse cx="392" cy="428" rx="92" ry="30" fill="#314a5a" opacity=".6"/>
+    <path d="M300 414a92 30 0 0 0 184 0v14a92 30 0 0 1-184 0Z" fill="url(#kDeckSide)"/>
+    <ellipse cx="392" cy="414" rx="92" ry="30" fill="url(#kDeck)"/>
+    <ellipse cx="392" cy="414" rx="70" ry="21" fill="none" stroke="#8da2ae" stroke-width="2"/>
+    <ellipse cx="392" cy="414" rx="46" ry="13" fill="none" stroke="#d7e7ee" stroke-width="2" opacity=".8"/>
+    <g stroke="#7f96a4" stroke-width="2" opacity=".6">
+      <path d="M300 414h184M392 384v60"/>
+    </g>
+    <!-- right landing pad -->
+    <ellipse cx="760" cy="372" rx="66" ry="22" fill="#314a5a" opacity=".6"/>
+    <path d="M694 362a66 22 0 0 0 132 0v12a66 22 0 0 1-132 0Z" fill="url(#kDeckSide)"/>
+    <ellipse cx="760" cy="362" rx="66" ry="22" fill="url(#kDeck)"/>
+    <ellipse cx="760" cy="362" rx="46" ry="15" fill="none" stroke="#8da2ae" stroke-width="1.8"/>
+    <!-- deck lights -->
+    <g fill="#b6f2ff">
+      <circle cx="60" cy="405" r="2.4"/><circle cx="150" cy="404" r="2.4"/>
+      <circle cx="244" cy="409" r="2.4"/><circle cx="330" cy="413" r="2.4"/>
+      <circle cx="470" cy="372" r="2.2"/><circle cx="566" cy="372" r="2.2"/>
+      <circle cx="662" cy="373" r="2.2"/><circle cx="726" cy="361" r="2.2"/>
+      <circle cx="800" cy="361" r="2.2"/>
+    </g>
+    <g fill="url(#kLamp)">
+      <circle cx="60" cy="405" r="9"/><circle cx="330" cy="413" r="9"/>
+      <circle cx="726" cy="361" r="8"/><circle cx="800" cy="361" r="8"/>
+    </g>
+  </g>
+
+  <!-- splash around the leviathan -->
+  <g>
+    <path d="M566 438c-14-18-8-34 6-40-6 12-2 22 10 28 4-16 16-26 28-22-10 8-12 20-6 34 10-14 24-18 34-10-12 6-16 16-14 28Z" fill="url(#kSplash)" opacity=".8"/>
+    <g stroke="#d6f2fb" stroke-width="3" stroke-linecap="round" opacity=".7">
+      <path d="M572 400c-10-12-14-24-10-38M596 398c-2-16 2-28 12-38M624 402c6-14 16-22 28-24M654 410c10-10 20-14 32-12"/>
+    </g>
+  </g>
+
+  <!-- giant sea monster -->
+  <g transform="matrix(0.93 0 0 0.93 44 14)">
+    <!-- long tail sweeping clear of the water -->
+    <path d="M842 452c38 6 68-8 84-38 8-16 18-28 34-32-4 16-10 28-20 38 14-2 24 4 26 14-12 6-24 4-34-4-12 22-40 38-76 42Z" fill="url(#kMonster)" stroke="#061b2b" stroke-width="2"/>
+    <path d="M932 386c12-14 22-20 34-20-4 14-12 24-24 30Z" fill="#2a668c" stroke="#082338" stroke-width="1.4"/>
+    <path d="M944 402c12-2 22 2 28 10-12 2-22-2-28-10Z" fill="#245f82" stroke="#082338" stroke-width="1.4"/>
+    <!-- rear flippers -->
+    <path d="M716 492c-18 14-38 22-58 22 14-12 22-24 24-38 12 4 24 10 34 16Z" fill="url(#kFlipper)" stroke="#071f30" stroke-width="1.8"/>
+    <path d="M824 492c18 14 38 22 58 22-14-12-22-24-24-38-12 4-24 10-34 16Z" fill="url(#kFlipper)" stroke="#071f30" stroke-width="1.8"/>
+    <!-- water shadow -->
+    <ellipse cx="762" cy="496" rx="150" ry="30" fill="#03131f" opacity=".55"/>
+    <!-- muscular body -->
+    <path d="M624 448c4-36 38-56 86-56 54 0 106 22 142 54 22 20 16 44-14 50-42 8-96 0-138-18-32-14-62-20-76-30Z" fill="url(#kMonster)" stroke="#061b2b" stroke-width="2.6"/>
+    <path d="M660 442c28-22 62-30 96-24 34 6 60 20 76 38-22 14-56 18-92 12-36-6-64-16-80-26Z" fill="#2b6f96" opacity=".4"/>
+    <!-- shoulder muscle -->
+    <path d="M790 408c18 2 34 10 46 22-14 4-30 2-44-6Z" fill="#3d86ad" opacity=".5"/>
+    <!-- dorsal spines -->
+    <g fill="#3d86ad" stroke="#0a2b41" stroke-width="1.3">
+      <path d="M696 392l10-20 10 20Z"/>
+      <path d="M726 392l10-22 10 22Z"/>
+      <path d="M756 396l9-18 9 18Z"/>
+    </g>
+    <!-- front flippers -->
+    <path d="M686 466c-30 6-58 20-82 42 28-4 56-2 84 8 10-16 10-34-2-50Z" fill="url(#kFlipper)" stroke="#071f30" stroke-width="2"/>
+    <path d="M850 464c30 6 56 22 76 44-28-4-54-2-82 8-8-18-6-36 6-52Z" fill="url(#kFlipper)" stroke="#071f30" stroke-width="2"/>
+    <g stroke="#4e93b8" stroke-width="1.4" opacity=".45">
+      <path d="M620 466c14-14 32-24 52-30M864 470c-14 14-16 30-10 46M610 496c30 0 56 6 78 16"/>
+    </g>
+    <!-- broad head and jaw -->
+    <path d="M632 448c-16 6-34 2-48-10-12-10-16-24-8-34 8-10 24-10 36-2 8-12 24-16 38-10 14 6 20 20 16 34-2 12-10 20-20 24Z" fill="url(#kMonster)" stroke="#061b2b" stroke-width="2.2"/>
+    <path d="M578 410c14 2 28-2 40-12 6 10 4 22-6 28-12 4-26 0-34-16Z" fill="#123f5c"/>
+    <path d="M584 414c10 0 20-4 28-12" fill="none" stroke="#0a2e46" stroke-width="2"/>
+    <g fill="#e8eee4">
+      <path d="M586 414l6-9 3 10Z"/><path d="M596 412l6-9 3 10Z"/><path d="M606 410l6-9 3 10Z"/><path d="M616 409l5-8 3 9Z"/>
+    </g>
+    <!-- glowing yellow eyes -->
+    <circle cx="610" cy="424" r="15" fill="#f5b52c" opacity=".22"/>
+    <ellipse cx="610" cy="424" rx="7.4" ry="5.6" fill="url(#kEye)"/>
+    <ellipse cx="610" cy="424" rx="2.1" ry="4.9" fill="#211605"/>
+    <circle cx="608.2" cy="421.8" r="1.6" fill="#fffce6"/>
+    <ellipse cx="624" cy="410" rx="4.6" ry="3.5" fill="url(#kEye)" opacity=".8"/>
+    <ellipse cx="624" cy="410" rx="1.3" ry="3" fill="#211605"/>
+    <circle cx="622.9" cy="408.6" r="1" fill="#fffce6"/>
+    <path d="M596 414c9-6 20-5 28 1" fill="none" stroke="#0b2f46" stroke-width="3.2" stroke-linecap="round"/>
+    <path d="M616 404c5-3 11-2 14 2" fill="none" stroke="#0b2f46" stroke-width="2.4" stroke-linecap="round"/>
+    <!-- gill slits -->
+    <g stroke="#082c44" stroke-width="1.6" opacity=".8" fill="none">
+      <path d="M652 420c-4 10-4 20 0 30M660 424c-4 9-4 18 0 27M668 428c-3 8-3 16 0 23"/>
+    </g>
+    <!-- scars and flank spots -->
+    <g stroke="#8fc6de" stroke-width="1.3" opacity=".4">
+      <path d="M684 440l16 4 12-2M706 470l18 4M764 434l14 4"/>
+    </g>
+    <g fill="#83e2ff" opacity=".5">
+      <circle cx="700" cy="480" r="2"/><circle cx="718" cy="486" r="1.6"/>
+      <circle cx="780" cy="482" r="2"/><circle cx="808" cy="474" r="1.6"/>
+    </g>
+    <!-- churn and spray -->
+    <g stroke="#cbeefb" stroke-width="2.4" stroke-linecap="round" opacity=".55" fill="none">
+      <path d="M596 490c-14-6-24-16-28-30M628 502c-10-10-14-22-14-36M856 500c14-8 24-20 28-34M902 466c12-2 22-8 28-18"/>
+      <path d="M562 500c-8-14-8-28-2-42M672 504c-6-12-6-24-2-36M830 508c8-12 20-20 34-24M930 490c10-8 16-18 18-30"/>
+    </g>
+    <g fill="#dff6ff" opacity=".7">
+      <circle cx="556" cy="452" r="2.4"/><circle cx="548" cy="470" r="1.6"/>
+      <circle cx="676" cy="460" r="2"/><circle cx="684" cy="478" r="1.4"/>
+      <circle cx="866" cy="478" r="1.8"/><circle cx="944" cy="452" r="1.6"/>
+    </g>
+  </g>
+
+  <!-- aiwhas gliding above the platforms -->
+  <g>
+    <!-- long tail with forked fluke -->
+    <path d="M508 282c-36 0-68 10-94 30 24 0 46 6 60 16 6-16 20-32 34-46Z" fill="#67849a" stroke="#334e62" stroke-width="1.6"/>
+    <path d="M414 312c-16-14-30-18-42-16 8 12 18 20 32 24Z" fill="#547187" stroke="#334e62" stroke-width="1.2"/>
+    <path d="M410 322c-14 12-24 26-26 38 14-6 26-14 34-26Z" fill="#547187" stroke="#334e62" stroke-width="1.2"/>
+    <!-- far wing, swept back -->
+    <path d="M596 272c-14-32-44-58-84-70 4 28 22 54 54 72Z" fill="url(#kWing)" stroke="#2c4658" stroke-width="2"/>
+    <path d="M596 272c-14-32-44-58-84-70" fill="none" stroke="#d4e8f3" stroke-width="1.2" opacity=".45"/>
+    <!-- heavy whale body -->
+    <path d="M638 292c4-16-8-30-32-36-30-8-66-2-92 10-14 6-20 16-20 26s8 20 22 26c28 12 70 12 94-2 16-10 24-16 28-24Z" fill="url(#kAiwha)" stroke="#2d4658" stroke-width="2.2"/>
+    <path d="M512 302c24-10 54-12 84-4 18 5 30 12 34 18-24 12-58 12-86 0-14-6-24-10-32-14Z" fill="#d7e9f2" opacity=".38"/>
+    <!-- near wing, wide glide -->
+    <path d="M586 320c-20 32-52 54-90 60 2-28 20-52 52-70Z" fill="url(#kWing)" stroke="#2c4658" stroke-width="2.2"/>
+    <g stroke="#d2e7f2" stroke-width="1.3" opacity=".4" fill="none">
+      <path d="M582 322c-20 28-48 46-80 52M592 318c-14 22-34 38-58 48M574 312c-22 26-46 42-74 48"/>
+    </g>
+    <path d="M586 320c-20 32-52 54-90 60" fill="none" stroke="#e6f4fa" stroke-width="1.7" opacity=".55"/>
+    <!-- broad rounded head -->
+    <path d="M620 264c20 0 34 12 34 28s-14 28-34 28c-12-16-12-40 0-56Z" fill="#9db9c9" stroke="#2d4658" stroke-width="1.8"/>
+    <path d="M624 272c14 2 24 10 24 20s-10 18-24 20c-6-12-6-28 0-40Z" fill="#b6cfdc" opacity=".55"/>
+    <!-- mouth line and throat grooves -->
+    <path d="M642 306c-8 4-18 6-28 4" fill="none" stroke="#243b4b" stroke-width="2" stroke-linecap="round"/>
+    <g stroke="#5d7c91" stroke-width="1.2" opacity=".7" fill="none">
+      <path d="M628 312c-8 2-16 4-24 4M626 318c-6 2-12 3-18 3"/>
+    </g>
+    <!-- eye -->
+    <ellipse cx="628" cy="284" rx="3.4" ry="2.8" fill="#eff7fb"/>
+    <ellipse cx="629" cy="284" rx="1.5" ry="1.9" fill="#173240"/>
+    <circle cx="627.6" cy="282.6" r=".8" fill="#ffffff"/>
+    <!-- blowhole and back mottling -->
+    <ellipse cx="604" cy="272" rx="4.4" ry="2.2" fill="#3c566a" opacity=".85"/>
+    <g fill="#5d7c91" opacity=".5">
+      <ellipse cx="574" cy="266" rx="7" ry="2.2"/>
+      <ellipse cx="556" cy="278" rx="5" ry="1.8"/>
+      <ellipse cx="590" cy="286" rx="6" ry="2"/>
+    </g>
+    <!-- rain mist around the wings -->
+    <g stroke="#c9ecf9" stroke-width="1.4" stroke-linecap="round" opacity=".5">
+      <path d="M486 194c-10 14-14 28-12 44M506 392c12 8 20 18 24 30"/>
+    </g>
+  </g>
+
+  <!-- aqua droid on the left platform -->
+  <g transform="translate(4 -46)">
+    <!-- cast shadow -->
+    <ellipse cx="176" cy="470" rx="46" ry="12" fill="#041622" opacity=".55"/>
+    <!-- rear leg with swim fin -->
+    <path d="M156 404c-8 16-14 32-18 50l16 4c6-16 12-30 20-42Z" fill="url(#kDroidLeg)" stroke="#58788c" stroke-width="1.4"/>
+    <path d="M142 418c-22 10-36 22-44 38 18-6 34-6 48 2 4-14 4-28-4-40Z" fill="url(#kFin)" stroke="#7cc7e4" stroke-width="1"/>
+    <path d="M138 456l12-2 5 12-14 4Z" fill="#7c95a5"/>
+    <!-- front leg -->
+    <path d="M188 404c10 14 16 30 18 48l-16 2c-2-16-8-30-16-42Z" fill="url(#kDroidLeg)" stroke="#58788c" stroke-width="1.4"/>
+    <path d="M200 416c20 8 34 20 42 36-18-4-34-4-46 4-2-14-2-28 4-40Z" fill="url(#kFin)" stroke="#7cc7e4" stroke-width="1"/>
+    <path d="M196 456l-14-2-5 12 14 4Z" fill="#7c95a5"/>
+    <!-- torso -->
+    <path d="M156 350c0-12 10-20 24-20s24 8 24 20v48c0 12-10 20-24 20s-24-8-24-20Z" fill="url(#kDroid)" stroke="#4f6f82" stroke-width="1.8"/>
+    <path d="M180 334v82" stroke="#5fa9c8" stroke-width="2" opacity=".8"/>
+    <circle cx="180" cy="366" r="7" fill="#8eeaff" opacity=".9"/>
+    <circle cx="180" cy="366" r="3.4" fill="#e6fbff"/>
+    <g stroke="#6f8b9c" stroke-width="1.4" opacity=".6">
+      <path d="M158 386h44M160 396h40"/>
+    </g>
+    <!-- shoulder armour -->
+    <ellipse cx="154" cy="348" rx="16" ry="11" fill="url(#kDroid)" stroke="#4f6f82" stroke-width="1.6"/>
+    <ellipse cx="206" cy="348" rx="16" ry="11" fill="url(#kDroid)" stroke="#4f6f82" stroke-width="1.6"/>
+    <path d="M146 344c6-4 14-4 20 0" fill="none" stroke="#7fd6f2" stroke-width="1.6"/>
+    <!-- arms and blaster -->
+    <path d="M204 352c14 8 24 20 28 34l-9 6c-6-14-14-24-24-30Z" fill="#b4c8d3" stroke="#55788b" stroke-width="1.2"/>
+    <path d="M154 352c-8 10-10 22-8 34l11 2c0-12 2-22 8-30Z" fill="#93adbb" stroke="#55788b" stroke-width="1.2"/>
+    <path d="M216 386l42-14 4 8-42 16Z" fill="#263741"/>
+    <path d="M218 388l40-13 2 4-40 14Z" fill="#7892a2"/>
+    <circle cx="259" cy="374" r="2.4" fill="#a6f0ff"/>
+    <!-- helmet -->
+    <path d="M162 316c0-12 8-20 18-20s18 8 18 20-8 18-18 18-18-6-18-18Z" fill="url(#kDroid)" stroke="#4f6f82" stroke-width="1.8"/>
+    <path d="M168 318c4-6 20-6 24 0-4 6-20 6-24 0Z" fill="#8ce9ff"/>
+    <path d="M170 318c4-3 16-3 20 0-4 3-16 3-20 0Z" fill="#0d3646"/>
+    <path d="M164 306c4-5 10-7 16-7s12 2 16 7" fill="none" stroke="#6fc4e2" stroke-width="1.6"/>
+    <!-- fins and chest rim light -->
+    <path d="M150 330c-10 2-18 8-22 16 8-2 16 0 22 4 2-6 2-14 0-20Z" fill="url(#kFin)" stroke="#7cc7e4" stroke-width=".9"/>
+    <path d="M212 332c10 4 16 10 20 18-10-2-18 0-24 4-2-8 0-16 4-22Z" fill="url(#kFin)" stroke="#7cc7e4" stroke-width=".9"/>
+    <path d="M160 336c6-8 34-8 40 0" fill="none" stroke="#ffffff" stroke-width="1.4" opacity=".5"/>
+  </g>
+
+  <!-- rain -->
+  <g stroke="url(#kRain)" stroke-width="1.6" stroke-linecap="round">
+    <path d="M42 18l-7 34M118 6l-7 34M196 26l-7 34M286 10l-7 34M364 30l-7 34M452 12l-7 34M540 32l-7 34M628 14l-7 34M716 34l-7 34M804 16l-7 34M892 36l-7 34M62 104l-7 34M150 96l-7 34M238 116l-7 34M326 100l-7 34M414 120l-7 34M502 104l-7 34M590 124l-7 34M678 108l-7 34M766 128l-7 34M854 110l-7 34M24 196l-7 34M112 188l-7 34M200 208l-7 34M288 192l-7 34M376 212l-7 34M464 196l-7 34M552 216l-7 34M640 200l-7 34M728 220l-7 34M816 202l-7 34M904 224l-7 34M70 288l-7 34M158 280l-7 34M246 300l-7 34M334 284l-7 34M422 304l-7 34M510 288l-7 34M598 308l-7 34M686 292l-7 34M774 312l-7 34M862 296l-7 34"/>
+  </g>
+  <g stroke="#d8f2fb" stroke-width="1" stroke-linecap="round" opacity=".3">
+    <path d="M96 44l-4 18M248 64l-4 18M402 50l-4 18M556 72l-4 18M708 56l-4 18M860 76l-4 18M180 152l-4 18M338 160l-4 18M494 146l-4 18M648 168l-4 18M804 152l-4 18M58 258l-4 18M216 266l-4 18M370 252l-4 18M526 274l-4 18M682 258l-4 18M838 278l-4 18"/>
+  </g>
+
+  <!-- foreground haze and framing -->
+  <rect y="360" width="960" height="180" fill="url(#kFade)" opacity=".55"/>
+  <g fill="#9ad9ef" opacity=".35">
+    <circle cx="146" cy="322" r="1.2"/><circle cx="514" cy="332" r="1"/>
+    <circle cx="862" cy="318" r="1.2"/><circle cx="304" cy="344" r="1"/>
+  </g>
+  <rect width="960" height="540" fill="none" stroke="#03101c" stroke-width="26" opacity=".32"/>
+</svg>

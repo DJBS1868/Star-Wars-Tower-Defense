@@ -77,6 +77,56 @@ const ENDOR_PATH = [
   [1.07, 0.60],
 ];
 
+/* Kamino — storm bridges strung between Tipoca City's landing pads. */
+const KAMINO_PATH = [
+  [-0.05, 0.74],
+  [0.105, 0.74],
+  [0.215, 0.47],
+  [0.345, 0.62],
+  [0.455, 0.37],
+  [0.585, 0.54],
+  [0.705, 0.29],
+  [0.825, 0.50],
+  [0.878, 0.76],
+  [0.938, 0.62],
+  [1.07, 0.60],
+];
+
+/* Circular landing pads the bridges terminate at (normalized map space). */
+const KAMINO_PADS = [
+  [0.105, 0.74], [0.215, 0.47], [0.345, 0.62], [0.455, 0.37],
+  [0.585, 0.54], [0.705, 0.29], [0.825, 0.50], [0.878, 0.76],
+];
+
+/* Open-water construction pads. Towers may also be mounted directly in the
+   surrounding sea, but these give the skyline a deliberate shape. */
+const KAMINO_BUILD_PADS = [
+  { x: 0.155, y: 0.145, r: 0.052 },
+  { x: 0.475, y: 0.130, r: 0.048 },
+  { x: 0.700, y: 0.545, r: 0.052 },
+  { x: 0.060, y: 0.930, r: 0.048 },
+  { x: 0.215, y: 0.945, r: 0.044 },
+  { x: 0.952, y: 0.925, r: 0.050 },
+];
+
+const KAMINO_DECOR = [
+  /* Tipoca City: white domed platforms and slender spires rising from the sea. */
+  { type: 'kaminodome', x: 0.040, y: 0.135, r: 0.062, seed: 11 },
+  { type: 'kaminodome', x: 0.250, y: 0.125, r: 0.048, seed: 17 },
+  { type: 'kaminodome', x: 0.952, y: 0.170, r: 0.052, seed: 23 },
+  { type: 'kaminodome', x: 0.140, y: 0.885, r: 0.050, seed: 29 },
+  { type: 'kaminospire', x: 0.858, y: 0.105, r: 0.040, seed: 31 },
+  { type: 'kaminospire', x: 0.548, y: 0.090, r: 0.030, seed: 37 },
+  { type: 'kaminoantenna', x: 0.692, y: 0.075, r: 0.024, seed: 41 },
+  { type: 'kaminoantenna', x: 0.388, y: 0.940, r: 0.022, seed: 43 },
+  { type: 'crate', x: 0.085, y: 0.320, r: 0.012, seed: 47 },
+  { type: 'crate', x: 0.115, y: 0.345, r: 0.011, seed: 53 },
+  { type: 'crate', x: 0.665, y: 0.745, r: 0.012, seed: 59 },
+  { type: 'crate', x: 0.933, y: 0.335, r: 0.011, seed: 61 },
+  /* Build pads are drawn as decor but are valid tower mounts. */
+  ...KAMINO_BUILD_PADS.map((p, i) => ({ type: 'buildpad', ...p, zone: 'pad', seed: 67 + i * 6 })),
+];
+
 /* Static set dressing. Radii are normalized to the map's short edge. */
 export const DECOR = [
   { type: 'rock', x: 0.045, y: 0.19, r: 0.030, seed: 11 },
@@ -417,6 +467,23 @@ export const ENEMY_TYPES = {
     color: '#493326',
   },
 
+  /* —— Kamino: the storm-lashed clone homeworld —— */
+  aquadroid: {
+    name: 'Aqua Droid', short: 'AQUA', body: 'aquadroid',
+    hp: 0.72, speed: 101, radius: 8.5, reward: 0.95, leak: 1, armor: 0, gap: 0.44,
+    color: '#9fd4ea', fx: '#c9f2ff',
+  },
+  aiwha: {
+    name: 'Aiwhas', short: 'AIWHA', body: 'aiwha',
+    hp: 5.9, speed: 52, radius: 16.5, reward: 3, leak: 2, armor: 3, gap: 1.2,
+    heavy: true, color: '#8ea9bf', fx: '#d5ecfa',
+  },
+  seamonster: {
+    name: 'Giant Sea Monster', short: 'LEVIATHAN', body: 'seamonster', boss: true,
+    hp: 38, speed: 26, radius: 31, reward: 35, leak: 12, armor: 6, gap: 1.85,
+    color: '#2f6f9b', fx: '#ffe066',
+  },
+
 };
 
 const BASE_HP = 14;
@@ -550,9 +617,48 @@ export const MAPS = {
     chips: ['25 WAVES', 'ENDOR', 'ELITE'],
     accent: '#9fd86a',
   },
+  kamino: {
+    id: 'kamino',
+    planet: 'KAMINO',
+    site: 'TIPOCA CITY',
+    region: 'KAMINO',
+    kicker: 'GALACTIC REPUBLIC · KAMINO SYSTEM',
+    desc: 'A storm front rolls over Tipoca City. Aqua Droids march the white bridge network, Aiwhas glide in from the deep, and something vast is circling beneath the landing pads.',
+    tag: 'KAMINO',
+    difficulty: 'ELITE',
+    theme: 'ocean',
+    waves: 25,
+    startCredits: 560,
+    startLives: 18,
+    hpBase: 15.5,
+    hpGrowth: 1.178,
+    base: { x: 0.952, y: 0.60 },
+    path: KAMINO_PATH,
+    decor: KAMINO_DECOR,
+    landingPads: KAMINO_PADS,
+    buildPads: KAMINO_BUILD_PADS,
+    placement: 'pads-or-water',
+    roster: { line: 'aquadroid', fast: 'aquadroid', heavy: 'aiwha', boss: 'seamonster' },
+    /* Aqua Droids hold the early waves. Aiwhas join as heavy fliers at wave 7
+       and begin running as fast packs from wave 13. */
+    phases: [
+      { from: 1, line: 'aquadroid', fast: 'aquadroid', heavy: 'aquadroid', heavyStart: 99 },
+      { from: 7, line: 'aquadroid', fast: 'aquadroid', heavy: 'aiwha' },
+      { from: 13, line: 'aquadroid', fast: 'aiwha', heavy: 'aiwha' },
+    ],
+    mix: { lineRate: 0.92, fastRate: 0.5, heavyStart: 7, heavyRate: 0.5, fastStart: 3 },
+    bossEvery: 0,
+    finalBossCount: 1,
+    finalBossMul: 1.95,
+    flavor: { boss: 'The sea is churning around the landing pads', final: 'Final wave — the Giant Sea Monster has surfaced!' },
+    endWin: 'The leviathan sinks back into the storm. Tipoca City’s bridges still stand, and the clone line holds.',
+    endLose: 'The sea monster tore through the platform ring. Tipoca City is dark beneath the rain.',
+    chips: ['25 WAVES', 'KAMINO', 'ELITE'],
+    accent: '#7fd8f5',
+  },
 };
 
-export const MAP_ORDER = ['tatooine', 'hoth', 'mustafar', 'endor'];
+export const MAP_ORDER = ['tatooine', 'hoth', 'mustafar', 'endor', 'kamino'];
 
 export function getMap(id) {
   return MAPS[id] || MAPS.tatooine;
