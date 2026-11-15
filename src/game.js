@@ -214,12 +214,9 @@ export class Game {
         return { ok: false, reason: 'Obstructed — pick open ground' };
       }
     }
-    // Kamino: towers stand on the platform pads or in the surrounding open water.
-    // The route and decor checks above already reject the white bridges and the
-    // Tipoca City towers, so any clear sea position is a legal footing.
-    const laneClear = this.distanceToPath(x, y) >= this.pathWidth() / 2 + 26 * S;
-    if (this.map.placement === 'pads-or-water' && !laneClear && !this.padAt(nx, ny)) {
-      return { ok: false, reason: 'Build on a platform pad or open water' };
+    // Kamino towers must be mounted on one of the designated floating platforms.
+    if (this.map.placement === 'pads-only' && !this.padAt(nx, ny)) {
+      return { ok: false, reason: 'Build on a floating platform' };
     }
     const baseX = this.map.base.x * this.w;
     const baseY = this.map.base.y * this.h;
@@ -409,6 +406,7 @@ export class Game {
       slowFactor: 0,
       hitFlash: 0,
       phase: Math.random() * TAU,
+      waterTrailTimer: 0,
       dead: false,
       reward: enemyReward(spec.type, this.waveNumber),
       leak: def.leak,
@@ -634,6 +632,28 @@ export class Game {
         this.leakEnemy(e);
       } else {
         this.positionEnemy(e);
+        if (e.type === 'aiwha') {
+          e.waterTrailTimer -= dt;
+          if (e.waterTrailTimer <= 0 && this.particles.length < 300) {
+            e.waterTrailTimer = 0.075 + Math.random() * 0.045;
+            const behind = e.radius * this.S * 0.58;
+            const side = (Math.random() - 0.5) * e.radius * this.S * 0.7;
+            this.particles.push({
+              kind: 'waterTrail',
+              x: e.x - Math.cos(e.angle) * behind - Math.sin(e.angle) * side,
+              y: e.y - Math.sin(e.angle) * behind + Math.cos(e.angle) * side + e.radius * this.S * 0.45,
+              vx: 0,
+              vy: 0,
+              life: 0.9 + Math.random() * 0.35,
+              max: 1.25,
+              size: (e.radius * this.S) * (0.55 + Math.random() * 0.25),
+              color: '#79d9ee',
+              glow: false,
+              gravity: 0,
+              drag: 1,
+            });
+          }
+        }
       }
     }
   }
@@ -1051,6 +1071,9 @@ export class Game {
     for (const t of this.towers) {
       if (t.type === 'jedi') drawAura(ctx, t, this.S, this.realTime);
     }
+
+    // Aiwhas leave fading pools across the sea beneath their flight path.
+    drawParticles(ctx, this.particles, true);
 
     // enemies
     for (const e of this.enemies) {

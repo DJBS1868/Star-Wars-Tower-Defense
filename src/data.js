@@ -98,8 +98,8 @@ const KAMINO_PADS = [
   [0.585, 0.54], [0.705, 0.29], [0.825, 0.50], [0.878, 0.76],
 ];
 
-/* Open-water construction pads. Towers may also be mounted directly in the
-   surrounding sea, but these give the skyline a deliberate shape. */
+/* Floating construction platforms beside the bridge network; these are the
+   only valid tower mounts on Kamino. */
 const KAMINO_BUILD_PADS = [
   { x: 0.155, y: 0.145, r: 0.052 },
   { x: 0.475, y: 0.130, r: 0.048 },
@@ -637,7 +637,7 @@ export const MAPS = {
     decor: KAMINO_DECOR,
     landingPads: KAMINO_PADS,
     buildPads: KAMINO_BUILD_PADS,
-    placement: 'pads-or-water',
+    placement: 'pads-only',
     roster: { line: 'aquadroid', fast: 'aquadroid', heavy: 'aiwha', boss: 'seamonster' },
     /* Aqua Droids hold the early waves. Aiwhas join as heavy fliers at wave 7
        and begin running as fast packs from wave 13. */
