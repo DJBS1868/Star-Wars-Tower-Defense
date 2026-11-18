@@ -196,6 +196,42 @@ const THEMES = {
     vignette: 'rgba(2, 8, 16, 0.54)',
     ambient: { mode: 'rain', color: 'rgba(196, 230, 245, 0.55)', density: 8 },
   },
+  canyon: {
+    extra: 'canyon',
+    ground: ['#a9542c', '#8d3e22', '#6d2d18'],
+    dunes: [
+      { x: -0.05, y: 0.00, w: 0.56, h: 0.30, c: 'rgba(244, 150, 84, 0.20)' },
+      { x: 0.42, y: 0.02, w: 0.66, h: 0.24, c: 'rgba(232, 118, 58, 0.14)' },
+      { x: 0.00, y: 0.76, w: 0.48, h: 0.34, c: 'rgba(62, 21, 12, 0.28)' },
+      { x: 0.52, y: 0.70, w: 0.54, h: 0.38, c: 'rgba(247, 162, 92, 0.10)' },
+      { x: 0.30, y: 0.36, w: 0.40, h: 0.26, c: 'rgba(180, 74, 38, 0.12)' },
+    ],
+    ripple: '222, 128, 72',
+    speckleDark: '54, 18, 10',
+    speckleLight: '255, 190, 124',
+    pathShadow: 'rgba(48, 14, 7, 0.32)',
+    pathBank: '#6f2b16',
+    pathFill: ['#bd6237', '#ad502d', '#8f3d21'],
+    pathHi: 'rgba(255, 171, 108, 0.24)',
+    track: 'rgba(75, 28, 14, 0.26)',
+    scrub: '174, 112, 54',
+    caveRim: ['#c06738', '#8a3b20', '#5b2414'],
+    caveDark: ['#180806', '#30110a'],
+    caveLip: 'rgba(255, 173, 102, 0.4)',
+    caveEdge: 'rgba(50, 16, 8, 0.75)',
+    caveStyle: 'canyon',
+    rock: ['#b65b32', '#8b3a20', '#622715'],
+    rockLit: 'rgba(255, 184, 116, 0.3)',
+    rockShadow: 'rgba(42, 12, 6, 0.42)',
+    pebbleShadow: 'rgba(48, 15, 8, 0.34)',
+    pebble: ['#a04a2a', '#7a311b'],
+    pebbleLit: 'rgba(255, 186, 122, 0.34)',
+    pad: '#8e6a52',
+    padEdge: '#503527',
+    dome: ['#ba7a54', '#81543b', '#4d3123'],
+    vignette: 'rgba(38, 10, 4, 0.46)',
+    ambient: { mode: 'dust', color: 'rgba(255, 170, 102, 0.42)', density: 1.5 },
+  },
 };
 
 export function getTheme(name) {
@@ -479,6 +515,429 @@ function drawKaminoBridges(ctx, w, h, S, pathPts, pw, pads) {
     ctx.restore();
   }
 
+  ctx.restore();
+}
+
+/* ============================================================
+   GEONOSIS — red canyon floor and Separatist foundry works
+   ============================================================ */
+
+/* Layered red sandstone butte seen from above. */
+function drawCanyonSpire(ctx, x, y, r, S, rng) {
+  ctx.save();
+  ctx.translate(x, y);
+
+  // long shadow cast toward the lower right
+  ctx.fillStyle = 'rgba(46, 12, 6, 0.36)';
+  ctx.beginPath();
+  ctx.ellipse(r * 0.26, r * 0.34, r * 1.22, r * 0.68, 0.14, 0, TAU);
+  ctx.fill();
+
+  // eroded outer skirt
+  const skirt = ctx.createLinearGradient(-r, -r, r, r);
+  skirt.addColorStop(0, '#b45a31');
+  skirt.addColorStop(0.52, '#8b3a20');
+  skirt.addColorStop(1, '#5c2313');
+  ctx.fillStyle = skirt;
+  ctx.beginPath();
+  const n = 11;
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * TAU;
+    const rr = r * (0.82 + rng() * 0.32);
+    const px = Math.cos(a) * rr;
+    const py = Math.sin(a) * rr * 0.72;
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(57, 18, 8, 0.72)';
+  ctx.lineWidth = 0.9 * S;
+  ctx.stroke();
+
+  // stacked rock shelves with sunlit lips
+  for (let layer = 0; layer < 3; layer++) {
+    const t = 1 - layer * 0.19;
+    const lr = r * (0.72 - layer * 0.14);
+    const lx = -r * 0.08 + layer * r * 0.045;
+    const ly = -r * 0.11 + layer * r * 0.035;
+    ctx.save();
+    ctx.translate(lx, ly);
+    ctx.rotate(layer * 0.2 - 0.12);
+    const g = ctx.createRadialGradient(-lr * 0.35, -lr * 0.4, lr * 0.1, 0, 0, lr);
+    g.addColorStop(0, layer === 2 ? '#e1864d' : '#c96a3c');
+    g.addColorStop(0.58, layer === 2 ? '#b9562d' : '#9e4525');
+    g.addColorStop(1, '#6a2916');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    for (let i = 0; i < 9; i++) {
+      const a = (i / 9) * TAU;
+      const rr = lr * (0.76 + rng() * 0.3) * t;
+      const px = Math.cos(a) * rr;
+      const py = Math.sin(a) * rr * 0.7;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(69, 22, 10, 0.6)';
+    ctx.lineWidth = 0.65 * S;
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(255, 186, 120, 0.3)';
+    ctx.lineWidth = 1.1 * S;
+    ctx.beginPath();
+    ctx.arc(0, 0, lr * 0.66, -2.7, -1.2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // sediment strata and cracks
+  ctx.strokeStyle = 'rgba(79, 25, 11, 0.42)';
+  ctx.lineWidth = 0.7 * S;
+  for (let i = 0; i < 4; i++) {
+    const yy = -r * 0.32 + i * r * 0.19;
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.62, yy);
+    ctx.quadraticCurveTo(0, yy - r * 0.09, r * 0.6, yy + r * 0.03);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+/* A run of sealed foundry pipe lying across the canyon floor. */
+function drawFoundryPipe(ctx, x, y, r, S, rng) {
+  ctx.save();
+  ctx.translate(x, y);
+  const ang = (rng() - 0.5) * 0.55;
+  ctx.rotate(ang);
+
+  const len = r * 2.9;
+  const wide = r * 0.31;
+
+  // ground shadow
+  ctx.fillStyle = 'rgba(42, 12, 6, 0.34)';
+  ctx.beginPath();
+  ctx.ellipse(r * 0.12, wide * 0.85, len * 0.54, wide * 1.2, 0, 0, TAU);
+  ctx.fill();
+
+  // support saddles
+  ctx.fillStyle = '#34231c';
+  for (const sx of [-len * 0.3, len * 0.3]) {
+    roundRect(ctx, sx - r * 0.18, -wide * 1.15, r * 0.36, wide * 2.3, 1.5 * S);
+    ctx.fill();
+  }
+
+  // main pipe body
+  const body = ctx.createLinearGradient(0, -wide, 0, wide);
+  body.addColorStop(0, '#9aa7a1');
+  body.addColorStop(0.28, '#66766f');
+  body.addColorStop(0.62, '#3c4a45');
+  body.addColorStop(1, '#212b28');
+  ctx.fillStyle = body;
+  roundRect(ctx, -len * 0.5, -wide * 0.72, len, wide * 1.44, wide * 0.72);
+  ctx.fill();
+  ctx.strokeStyle = '#1a211f';
+  ctx.lineWidth = 0.85 * S;
+  ctx.stroke();
+
+  // second smaller conduit riding alongside
+  ctx.fillStyle = '#4b5a54';
+  roundRect(ctx, -len * 0.46, wide * 0.82, len * 0.9, wide * 0.62, wide * 0.3);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(13, 19, 17, 0.9)';
+  ctx.lineWidth = 0.6 * S;
+  ctx.stroke();
+
+  // coupling rings and rivets
+  for (const t of [-0.3, 0, 0.3]) {
+    const cx = len * t;
+    ctx.strokeStyle = 'rgba(27, 36, 33, 0.9)';
+    ctx.lineWidth = 1.3 * S;
+    ctx.beginPath();
+    ctx.moveTo(cx, -wide * 0.8);
+    ctx.lineTo(cx, wide * 0.8);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(197, 211, 201, 0.3)';
+    ctx.lineWidth = 0.5 * S;
+    ctx.beginPath();
+    ctx.moveTo(cx + 1.1 * S, -wide * 0.75);
+    ctx.lineTo(cx + 1.1 * S, wide * 0.75);
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(207, 219, 208, 0.32)';
+    for (const sy of [-0.55, 0.55]) {
+      ctx.beginPath();
+      ctx.arc(cx, wide * sy, 0.55 * S, 0, TAU);
+      ctx.fill();
+    }
+  }
+
+  // pale top highlight and a hot amber status lamp
+  ctx.strokeStyle = 'rgba(226, 236, 225, 0.34)';
+  ctx.lineWidth = Math.max(0.7 * S, wide * 0.12);
+  ctx.beginPath();
+  ctx.moveTo(-len * 0.44, -wide * 0.38);
+  ctx.lineTo(len * 0.44, -wide * 0.38);
+  ctx.stroke();
+  ctx.save();
+  ctx.shadowColor = 'rgba(255, 160, 60, 0.9)';
+  ctx.shadowBlur = 6 * S;
+  ctx.fillStyle = 'rgba(255, 190, 92, 0.95)';
+  ctx.beginPath();
+  ctx.arc(len * 0.46, 0, 1.25 * S, 0, TAU);
+  ctx.fill();
+  ctx.restore();
+
+  // scorch marks under the joints
+  ctx.fillStyle = 'rgba(46, 16, 8, 0.35)';
+  for (const t of [-0.24, 0.24]) {
+    ctx.beginPath();
+    ctx.ellipse(len * t, wide * 1.15, r * 0.52, wide * 0.35, 0, 0, TAU);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+/* Ground-level canyon strata, cracked hardpan and eroded shelves. */
+function drawGeonosisTerrain(ctx, w, h, S, rng, pathPts) {
+  ctx.save();
+
+  // wind-scoured sandstone bands
+  ctx.lineCap = 'round';
+  for (let i = 0; i < 10; i++) {
+    const y0 = (0.04 + i * 0.105) * h + (rng() - 0.5) * 20 * S;
+    const x0 = -0.08 * w;
+    const amp = (12 + rng() * 26) * S;
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.bezierCurveTo(
+      w * 0.26, y0 - amp,
+      w * 0.62, y0 + amp * 0.9,
+      w * 1.08, y0 - amp * 0.35,
+    );
+    ctx.strokeStyle = `rgba(${i % 3 === 0 ? '246, 164, 98' : '92, 30, 14'}, ${i % 3 === 0 ? 0.08 : 0.11})`;
+    ctx.lineWidth = (7 + rng() * 13) * S;
+    ctx.stroke();
+  }
+
+  // broken rock shelves and flat mesa ledges
+  const shelves = [
+    [0.080, 0.235, 0.060], [0.245, 0.205, 0.044], [0.505, 0.105, 0.050],
+    [0.705, 0.185, 0.040], [0.905, 0.235, 0.046], [0.120, 0.535, 0.043],
+    [0.305, 0.435, 0.034], [0.860, 0.475, 0.038], [0.455, 0.735, 0.036],
+    [0.075, 0.825, 0.040], [0.690, 0.825, 0.034], [0.965, 0.705, 0.036],
+  ];
+  for (const [nx, ny, nr] of shelves) {
+    const x = nx * w;
+    const y = ny * h;
+    const r = nr * Math.min(w, h);
+    if (distanceToPath(x, y, pathPts) < 44 * S + r) continue;
+    drawCanyonSpire(ctx, x, y, r, S, rng);
+  }
+
+  // cracked hardpan plates
+  for (let i = 0; i < 14; i++) {
+    const x = rng() * w;
+    const y = rng() * h;
+    if (distanceToPath(x, y, pathPts) < 52 * S) continue;
+    const rx = (18 + rng() * 48) * S;
+    const ry = rx * (0.4 + rng() * 0.25);
+    const rot = rng() * TAU;
+    ctx.fillStyle = `rgba(73, 24, 11, ${0.08 + rng() * 0.08})`;
+    ctx.beginPath();
+    ctx.ellipse(x, y, rx, ry, rot, 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(59, 18, 8, 0.2)';
+    ctx.lineWidth = 0.65 * S;
+    for (let c = 0; c < 7; c++) {
+      const a = rng() * TAU;
+      const cr = rx * (0.18 + rng() * 0.66);
+      const cx = x + Math.cos(a) * cr;
+      const cy = y + Math.sin(a) * cr * 0.55;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + (rng() - 0.5) * 20 * S, cy + (rng() - 0.5) * 13 * S);
+      ctx.stroke();
+    }
+  }
+
+  // loose scree and dry scrub
+  for (let i = 0; i < 64; i++) {
+    const x = rng() * w;
+    const y = rng() * h;
+    if (distanceToPath(x, y, pathPts) < 34 * S) continue;
+    const a = rng() * TAU;
+    const s = (1.2 + rng() * 2.8) * S;
+    ctx.fillStyle = rng() > 0.45 ? 'rgba(96, 35, 17, 0.34)' : 'rgba(255, 176, 108, 0.24)';
+    ctx.beginPath();
+    ctx.ellipse(x, y, s, s * (0.42 + rng() * 0.3), a, 0, TAU);
+    ctx.fill();
+  }
+  for (let i = 0; i < 26; i++) {
+    const x = rng() * w;
+    const y = rng() * h;
+    if (distanceToPath(x, y, pathPts) < 40 * S) continue;
+    ctx.strokeStyle = `rgba(138, 105, 53, ${0.16 + rng() * 0.14})`;
+    ctx.lineWidth = 0.8 * S;
+    for (let b = -1; b <= 1; b++) {
+      ctx.beginPath();
+      ctx.moveTo(x, y + 1.5 * S);
+      ctx.quadraticCurveTo(x + b * 2.8 * S, y - 2.6 * S, x + b * (4.0 + rng() * 2.2) * S, y - (5.2 + rng() * 2.4) * S);
+      ctx.stroke();
+    }
+  }
+
+  ctx.restore();
+}
+
+/* Large industrial foundry silhouettes and pipe runs around the canyon. */
+function drawGeonosisFoundry(ctx, w, h, S, pathPts) {
+  const rng = mulberry32(0x3d91e7);
+  const m = Math.min(w, h);
+
+  // main foundry deck along the north rim
+  const deckX = 0.715 * w;
+  const deckY = 0.075 * h;
+  const deckW = 0.255 * w;
+  const deckH = 0.085 * h;
+  ctx.save();
+  ctx.fillStyle = 'rgba(36, 13, 7, 0.42)';
+  roundRect(ctx, deckX - deckW * 0.5 + 5 * S, deckY - deckH * 0.5 + 7 * S, deckW, deckH, 6 * S);
+  ctx.fill();
+  const deck = ctx.createLinearGradient(0, deckY - deckH, 0, deckY + deckH);
+  deck.addColorStop(0, '#645a50');
+  deck.addColorStop(0.5, '#3b3832');
+  deck.addColorStop(1, '#24231f');
+  ctx.fillStyle = deck;
+  roundRect(ctx, deckX - deckW * 0.5, deckY - deckH * 0.5, deckW, deckH, 6 * S);
+  ctx.fill();
+  ctx.strokeStyle = '#171613';
+  ctx.lineWidth = 1.2 * S;
+  ctx.stroke();
+  ctx.strokeStyle = 'rgba(191, 179, 159, 0.18)';
+  ctx.lineWidth = 0.55 * S;
+  for (let i = 1; i < 7; i++) {
+    ctx.beginPath();
+    ctx.moveTo(deckX - deckW * 0.5 + (deckW * i) / 7, deckY - deckH * 0.42);
+    ctx.lineTo(deckX - deckW * 0.5 + (deckW * i) / 7, deckY + deckH * 0.42);
+    ctx.stroke();
+  }
+
+  // overhead pipe manifold
+  for (const off of [-0.028, -0.008, 0.014]) {
+    const py = deckY + off * h;
+    ctx.strokeStyle = '#1d211f';
+    ctx.lineWidth = 5 * S;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(0.575 * w, py);
+    ctx.lineTo(0.845 * w, py + 2 * S);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(155, 170, 159, 0.36)';
+    ctx.lineWidth = 1.1 * S;
+    ctx.beginPath();
+    ctx.moveTo(0.575 * w, py - 1.7 * S);
+    ctx.lineTo(0.845 * w, py + 0.3 * S);
+    ctx.stroke();
+  }
+
+  // tank farm and vent stacks on the deck
+  for (const [tx, ty, tr] of [
+    [0.660, 0.058, 0.026], [0.742, 0.050, 0.020], [0.808, 0.070, 0.024], [0.882, 0.048, 0.017],
+  ]) {
+    const x = tx * w;
+    const y = ty * h;
+    const r = tr * m;
+    ctx.fillStyle = 'rgba(24, 9, 5, 0.4)';
+    ctx.beginPath();
+    ctx.ellipse(x + r * 0.18, y + r * 0.24, r * 1.08, r * 0.82, 0, 0, TAU);
+    ctx.fill();
+    const g = ctx.createRadialGradient(x - r * 0.35, y - r * 0.38, r * 0.1, x, y, r);
+    g.addColorStop(0, '#8b857a');
+    g.addColorStop(0.5, '#555049');
+    g.addColorStop(1, '#292723');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = '#161411';
+    ctx.lineWidth = 1 * S;
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(207, 195, 174, 0.22)';
+    ctx.lineWidth = 0.55 * S;
+    ctx.beginPath();
+    ctx.arc(x, y, r * 0.62, 0, TAU);
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(255, 166, 62, 0.85)';
+    ctx.shadowColor = 'rgba(255, 138, 38, 0.8)';
+    ctx.shadowBlur = 5 * S;
+    ctx.beginPath();
+    ctx.arc(x, y, r * 0.16, 0, TAU);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+
+  // conveyor gantry climbing away toward the east
+  ctx.strokeStyle = 'rgba(31, 28, 24, 0.9)';
+  ctx.lineWidth = 4 * S;
+  ctx.beginPath();
+  ctx.moveTo(0.815 * w, 0.115 * h);
+  ctx.lineTo(0.905 * w, 0.185 * h);
+  ctx.lineTo(0.955 * w, 0.150 * h);
+  ctx.stroke();
+  ctx.strokeStyle = 'rgba(178, 151, 104, 0.45)';
+  ctx.lineWidth = 1.2 * S;
+  ctx.stroke();
+
+  // a second pumping station tucked into the south-west canyon
+  const pumpX = 0.115 * w;
+  const pumpY = 0.855 * h;
+  ctx.fillStyle = 'rgba(35, 12, 6, 0.4)';
+  roundRect(ctx, pumpX - 0.075 * w, pumpY - 0.032 * h, 0.15 * w, 0.064 * h, 4 * S);
+  ctx.fill();
+  ctx.fillStyle = '#36332d';
+  roundRect(ctx, pumpX - 0.07 * w, pumpY - 0.028 * h, 0.14 * w, 0.056 * h, 4 * S);
+  ctx.fill();
+  ctx.strokeStyle = '#171511';
+  ctx.lineWidth = 1 * S;
+  ctx.stroke();
+  for (const side of [-1, 1]) {
+    ctx.fillStyle = '#22241f';
+    ctx.beginPath();
+    ctx.arc(pumpX + side * 0.035 * w, pumpY, 0.018 * m, 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(186, 172, 146, 0.26)';
+    ctx.lineWidth = 0.7 * S;
+    ctx.beginPath();
+    ctx.arc(pumpX + side * 0.035 * w, pumpY, 0.011 * m, 0, TAU);
+    ctx.stroke();
+  }
+  ctx.save();
+  ctx.shadowColor = 'rgba(255, 150, 42, 0.85)';
+  ctx.shadowBlur = 7 * S;
+  ctx.fillStyle = 'rgba(255, 184, 76, 0.9)';
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.arc(pumpX + side * 0.06 * w, pumpY - 0.015 * h, 1.5 * S, 0, TAU);
+    ctx.fill();
+  }
+  ctx.restore();
+
+  // steam venting from the works, kept off the trail
+  const steam = [
+    [0.760, 0.120, 36], [0.905, 0.175, 28], [0.150, 0.825, 24],
+  ];
+  for (const [nx, ny, rr] of steam) {
+    const x = nx * w;
+    const y = ny * h;
+    if (distanceToPath(x, y, pathPts) < 54 * S) continue;
+    const r = rr * S;
+    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, 'rgba(218, 206, 188, 0.18)');
+    g.addColorStop(0.55, 'rgba(206, 190, 170, 0.08)');
+    g.addColorStop(1, 'rgba(206, 190, 170, 0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.ellipse(x, y, r, r * 0.7, -0.2 + rng() * 0.4, 0, TAU);
+    ctx.fill();
+  }
   ctx.restore();
 }
 
@@ -1328,6 +1787,7 @@ export function buildBackground(w, h, pathPts, S, dpr = 1, map = {}) {
   }
 
   if (theme.extra === 'lava') drawMustafarRefinery(ctx, w, h, S, pathPts);
+  if (theme.extra === 'canyon') drawGeonosisFoundry(ctx, w, h, S, pathPts);
 
   // --- relay base -------------------------------------------------
   drawRelayBaseStatic(ctx, basePos.x * w, basePos.y * h, m, S, rng, theme);
@@ -1376,6 +1836,10 @@ function hashString(s) {
 function drawTerrainDetail(ctx, w, h, S, rng, pathPts, theme) {
   if (theme.extra === 'ocean') {
     drawKaminoOcean(ctx, w, h, S, rng, pathPts);
+    return;
+  }
+  if (theme.extra === 'canyon') {
+    drawGeonosisTerrain(ctx, w, h, S, rng, pathPts);
     return;
   }
   if (theme.extra === 'desert') {
@@ -1695,6 +2159,61 @@ function drawPathEdges(ctx, w, h, S, rng, pathPts, pw, theme) {
       }
       ctx.restore();
     }
+  } else if (theme.extra === 'canyon') {
+    // Dusty red shoulders and broken rock lip along the dirt trail.
+    ctx.save();
+    ctx.lineCap = 'round';
+    for (const side of [-1, 1]) {
+      tracePoints(ctx, offsetPath(pathPts, side * (pw * 0.5 + 2.6 * S)));
+      ctx.strokeStyle = 'rgba(247, 164, 98, 0.24)';
+      ctx.lineWidth = 3.6 * S;
+      ctx.stroke();
+      tracePoints(ctx, offsetPath(pathPts, side * (pw * 0.5 + 6.8 * S)));
+      ctx.strokeStyle = 'rgba(70, 22, 10, 0.2)';
+      ctx.lineWidth = 2.4 * S;
+      ctx.stroke();
+    }
+    // Embedded stones and dry ruts.
+    for (let i = 6; i < pathPts.length - 4; i += 9) {
+      const p = pathPts[i];
+      const prev = pathPts[i - 1];
+      const next = pathPts[i + 1];
+      let dx = next[0] - prev[0];
+      let dy = next[1] - prev[1];
+      const len = Math.hypot(dx, dy) || 1;
+      dx /= len; dy /= len;
+      for (const side of [-1, 1]) {
+        if (rng() > 0.7) continue;
+        const off = side * (pw * 0.5 + (2 + rng() * 10) * S);
+        const sx = p[0] - dy * off;
+        const sy = p[1] + dx * off;
+        ctx.fillStyle = `rgba(84, 29, 13, ${0.2 + rng() * 0.2})`;
+        ctx.beginPath();
+        ctx.ellipse(sx, sy, (1.2 + rng() * 2.2) * S, (0.7 + rng() * 1.2) * S, rng() * TAU, 0, TAU);
+        ctx.fill();
+      }
+    }
+    // Hairline cracks spidering out from the route.
+    ctx.strokeStyle = 'rgba(61, 18, 8, 0.16)';
+    ctx.lineWidth = 0.7 * S;
+    for (let i = 4; i < pathPts.length - 2; i += 5) {
+      const p = pathPts[i];
+      const prev = pathPts[i - 1];
+      const next = pathPts[i + 1];
+      let dx = next[0] - prev[0];
+      let dy = next[1] - prev[1];
+      const len = Math.hypot(dx, dy) || 1;
+      dx /= len; dy /= len;
+      const side = rng() > 0.5 ? 1 : -1;
+      const off = side * (pw * 0.5 + (4 + rng() * 13) * S);
+      const sx = p[0] - dy * off;
+      const sy = p[1] + dx * off;
+      ctx.beginPath();
+      ctx.moveTo(sx, sy);
+      ctx.lineTo(sx + (rng() - 0.5) * 15 * S, sy + (rng() - 0.5) * 10 * S);
+      ctx.stroke();
+    }
+    ctx.restore();
   } else if (theme.extra === 'lava') {
     ctx.save();
     ctx.lineJoin = 'round';
@@ -1787,7 +2306,41 @@ function drawForeground(ctx, w, h, S, rng, theme, pathPts) {
     ctx.restore();
     return;
   }
-  if (theme.extra === 'forest') {
+  if (theme.extra === 'canyon') {
+    ctx.save();
+    // Low ochre dust banks rolling across the canyon floor.
+    for (let i = 0; i < 8; i++) {
+      const x = rng() * w;
+      const y = rng() * h;
+      if (distanceToPath(x, y, pathPts) < 58 * S) continue;
+      const rx = (70 + rng() * 160) * S;
+      const g = ctx.createRadialGradient(x, y, 0, x, y, rx);
+      g.addColorStop(0, `rgba(226, 144, 84, ${0.06 + rng() * 0.06})`);
+      g.addColorStop(0.6, 'rgba(188, 92, 48, 0.03)');
+      g.addColorStop(1, 'rgba(188, 92, 48, 0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.ellipse(x, y, rx, rx * (0.24 + rng() * 0.18), rng() * 0.6 - 0.3, 0, TAU);
+      ctx.fill();
+    }
+    // Warm foundry haze in the upper corners.
+    const glow = ctx.createRadialGradient(w * 0.78, h * 0.08, 0, w * 0.78, h * 0.08, Math.max(w, h) * 0.6);
+    glow.addColorStop(0, 'rgba(255, 154, 74, 0.08)');
+    glow.addColorStop(0.55, 'rgba(214, 92, 42, 0.03)');
+    glow.addColorStop(1, 'rgba(214, 92, 42, 0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, w, h);
+    // Fine windblown grit.
+    for (let i = 0; i < 24; i++) {
+      const x = rng() * w;
+      const y = rng() * h;
+      ctx.fillStyle = `rgba(255, 196, 136, ${0.08 + rng() * 0.12})`;
+      ctx.beginPath();
+      ctx.arc(x, y, (0.5 + rng() * 1.1) * S, 0, TAU);
+      ctx.fill();
+    }
+    ctx.restore();
+  } else if (theme.extra === 'forest') {
     ctx.save();
     for (let i = 0; i < 7; i++) {
       const x = rng() * w;
@@ -3847,6 +4400,8 @@ function drawDecor(ctx, d, x, y, r, S, rng, theme = THEMES.desert) {
     case 'fern': drawFern(ctx, x, y, r, S, rng); break;
     case 'log': drawLog(ctx, x, y, r, S, rng); break;
     case 'bunker': drawBunker(ctx, x, y, r, S, rng); break;
+    case 'canyonspire': drawCanyonSpire(ctx, x, y, r, S, rng); break;
+    case 'foundrypipe': drawFoundryPipe(ctx, x, y, r, S, rng); break;
     case 'kaminodome': drawKaminoDome(ctx, x, y, r, S, rng); break;
     case 'kaminospire': drawKaminoSpire(ctx, x, y, r, S, rng); break;
     case 'kaminoantenna': drawKaminoAntenna(ctx, x, y, r, S, rng); break;
@@ -4500,7 +5055,7 @@ export function drawEnemy(ctx, e, time, S) {
   ctx.translate(e.x, e.y);
   // shadow
   const body = def.body || 'droid';
-  const flying = body === 'stap' || body === 'probe' || body === 'droidboss' || body === 'bikerscout' || body === 'aiwha';
+  const flying = body === 'stap' || body === 'probe' || body === 'droidboss' || body === 'bikerscout' || body === 'aiwha' || body === 'geonosian';
   const bob = flying ? Math.sin(time * 8 + e.phase) * 1.4 * V : 0;
   ctx.fillStyle = 'rgba(20, 16, 12, 0.28)';
   ctx.beginPath();
@@ -4534,6 +5089,9 @@ export function drawEnemy(ctx, e, time, S) {
   else if (body === 'aquadroid') drawAquaDroidBody(ctx, e, time);
   else if (body === 'aiwha') drawAiwhasBody(ctx, e, time);
   else if (body === 'seamonster') drawSeaMonsterBody(ctx, e, time);
+  else if (body === 'geonosian') drawGeonosianBody(ctx, e, time);
+  else if (body === 'reek') drawReekBody(ctx, e, time);
+  else if (body === 'acklay') drawAcklayBody(ctx, e, time);
   else if (body === 'stormtrooper') drawStormtrooperBody(ctx, e, time);
   else if (body === 'bikerscout') drawBikerScoutBody(ctx, e, time);
   else if (body === 'commando') drawCommandoBody(ctx, e, time);
@@ -9544,6 +10102,731 @@ function drawSeaMonsterBody(ctx, e, time) {
   ctx.beginPath();
   ctx.arc(1.5, 0, 12.5, -2.5, -1.0);
   ctx.stroke();
+}
+
+/* ============================================================
+   GEONOSIS — custom enemy art
+   ============================================================ */
+
+/* —— Geonosis · Geonosian Warrior ————————————————————————
+   Lean tan insectoid soldier with four translucent wings and a
+   sonic blaster held forward. */
+function drawGeonosianBody(ctx, e, time) {
+  const p = e.phase || 0;
+  const flap = Math.sin(time * 17 + p);
+  const flapB = Math.sin(time * 17 + p + 1.15);
+  const drift = Math.sin(time * 3.2 + p);
+
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  /* far pair of wings, slightly darker behind the near pair */
+  const wingSets = [
+    { side: -1, phase: flapB, back: true },
+    { side: 1, phase: flap, back: true },
+    { side: -1, phase: flap, back: false },
+    { side: 1, phase: flapB, back: false },
+  ];
+  for (const wing of wingSets) {
+    const side = wing.side;
+    const spread = (wing.back ? 0.83 : 1) * (0.86 + wing.phase * 0.14);
+    const len = wing.back ? 15.5 : 19.5;
+    ctx.save();
+    ctx.translate(-1.5, side * 2.4);
+    ctx.rotate(side * (0.18 + wing.phase * 0.26));
+    const g = ctx.createLinearGradient(0, 0, -len * 0.7, side * len);
+    g.addColorStop(0, 'rgba(220, 248, 255, 0.54)');
+    g.addColorStop(0.48, 'rgba(160, 224, 246, 0.31)');
+    g.addColorStop(1, 'rgba(102, 178, 214, 0.08)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.bezierCurveTo(-4 * spread, side * 7 * spread, -12 * spread, side * 14 * spread, -len * 0.78, side * len * spread);
+    ctx.bezierCurveTo(-len * 0.5, side * len * 0.6, -len * 0.2, side * len * 0.2, 1.5, 0);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(228, 252, 255, 0.62)';
+    ctx.lineWidth = 0.38;
+    ctx.stroke();
+
+    // wing veins
+    ctx.strokeStyle = 'rgba(224, 250, 255, 0.38)';
+    ctx.lineWidth = 0.28;
+    for (let k = 1; k <= 3; k++) {
+      const t = k / 4;
+      ctx.beginPath();
+      ctx.moveTo(-0.5, side * 0.8);
+      ctx.quadraticCurveTo(-len * 0.32 * spread, side * len * 0.42 * t, -len * 0.64 * spread, side * len * (0.72 + t * 0.16) * spread);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  /* thin rear legs trailing under the abdomen */
+  ctx.strokeStyle = '#7c5a35';
+  ctx.lineWidth = 1.5;
+  const legSwing = drift * 0.8;
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(-4, side * 3.2);
+    ctx.lineTo(-8.8 + legSwing * side, side * 7.2);
+    ctx.lineTo(-12.4 + legSwing * 1.5, side * 9.4);
+    ctx.stroke();
+    ctx.strokeStyle = '#b48a54';
+    ctx.lineWidth = 0.8;
+    ctx.beginPath();
+    ctx.moveTo(-8.8 + legSwing * side, side * 7.2);
+    ctx.lineTo(-12.4 + legSwing * 1.5, side * 9.4);
+    ctx.stroke();
+    ctx.strokeStyle = '#7c5a35';
+    ctx.lineWidth = 1.5;
+  }
+
+  /* tapered chitin abdomen */
+  const abd = ctx.createLinearGradient(-15, 0, 2, 0);
+  abd.addColorStop(0, '#9a7444');
+  abd.addColorStop(0.5, '#c39a61');
+  abd.addColorStop(1, '#8a6338');
+  ctx.fillStyle = abd;
+  ctx.beginPath();
+  ctx.moveTo(1.5, -4.2);
+  ctx.quadraticCurveTo(-7, -5.4, -13.6, -3.0);
+  ctx.quadraticCurveTo(-17.5, 0, -13.6, 3.0);
+  ctx.quadraticCurveTo(-7, 5.4, 1.5, 4.2);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#5a3e22';
+  ctx.lineWidth = 0.8;
+  ctx.stroke();
+  ctx.strokeStyle = 'rgba(231, 197, 145, 0.45)';
+  ctx.lineWidth = 0.55;
+  for (let i = 0; i < 3; i++) {
+    ctx.beginPath();
+    ctx.arc(-5.5 - i * 2.8, 0, 3.5 - i * 0.5, -1.1, 1.1);
+    ctx.stroke();
+  }
+
+  /* narrow thorax and layered shoulder plates */
+  const thorax = ctx.createRadialGradient(-1, -1.5, 0.5, 0, 0, 6);
+  thorax.addColorStop(0, '#e1bd83');
+  thorax.addColorStop(0.6, '#b78b52');
+  thorax.addColorStop(1, '#7f5b33');
+  ctx.fillStyle = thorax;
+  ctx.beginPath();
+  ctx.ellipse(-0.5, 0, 5.6, 4.4, 0, 0, TAU);
+  ctx.fill();
+  ctx.strokeStyle = '#5a3e22';
+  ctx.lineWidth = 0.75;
+  ctx.stroke();
+  ctx.strokeStyle = 'rgba(82, 54, 28, 0.55)';
+  ctx.lineWidth = 0.55;
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(-2.5, side * 3.5);
+    ctx.quadraticCurveTo(0.5, side * 5.1, 3.2, side * 3.2);
+    ctx.stroke();
+  }
+
+  /* head with helmet plates, antennae and compound eyes */
+  const head = ctx.createLinearGradient(4, -4, 12, 4);
+  head.addColorStop(0, '#d4ad74');
+  head.addColorStop(0.55, '#a77c46');
+  head.addColorStop(1, '#704d29');
+  ctx.fillStyle = head;
+  ctx.beginPath();
+  ctx.moveTo(4.0, -3.8);
+  ctx.quadraticCurveTo(8.0, -4.8, 10.4, -2.6);
+  ctx.lineTo(12.4, 0);
+  ctx.lineTo(10.4, 2.6);
+  ctx.quadraticCurveTo(8.0, 4.8, 4.0, 3.8);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#51361d';
+  ctx.lineWidth = 0.7;
+  ctx.stroke();
+
+  // central helmet ridge
+  ctx.strokeStyle = 'rgba(242, 211, 158, 0.65)';
+  ctx.lineWidth = 0.7;
+  ctx.beginPath();
+  ctx.moveTo(4.6, 0);
+  ctx.lineTo(10.8, 0);
+  ctx.stroke();
+
+  // antennae
+  ctx.strokeStyle = '#5a3e22';
+  ctx.lineWidth = 0.62;
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(6.2, side * 2.6);
+    ctx.quadraticCurveTo(8.0, side * 5.2, 12.4, side * 5.8);
+    ctx.stroke();
+    ctx.fillStyle = '#d6b27c';
+    ctx.beginPath();
+    ctx.arc(12.5, side * 5.9, 0.55, 0, TAU);
+    ctx.fill();
+  }
+
+  // dark compound eyes
+  for (const side of [-1, 1]) {
+    ctx.fillStyle = '#211711';
+    ctx.beginPath();
+    ctx.ellipse(8.7, side * 2.1, 1.35, 1.05, side * 0.25, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(255, 222, 150, 0.7)';
+    ctx.beginPath();
+    ctx.arc(8.45, side * 1.85, 0.34, 0, TAU);
+    ctx.fill();
+  }
+
+  /* sonic blaster clamped under the right arm */
+  ctx.save();
+  ctx.translate(7.6, 3.6);
+  ctx.rotate(0.07 * drift);
+  ctx.fillStyle = '#2b302c';
+  roundRect(ctx, -2.4, -1.05, 8.2, 2.1, 0.7);
+  ctx.fill();
+  ctx.strokeStyle = '#121714';
+  ctx.lineWidth = 0.5;
+  ctx.stroke();
+  ctx.fillStyle = '#59635b';
+  roundRect(ctx, 3.6, -0.72, 4.2, 1.44, 0.55);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(213, 234, 219, 0.4)';
+  ctx.lineWidth = 0.35;
+  ctx.beginPath();
+  ctx.moveTo(-1.6, -0.62);
+  ctx.lineTo(4.5, -0.62);
+  ctx.stroke();
+  // sonic emitter rings
+  ctx.strokeStyle = `rgba(156, 232, 246, ${0.55 + Math.sin(time * 9 + p) * 0.2})`;
+  ctx.lineWidth = 0.55;
+  for (let i = 0; i < 2; i++) {
+    ctx.beginPath();
+    ctx.ellipse(6.6 + i * 1.5, 0, 0.9, 1.25, 0, 0, TAU);
+    ctx.stroke();
+  }
+  ctx.fillStyle = 'rgba(190, 246, 255, 0.9)';
+  ctx.beginPath();
+  ctx.arc(8.2, 0, 0.55, 0, TAU);
+  ctx.fill();
+  // clawed grip
+  ctx.strokeStyle = '#b78b52';
+  ctx.lineWidth = 0.85;
+  ctx.beginPath();
+  ctx.moveTo(1.2, -0.8);
+  ctx.lineTo(3.0, -2.8);
+  ctx.moveTo(1.2, 0.8);
+  ctx.lineTo(3.0, 2.6);
+  ctx.stroke();
+  ctx.restore();
+
+  // pale carapace highlight
+  ctx.strokeStyle = 'rgba(247, 219, 168, 0.42)';
+  ctx.lineWidth = 0.7;
+  ctx.beginPath();
+  ctx.arc(-0.5, 0, 4.2, -2.3, -0.8);
+  ctx.stroke();
+}
+
+/* —— Geonosis · Reek ————————————————————————————————————
+   Massive red-skinned rhino beast with a humped back and three
+   curved horns sweeping off its snout. */
+function drawReekBody(ctx, e, time) {
+  const p = e.phase || 0;
+  const lumber = Math.sin(time * 8.5 + p);
+  const lumberB = Math.sin(time * 8.5 + p + Math.PI);
+  const breathe = Math.sin(time * 3.1 + p);
+
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.save();
+  ctx.scale(1.12, 1.12);
+
+  /* short fighting tail */
+  ctx.strokeStyle = '#4e1a12';
+  ctx.lineWidth = 3.4;
+  ctx.beginPath();
+  ctx.moveTo(-14.5, 0);
+  ctx.quadraticCurveTo(-20, lumber * 2.0, -24, lumber * 4.2);
+  ctx.stroke();
+  ctx.fillStyle = '#3a120d';
+  ctx.beginPath();
+  ctx.ellipse(-24.2, lumber * 4.3, 2.2, 1.6, 0.35, 0, TAU);
+  ctx.fill();
+
+  /* four heavy legs, far pair beneath the body */
+  const legs = [
+    { x: 7.2, y: -5.2, kx: 9.6, ky: -10.0, fx: 11.6, fy: -14.2, s: lumberB, far: true },
+    { x: 7.2, y: 5.2, kx: 9.6, ky: 10.0, fx: 11.6, fy: 14.2, s: lumber, far: true },
+    { x: -7.8, y: -5.4, kx: -10.6, ky: -10.8, fx: -13.2, fy: -15.2, s: lumber, far: false },
+    { x: -7.8, y: 5.4, kx: -10.6, ky: 10.8, fx: -13.2, fy: 15.2, s: lumberB, far: false },
+  ];
+  for (const leg of legs) {
+    const swing = leg.s * 1.4;
+    ctx.strokeStyle = leg.far ? '#4a1710' : '#642219';
+    ctx.lineWidth = leg.far ? 5.2 : 6.6;
+    ctx.beginPath();
+    ctx.moveTo(leg.x, leg.y);
+    ctx.lineTo(leg.kx + swing * 0.25, leg.ky);
+    ctx.lineTo(leg.fx + swing * 0.65, leg.fy);
+    ctx.stroke();
+    if (!leg.far) {
+      ctx.strokeStyle = 'rgba(190, 83, 58, 0.55)';
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.moveTo(leg.x + 0.8, leg.y);
+      ctx.lineTo(leg.kx + swing * 0.25 + 0.8, leg.ky);
+      ctx.stroke();
+    }
+    // broad three-toed foot
+    ctx.fillStyle = leg.far ? '#33100b' : '#45160f';
+    ctx.beginPath();
+    ctx.ellipse(leg.fx + swing * 0.65, leg.fy, 3.6, 2.8, 0.2 * Math.sign(leg.fy), 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = '#d6bd94';
+    ctx.lineWidth = 0.55;
+    for (let c = -1; c <= 1; c++) {
+      ctx.beginPath();
+      ctx.moveTo(leg.fx + swing * 0.65 + c * 1.3, leg.fy + 1.5 * Math.sign(leg.fy));
+      ctx.lineTo(leg.fx + swing * 0.65 + c * 1.6, leg.fy + 3.7 * Math.sign(leg.fy));
+      ctx.stroke();
+    }
+  }
+
+  /* mountainous barrel body */
+  const hide = ctx.createRadialGradient(-2, -5, 2, 0, 0, 20);
+  hide.addColorStop(0, '#bc503a');
+  hide.addColorStop(0.38, '#9a3c2b');
+  hide.addColorStop(0.74, '#71271c');
+  hide.addColorStop(1, '#45140e');
+  ctx.fillStyle = hide;
+  ctx.beginPath();
+  ctx.moveTo(17.5, 0);
+  ctx.bezierCurveTo(16.8, -7.6, 10.5, -12.4, 0.5, -12.8);
+  ctx.bezierCurveTo(-9.5, -13.2, -16.6, -9.0, -18.4, -3.8);
+  ctx.bezierCurveTo(-19.2, 0, -19.2, 0, -18.4, 3.8);
+  ctx.bezierCurveTo(-16.6, 9.0, -9.5, 13.2, 0.5, 12.8);
+  ctx.bezierCurveTo(10.5, 12.4, 16.8, 7.6, 17.5, 0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#330e09';
+  ctx.lineWidth = 1.3;
+  ctx.stroke();
+
+  // shoulder hump and back ridges
+  ctx.fillStyle = 'rgba(206, 91, 65, 0.38)';
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.ellipse(5.5, side * 7.7, 8.0, 4.1, side * 0.25, 0, TAU);
+    ctx.fill();
+  }
+  ctx.strokeStyle = 'rgba(56, 15, 9, 0.55)';
+  ctx.lineWidth = 1.1;
+  for (let i = 0; i < 4; i++) {
+    const x = 4 - i * 4.1;
+    ctx.beginPath();
+    ctx.moveTo(x, -6.8 + i * 0.2);
+    ctx.quadraticCurveTo(x - 1.2, 0, x, 6.8 - i * 0.2);
+    ctx.stroke();
+  }
+  // scarred hide creases
+  ctx.strokeStyle = 'rgba(231, 131, 102, 0.26)';
+  ctx.lineWidth = 0.7;
+  ctx.beginPath();
+  ctx.arc(0.5, 0, 12.5, -2.4, -0.9);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(-10, -8.2);
+  ctx.quadraticCurveTo(-6, -4.6, -2.5, -7.4);
+  ctx.stroke();
+
+  // dorsal armour lumps
+  ctx.fillStyle = '#5e1c13';
+  for (const [x, r] of [[-6, 2.6], [-1, 3.2], [4.5, 2.4]]) {
+    ctx.beginPath();
+    ctx.ellipse(x, 0, r, r * 0.7, 0, 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(210, 104, 78, 0.34)';
+    ctx.lineWidth = 0.55;
+    ctx.stroke();
+  }
+
+  /* broad snout with breathing nostril bumps */
+  const snout = ctx.createLinearGradient(13, -6, 26, 6);
+  snout.addColorStop(0, '#a94330');
+  snout.addColorStop(0.6, '#7d2b1e');
+  snout.addColorStop(1, '#4e1710');
+  ctx.fillStyle = snout;
+  ctx.beginPath();
+  ctx.moveTo(13.0, -7.2);
+  ctx.quadraticCurveTo(20.0, -8.4, 24.8, -4.3);
+  ctx.lineTo(26.2, 0);
+  ctx.lineTo(24.8, 4.3);
+  ctx.quadraticCurveTo(20.0, 8.4, 13.0, 7.2);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#35100a';
+  ctx.lineWidth = 1.0;
+  ctx.stroke();
+
+  // mouth line and nostrils
+  ctx.strokeStyle = 'rgba(44, 12, 8, 0.9)';
+  ctx.lineWidth = 0.9;
+  ctx.beginPath();
+  ctx.moveTo(25.3, 0);
+  ctx.quadraticCurveTo(20.5, 4.2, 14.0, 3.6);
+  ctx.stroke();
+  ctx.fillStyle = '#2c0e09';
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.ellipse(23.4, side * 1.7, 1.0, 0.68, side * 0.2, 0, TAU);
+    ctx.fill();
+  }
+
+  /* three curved snout horns */
+  const horn = ctx.createLinearGradient(17, -9, 29, 9);
+  horn.addColorStop(0, '#f1dfbd');
+  horn.addColorStop(0.55, '#ceb084');
+  horn.addColorStop(1, '#80603c');
+  ctx.fillStyle = horn;
+  const horns = [
+    { bx: 21.0, by: 0.0, tx: 31.0, ty: 0.0, w: 3.0 },
+    { bx: 19.6, by: -4.2, tx: 27.0, ty: -10.2, w: 2.4 },
+    { bx: 19.6, by: 4.2, tx: 27.0, ty: 10.2, w: 2.4 },
+  ];
+  for (const h of horns) {
+    ctx.beginPath();
+    ctx.moveTo(h.bx, h.by - h.w * 0.5);
+    ctx.quadraticCurveTo(h.bx + (h.tx - h.bx) * 0.52, h.by + (h.ty - h.by) * 0.25 - h.w * 0.45, h.tx, h.ty);
+    ctx.quadraticCurveTo(h.bx + (h.tx - h.bx) * 0.45, h.by + (h.ty - h.by) * 0.55 + h.w * 0.45, h.bx, h.by + h.w * 0.5);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(86, 56, 30, 0.55)';
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+    // growth rings
+    ctx.strokeStyle = 'rgba(255, 244, 214, 0.35)';
+    ctx.lineWidth = 0.4;
+    for (let k = 1; k <= 3; k++) {
+      const t = k / 4;
+      ctx.beginPath();
+      ctx.moveTo(h.bx + (h.tx - h.bx) * t - 0.6, h.by + (h.ty - h.by) * t - h.w * 0.22);
+      ctx.lineTo(h.bx + (h.tx - h.bx) * t + 0.6, h.by + (h.ty - h.by) * t + h.w * 0.22);
+      ctx.stroke();
+    }
+  }
+
+  // small deep-set eyes under a brow ridge
+  for (const side of [-1, 1]) {
+    ctx.fillStyle = '#f5be58';
+    ctx.beginPath();
+    ctx.ellipse(15.6, side * 5.0, 1.05, 0.8, 0, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = '#211108';
+    ctx.beginPath();
+    ctx.arc(15.9, side * 5.0, 0.42, 0, TAU);
+    ctx.fill();
+    ctx.strokeStyle = '#4a1710';
+    ctx.lineWidth = 1.0;
+    ctx.beginPath();
+    ctx.moveTo(13.0, side * 6.3);
+    ctx.quadraticCurveTo(15.4, side * 6.8, 17.2, side * 5.5);
+    ctx.stroke();
+  }
+
+  // dusty breath
+  ctx.globalAlpha = 0.18 + Math.max(0, breathe) * 0.1;
+  ctx.strokeStyle = 'rgba(255, 198, 148, 0.9)';
+  ctx.lineWidth = 0.9;
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(26.4, side * 1.4);
+    ctx.quadraticCurveTo(29.8, side * 2.6, 32.0, side * 1.0);
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  ctx.restore();
+}
+
+/* —— Geonosis · Acklay ————————————————————————————————————
+   A towering green-and-tan crustacean horror: six razor claw
+   legs, a spined carapace and a wide fanned crest behind the jaw. */
+function drawAcklayBody(ctx, e, time) {
+  const p = e.phase || 0;
+  const scuttle = Math.sin(time * 11 + p);
+  const breathe = Math.sin(time * 2.8 + p);
+  const pulse = 0.68 + Math.sin(time * 4.2 + p) * 0.32;
+
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.save();
+  ctx.scale(1.3, 1.3);
+
+  /* six long segmented claw legs */
+  const legSets = [
+    { side: -1, bx: 10.5, by: -4.0, len: 29, lift: 0.0, far: true },
+    { side: 1, bx: 10.5, by: 4.0, len: 29, lift: 1.9, far: true },
+    { side: -1, bx: 1.0, by: -5.2, len: 33, lift: 1.1, far: false },
+    { side: 1, bx: 1.0, by: 5.2, len: 33, lift: 3.0, far: false },
+    { side: -1, bx: -8.0, by: -4.4, len: 27, lift: 2.2, far: false },
+    { side: 1, bx: -8.0, by: 4.4, len: 27, lift: 0.7, far: false },
+  ];
+  for (const leg of legSets) {
+    const side = leg.side;
+    const step = Math.sin(time * 11 + p + leg.lift) * 2.6;
+    const hipX = leg.bx;
+    const hipY = leg.by;
+    const kneeX = leg.bx + 7 + step * 0.45;
+    const kneeY = side * (11 + leg.len * 0.18);
+    const ankleX = leg.bx - 5 - step * 0.3;
+    const ankleY = side * (leg.len * 0.72);
+    const clawX = ankleX - 10 - step * 0.5;
+    const clawY = side * (leg.len * 0.92);
+    const dark = leg.far;
+
+    ctx.strokeStyle = dark ? '#2d3f24' : '#456032';
+    ctx.lineWidth = dark ? 3.5 : 4.3;
+    ctx.beginPath();
+    ctx.moveTo(hipX, hipY);
+    ctx.lineTo(kneeX, kneeY);
+    ctx.lineTo(ankleX, ankleY);
+    ctx.stroke();
+    // lit tan underside
+    ctx.strokeStyle = dark ? 'rgba(140, 153, 101, 0.35)' : 'rgba(214, 206, 152, 0.6)';
+    ctx.lineWidth = 1.0;
+    ctx.beginPath();
+    ctx.moveTo(hipX, hipY);
+    ctx.lineTo(kneeX - 0.7, kneeY);
+    ctx.lineTo(ankleX - 0.7, ankleY);
+    ctx.stroke();
+    // joints
+    ctx.fillStyle = dark ? '#24351d' : '#374d28';
+    for (const [jx, jy, jr] of [[kneeX, kneeY, 2.0], [ankleX, ankleY, 1.55]]) {
+      ctx.beginPath();
+      ctx.arc(jx, jy, jr, 0, TAU);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(193, 192, 136, 0.38)';
+      ctx.lineWidth = 0.45;
+      ctx.stroke();
+    }
+    // hooked razor claw
+    ctx.fillStyle = '#e6dfb2';
+    ctx.beginPath();
+    ctx.moveTo(ankleX, ankleY);
+    ctx.quadraticCurveTo(ankleX - 4.6, ankleY + side * 1.6, clawX, clawY);
+    ctx.quadraticCurveTo(ankleX - 3.7, ankleY - side * 2.3, ankleX, ankleY);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = '#5f542f';
+    ctx.lineWidth = 0.55;
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(255, 255, 226, 0.55)';
+    ctx.beginPath();
+    ctx.moveTo(ankleX - 1.0, ankleY);
+    ctx.lineTo(clawX + 0.8, clawY);
+    ctx.lineTo(clawX - 0.4, clawY);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  /* broad crustacean body in mottled green and tan */
+  const shell = ctx.createRadialGradient(-2, -5, 2, 0, 0, 23);
+  shell.addColorStop(0, '#91a95c');
+  shell.addColorStop(0.32, '#6f8a45');
+  shell.addColorStop(0.68, '#4c6332');
+  shell.addColorStop(1, '#2b3b1e');
+  ctx.fillStyle = shell;
+  ctx.beginPath();
+  ctx.moveTo(20.0, 0);
+  ctx.bezierCurveTo(19.0, -8.8, 11.0, -14.6, 0.0, -15.0);
+  ctx.bezierCurveTo(-10.5, -15.4, -18.5, -10.4, -20.0, -4.2);
+  ctx.bezierCurveTo(-20.8, 0, -20.8, 0, -20.0, 4.2);
+  ctx.bezierCurveTo(-18.5, 10.4, -10.5, 15.4, 0.0, 15.0);
+  ctx.bezierCurveTo(11.0, 14.6, 19.0, 8.8, 20.0, 0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#1b2914';
+  ctx.lineWidth = 1.4;
+  ctx.stroke();
+
+  // pale underbelly showing at the flanks
+  const belly = ctx.createLinearGradient(0, 12, 0, -12);
+  belly.addColorStop(0, 'rgba(213, 203, 143, 0.36)');
+  belly.addColorStop(0.5, 'rgba(213, 203, 143, 0.05)');
+  belly.addColorStop(1, 'rgba(213, 203, 143, 0.36)');
+  ctx.fillStyle = belly;
+  ctx.beginPath();
+  ctx.ellipse(-1, 0, 14.5, 8.2, 0, 0, TAU);
+  ctx.fill();
+
+  // overlapping carapace plates
+  for (let i = 0; i < 5; i++) {
+    const x = 6.5 - i * 4.6;
+    const w = 4.6 - i * 0.36;
+    const h = 11.4 - i * 0.8;
+    ctx.beginPath();
+    ctx.moveTo(x - w, -h);
+    ctx.quadraticCurveTo(x + w * 0.9, 0, x - w, h);
+    ctx.quadraticCurveTo(x + w * 0.35, 0, x - w, -h);
+    ctx.closePath();
+    const pg = ctx.createLinearGradient(x - w, 0, x + w, 0);
+    pg.addColorStop(0, i % 2 ? '#7d9750' : '#6d8644');
+    pg.addColorStop(1, '#3e5229');
+    ctx.fillStyle = pg;
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(27, 41, 20, 0.65)';
+    ctx.lineWidth = 0.65;
+    ctx.stroke();
+  }
+
+  // dorsal spines
+  ctx.fillStyle = '#d7cc92';
+  for (const [sx, sy, sr] of [[5, -8.6, 2.6], [-1, -10.0, 3.0], [-7, -8.8, 2.4], [5, 8.6, 2.6], [-1, 10.0, 3.0], [-7, 8.8, 2.4]]) {
+    ctx.beginPath();
+    ctx.moveTo(sx - 1.5, sy);
+    ctx.lineTo(sx, sy + Math.sign(sy) * sr);
+    ctx.lineTo(sx + 1.5, sy);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(84, 78, 44, 0.55)';
+    ctx.lineWidth = 0.4;
+    ctx.stroke();
+  }
+
+  // mottled shell markings
+  ctx.fillStyle = 'rgba(90, 112, 54, 0.5)';
+  for (let i = 0; i < 9; i++) {
+    const a = i * 1.7 + p;
+    const rr = 4.5 + (i % 3) * 2.8;
+    ctx.beginPath();
+    ctx.ellipse(Math.cos(a) * rr, Math.sin(a) * rr * 0.7, 1.7, 1.0, a, 0, TAU);
+    ctx.fill();
+  }
+
+  /* fanned crest sweeping back from the head */
+  ctx.save();
+  ctx.translate(12.0, 0);
+  ctx.rotate(breathe * 0.025);
+  for (let i = 0; i < 9; i++) {
+    const t = (i / 8) * 2 - 1;
+    const spread = t * 1.05;
+    const len = 14.5 - Math.abs(t) * 4.2;
+    ctx.save();
+    ctx.rotate(spread * 0.72);
+    const fg = ctx.createLinearGradient(0, 0, len, 0);
+    fg.addColorStop(0, 'rgba(110, 132, 68, 0.95)');
+    fg.addColorStop(0.62, 'rgba(176, 174, 110, 0.86)');
+    fg.addColorStop(1, 'rgba(222, 210, 146, 0.2)');
+    ctx.fillStyle = fg;
+    ctx.beginPath();
+    ctx.moveTo(0, -1.1);
+    ctx.lineTo(len, -0.25);
+    ctx.lineTo(len - 1.4, 0.7);
+    ctx.lineTo(0, 1.1);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(41, 57, 27, 0.75)';
+    ctx.lineWidth = 0.45;
+    ctx.stroke();
+    // barb along the crest spine
+    ctx.fillStyle = '#e5d9a2';
+    ctx.beginPath();
+    ctx.moveTo(len * 0.55, -0.9);
+    ctx.lineTo(len * 0.58, -2.8);
+    ctx.lineTo(len * 0.68, -0.7);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+  ctx.restore();
+
+  /* fanged head and manipulator mandibles */
+  const head = ctx.createLinearGradient(17, -8, 32, 8);
+  head.addColorStop(0, '#8da65a');
+  head.addColorStop(0.48, '#637d3f');
+  head.addColorStop(1, '#354725');
+  ctx.fillStyle = head;
+  ctx.beginPath();
+  ctx.moveTo(16.0, -8.0);
+  ctx.quadraticCurveTo(25.5, -9.6, 30.0, -4.2);
+  ctx.lineTo(32.2, 0);
+  ctx.lineTo(30.0, 4.2);
+  ctx.quadraticCurveTo(25.5, 9.6, 16.0, 8.0);
+  ctx.quadraticCurveTo(13.2, 0, 16.0, -8.0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#1c2a15';
+  ctx.lineWidth = 1.0;
+  ctx.stroke();
+
+  // pointed rostrum
+  ctx.fillStyle = '#d9cf98';
+  ctx.beginPath();
+  ctx.moveTo(30.0, -2.0);
+  ctx.lineTo(35.8, 0);
+  ctx.lineTo(30.0, 2.0);
+  ctx.closePath();
+  ctx.fill();
+
+  // four glowing eyes
+  for (const side of [-1, 1]) {
+    for (const [ex, ey, er] of [[23.5, side * 4.0, 1.5], [20.4, side * 5.6, 1.1]]) {
+      ctx.save();
+      ctx.shadowColor = 'rgba(222, 246, 120, 0.9)';
+      ctx.shadowBlur = 7 * pulse;
+      ctx.fillStyle = `rgba(226, 246, 134, ${0.8 + pulse * 0.2})`;
+      ctx.beginPath();
+      ctx.ellipse(ex, ey, er, er * 0.72, side * 0.2, 0, TAU);
+      ctx.fill();
+      ctx.restore();
+      ctx.fillStyle = '#1b230d';
+      ctx.beginPath();
+      ctx.ellipse(ex + 0.25, ey, er * 0.34, er * 0.55, 0, 0, TAU);
+      ctx.fill();
+    }
+  }
+
+  // mandibles and fangs
+  ctx.strokeStyle = '#d9cf98';
+  ctx.lineWidth = 1.6;
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(29.4, side * 2.5);
+    ctx.quadraticCurveTo(34.4, side * 5.2, 32.0, side * 8.2);
+    ctx.stroke();
+    ctx.fillStyle = '#f2e8bc';
+    ctx.beginPath();
+    ctx.moveTo(31.4, side * 7.5);
+    ctx.lineTo(32.4, side * 9.8);
+    ctx.lineTo(30.4, side * 9.0);
+    ctx.closePath();
+    ctx.fill();
+  }
+  ctx.fillStyle = '#e9dfb0';
+  for (let i = 0; i < 4; i++) {
+    const x = 28.5 - i * 2.5;
+    ctx.beginPath();
+    ctx.moveTo(x, 2.0);
+    ctx.lineTo(x - 0.8, 4.0);
+    ctx.lineTo(x + 0.5, 4.2);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(x, -2.0);
+    ctx.lineTo(x - 0.8, -4.0);
+    ctx.lineTo(x + 0.5, -4.2);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // shell highlight
+  ctx.strokeStyle = 'rgba(222, 232, 154, 0.4)';
+  ctx.lineWidth = 0.9;
+  ctx.beginPath();
+  ctx.arc(-1, 0, 12.6, -2.5, -0.9);
+  ctx.stroke();
+  ctx.restore();
 }
 
 /* —— Endor · stormtrooper —— */

@@ -1,0 +1,488 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-label="Geonosis red canyons beneath the planet Geonosis, with a Geonosian warrior, a Reek and an Acklay">
+  <defs>
+    <linearGradient id="gSky" x2="0" y2="1">
+      <stop offset="0" stop-color="#2c0e09"/>
+      <stop offset=".30" stop-color="#601e10"/>
+      <stop offset=".58" stop-color="#94381c"/>
+      <stop offset=".80" stop-color="#c05d2d"/>
+      <stop offset="1" stop-color="#e08a52"/>
+    </linearGradient>
+    <radialGradient id="gPlanet" cx=".34" cy=".28" r=".82">
+      <stop offset="0" stop-color="#ffe0b2"/>
+      <stop offset=".20" stop-color="#f2a467"/>
+      <stop offset=".46" stop-color="#cf6b3b"/>
+      <stop offset=".72" stop-color="#96361f"/>
+      <stop offset=".90" stop-color="#5c1a10"/>
+      <stop offset="1" stop-color="#350c08"/>
+    </radialGradient>
+    <radialGradient id="gPlanetGlow">
+      <stop offset=".46" stop-color="#ff9c56" stop-opacity=".38"/>
+      <stop offset=".70" stop-color="#e06a30" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#b84a20" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gRing" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8c896" stop-opacity="0"/>
+      <stop offset=".24" stop-color="#ffd9ae" stop-opacity=".55"/>
+      <stop offset=".48" stop-color="#d98f5f" stop-opacity=".2"/>
+      <stop offset=".70" stop-color="#ffd9ae" stop-opacity=".44"/>
+      <stop offset="1" stop-color="#c46e3f" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="gHaze" x2="0" y2="1">
+      <stop offset="0" stop-color="#d97b44" stop-opacity="0"/>
+      <stop offset=".55" stop-color="#e39058" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#e8a271" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="gFarRock" x2="0" y2="1">
+      <stop offset="0" stop-color="#a04a29"/>
+      <stop offset=".52" stop-color="#792e1a"/>
+      <stop offset="1" stop-color="#4a170e"/>
+    </linearGradient>
+    <linearGradient id="gMidRock" x2="0" y2="1">
+      <stop offset="0" stop-color="#cd6c3e"/>
+      <stop offset=".34" stop-color="#a44826"/>
+      <stop offset=".72" stop-color="#762d19"/>
+      <stop offset="1" stop-color="#4e190f"/>
+    </linearGradient>
+    <linearGradient id="gNearRock" x2="0" y2="1">
+      <stop offset="0" stop-color="#b25a34"/>
+      <stop offset=".5" stop-color="#7d301b"/>
+      <stop offset="1" stop-color="#3a110b"/>
+    </linearGradient>
+    <linearGradient id="gTrail" x2="1" y2="0">
+      <stop offset="0" stop-color="#8e3d23" stop-opacity=".72"/>
+      <stop offset=".34" stop-color="#bd6136"/>
+      <stop offset=".68" stop-color="#a94e2c"/>
+      <stop offset="1" stop-color="#7b2c19" stop-opacity=".82"/>
+    </linearGradient>
+    <linearGradient id="gMetal" x2="0" y2="1">
+      <stop offset="0" stop-color="#8b8d7d"/>
+      <stop offset=".28" stop-color="#5f6256"/>
+      <stop offset=".66" stop-color="#3b3e35"/>
+      <stop offset="1" stop-color="#20231e"/>
+    </linearGradient>
+    <linearGradient id="gMetalDark" x2="0" y2="1">
+      <stop offset="0" stop-color="#4e5247"/>
+      <stop offset=".55" stop-color="#2f342c"/>
+      <stop offset="1" stop-color="#171a16"/>
+    </linearGradient>
+    <linearGradient id="gGeoBody" x2="0" y2="1">
+      <stop offset="0" stop-color="#e1bd83"/>
+      <stop offset=".44" stop-color="#c49a61"/>
+      <stop offset=".78" stop-color="#96703e"/>
+      <stop offset="1" stop-color="#5f4223"/>
+    </linearGradient>
+    <linearGradient id="gGeoWing" x2="1" y2="1">
+      <stop offset="0" stop-color="#e5fbff" stop-opacity=".72"/>
+      <stop offset=".45" stop-color="#a8e2f4" stop-opacity=".42"/>
+      <stop offset="1" stop-color="#64b6d4" stop-opacity=".08"/>
+    </linearGradient>
+    <linearGradient id="gReek" x2="0" y2="1">
+      <stop offset="0" stop-color="#c85d43"/>
+      <stop offset=".34" stop-color="#a13e2c"/>
+      <stop offset=".7" stop-color="#75271b"/>
+      <stop offset="1" stop-color="#43120c"/>
+    </linearGradient>
+    <linearGradient id="gReekLeg" x2="0" y2="1">
+      <stop offset="0" stop-color="#7c2b1e"/>
+      <stop offset="1" stop-color="#3b100b"/>
+    </linearGradient>
+    <linearGradient id="gHorn" x2="1" y2="1">
+      <stop offset="0" stop-color="#f2e2c0"/>
+      <stop offset=".5" stop-color="#d0b083"/>
+      <stop offset="1" stop-color="#7d5b36"/>
+    </linearGradient>
+    <linearGradient id="gAcklay" x2="0" y2="1">
+      <stop offset="0" stop-color="#a9bb75"/>
+      <stop offset=".32" stop-color="#7e954f"/>
+      <stop offset=".66" stop-color="#586b37"/>
+      <stop offset="1" stop-color="#2c3a1e"/>
+    </linearGradient>
+    <linearGradient id="gAcklayBelly" x2="0" y2="1">
+      <stop offset="0" stop-color="#d7ca94"/>
+      <stop offset=".6" stop-color="#b9aa76"/>
+      <stop offset="1" stop-color="#7a6d45"/>
+    </linearGradient>
+    <linearGradient id="gAcklayLeg" x2="1" y2="1">
+      <stop offset="0" stop-color="#687d42"/>
+      <stop offset=".55" stop-color="#4b6032"/>
+      <stop offset="1" stop-color="#233018"/>
+    </linearGradient>
+    <linearGradient id="gClaw" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5efca"/>
+      <stop offset=".6" stop-color="#d8cf9c"/>
+      <stop offset="1" stop-color="#77683e"/>
+    </linearGradient>
+    <radialGradient id="gEye">
+      <stop offset="0" stop-color="#fbffdc"/>
+      <stop offset=".34" stop-color="#e7f58d"/>
+      <stop offset=".72" stop-color="#abc23c"/>
+      <stop offset="1" stop-color="#4f6515"/>
+    </radialGradient>
+    <linearGradient id="gSonic" x2="1" y2="0">
+      <stop offset="0" stop-color="#dcfbff" stop-opacity=".85"/>
+      <stop offset="1" stop-color="#78d8ee" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="gGroundGlow">
+      <stop offset="0" stop-color="#ffb478" stop-opacity=".16"/>
+      <stop offset=".62" stop-color="#ff9a52" stop-opacity=".06"/>
+      <stop offset="1" stop-color="#e07038" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="gGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="gSoft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <clipPath id="gPlanetClip"><circle cx="752" cy="132" r="158"/></clipPath>
+  </defs>
+
+  <!-- canyon sky -->
+  <rect width="960" height="540" fill="url(#gSky)"/>
+
+  <!-- planet Geonosis, hanging over the canyon rim -->
+  <g>
+    <circle cx="752" cy="132" r="252" fill="url(#gPlanetGlow)"/>
+    <ellipse cx="752" cy="144" rx="268" ry="62" fill="none" stroke="url(#gRing)" stroke-width="15" transform="rotate(-14 752 144)" opacity=".72"/>
+    <circle cx="752" cy="132" r="158" fill="url(#gPlanet)"/>
+    <g clip-path="url(#gPlanetClip)" opacity=".55">
+      <path d="M586 66c76-20 152 4 224 4 48 0 96-10 136-28v24c-48 22-102 30-154 26-76-6-148-24-206-8Z" fill="#ffdcb0" opacity=".4"/>
+      <path d="M592 108c80-14 146 12 218 8 56-3 106-18 150-32v22c-54 26-112 34-172 30-74-5-132-26-196-14Z" fill="#f7bf88" opacity=".26"/>
+      <path d="M596 158c84-18 150 8 216 8 60 0 112-14 156-30v30c-54 22-110 30-170 26-76-5-136-30-202-18Z" fill="#8f341d" opacity=".42"/>
+      <path d="M610 210c80-8 136 14 200 12 56-2 106-14 148-26v24c-50 18-100 26-154 22-74-5-134-24-194-12Z" fill="#5d190f" opacity=".38"/>
+      <ellipse cx="700" cy="82" rx="116" ry="13" fill="#ffdcb0" opacity=".2"/>
+      <ellipse cx="762" cy="250" rx="150" ry="20" fill="#4a140c" opacity=".35"/>
+    </g>
+    <ellipse cx="752" cy="144" rx="268" ry="62" fill="none" stroke="url(#gRing)" stroke-width="4" transform="rotate(-14 752 144)" opacity=".65"/>
+    <circle cx="752" cy="132" r="158" fill="none" stroke="#571a0e" stroke-width="2.4" opacity=".6"/>
+    <path d="M752 290a158 158 0 0 1-149-104c40 46 96 74 157 80 42 4 82-2 118-17a158 158 0 0 1-126 41Z" fill="#3d100a" opacity=".4"/>
+  </g>
+
+  <!-- atmospheric dust bands -->
+  <g opacity=".5">
+    <path d="M0 150c112-28 200-10 286 10 94 22 168 10 254-8 94-20 170-16 256 4 66 15 126 18 186 10v52c-86 8-152 2-224-12-94-18-170-22-258-2-88 20-164 18-260-4C146 182 78 178 0 200Z" fill="#45130b" opacity=".5"/>
+    <path d="M0 244c98-16 172-2 252 14 78 15 146 8 220-8 90-20 160-10 242 10 86 21 180 20 270 2v34c-98 16-194 12-280-6-86-18-160-28-244-6-84 22-164 20-250 2C130 272 64 268 0 284Z" fill="#7d3119" opacity=".22"/>
+  </g>
+
+  <!-- distant canyon mesas, spires and buttes -->
+  <g>
+    <path d="M0 316c42-26 72-56 108-92 13-14 26-16 37 2 18 28 28 56 36 90Z" fill="#5a2012" opacity=".9"/>
+    <path d="M120 316c30-40 52-90 76-124 10-15 23-17 33-2 24 34 40 80 50 126Z" fill="#6a2616" opacity=".8"/>
+    <path d="M352 316c22-32 40-68 62-96 11-14 24-14 34 0 22 30 34 62 42 96Z" fill="#572012" opacity=".78"/>
+    <path d="M618 316c20-36 42-74 72-108 12-15 25-15 35 2 24 32 40 68 48 106Z" fill="#4c1a0f" opacity=".9"/>
+    <path d="M800 316c28-30 54-52 84-66 22-10 38-4 44 14 10 28 14 48 16 52Z" fill="#5f2113" opacity=".82"/>
+    <g fill="url(#gFarRock)" opacity=".92">
+      <path d="M0 330l58-6 20 34-38 16L0 360Z"/>
+      <path d="M396 330l54-22 36 30-26 22-56 2Z"/>
+      <path d="M630 338l44-40 46 22 8 28-48 18Z"/>
+      <path d="M878 320l58-22 24 26v34l-60 8Z"/>
+    </g>
+    <g fill="#c9794d" opacity=".22">
+      <path d="M112 250l20-24 14 24-16 12Z"/>
+      <path d="M676 238l18-26 16 24-16 12Z"/>
+      <path d="M846 246l16-20 14 22-14 10Z"/>
+    </g>
+  </g>
+
+  <!-- Separatist foundry: pipe run and tower on the canyon rim -->
+  <g>
+    <path d="M-20 254h286l38-26h96" fill="none" stroke="#171a15" stroke-width="17" stroke-linecap="round"/>
+    <path d="M-20 254h286l38-26h96" fill="none" stroke="url(#gMetal)" stroke-width="9" stroke-linecap="round" opacity=".9"/>
+    <path d="M-10 250h276l38-26h92" fill="none" stroke="#d8d3c0" stroke-width="1.6" stroke-linecap="round" opacity=".34"/>
+    <g fill="#262a23" stroke="#111410" stroke-width="2">
+      <rect x="74" y="258" width="13" height="58" rx="3"/>
+      <rect x="236" y="258" width="13" height="52" rx="3"/>
+      <rect x="316" y="232" width="11" height="70" rx="3"/>
+    </g>
+    <g stroke="#767a6c" stroke-width="2" opacity=".45">
+      <path d="M74 276h13M74 294h13M236 278h13M236 296h13M316 254h11M316 274h11"/>
+    </g>
+    <g fill="#ffba66" filter="url(#gGlow)">
+      <circle cx="104" cy="253" r="3"/>
+      <circle cx="272" cy="253" r="2.6"/>
+      <circle cx="350" cy="221" r="2.4"/>
+    </g>
+
+    <!-- right-hand foundry tower -->
+    <path d="M876 316V214l26-20 30 20v102Z" fill="url(#gMetalDark)" stroke="#141611" stroke-width="3"/>
+    <path d="M886 214h34v12h-34Z" fill="#2a2e27" stroke="#11130f" stroke-width="2"/>
+    <path d="M888 240h30M888 260h30M888 280h30" stroke="#7c8175" stroke-width="2" opacity=".4"/>
+    <path d="M904 196v-30" stroke="#30352d" stroke-width="6"/>
+    <path d="M904 166c-10-8-10-20 0-28 9 8 9 20 0 28Z" fill="#e07338" opacity=".55" filter="url(#gGlow)"/>
+    <circle cx="904" cy="290" r="8" fill="#252922" stroke="#0d0f0c" stroke-width="2"/>
+    <circle cx="904" cy="290" r="3.4" fill="#ffc06b" filter="url(#gGlow)"/>
+
+    <!-- low pumping station on the left shoulder -->
+    <path d="M36 386h92l10 18H26Z" fill="#2f332b" stroke="#151712" stroke-width="2.5"/>
+    <path d="M52 366h58v20H52Z" fill="#3b4036" stroke="#151712" stroke-width="2.5"/>
+    <path d="M62 372h38M62 380h38" stroke="#7f8274" stroke-width="1.8" opacity=".45"/>
+    <circle cx="132" cy="394" r="7" fill="#22261f" stroke="#0f110d" stroke-width="2"/>
+    <circle cx="132" cy="394" r="2.8" fill="#ffc06b" filter="url(#gGlow)"/>
+
+    <!-- steam venting off the works -->
+    <g fill="#d9c3a6" opacity=".13" filter="url(#gSoft)">
+      <ellipse cx="330" cy="238" rx="54" ry="30"/>
+      <ellipse cx="862" cy="176" rx="44" ry="24"/>
+    </g>
+  </g>
+
+  <!-- winding red dirt canyon trail -->
+  <g>
+    <path d="M-20 462C104 446 196 414 312 396c96-15 192-6 284 18 92 24 196 20 384-10v108H-20Z" fill="#7f311c" opacity=".55"/>
+    <path d="M-20 456C106 440 198 408 314 390c96-15 192-6 284 18 92 24 194 18 382-12" fill="none" stroke="#8a341e" stroke-width="54" stroke-linecap="round" opacity=".85"/>
+    <path d="M-20 456C106 440 198 408 314 390c96-15 192-6 284 18 92 24 194 18 382-12" fill="none" stroke="url(#gTrail)" stroke-width="40" stroke-linecap="round"/>
+    <path d="M-20 452C106 436 198 404 314 386c96-15 192-6 284 18 92 24 194 18 382-12" fill="none" stroke="#e0935d" stroke-width="7" stroke-linecap="round" opacity=".34"/>
+    <g fill="#5f2313" opacity=".55">
+      <ellipse cx="128" cy="440" rx="17" ry="4"/><ellipse cx="330" cy="398" rx="13" ry="3.4"/>
+      <ellipse cx="512" cy="390" rx="17" ry="4"/><ellipse cx="704" cy="404" rx="12" ry="3"/>
+      <ellipse cx="866" cy="404" rx="15" ry="3.6"/>
+    </g>
+    <g stroke="#f1ae76" stroke-width="2" stroke-linecap="round" opacity=".22">
+      <path d="M182 428c18-8 34-18 46-32M386 400c16-8 28-20 38-34M726 416c16-4 30-10 42-20"/>
+    </g>
+  </g>
+
+  <!-- warm ground light under the lineup -->
+  <ellipse cx="470" cy="392" rx="360" ry="92" fill="url(#gGroundGlow)"/>
+
+  <!-- canyon walls framing the lower corners -->
+  <g>
+    <path d="M0 540V424l32-16 24 26 30-44 28 18 26-34 30 26 26-14 24 36 22-8 16 34v72Z" fill="url(#gNearRock)"/>
+    <g stroke="#4b170d" stroke-width="3" opacity=".5" fill="none">
+      <path d="M0 466c64-4 112-14 166-32 50-17 90-28 142-22"/>
+      <path d="M0 500c58 2 110-8 164-26 54-18 96-28 148-20"/>
+    </g>
+    <path d="M960 540V410l-34 6-16-36-26 22-26-44-30 30-22-14-28 40-28-16-22 44-26-6-18 40v64Z" fill="url(#gNearRock)"/>
+    <g stroke="#4b170d" stroke-width="3" opacity=".5" fill="none">
+      <path d="M960 456c-70-2-124-14-178-30-52-16-94-28-150-22"/>
+      <path d="M960 496c-64 2-118-10-172-28-56-18-100-28-156-20"/>
+    </g>
+    <g fill="#c9794d" opacity=".16">
+      <path d="M0 430l32-8 24 20 30-36 28 14 26-28 30 24 26-12 24 30 22-6 16 28-258 16Z"/>
+      <path d="M960 416l-34 2-16-28-26 16-26-32-30 26-22-10-28 32-28-12-22 34-26-4-18 32 276 24Z"/>
+    </g>
+  </g>
+
+  <!-- GEONOSIAN WARRIOR: lean tan flyer with translucent wings and sonic blaster -->
+  <g id="geonosian" transform="translate(176 270) scale(1)">
+    <ellipse cx="0" cy="96" rx="52" ry="10" fill="#3c120b" opacity=".4" filter="url(#gSoft)"/>
+    <!-- rear wings -->
+    <g opacity=".8">
+      <path d="M-6 2C-28-28-60-45-96-48c8 30 34 54 70 66 12-4 20-10 20-16Z" fill="url(#gGeoWing)" stroke="#c9f2fb" stroke-width="1.4"/>
+      <path d="M-8 10C-36 36-58 58-92 72c16-30 44-52 74-68 8 1 14 3 10 6Z" fill="url(#gGeoWing)" stroke="#c9f2fb" stroke-width="1.4" opacity=".9"/>
+      <g stroke="#dff9ff" stroke-width=".9" opacity=".45" fill="none">
+        <path d="M-14-2c-24-18-48-30-72-34M-16 8c-22 18-42 34-64 46M-12 16c-18 16-34 28-54 38"/>
+      </g>
+    </g>
+    <!-- near wings -->
+    <path d="M8-4C30-38 62-56 102-56c-4 34-30 60-70 74-14-2-24-10-24-18Z" fill="url(#gGeoWing)" stroke="#e2fbff" stroke-width="1.7"/>
+    <path d="M10 8C38 34 64 52 102 60c-12-30-40-52-74-64-10 2-18 6-18 12Z" fill="url(#gGeoWing)" stroke="#e2fbff" stroke-width="1.7"/>
+    <g stroke="#f2fdff" stroke-width="1" opacity=".55" fill="none">
+      <path d="M18-6c24-20 46-32 72-38M22 12c24 18 44 32 68 42M14 18c18 14 34 24 54 34M24-12c18-16 34-26 54-32"/>
+    </g>
+    <!-- dangling legs -->
+    <g stroke="#7f5a2e" stroke-width="5" stroke-linecap="round" fill="none">
+      <path d="M-12 24c-8 18-14 34-16 50M8 26c8 18 10 34 8 52"/>
+    </g>
+    <g fill="#d4b078">
+      <ellipse cx="-29" cy="78" rx="8" ry="4" transform="rotate(-18 -29 78)"/>
+      <ellipse cx="17" cy="81" rx="8" ry="4" transform="rotate(16 17 81)"/>
+    </g>
+    <!-- abdomen and thorax -->
+    <path d="M-36 6c-18 10-30 22-34 36 18 8 40 10 58 2 6-14 2-28-10-38Z" fill="url(#gGeoBody)" stroke="#64451f" stroke-width="2"/>
+    <ellipse cx="0" cy="4" rx="22" ry="17" fill="url(#gGeoBody)" stroke="#5c3d1b" stroke-width="2.2"/>
+    <path d="M-20 0c-10 2-20 8-26 16M-14 10c-8 2-14 6-20 10" stroke="#f0d096" stroke-width="1.4" opacity=".55" fill="none"/>
+    <!-- head and antennae -->
+    <ellipse cx="30" cy="-2" rx="20" ry="13" fill="url(#gGeoBody)" stroke="#5c3d1b" stroke-width="2.2"/>
+    <path d="M28-14c8-10 18-16 40-16M31-14c10-16 24-22 42-24" stroke="#6c4b21" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <circle cx="69" cy="-30" r="3" fill="#d9b980"/>
+    <circle cx="74" cy="-38" r="2.6" fill="#d9b980"/>
+    <path d="M22-2c8-4 16-4 24 0" stroke="#f1d59f" stroke-width="1.6" fill="none"/>
+    <ellipse cx="38" cy="-8" rx="5" ry="4" fill="#24160c"/>
+    <ellipse cx="38" cy="4" rx="5" ry="4" fill="#24160c"/>
+    <circle cx="36.6" cy="-9.4" r="1.4" fill="#f6e4b0"/>
+    <circle cx="36.6" cy="2.6" r="1.4" fill="#f6e4b0"/>
+    <path d="M28 10c7 2 14 2 20 0" stroke="#59401e" stroke-width="1.6" fill="none"/>
+    <!-- sonic blaster -->
+    <g transform="translate(22 20) rotate(8)">
+      <rect x="-6" y="-5" width="54" height="10" rx="4" fill="#2a2f29" stroke="#121612" stroke-width="2"/>
+      <rect x="24" y="-3.2" width="30" height="6.4" rx="3" fill="#697166" stroke="#1b201a" stroke-width="1.5"/>
+      <path d="M-3-2.4H28" stroke="#b9c8b0" stroke-width="1.4" opacity=".5"/>
+      <ellipse cx="56" cy="0" rx="4" ry="6" fill="none" stroke="#bff4ff" stroke-width="2"/>
+      <ellipse cx="63" cy="0" rx="4" ry="7" fill="none" stroke="#bff4ff" stroke-width="1.5" opacity=".6"/>
+      <circle cx="55" cy="0" r="2.6" fill="#e5ffff" filter="url(#gGlow)"/>
+    </g>
+    <!-- sonic pulse -->
+    <g fill="none" stroke="url(#gSonic)" stroke-width="3" opacity=".6">
+      <path d="M86 20c16-8 30-8 44 0"/>
+      <path d="M96 12c16-5 30-4 42 2"/>
+    </g>
+    <path d="M-16 17c-8 4-14 10-18 18" stroke="#f0d096" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <!-- REEK: massive red three-horned rhino beast -->
+  <g id="reek" transform="translate(432 286) scale(1.02)">
+    <ellipse cx="6" cy="92" rx="112" ry="22" fill="#2e0c07" opacity=".6" filter="url(#gSoft)"/>
+    <!-- tail -->
+    <path d="M-80 8c-24-4-42 6-52 26 18 6 38 2 56-12Z" fill="#5f1d14" stroke="#35100a" stroke-width="2.4"/>
+    <!-- far legs -->
+    <path d="M-54 28c-12 20-16 38-14 52l22 2c-2-16 2-30 12-44Z" fill="#4a140e" stroke="#2a0a07" stroke-width="2.6"/>
+    <path d="M48 30c14 18 20 34 20 48l-22 4c0-16-6-30-16-42Z" fill="#4a140e" stroke="#2a0a07" stroke-width="2.6"/>
+    <g fill="#2b0a07">
+      <path d="M-68 80l-12 4 16 6 12-6Z"/><path d="M70 80l12 4-16 6-12-6Z"/>
+    </g>
+    <!-- near legs -->
+    <path d="M-38 36c-16 20-22 40-18 54l24-1c-1-16 5-30 18-42Z" fill="url(#gReekLeg)" stroke="#240805" stroke-width="3"/>
+    <path d="M36 38c16 18 24 36 22 52l-24 1c1-16-5-30-16-42Z" fill="url(#gReekLeg)" stroke="#240805" stroke-width="3"/>
+    <g fill="#1f0805">
+      <path d="M-56 87l-14 4 18 7 14-7Z"/><path d="M58 88l14 4-18 7-14-7Z"/>
+    </g>
+    <!-- barrel body and shoulder hump -->
+    <path d="M-82 16c-14-24-6-52 22-66 30-15 74-14 102 4 24 16 36 36 34 54-2 20-18 34-44 40-38 9-82 2-114-32Z" fill="url(#gReek)" stroke="#360f09" stroke-width="3"/>
+    <path d="M-58-38c18-18 48-24 74-16 18 5 32 16 40 30-22 8-46 8-68 0-20-7-34-12-46-14Z" fill="#d07458" opacity=".2"/>
+    <g stroke="#4a130b" stroke-width="2.2" opacity=".75" fill="none">
+      <path d="M-48-32c-8 18-8 36 0 52M-20-46c-10 22-10 44 0 66M10-48c-8 22-8 42 0 62M40-42c-6 18-6 36 0 50"/>
+    </g>
+    <g fill="#53170e" stroke="#2c0a06" stroke-width="1.6">
+      <path d="M-30-56l18-12 16 18-16 10Z"/>
+      <path d="M4-58l22-12 16 20-18 8Z"/>
+      <path d="M38-48l20-6 10 20-20 4Z"/>
+    </g>
+    <g fill="#ef9b78" opacity=".22">
+      <ellipse cx="-38" cy="-16" rx="20" ry="12"/>
+      <ellipse cx="18" cy="-22" rx="26" ry="14"/>
+    </g>
+    <!-- head and snout -->
+    <path d="M66-18c18-10 42-10 58 0 14 8 22 20 26 34-18 12-44 14-66 6-14-6-24-18-18-40Z" fill="#a33e2b" stroke="#360f09" stroke-width="3"/>
+    <path d="M98-8c18-4 34 0 46 10-12 8-28 10-46 6Z" fill="#7c2a1d" opacity=".75"/>
+    <path d="M112 2c14 0 26 4 34 10-10 4-20 5-32 2Z" fill="#2b0b07"/>
+    <ellipse cx="82" cy="-10" rx="5" ry="4" fill="#ffc65e"/>
+    <ellipse cx="82" cy="-10" rx="2" ry="3.2" fill="#211006"/>
+    <path d="M68-24c8-6 20-8 30-4" stroke="#4a130b" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <!-- three curved snout horns -->
+    <path d="M108-12c18-18 36-26 54-24-6 18-18 32-36 40Z" fill="url(#gHorn)" stroke="#73562f" stroke-width="2"/>
+    <path d="M98-20c10-22 24-36 42-42 2 20-4 38-18 50Z" fill="url(#gHorn)" stroke="#73562f" stroke-width="2"/>
+    <path d="M102 2c14 14 28 22 46 24-4-16-14-28-30-34Z" fill="url(#gHorn)" stroke="#73562f" stroke-width="2"/>
+    <g stroke="#fff1cf" stroke-width="1" opacity=".4" fill="none">
+      <path d="M120-16c12-10 24-17 36-19M112-24c8-12 18-20 30-24M120 6c10 8 20 12 30 14"/>
+    </g>
+    <!-- battle scars -->
+    <path d="M-8-20l18 5 12-3M-26 18l14 4" stroke="#e78f6a" stroke-width="2" opacity=".36" fill="none"/>
+  </g>
+
+  <!-- ACKLAY: giant green-and-tan crustacean with six razor legs and fanned crest -->
+  <g id="acklay" transform="translate(722 272) scale(1.02)">
+    <ellipse cx="0" cy="122" rx="132" ry="24" fill="#1e250b" opacity=".6" filter="url(#gSoft)"/>
+    <!-- far-side legs -->
+    <g stroke="#344324" stroke-width="12" stroke-linecap="round" fill="none">
+      <path d="M-52 2c-36 8-62 28-82 60l-20 4"/>
+      <path d="M8 10c-16 32-24 60-24 88l-18 10"/>
+      <path d="M54 8c18 28 30 54 34 84l20 8"/>
+    </g>
+    <g fill="#d8cf9c" stroke="#5e532c" stroke-width="1.5">
+      <path d="M-154 66l-24 10 25 4 22-10Z"/>
+      <path d="M-34 98l-18 12 24 1 14-11Z"/>
+      <path d="M108 92l22 8-20 8-20-9Z"/>
+    </g>
+    <!-- body shell -->
+    <path d="M-70-38c-24-2-44 12-50 34-8 28 4 54 30 66 34 16 84 14 116-4 24-14 34-36 28-58-8-28-36-44-76-42-18 1-34 2-48 4Z" fill="url(#gAcklay)" stroke="#233016" stroke-width="4"/>
+    <path d="M-78 20c-8 18 0 36 20 46 30 14 72 12 100-4 18-10 26-26 22-40-26 20-62 26-94 18-22-5-38-12-48-20Z" fill="url(#gAcklayBelly)" opacity=".7"/>
+    <!-- carapace plates -->
+    <g fill="none" stroke="#2b3a1c" stroke-width="3" opacity=".75">
+      <path d="M-58-36c-12 22-12 46 2 66M-28-42c-10 24-10 48 2 70M8-42c-8 24-8 48 2 68M44-36c-6 20-6 40 2 58M72-22c-4 16-4 30 0 44"/>
+    </g>
+    <g fill="url(#gAcklay)" stroke="#243117" stroke-width="2.2">
+      <path d="M-64-44l22-24 16 22-20 14Z"/>
+      <path d="M-22-56l24-20 18 24-22 12Z"/>
+      <path d="M28-56l24-16 18 24-22 10Z"/>
+      <path d="M66-38l22-8 12 24-20 6Z"/>
+    </g>
+    <!-- dorsal spines -->
+    <g fill="#ddd39c" stroke="#5f542c" stroke-width="1.4">
+      <path d="M-48-52l8-26 16 22Z"/>
+      <path d="M-14-62l12-28 14 28Z"/>
+      <path d="M22-58l14-26 12 26Z"/>
+      <path d="M56-46l18-20 6 28Z"/>
+    </g>
+    <!-- near-side legs -->
+    <g stroke="url(#gAcklayLeg)" stroke-width="14" stroke-linecap="round" fill="none">
+      <path d="M-46 26c-30 18-46 44-52 76l-24 16"/>
+      <path d="M10 34c-8 32-8 62 0 90l-16 16"/>
+      <path d="M58 28c20 26 34 52 40 80l22 12"/>
+    </g>
+    <g stroke="#cfc68f" stroke-width="3" stroke-linecap="round" fill="none" opacity=".48">
+      <path d="M-46 26c-28 18-44 42-50 74"/>
+      <path d="M10 34c-7 30-7 58 0 86"/>
+      <path d="M58 28c19 24 32 48 38 76"/>
+    </g>
+    <g fill="#e5dcae" stroke="#62562d" stroke-width="1.8">
+      <path d="M-122 112l-30 20 32 1 28-20Z"/>
+      <path d="M-16 130l-24 22 30-2 22-22Z"/>
+      <path d="M120 112l30 18-30 4-30-20Z"/>
+    </g>
+    <g fill="#42552a" stroke="#1c2712" stroke-width="2">
+      <path d="M-70 72l20-12 18 16-16 16-22-4Z"/>
+      <path d="M-2 76l20-10 16 18-20 14-18-8Z"/>
+      <path d="M66 64l22-6 12 20-24 10-14-10Z"/>
+    </g>
+    <!-- fanned crest behind the head -->
+    <g transform="translate(-66 -28) rotate(-10)">
+      <g fill="url(#gAcklayBelly)" stroke="#4b4424" stroke-width="2">
+        <path d="M0 0L-38-56l10 60Z"/>
+        <path d="M0 0L-62-34l34 44Z"/>
+        <path d="M0 0L-74-4l50 20Z"/>
+        <path d="M0 0L-68 30l48-4Z"/>
+        <path d="M0 0L-44 58l36-38Z"/>
+        <path d="M0 0L-14 66l20-56Z"/>
+      </g>
+      <g fill="#d9d09a" opacity=".65">
+        <path d="M-8-8L-32-46l10 42Z"/>
+        <path d="M-8 4L-54 6l42 12Z"/>
+        <path d="M-6 12L-34 48l28-32Z"/>
+      </g>
+    </g>
+    <!-- head, eyes and fangs -->
+    <path d="M-88-16c-22 4-36 18-38 34 2 16 18 28 40 30 14 1 28-4 34-14-14-12-22-30-20-48-4-1-10-2-16-2Z" fill="url(#gAcklay)" stroke="#243117" stroke-width="3.4"/>
+    <path d="M-116 10c-14 0-26 6-32 16 10 8 24 10 38 6Z" fill="#c8bd8c" stroke="#5f532c" stroke-width="2"/>
+    <g filter="url(#gGlow)">
+      <ellipse cx="-100" cy="-2" rx="9" ry="7" fill="url(#gEye)"/>
+      <ellipse cx="-84" cy="-6" rx="8" ry="6.4" fill="url(#gEye)"/>
+      <ellipse cx="-108" cy="12" rx="6" ry="5" fill="url(#gEye)" opacity=".85"/>
+      <ellipse cx="-90" cy="14" rx="6.6" ry="5.2" fill="url(#gEye)" opacity=".9"/>
+    </g>
+    <g fill="#1c260b">
+      <ellipse cx="-100" cy="-2" rx="2.6" ry="4.6"/>
+      <ellipse cx="-84" cy="-6" rx="2.3" ry="4.2"/>
+      <ellipse cx="-108" cy="12" rx="2" ry="3.2"/>
+      <ellipse cx="-90" cy="14" rx="2.2" ry="3.4"/>
+    </g>
+    <g fill="#f3ecc6" stroke="#71653a" stroke-width="1.4">
+      <path d="M-126 22l-22 10 22 8 16-8Z"/>
+      <path d="M-122 38l-18 14 22 2 16-12Z"/>
+      <path d="M-78 34l18 12-20 8-14-10Z"/>
+    </g>
+    <g stroke="#d9d09a" stroke-width="4" stroke-linecap="round" fill="none">
+      <path d="M-128 16c-16-8-30-6-40 4M-120 44c-14 8-24 18-28 30"/>
+    </g>
+    <!-- shell texture and highlights -->
+    <g fill="#d9e29c" opacity=".2">
+      <ellipse cx="-24" cy="-20" rx="24" ry="10"/>
+      <ellipse cx="30" cy="-26" rx="20" ry="8"/>
+      <ellipse cx="60" cy="12" rx="16" ry="6"/>
+    </g>
+    <path d="M-56-36c20-10 48-12 72-4" stroke="#e3e9b0" stroke-width="3" fill="none" opacity=".34"/>
+  </g>
+
+  <!-- dust motes and foundry sparks -->
+  <g fill="#ffc186" opacity=".55">
+    <circle cx="150" cy="330" r="2.2"/><circle cx="344" cy="352" r="1.6"/>
+    <circle cx="556" cy="320" r="1.8"/><circle cx="850" cy="336" r="2"/>
+    <circle cx="118" cy="372" r="1.2"/><circle cx="792" cy="300" r="1.4"/>
+  </g>
+  <g stroke="#f6b47f" stroke-width="2.2" stroke-linecap="round" opacity=".16" fill="none">
+    <path d="M60 424c34-12 60-30 78-56M262 450c26-10 48-26 64-48M458 448c24-12 42-28 54-48M836 456c22-8 40-20 52-36"/>
+  </g>
+
+  <!-- thin canyon frame, kept light so the planet and the three enemies stay readable -->
+  <rect width="960" height="540" fill="none" stroke="#1b0705" stroke-width="22" opacity=".28"/>
+</svg>
