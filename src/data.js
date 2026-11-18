@@ -77,6 +77,24 @@ const ENDOR_PATH = [
   [1.07, 0.60],
 ];
 
+/* Geonosis — a winding red dirt trail through the droid foundry canyons. */
+const GEONOSIS_PATH = [
+  [-0.05, 0.72],
+  [0.095, 0.72],
+  [0.165, 0.44],
+  [0.305, 0.295],
+  [0.395, 0.555],
+  [0.295, 0.805],
+  [0.475, 0.905],
+  [0.615, 0.715],
+  [0.565, 0.405],
+  [0.705, 0.215],
+  [0.845, 0.405],
+  [0.775, 0.665],
+  [0.905, 0.845],
+  [1.07, 0.60],
+];
+
 /* Kamino — storm bridges strung between Tipoca City's landing pads. */
 const KAMINO_PATH = [
   [-0.05, 0.74],
@@ -107,6 +125,33 @@ const KAMINO_BUILD_PADS = [
   { x: 0.060, y: 0.930, r: 0.048 },
   { x: 0.215, y: 0.945, r: 0.044 },
   { x: 0.952, y: 0.925, r: 0.050 },
+];
+
+const GEONOSIS_DECOR = [
+  /* Red-rock canyon spires and weathered buttes frame the foundry floor. */
+  { type: 'canyonspire', x: 0.045, y: 0.125, r: 0.062, seed: 11 },
+  { type: 'canyonspire', x: 0.170, y: 0.075, r: 0.042, seed: 17 },
+  { type: 'canyonspire', x: 0.380, y: 0.105, r: 0.050, seed: 23 },
+  { type: 'canyonspire', x: 0.635, y: 0.085, r: 0.046, seed: 29 },
+  { type: 'canyonspire', x: 0.925, y: 0.135, r: 0.058, seed: 31 },
+  { type: 'canyonspire', x: 0.055, y: 0.925, r: 0.056, seed: 37 },
+  { type: 'canyonspire', x: 0.255, y: 0.955, r: 0.043, seed: 41 },
+  { type: 'canyonspire', x: 0.665, y: 0.945, r: 0.050, seed: 43 },
+  { type: 'canyonspire', x: 0.955, y: 0.915, r: 0.055, seed: 47 },
+  { type: 'canyonspire', x: 0.465, y: 0.455, r: 0.029, seed: 53 },
+  { type: 'canyonspire', x: 0.175, y: 0.585, r: 0.026, seed: 59 },
+  { type: 'canyonspire', x: 0.855, y: 0.565, r: 0.022, seed: 61 },
+  /* Separatist droid foundry pipes and hardware. */
+  { type: 'foundrypipe', x: 0.275, y: 0.125, r: 0.034, seed: 67 },
+  { type: 'foundrypipe', x: 0.765, y: 0.108, r: 0.032, seed: 71 },
+  { type: 'foundrypipe', x: 0.115, y: 0.345, r: 0.024, seed: 73 },
+  { type: 'foundrypipe', x: 0.795, y: 0.895, r: 0.027, seed: 79 },
+  { type: 'crate', x: 0.320, y: 0.145, r: 0.014, seed: 83 },
+  { type: 'crate', x: 0.355, y: 0.125, r: 0.012, seed: 89 },
+  { type: 'crate', x: 0.825, y: 0.852, r: 0.013, seed: 97 },
+  { type: 'rock', x: 0.535, y: 0.245, r: 0.018, seed: 101 },
+  { type: 'rock', x: 0.705, y: 0.885, r: 0.020, seed: 103 },
+  { type: 'rock', x: 0.935, y: 0.775, r: 0.016, seed: 107 },
 ];
 
 const KAMINO_DECOR = [
@@ -484,6 +529,23 @@ export const ENEMY_TYPES = {
     color: '#2f6f9b', fx: '#ffe066',
   },
 
+  /* —— Geonosis: the Separatist foundry canyons —— */
+  geonosian: {
+    name: 'Geonosian Warrior', short: 'GEONOSIAN', body: 'geonosian',
+    hp: 0.78, speed: 96, radius: 8, reward: 0.9, leak: 1, armor: 0, gap: 0.46,
+    color: '#c9a26a', fx: '#dff6ff',
+  },
+  reek: {
+    name: 'Reek', short: 'REEK', body: 'reek',
+    hp: 4.8, speed: 57, radius: 17, reward: 2.8, leak: 2, armor: 2.6, gap: 1.05,
+    heavy: true, color: '#8f3b2c', fx: '#ffb066',
+  },
+  acklay: {
+    name: 'Acklay', short: 'ACKLAY', body: 'acklay', boss: true,
+    hp: 36, speed: 31, radius: 35, reward: 34, leak: 12, armor: 5.5, gap: 1.8,
+    color: '#5c7f3e', fx: '#d9f08a',
+  },
+
 };
 
 const BASE_HP = 14;
@@ -656,9 +718,45 @@ export const MAPS = {
     chips: ['25 WAVES', 'KAMINO', 'ELITE'],
     accent: '#7fd8f5',
   },
+  geonosis: {
+    id: 'geonosis',
+    planet: 'GEONOSIS',
+    site: 'RED CANYONS',
+    region: 'GEONOSIS',
+    kicker: 'SEPARATIST FOUNDRY · GEONOSIS',
+    desc: 'The droid foundries never sleep beneath the red canyon walls. Geonosian warriors swarm the dirt trail on translucent wings, Reek tanks crush the front line, and an Acklay waits in the foundry pits.',
+    tag: 'GEONOSIS',
+    difficulty: 'ELITE',
+    theme: 'canyon',
+    waves: 25,
+    startCredits: 550,
+    startLives: 18,
+    hpBase: 15.5,
+    hpGrowth: 1.176,
+    base: { x: 0.952, y: 0.60 },
+    path: GEONOSIS_PATH,
+    decor: GEONOSIS_DECOR,
+    roster: { line: 'geonosian', fast: 'geonosian', heavy: 'reek', boss: 'acklay' },
+    /* Geonosian warriors hold the early trail. Reek tanks join the
+       mid and hard waves, with the Acklay as the wave-25 boss. */
+    phases: [
+      { from: 1, line: 'geonosian', fast: 'geonosian', heavy: 'geonosian', heavyStart: 99 },
+      { from: 7, line: 'geonosian', fast: 'geonosian', heavy: 'reek' },
+      { from: 13, line: 'geonosian', fast: 'geonosian', heavy: 'reek' },
+    ],
+    mix: { lineRate: 0.98, fastRate: 0.56, heavyStart: 7, heavyRate: 0.5, fastStart: 2 },
+    bossEvery: 0,
+    finalBossCount: 1,
+    finalBossMul: 1.85,
+    flavor: { boss: 'Something enormous is clawing out of the foundry pits', final: 'Final wave — the Acklay has broken loose!' },
+    endWin: 'The Acklay collapses among the foundry pipes. The red canyon trail is clear, and the Separatist foundry goes dark.',
+    endLose: 'The canyon defenses are overrun. The droid foundry is running at full capacity again.',
+    chips: ['25 WAVES', 'GEONOSIS', 'ELITE'],
+    accent: '#e8863f',
+  },
 };
 
-export const MAP_ORDER = ['tatooine', 'hoth', 'mustafar', 'endor', 'kamino'];
+export const MAP_ORDER = ['tatooine', 'hoth', 'mustafar', 'endor', 'kamino', 'geonosis'];
 
 export function getMap(id) {
   return MAPS[id] || MAPS.tatooine;

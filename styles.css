@@ -3223,6 +3223,9 @@ body.muted .sound-ico { color: #7a8b98; }
 .art-kamino.map-art-illustration {
   box-shadow: inset 0 0 48px rgba(112, 205, 244, 0.16);
 }
+.art-geonosis.map-art-illustration {
+  box-shadow: inset 0 0 48px rgba(255, 132, 64, 0.18);
+}
 
 /* ---------- Bloons-style six-slot star map page ---------- */
 .map-screen {
@@ -3365,6 +3368,7 @@ body.muted .sound-ico { color: #7a8b98; }
 }
 .map-tile[data-map="mustafar"] .map-illustration { filter: saturate(1.1) brightness(1.12) contrast(1.02); }
 .map-tile[data-map="endor"] .map-illustration { filter: saturate(1.08) brightness(1.05) contrast(1.02); }
+.map-tile[data-map="geonosis"] .map-illustration { filter: saturate(1.14) brightness(1.12) contrast(1.03); }
 
 .map-tile-available { cursor: pointer; }
 .map-tile-available:hover,
