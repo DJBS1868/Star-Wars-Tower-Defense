@@ -27,7 +27,7 @@ const menuScreens = { start: startScreen, home: homeScreen, map: mapScreen, hang
 
 const audio = new AudioEngine();
 const AUTO_WAVE_DELAY = 2;
-const AUTO_HOLD_MS = 600;
+const AUTO_HOLD_MS = 400;
 let autoWave = false;
 let autoWaveTimer = AUTO_WAVE_DELAY;
 let game;
@@ -784,7 +784,8 @@ function quitToMap() {
 const nextWaveBtn = $('#nextWaveBtn');
 let suppressSendClick = false;
 let sendHoldTimer = 0;
-let sendHoldReady = false;
+let sendHoldActive = false;
+let sendHoldEngaged = false;
 
 function launchWave(fromAuto = false) {
   if (!game.started || game.paused) return false;
@@ -821,6 +822,10 @@ function toggleAutoWave() {
 function resetAutoWave() {
   autoWave = false;
   autoWaveTimer = AUTO_WAVE_DELAY;
+  clearTimeout(sendHoldTimer);
+  sendHoldTimer = 0;
+  sendHoldActive = false;
+  sendHoldEngaged = false;
   if (nextWaveBtn) {
     nextWaveBtn.classList.remove('auto', 'holding', 'hold-ready');
     nextWaveBtn.setAttribute('aria-pressed', 'false');
@@ -857,33 +862,50 @@ nextWaveBtn.addEventListener('click', (e) => {
 nextWaveBtn.addEventListener('pointerdown', (e) => {
   if (!game.started) return;
   if (e.button != null && e.button !== 0) return;
-  sendHoldReady = false;
+  if (game.phase === 'victory' || game.phase === 'defeat') return;
+  sendHoldActive = true;
+  sendHoldEngaged = false;
+  nextWaveBtn.classList.remove('hold-ready');
   nextWaveBtn.classList.add('holding');
+  try { nextWaveBtn.setPointerCapture(e.pointerId); } catch {}
   clearTimeout(sendHoldTimer);
+  // Engage auto-start as soon as the hold threshold is reached, not on
+  // release. That way the feature still works if the browser swallows the
+  // pointerup/click (long-press menus, touch cancellation, dragging off).
   sendHoldTimer = window.setTimeout(() => {
-    sendHoldReady = true;
+    sendHoldTimer = 0;
+    if (!sendHoldActive) return;
+    sendHoldEngaged = true;
     nextWaveBtn.classList.add('hold-ready');
+    if (!autoWave) {
+      setAutoWave(true);
+    } else {
+      toast('Auto-start is already on — tap to stop', 'good');
+    }
   }, AUTO_HOLD_MS);
 });
 
-function endSendHold(commit) {
-  if (!sendHoldTimer && !sendHoldReady) return;
+function endSendHold() {
+  if (!sendHoldActive && !sendHoldTimer && !sendHoldEngaged) return;
   clearTimeout(sendHoldTimer);
   sendHoldTimer = 0;
+  sendHoldActive = false;
   nextWaveBtn.classList.remove('holding', 'hold-ready');
-  if (commit && sendHoldReady) {
+  if (sendHoldEngaged) {
+    // The hold already toggled auto mode; swallow the trailing click so it
+    // does not immediately turn auto back off.
     suppressSendClick = true;
-    window.setTimeout(() => { suppressSendClick = false; }, 500);
-    sendHoldReady = false;
-    toggleAutoWave();
-  } else {
-    sendHoldReady = false;
+    window.setTimeout(() => { suppressSendClick = false; }, 450);
   }
+  sendHoldEngaged = false;
 }
 
-nextWaveBtn.addEventListener('pointerup', () => endSendHold(true));
-nextWaveBtn.addEventListener('pointercancel', () => endSendHold(false));
-nextWaveBtn.addEventListener('pointerleave', () => endSendHold(false));
+nextWaveBtn.addEventListener('pointerup', () => endSendHold());
+nextWaveBtn.addEventListener('pointercancel', () => endSendHold());
+nextWaveBtn.addEventListener('contextmenu', (e) => e.preventDefault());
+// Safety net: if the pointer is released anywhere, clear the hold visuals.
+window.addEventListener('pointerup', () => { if (sendHoldActive) endSendHold(); });
+window.addEventListener('pointercancel', () => { if (sendHoldActive) endSendHold(); });
 
 $('#cancelPlace').addEventListener('click', () => cancelPlacement());
 
