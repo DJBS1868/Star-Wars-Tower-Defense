@@ -261,9 +261,10 @@
 
       <footer class="shop-foot">
         <div id="waveStatus" class="wave-status"><span class="status-dot"></span>Wave 1 ready — place your towers</div>
-        <button id="nextWaveBtn" class="send-btn">
+        <button id="nextWaveBtn" class="send-btn" aria-pressed="false" title="Send next wave — hold and release to auto-start">
           <span id="sendLabel">Send Wave 1</span>
           <small id="sendSub">Clear each wave for credits</small>
+          <i class="send-hold" aria-hidden="true"></i>
         </button>
       </footer>
     </aside>
