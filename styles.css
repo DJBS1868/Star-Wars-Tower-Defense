@@ -807,8 +807,10 @@ body.muted .icon-btn .ico-muted { display: block; }
 }
 .send-btn.in-wave::after { display: none; }
 .send-btn.in-wave small { opacity: 0.55; }
+.send-btn.in-wave:not(:disabled) { cursor: pointer; }
+.send-btn.in-wave:not(:disabled):hover { filter: brightness(1.12); }
 
-/* hold-and-release auto-start */
+/* hold-to-auto countdown */
 .send-hold {
   position: absolute;
   left: 0;
@@ -820,16 +822,29 @@ body.muted .icon-btn .ico-muted { display: block; }
   background: rgba(255, 249, 220, 0.95);
   opacity: 0;
   pointer-events: none;
-  transition: width 0.4s linear, opacity 0.15s ease;
+  transition: width 0.2s ease, opacity 0.12s ease;
 }
-.send-btn.holding .send-hold { width: 100%; opacity: 1; }
-.send-btn.holding {
-  transform: translateY(1px) scale(0.995);
-  box-shadow: 0 1px 0 #8f5c1c, 0 3px 10px rgba(0, 0, 0, 0.3), inset 0 0 0 2px rgba(255, 248, 210, 0.35);
+.send-btn.arming {
+  border-color: #ffe9ad;
+  color: #2a1b05;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.4), transparent 42%),
+    linear-gradient(180deg, #ffd980, #e0a636);
+  box-shadow: 0 3px 0 #8f5c1c, 0 7px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  transform: translateY(1px);
+  animation: arm-pulse 0.8s ease-in-out infinite;
 }
-.send-btn.hold-ready .send-hold {
-  background: #fff6c8;
-  box-shadow: 0 0 9px rgba(255, 240, 170, 0.95);
+.send-btn.arming .send-hold {
+  opacity: 1;
+  background: #fff8cf;
+  box-shadow: 0 0 12px rgba(255, 240, 170, 0.95);
+  transition: width 0.18s linear, opacity 0.12s ease;
+}
+.send-btn.arming .send-hold::after { content: none; }
+.send-btn.arming small { opacity: 0.82; }
+@keyframes arm-pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.09); }
 }
 .send-btn.auto {
   border-color: #bfe9a8;
