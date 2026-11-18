@@ -27,9 +27,14 @@ const menuScreens = { start: startScreen, home: homeScreen, map: mapScreen, hang
 
 const audio = new AudioEngine();
 const AUTO_WAVE_DELAY = 2;
-const AUTO_HOLD_MS = 400;
+const AUTO_ARM_TIME = 3;
+const AUTO_ARM_STEP = AUTO_ARM_TIME / 4;
+const AUTO_TAP_MS = 150;
 let autoWave = false;
 let autoWaveTimer = AUTO_WAVE_DELAY;
+let autoArming = false;
+let autoArmTimer = 0;
+let autoArmEndsAt = 0;
 let game;
 let selectedType = null;
 let ghostVisible = false;
@@ -601,26 +606,35 @@ function syncUI(force = false) {
   const send = $('#nextWaveBtn');
   const canSend = game.started && h.phase === 'build';
   const canStopAuto = game.started && autoWave && (h.phase === 'build' || h.phase === 'wave');
-  send.disabled = !(canSend || canStopAuto);
+  const canCancelArm = game.started && autoArming;
+  const canArmAuto = game.started && !autoArming && !autoWave && (h.phase === 'build' || h.phase === 'wave');
+  send.disabled = !(canSend || canStopAuto || canCancelArm || canArmAuto);
   send.classList.toggle('in-wave', game.started && (h.phase === 'wave' || h.phase === 'victory' || h.phase === 'defeat'));
-  send.classList.toggle('auto', autoWave);
-  send.setAttribute('aria-pressed', String(autoWave));
-  send.title = autoWave
-    ? 'Auto-start active — tap to stop'
-    : 'Send next wave — hold and release to auto-start';
+  send.classList.toggle('auto', autoWave && !autoArming);
+  send.classList.toggle('arming', autoArming);
+  send.setAttribute('aria-pressed', String(autoWave || autoArming));
+  if (autoArming) send.title = 'Auto waves are counting down — tap to cancel';
+  else if (autoWave) send.title = 'Auto-start active — tap to stop';
+  else send.title = 'Hold to start auto waves';
   if (!game.started) {
     $('#sendLabel').textContent = 'Deploy Outpost';
     $('#sendSub').textContent = 'Place towers, hold the relay';
+  } else if (autoArming) {
+    const left = game.paused ? autoArmTimer : Math.max(0, (autoArmEndsAt - performance.now()) / 1000);
+    const count = Math.max(0, Math.min(3, Math.ceil(left / AUTO_ARM_STEP) - 1));
+    send.querySelector('.send-hold').style.width = `${Math.max(0, Math.min(100, (left / AUTO_ARM_TIME) * 100))}%`;
+    $('#sendLabel').textContent = `Auto in ${count}`;
+    $('#sendSub').textContent = 'Auto waves begin at 0 · tap to cancel';
   } else if (h.phase === 'build') {
     $('#sendLabel').textContent = autoWave ? `Auto Wave ${h.wave}` : `Send Wave ${h.wave}`;
     $('#sendSub').textContent = autoWave
       ? `Launching in ${Math.max(0, Math.ceil(autoWaveTimer))}s · tap to stop`
-      : `Clear bonus +${waveReward(h.wave)} credits`;
+      : `Clear bonus +${waveReward(h.wave)} credits · hold for auto`;
   } else if (h.phase === 'wave') {
     $('#sendLabel').textContent = `Wave ${h.wave} in progress`;
     $('#sendSub').textContent = autoWave
       ? 'Auto-start on · tap to stop'
-      : `${remaining} hostile${remaining === 1 ? '' : 's'} remaining`;
+      : `${remaining} hostile${remaining === 1 ? '' : 's'} · hold for auto`;
   } else if (h.phase === 'victory') {
     $('#sendLabel').textContent = 'Outpost secured';
     $('#sendSub').textContent = 'The relay is safe';
@@ -628,6 +642,7 @@ function syncUI(force = false) {
     $('#sendLabel').textContent = 'Relay destroyed';
     $('#sendSub').textContent = 'Redeploy to try again';
   }
+  if (!autoArming) send.querySelector('.send-hold').style.width = '';
 
   // affordability
   for (const el of towerList.children) {
@@ -782,19 +797,17 @@ function quitToMap() {
 /* ---------------- wave launch & auto-start ---------------- */
 
 const nextWaveBtn = $('#nextWaveBtn');
-let suppressSendClick = false;
-let sendHoldTimer = 0;
-let sendHoldActive = false;
-let sendHoldEngaged = false;
+let sendDownAt = 0;
+let swallowNextClick = false;
 
-function launchWave(fromAuto = false) {
+function launchWave(fromAuto = false, quiet = false) {
   if (!game.started || game.paused) return false;
   if (game.phase !== 'build' || game.waveActive) return false;
   if (!fromAuto) cancelPlacement(true);
   const started = game.startWave();
   if (started) {
     audio.ui();
-    toast(`Wave ${game.waveNumber} incoming${fromAuto ? ' — auto-start' : ''}`, 'bad');
+    if (!quiet) toast(`Wave ${game.waveNumber} incoming${fromAuto ? ' — auto-start' : ''}`, 'bad');
     syncUI(true);
   }
   return started;
@@ -806,7 +819,7 @@ function setAutoWave(next, announce = true) {
   autoWave = !!next;
   autoWaveTimer = AUTO_WAVE_DELAY;
   nextWaveBtn.classList.toggle('auto', autoWave);
-  nextWaveBtn.setAttribute('aria-pressed', String(autoWave));
+  nextWaveBtn.setAttribute('aria-pressed', String(autoWave || autoArming));
   if (announce) {
     audio.ui();
     toast(autoWave ? 'Auto-start engaged — waves launch automatically' : 'Auto-start disengaged', 'good');
@@ -814,98 +827,161 @@ function setAutoWave(next, announce = true) {
   syncUI(true);
 }
 
+/* The countdown starts the instant Send Wave is pressed and keeps running even
+   if the browser never delivers pointerup, so holding always works. */
+function startAutoArm() {
+  if (!game || !game.started || game.paused) return false;
+  if (game.phase === 'victory' || game.phase === 'defeat') return false;
+  if (autoWave) { setAutoWave(false); return false; }
+  if (autoArming) { cancelAutoArm(); return false; }
+  autoArming = true;
+  autoArmTimer = AUTO_ARM_TIME;
+  autoArmEndsAt = performance.now() + AUTO_ARM_TIME * 1000;
+  nextWaveBtn.classList.add('arming');
+  syncUI(true);
+  return true;
+}
+
+function cancelAutoArm(silent = false) {
+  if (!autoArming) return;
+  autoArming = false;
+  autoArmTimer = 0;
+  autoArmEndsAt = 0;
+  nextWaveBtn.classList.remove('arming');
+  if (!silent) toast('Auto-start cancelled', 'good');
+  syncUI(true);
+}
+
+function finishAutoArm() {
+  const launchNow = game.phase === 'build' && !game.waveActive;
+  autoArming = false;
+  autoArmTimer = 0;
+  autoArmEndsAt = 0;
+  nextWaveBtn.classList.remove('arming');
+  setAutoWave(true, false);
+  const launched = launchNow ? launchWave(true, true) : false;
+  toast(launched
+    ? `Auto waves engaged — wave ${game.waveNumber} incoming`
+    : 'Auto waves engaged — the next wave launches automatically', 'good');
+  syncUI(true);
+}
+
 function toggleAutoWave() {
   if (!game.started) return;
-  setAutoWave(!autoWave);
+  if (autoArming) { cancelAutoArm(); return; }
+  if (autoWave) setAutoWave(false);
+  else startAutoArm();
 }
 
 function resetAutoWave() {
   autoWave = false;
   autoWaveTimer = AUTO_WAVE_DELAY;
-  clearTimeout(sendHoldTimer);
-  sendHoldTimer = 0;
-  sendHoldActive = false;
-  sendHoldEngaged = false;
+  autoArming = false;
+  autoArmTimer = 0;
+  autoArmEndsAt = 0;
+  sendDownAt = 0;
+  swallowNextClick = false;
   if (nextWaveBtn) {
-    nextWaveBtn.classList.remove('auto', 'holding', 'hold-ready');
+    nextWaveBtn.classList.remove('auto', 'arming');
     nextWaveBtn.setAttribute('aria-pressed', 'false');
+    const hold = nextWaveBtn.querySelector('.send-hold');
+    if (hold) hold.style.width = '';
   }
 }
 
 function updateAutoWave(dt) {
-  if (!autoWave || !game.started || game.paused) return;
+  if (!game.started) return;
+  if (game.phase === 'victory' || game.phase === 'defeat') {
+    if (autoArming) cancelAutoArm(true);
+    return;
+  }
+  // Wall-clock countdown: accurate even on slow frames or long stalls.
+  if (autoArming) {
+    if (game.paused) {
+      autoArmEndsAt = performance.now() + autoArmTimer * 1000;
+    } else {
+      autoArmTimer = Math.max(0, (autoArmEndsAt - performance.now()) / 1000);
+      if (autoArmTimer <= 0) finishAutoArm();
+    }
+    return;
+  }
+  if (game.paused) return;
+  if (!autoWave) return;
   if (game.phase !== 'build') {
     autoWaveTimer = AUTO_WAVE_DELAY;
     return;
   }
-  autoWaveTimer -= dt;
+  const step = Math.min(dt, 0.15);
+  autoWaveTimer -= step;
   if (autoWaveTimer <= 0) {
     autoWaveTimer = AUTO_WAVE_DELAY;
     launchWave(true);
   }
 }
 
+function onSendDown(e) {
+  if (!game.started) return;
+  if (e && e.button != null && e.button !== 0) return;
+  if (game.phase === 'victory' || game.phase === 'defeat') return;
+  sendDownAt = performance.now();
+  try { nextWaveBtn.setPointerCapture?.(e.pointerId); } catch {}
+  startAutoArm();
+}
+
+function onSendUp() {
+  if (!sendDownAt) return;
+  const elapsed = performance.now() - sendDownAt;
+  sendDownAt = 0;
+  swallowNextClick = true;
+  if (autoArming && elapsed < AUTO_TAP_MS) {
+    cancelAutoArm(true);
+    if (!autoWave) launchWave(false);
+  }
+}
+
+function onSendCancel() {
+  if (!sendDownAt) return;
+  sendDownAt = 0;
+  swallowNextClick = true;
+}
+
+nextWaveBtn.addEventListener('contextmenu', (e) => e.preventDefault());
+
+if (window.PointerEvent) {
+  nextWaveBtn.addEventListener('pointerdown', onSendDown);
+  nextWaveBtn.addEventListener('pointerup', onSendUp);
+  nextWaveBtn.addEventListener('pointercancel', onSendCancel);
+  window.addEventListener('pointerup', () => { if (sendDownAt) onSendUp(); });
+} else if ('ontouchstart' in window) {
+  nextWaveBtn.addEventListener('touchstart', onSendDown, { passive: true });
+  nextWaveBtn.addEventListener('touchend', onSendUp);
+  nextWaveBtn.addEventListener('touchcancel', onSendCancel);
+} else {
+  nextWaveBtn.addEventListener('mousedown', onSendDown);
+  nextWaveBtn.addEventListener('mouseup', onSendUp);
+  window.addEventListener('mouseup', () => { if (sendDownAt) onSendUp(); });
+}
+
 nextWaveBtn.addEventListener('click', (e) => {
-  if (suppressSendClick) {
-    suppressSendClick = false;
+  if (sendDownAt) {
+    // A press without a delivered pointerup; decide tap vs hold here.
+    e.preventDefault();
+    onSendUp();
+    return;
+  }
+  if (swallowNextClick && e.detail > 0) {
+    // Trailing click from the pointer press we already handled.
+    swallowNextClick = false;
     e.preventDefault();
     return;
   }
+  swallowNextClick = false;
   if (!game.started) return;
-  if (autoWave) {
-    setAutoWave(false);
-    return;
-  }
+  // Keyboard / assistive click with no pointer press.
+  if (autoArming) { cancelAutoArm(); return; }
+  if (autoWave) { setAutoWave(false); return; }
   launchWave(false);
 });
-
-nextWaveBtn.addEventListener('pointerdown', (e) => {
-  if (!game.started) return;
-  if (e.button != null && e.button !== 0) return;
-  if (game.phase === 'victory' || game.phase === 'defeat') return;
-  sendHoldActive = true;
-  sendHoldEngaged = false;
-  nextWaveBtn.classList.remove('hold-ready');
-  nextWaveBtn.classList.add('holding');
-  try { nextWaveBtn.setPointerCapture(e.pointerId); } catch {}
-  clearTimeout(sendHoldTimer);
-  // Engage auto-start as soon as the hold threshold is reached, not on
-  // release. That way the feature still works if the browser swallows the
-  // pointerup/click (long-press menus, touch cancellation, dragging off).
-  sendHoldTimer = window.setTimeout(() => {
-    sendHoldTimer = 0;
-    if (!sendHoldActive) return;
-    sendHoldEngaged = true;
-    nextWaveBtn.classList.add('hold-ready');
-    if (!autoWave) {
-      setAutoWave(true);
-    } else {
-      toast('Auto-start is already on — tap to stop', 'good');
-    }
-  }, AUTO_HOLD_MS);
-});
-
-function endSendHold() {
-  if (!sendHoldActive && !sendHoldTimer && !sendHoldEngaged) return;
-  clearTimeout(sendHoldTimer);
-  sendHoldTimer = 0;
-  sendHoldActive = false;
-  nextWaveBtn.classList.remove('holding', 'hold-ready');
-  if (sendHoldEngaged) {
-    // The hold already toggled auto mode; swallow the trailing click so it
-    // does not immediately turn auto back off.
-    suppressSendClick = true;
-    window.setTimeout(() => { suppressSendClick = false; }, 450);
-  }
-  sendHoldEngaged = false;
-}
-
-nextWaveBtn.addEventListener('pointerup', () => endSendHold());
-nextWaveBtn.addEventListener('pointercancel', () => endSendHold());
-nextWaveBtn.addEventListener('contextmenu', (e) => e.preventDefault());
-// Safety net: if the pointer is released anywhere, clear the hold visuals.
-window.addEventListener('pointerup', () => { if (sendHoldActive) endSendHold(); });
-window.addEventListener('pointercancel', () => { if (sendHoldActive) endSendHold(); });
 
 $('#cancelPlace').addEventListener('click', () => cancelPlacement());
 
