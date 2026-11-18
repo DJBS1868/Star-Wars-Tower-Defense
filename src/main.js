@@ -26,6 +26,10 @@ const settingsModal = $('#settingsModal');
 const menuScreens = { start: startScreen, home: homeScreen, map: mapScreen, hangar: hangarScreen };
 
 const audio = new AudioEngine();
+const AUTO_WAVE_DELAY = 2;
+const AUTO_HOLD_MS = 600;
+let autoWave = false;
+let autoWaveTimer = AUTO_WAVE_DELAY;
 let game;
 let selectedType = null;
 let ghostVisible = false;
@@ -596,17 +600,27 @@ function syncUI(force = false) {
 
   const send = $('#nextWaveBtn');
   const canSend = game.started && h.phase === 'build';
-  send.disabled = !canSend;
+  const canStopAuto = game.started && autoWave && (h.phase === 'build' || h.phase === 'wave');
+  send.disabled = !(canSend || canStopAuto);
   send.classList.toggle('in-wave', game.started && (h.phase === 'wave' || h.phase === 'victory' || h.phase === 'defeat'));
+  send.classList.toggle('auto', autoWave);
+  send.setAttribute('aria-pressed', String(autoWave));
+  send.title = autoWave
+    ? 'Auto-start active — tap to stop'
+    : 'Send next wave — hold and release to auto-start';
   if (!game.started) {
     $('#sendLabel').textContent = 'Deploy Outpost';
     $('#sendSub').textContent = 'Place towers, hold the relay';
   } else if (h.phase === 'build') {
-    $('#sendLabel').textContent = `Send Wave ${h.wave}`;
-    $('#sendSub').textContent = `Clear bonus +${waveReward(h.wave)} credits`;
+    $('#sendLabel').textContent = autoWave ? `Auto Wave ${h.wave}` : `Send Wave ${h.wave}`;
+    $('#sendSub').textContent = autoWave
+      ? `Launching in ${Math.max(0, Math.ceil(autoWaveTimer))}s · tap to stop`
+      : `Clear bonus +${waveReward(h.wave)} credits`;
   } else if (h.phase === 'wave') {
     $('#sendLabel').textContent = `Wave ${h.wave} in progress`;
-    $('#sendSub').textContent = `${remaining} hostile${remaining === 1 ? '' : 's'} remaining`;
+    $('#sendSub').textContent = autoWave
+      ? 'Auto-start on · tap to stop'
+      : `${remaining} hostile${remaining === 1 ? '' : 's'} remaining`;
   } else if (h.phase === 'victory') {
     $('#sendLabel').textContent = 'Outpost secured';
     $('#sendSub').textContent = 'The relay is safe';
@@ -727,6 +741,7 @@ function setPaused(paused) {
 
 function restartRun() {
   runFinished = false;
+  resetAutoWave();
   pauseModal.classList.add('hidden');
   endScreen.classList.add('hidden');
   hideMenuScreens();
@@ -747,6 +762,7 @@ function restartRun() {
 
 function quitToMap() {
   runFinished = false;
+  resetAutoWave();
   pauseModal.classList.add('hidden');
   endScreen.classList.add('hidden');
   cancelPlacement(true);
@@ -763,17 +779,111 @@ function quitToMap() {
   syncUI(true);
 }
 
-$('#nextWaveBtn').addEventListener('click', () => {
-  if (!game.started) return;
-  if (game.phase !== 'build' || game.waveActive) return;
-  cancelPlacement(true);
+/* ---------------- wave launch & auto-start ---------------- */
+
+const nextWaveBtn = $('#nextWaveBtn');
+let suppressSendClick = false;
+let sendHoldTimer = 0;
+let sendHoldReady = false;
+
+function launchWave(fromAuto = false) {
+  if (!game.started || game.paused) return false;
+  if (game.phase !== 'build' || game.waveActive) return false;
+  if (!fromAuto) cancelPlacement(true);
   const started = game.startWave();
   if (started) {
     audio.ui();
-    toast(`Wave ${game.waveNumber} incoming`, 'bad');
+    toast(`Wave ${game.waveNumber} incoming${fromAuto ? ' — auto-start' : ''}`, 'bad');
     syncUI(true);
   }
+  return started;
+}
+
+function setAutoWave(next, announce = true) {
+  if (!game.started || game.phase === 'victory' || game.phase === 'defeat') return;
+  if (!!next === autoWave) return;
+  autoWave = !!next;
+  autoWaveTimer = AUTO_WAVE_DELAY;
+  nextWaveBtn.classList.toggle('auto', autoWave);
+  nextWaveBtn.setAttribute('aria-pressed', String(autoWave));
+  if (announce) {
+    audio.ui();
+    toast(autoWave ? 'Auto-start engaged — waves launch automatically' : 'Auto-start disengaged', 'good');
+  }
+  syncUI(true);
+}
+
+function toggleAutoWave() {
+  if (!game.started) return;
+  setAutoWave(!autoWave);
+}
+
+function resetAutoWave() {
+  autoWave = false;
+  autoWaveTimer = AUTO_WAVE_DELAY;
+  if (nextWaveBtn) {
+    nextWaveBtn.classList.remove('auto', 'holding', 'hold-ready');
+    nextWaveBtn.setAttribute('aria-pressed', 'false');
+  }
+}
+
+function updateAutoWave(dt) {
+  if (!autoWave || !game.started || game.paused) return;
+  if (game.phase !== 'build') {
+    autoWaveTimer = AUTO_WAVE_DELAY;
+    return;
+  }
+  autoWaveTimer -= dt;
+  if (autoWaveTimer <= 0) {
+    autoWaveTimer = AUTO_WAVE_DELAY;
+    launchWave(true);
+  }
+}
+
+nextWaveBtn.addEventListener('click', (e) => {
+  if (suppressSendClick) {
+    suppressSendClick = false;
+    e.preventDefault();
+    return;
+  }
+  if (!game.started) return;
+  if (autoWave) {
+    setAutoWave(false);
+    return;
+  }
+  launchWave(false);
 });
+
+nextWaveBtn.addEventListener('pointerdown', (e) => {
+  if (!game.started) return;
+  if (e.button != null && e.button !== 0) return;
+  sendHoldReady = false;
+  nextWaveBtn.classList.add('holding');
+  clearTimeout(sendHoldTimer);
+  sendHoldTimer = window.setTimeout(() => {
+    sendHoldReady = true;
+    nextWaveBtn.classList.add('hold-ready');
+  }, AUTO_HOLD_MS);
+});
+
+function endSendHold(commit) {
+  if (!sendHoldTimer && !sendHoldReady) return;
+  clearTimeout(sendHoldTimer);
+  sendHoldTimer = 0;
+  nextWaveBtn.classList.remove('holding', 'hold-ready');
+  if (commit && sendHoldReady) {
+    suppressSendClick = true;
+    window.setTimeout(() => { suppressSendClick = false; }, 500);
+    sendHoldReady = false;
+    toggleAutoWave();
+  } else {
+    sendHoldReady = false;
+  }
+}
+
+nextWaveBtn.addEventListener('pointerup', () => endSendHold(true));
+nextWaveBtn.addEventListener('pointercancel', () => endSendHold(false));
+nextWaveBtn.addEventListener('pointerleave', () => endSendHold(false));
 
 $('#cancelPlace').addEventListener('click', () => cancelPlacement());
 
@@ -788,6 +898,7 @@ function startGame(auto = false) {
   pauseModal.classList.add('hidden');
   settingsModal.classList.add('hidden');
   runFinished = false;
+  resetAutoWave();
   lastIntelKey = '';
   game.setMap(selectedMap.id);
   game.reset();
@@ -890,6 +1001,7 @@ function updateBest(held) {
 function finishRun(win) {
   if (runFinished) return;
   runFinished = true;
+  resetAutoWave();
   const playedMap = game.map || selectedMap;
   const held = win ? (game.endless ? game.waveNumber - 1 : playedMap.waves) : Math.max(0, game.waveNumber - 1);
   updateBest(held);
@@ -970,6 +1082,9 @@ window.addEventListener('keydown', (e) => {
   if (e.key === 'm' || e.key === 'M') {
     audio.ensure(); audio.setMuted(!audio.muted); syncUI(true); return;
   }
+  if (e.key === 'a' || e.key === 'A') {
+    toggleAutoWave(); return;
+  }
   const idx = Number(e.key);
   if (idx >= 1 && idx <= TOWER_ORDER.length) {
     const type = TOWER_ORDER[idx - 1];
@@ -1024,6 +1139,7 @@ function loop(now) {
   const dt = (now - last) / 1000;
   last = now;
   game.update(dt);
+  updateAutoWave(dt);
   game.render();
   requestAnimationFrame(loop);
 }
