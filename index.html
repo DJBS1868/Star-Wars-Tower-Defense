@@ -261,11 +261,16 @@
 
       <footer class="shop-foot">
         <div id="waveStatus" class="wave-status"><span class="status-dot"></span>Wave 1 ready — place your towers</div>
-        <button id="nextWaveBtn" class="send-btn" aria-pressed="false" title="Hold to start auto waves">
-          <span id="sendLabel">Send Wave 1</span>
-          <small id="sendSub">Clear each wave for credits</small>
-          <i class="send-hold" aria-hidden="true"></i>
-        </button>
+        <div id="sendRow" class="send-row">
+          <button id="nextWaveBtn" class="send-btn" aria-pressed="false" title="Send the next wave">
+            <span id="sendLabel">Send Wave 1</span>
+            <small id="sendSub">Clear each wave for credits</small>
+          </button>
+          <button id="autoWaveBtn" class="auto-btn" type="button" title="Start auto waves" aria-label="Start auto waves" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5l11 6.5-11 6.5z"/></svg>
+            <span>AUTO</span>
+          </button>
+        </div>
       </footer>
     </aside>
   </div>

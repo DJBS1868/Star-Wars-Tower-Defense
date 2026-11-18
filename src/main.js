@@ -27,14 +27,8 @@ const menuScreens = { start: startScreen, home: homeScreen, map: mapScreen, hang
 
 const audio = new AudioEngine();
 const AUTO_WAVE_DELAY = 2;
-const AUTO_ARM_TIME = 3;
-const AUTO_ARM_STEP = AUTO_ARM_TIME / 4;
-const AUTO_TAP_MS = 150;
 let autoWave = false;
 let autoWaveTimer = AUTO_WAVE_DELAY;
-let autoArming = false;
-let autoArmTimer = 0;
-let autoArmEndsAt = 0;
 let game;
 let selectedType = null;
 let ghostVisible = false;
@@ -604,37 +598,30 @@ function syncUI(force = false) {
   }
 
   const send = $('#nextWaveBtn');
+  const autoBtn = $('#autoWaveBtn');
   const canSend = game.started && h.phase === 'build';
   const canStopAuto = game.started && autoWave && (h.phase === 'build' || h.phase === 'wave');
-  const canCancelArm = game.started && autoArming;
-  const canArmAuto = game.started && !autoArming && !autoWave && (h.phase === 'build' || h.phase === 'wave');
-  send.disabled = !(canSend || canStopAuto || canCancelArm || canArmAuto);
+  send.disabled = !(canSend || canStopAuto);
   send.classList.toggle('in-wave', game.started && (h.phase === 'wave' || h.phase === 'victory' || h.phase === 'defeat'));
-  send.classList.toggle('auto', autoWave && !autoArming);
-  send.classList.toggle('arming', autoArming);
-  send.setAttribute('aria-pressed', String(autoWave || autoArming));
-  if (autoArming) send.title = 'Auto waves are counting down — keep holding';
-  else if (autoWave) send.title = 'Auto-start active — tap to stop';
-  else send.title = 'Hold to start auto waves';
+  send.classList.toggle('auto', autoWave);
+  send.setAttribute('aria-pressed', String(autoWave));
+  send.title = autoWave ? 'Auto-start active — tap to stop' : 'Send the next wave';
+  autoBtn.disabled = !game.started || autoWave || h.phase === 'victory' || h.phase === 'defeat';
+  autoBtn.setAttribute('aria-pressed', String(autoWave));
+  $('#sendRow').classList.toggle('auto-on', autoWave);
   if (!game.started) {
     $('#sendLabel').textContent = 'Deploy Outpost';
     $('#sendSub').textContent = 'Place towers, hold the relay';
-  } else if (autoArming) {
-    const left = game.paused ? autoArmTimer : Math.max(0, (autoArmEndsAt - performance.now()) / 1000);
-    const count = Math.max(0, Math.min(3, Math.ceil(left / AUTO_ARM_STEP) - 1));
-    send.querySelector('.send-hold').style.width = `${Math.max(0, Math.min(100, (left / AUTO_ARM_TIME) * 100))}%`;
-    $('#sendLabel').textContent = `Auto in ${count}`;
-    $('#sendSub').textContent = 'Keep holding · release cancels';
   } else if (h.phase === 'build') {
     $('#sendLabel').textContent = autoWave ? `Auto Wave ${h.wave}` : `Send Wave ${h.wave}`;
     $('#sendSub').textContent = autoWave
       ? `Launching in ${Math.max(0, Math.ceil(autoWaveTimer))}s · tap to stop`
-      : `Clear bonus +${waveReward(h.wave)} credits · hold for auto`;
+      : `Clear bonus +${waveReward(h.wave)} credits`;
   } else if (h.phase === 'wave') {
     $('#sendLabel').textContent = `Wave ${h.wave} in progress`;
     $('#sendSub').textContent = autoWave
       ? 'Auto-start on · tap to stop'
-      : `${remaining} hostile${remaining === 1 ? '' : 's'} · hold for auto`;
+      : `${remaining} hostile${remaining === 1 ? '' : 's'} remaining`;
   } else if (h.phase === 'victory') {
     $('#sendLabel').textContent = 'Outpost secured';
     $('#sendSub').textContent = 'The relay is safe';
@@ -642,7 +629,6 @@ function syncUI(force = false) {
     $('#sendLabel').textContent = 'Relay destroyed';
     $('#sendSub').textContent = 'Redeploy to try again';
   }
-  if (!autoArming) send.querySelector('.send-hold').style.width = '';
 
   // affordability
   for (const el of towerList.children) {
@@ -797,9 +783,7 @@ function quitToMap() {
 /* ---------------- wave launch & auto-start ---------------- */
 
 const nextWaveBtn = $('#nextWaveBtn');
-let sendDownAt = 0;
-let sendPointerId = null;
-let swallowNextClick = false;
+const autoWaveBtn = $('#autoWaveBtn');
 
 function launchWave(fromAuto = false, quiet = false) {
   if (!game.started || game.paused) return false;
@@ -819,180 +803,68 @@ function setAutoWave(next, announce = true) {
   if (!!next === autoWave) return;
   autoWave = !!next;
   autoWaveTimer = AUTO_WAVE_DELAY;
-  nextWaveBtn.classList.toggle('auto', autoWave);
-  nextWaveBtn.setAttribute('aria-pressed', String(autoWave || autoArming));
+  syncUI(true);
   if (announce) {
     audio.ui();
-    toast(autoWave ? 'Auto-start engaged — waves launch automatically' : 'Auto-start disengaged', 'good');
+    toast(autoWave ? 'Auto waves engaged — tap the big button to stop' : 'Auto waves stopped', 'good');
   }
-  syncUI(true);
 }
 
-/* Holding Send Wave runs a 3→0 countdown; releasing before 0 cancels it. */
-function startAutoArm() {
-  if (!game || !game.started || game.paused) return false;
-  if (game.phase === 'victory' || game.phase === 'defeat') return false;
-  if (autoWave) { setAutoWave(false); return false; }
-  if (autoArming) { cancelAutoArm(); return false; }
-  autoArming = true;
-  autoArmTimer = AUTO_ARM_TIME;
-  autoArmEndsAt = performance.now() + AUTO_ARM_TIME * 1000;
-  nextWaveBtn.classList.add('arming');
-  syncUI(true);
-  return true;
-}
-
-function cancelAutoArm(silent = false, message = 'Auto-start cancelled') {
-  if (!autoArming) return;
-  autoArming = false;
-  autoArmTimer = 0;
-  autoArmEndsAt = 0;
-  nextWaveBtn.classList.remove('arming');
-  if (!silent) toast(message, 'good');
-  syncUI(true);
-}
-
-function finishAutoArm() {
-  if (!sendDownAt) { cancelAutoArm(true); return; }
+function engageAutoWave() {
+  if (!game.started || autoWave) return;
+  if (game.phase === 'victory' || game.phase === 'defeat') return;
   const launchNow = game.phase === 'build' && !game.waveActive;
-  autoArming = false;
-  autoArmTimer = 0;
-  autoArmEndsAt = 0;
-  nextWaveBtn.classList.remove('arming');
   setAutoWave(true, false);
-  const launched = launchNow ? launchWave(true, true) : false;
-  toast(launched
-    ? `Auto waves engaged — wave ${game.waveNumber} incoming`
-    : 'Auto waves engaged — the next wave launches automatically', 'good');
+  audio.ui();
+  if (launchNow) {
+    autoWaveTimer = AUTO_WAVE_DELAY;
+    launchWave(true, true);
+    toast(`Auto waves engaged — wave ${game.waveNumber} incoming`, 'good');
+  } else {
+    toast('Auto waves armed — the next wave launches automatically', 'good');
+  }
   syncUI(true);
 }
 
 function toggleAutoWave() {
   if (!game.started) return;
-  if (autoArming) { cancelAutoArm(); return; }
-  setAutoWave(!autoWave);
+  if (autoWave) setAutoWave(false);
+  else engageAutoWave();
 }
 
 function resetAutoWave() {
   autoWave = false;
   autoWaveTimer = AUTO_WAVE_DELAY;
-  autoArming = false;
-  autoArmTimer = 0;
-  autoArmEndsAt = 0;
-  sendDownAt = 0;
-  sendPointerId = null;
-  swallowNextClick = false;
+  if (autoWaveBtn) autoWaveBtn.setAttribute('aria-pressed', 'false');
   if (nextWaveBtn) {
-    nextWaveBtn.classList.remove('auto', 'arming');
+    nextWaveBtn.classList.remove('auto');
     nextWaveBtn.setAttribute('aria-pressed', 'false');
-    const hold = nextWaveBtn.querySelector('.send-hold');
-    if (hold) hold.style.width = '';
   }
+  $('#sendRow')?.classList.remove('auto-on');
 }
 
 function updateAutoWave(dt) {
-  if (!game.started) return;
-  if (game.phase === 'victory' || game.phase === 'defeat') {
-    if (autoArming) cancelAutoArm(true);
-    return;
-  }
-  // Wall-clock countdown: accurate even on slow frames or long stalls.
-  if (autoArming) {
-    if (game.paused) {
-      autoArmEndsAt = performance.now() + autoArmTimer * 1000;
-    } else {
-      autoArmTimer = Math.max(0, (autoArmEndsAt - performance.now()) / 1000);
-      if (autoArmTimer <= 0) finishAutoArm();
-    }
-    return;
-  }
-  if (game.paused) return;
-  if (!autoWave) return;
+  if (!game.started || game.paused || !autoWave) return;
+  if (game.phase === 'victory' || game.phase === 'defeat') return;
   if (game.phase !== 'build') {
     autoWaveTimer = AUTO_WAVE_DELAY;
     return;
   }
-  const step = Math.min(dt, 0.15);
-  autoWaveTimer -= step;
+  autoWaveTimer -= Math.min(dt, 0.15);
   if (autoWaveTimer <= 0) {
     autoWaveTimer = AUTO_WAVE_DELAY;
     launchWave(true);
   }
 }
 
-function onSendDown(e) {
+nextWaveBtn.addEventListener('click', () => {
   if (!game.started) return;
-  if (e && e.button != null && e.button !== 0) return;
-  if (game.phase === 'victory' || game.phase === 'defeat') return;
-  sendDownAt = performance.now();
-  sendPointerId = e && e.pointerId != null ? e.pointerId : null;
-  try { nextWaveBtn.setPointerCapture?.(e.pointerId); } catch {}
-  startAutoArm();
-}
-
-function onSendUp(e) {
-  if (e && e.pointerId != null && sendPointerId != null && e.pointerId !== sendPointerId) return;
-  if (!sendDownAt) return;
-  const elapsed = performance.now() - sendDownAt;
-  sendDownAt = 0;
-  sendPointerId = null;
-  swallowNextClick = true;
-  if (!autoArming) return;
-  if (elapsed < AUTO_TAP_MS) {
-    // Quick tap = send exactly one wave.
-    cancelAutoArm(true);
-    if (!autoWave) launchWave(false);
-  } else {
-    // Letting go before the countdown reaches 0 aborts auto-start.
-    cancelAutoArm(false, 'Auto-start cancelled — hold until 0');
-  }
-}
-
-function onSendCancel(e) {
-  if (e && e.pointerId != null && sendPointerId != null && e.pointerId !== sendPointerId) return;
-  if (!sendDownAt) return;
-  sendDownAt = 0;
-  sendPointerId = null;
-  swallowNextClick = true;
-  if (autoArming) cancelAutoArm(false, 'Auto-start cancelled — hold until 0');
-}
-
-nextWaveBtn.addEventListener('contextmenu', (e) => e.preventDefault());
-
-if (window.PointerEvent) {
-  nextWaveBtn.addEventListener('pointerdown', onSendDown);
-  nextWaveBtn.addEventListener('pointerup', (e) => onSendUp(e));
-  nextWaveBtn.addEventListener('pointercancel', (e) => onSendCancel(e));
-  window.addEventListener('pointerup', (e) => { if (sendDownAt) onSendUp(e); });
-} else if ('ontouchstart' in window) {
-  nextWaveBtn.addEventListener('touchstart', onSendDown, { passive: true });
-  nextWaveBtn.addEventListener('touchend', onSendUp);
-  nextWaveBtn.addEventListener('touchcancel', onSendCancel);
-} else {
-  nextWaveBtn.addEventListener('mousedown', onSendDown);
-  nextWaveBtn.addEventListener('mouseup', onSendUp);
-  window.addEventListener('mouseup', () => { if (sendDownAt) onSendUp(); });
-}
-
-nextWaveBtn.addEventListener('click', (e) => {
-  if (sendDownAt) {
-    // A press without a delivered pointerup; decide tap vs hold here.
-    e.preventDefault();
-    onSendUp();
-    return;
-  }
-  if (swallowNextClick && e.detail > 0) {
-    // Trailing click from the pointer press we already handled.
-    swallowNextClick = false;
-    e.preventDefault();
-    return;
-  }
-  swallowNextClick = false;
-  if (!game.started) return;
-  // Keyboard / assistive click with no pointer press.
-  if (autoArming) { cancelAutoArm(); return; }
   if (autoWave) { setAutoWave(false); return; }
   launchWave(false);
+});
+
+autoWaveBtn.addEventListener('click', () => {
+  engageAutoWave();
 });
 
 $('#cancelPlace').addEventListener('click', () => cancelPlacement());
